@@ -1,5 +1,12 @@
 # NUS Game (Orbital project for AY20/21)
 
+### Tech Stack
+
+- Nextjs
+- TypeScript
+- Tailwind CSS
+- Jest & React testing library
+
 ### Resources
 
 - Our figma page [here](https://www.figma.com/file/G0ajAThyYnljoAg9M25ahR/Not-Awake-team-library?node-id=0%3A1)
