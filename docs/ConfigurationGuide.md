@@ -1,26 +1,16 @@
+---
+layout: default
+title: Configuration Guide
+description: Find out how to setup the project and start development
+---
 ## **Table Of Content**
 
 * Table of Contents 
 {:toc}
 
-### Notes
+## **Setup Guide**
 
-- We use Yarn (start development server via: `yarn dev`)
-- All dependencies should be added via `yarn add`
-
-### Setup Guide
-
-```
-npx create-next-app nus-game
-yarn dev
-```
-
-- tailwindcss
-
-```
-yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
-
-npx tailwindcss init -p
-update tailwind config to purge css and use JIT compiler
-then include tailwind in css
-```
+Refer to our [developer guide](DeveloperGuide) to see the details of our tech stack.
+To setup the front end for the project, first clone the github repository and run `yarn install`
+to download relevant dependencies. To start the development server, run `yarn dev`. Note that
+all dependencies should be added via `yarn add`.

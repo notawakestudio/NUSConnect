@@ -1,3 +1,8 @@
+---
+layout: default
+title: Developer Guide
+description: Find out the technical details behind the project
+---
 ## **Table Of Content**
 
 * Table of Contents 
@@ -17,22 +22,24 @@ We hope that our project becomes a source of external motivating factors that nu
 - Nextjs
 - TypeScript
 - Tailwind CSS
+
 ### Back end
 - firebase
 - Deta base
 - fastAPI
+
 ### Test 
 - Jest
 - React testing library
 
 ---
-## **Documentation, logging, testing, configuration, dev-ops**
+## **Timeline, testing, configuration, dev-ops, workflow**
 
-- [Documentation guide](Documentation.md)
-- [Testing guide](Testing.md)
-- [Configuration guide](Configuration.md)
-- [DevOps guide](DevOps.md)
-
+- [Timeline](Timeline)
+- [Testing guide](TestingGuide)
+- [Configuration guide](ConfigurationGuide)
+- [DevOps guide](DevOps)
+- [Workflow guide](Workflow)
 ---
 
 ## **Product Scope**
@@ -44,6 +51,7 @@ We hope that our project becomes a source of external motivating factors that nu
 - looking for ways to interact and learn from peers from the same module
 - wants to have a all-in-one place to check out all related materials
 - is keen to help others learning the same module
+
 ### **Value proposition**
 - provide powerful features to enhance learning experience and effectiveness
 - user centric and tailored to learners of respective modules
@@ -55,8 +63,10 @@ We hope that our project becomes a source of external motivating factors that nu
 
 ## **User Stories**
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low
-(unlikely to have) - `*`
+Priorities: 
+- High (must have): `* * *`
+- Medium (nice to have): `* *`
+- Low (unlikely to have):`*`
 
 | Priority | As a …​  | I want to …​                                       | So that I can…​                                  |
 |----------|---------|---------------------------------------------------|-------------------------------------------------|
