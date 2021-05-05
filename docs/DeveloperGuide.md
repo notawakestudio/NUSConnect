@@ -38,8 +38,9 @@ We hope that our project becomes a source of external motivating factors that nu
 - [Timeline](Timeline)
 - [Testing guide](TestingGuide)
 - [Configuration guide](ConfigurationGuide)
-- [DevOps guide](DevOps)
+- [DevOps guide](DevOpsGuide)
 - [Workflow guide](Workflow)
+
 ---
 
 ## **Product Scope**

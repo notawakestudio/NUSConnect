@@ -34,6 +34,7 @@ description: Find out the features and timeline of the product
   - Show in homepage the weekly tasks to be done and also the current progress
 - UI: 
   - Updates on UI elements, icons, and layout.
+  
 ## **2nd month**
 - V1.0 - Starting to take shape (Beta Release) 
   - Gamification: Badge (achievement) system implemented for students to grow as they level up. All learning activities will be recorded and updated in their progress - to level up and earn badges.

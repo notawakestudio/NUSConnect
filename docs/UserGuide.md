@@ -25,7 +25,7 @@ We want students to know the various ways of learning on top of doing school ass
 Lastly we want all their learning activities to be tracked and gamified to provide a constant stream of motivation to achieve more. In summary, we hope to provide students with the following:
 
 ### **Motivation**
-Gamification of tasks and visualization of student’s progress
+- Gamification of tasks and visualization of student’s progress
 
 ### **Learning opportunities**
 
