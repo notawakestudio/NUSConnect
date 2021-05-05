@@ -10,8 +10,8 @@ description: See all documentations relating to the project
 - [Developer guide](DeveloperGuide)
 - [User guide](UserGuide)
 - [Configuration guide](ConfigurationGuide)
-- [DevOps guide](DevOps)
-- [Workflow guide](Workflow)
+- [DevOps guide](DevOpsGuide)
+- [Workflow guide](WorkflowGuide)
 
 ---
 ## **Resources**
