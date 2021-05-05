@@ -1,8 +1,4 @@
----
-layout: page
-title: User Guide
-nav-text: User Guide
----
+## **Table Of Content**
 
 * Table of Contents 
 {:toc}

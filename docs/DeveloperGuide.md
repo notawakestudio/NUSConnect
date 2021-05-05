@@ -1,8 +1,4 @@
----
-layout: page
-title: Developer Guide
-nav-text: Developer Guide
----
+## **Table Of Content**
 
 * Table of Contents 
 {:toc}
