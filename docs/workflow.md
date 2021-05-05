@@ -1,3 +1,9 @@
+---
+layout: page
+title: Workflow Guide
+nav-text: Workflow Guide
+---
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
@@ -16,7 +22,7 @@ workflow practices to adhere to in the development of the project.
 
 ### Project Management
 
-The team will follow a modified version of the [Scrum workflow](https://www.scrumstudy.com/whyscrum/scrum-phases-and-processes). We will have weekly sprints to plan the goals for the upcoming week and will draft them down in a github issue. Each developer will be responsible for one feature/ user story and will check back in with the other developers as they near completion. As the scrum workflow is suited to teams of 3-8 people. The modified scrum workflow we will be following will not have daily meetings, instead these will be replaced with daily reports through a messaging app. As there are only 2 members in this development team, we will also not have a Scrum master.
+The team will follow a modified version of the [Scrum workflow](https://www.scrumstudy.com/whyscrum/scrum-phases-and-processes). We will have weekly meeting to plan for the goals for the upcoming weekly sprint and will draft them down in a github issue. Each developer will be responsible for one feature/ user story and will check back in with the other developers as they near completion. As the scrum workflow is suited to teams of 3-8 people. The modified scrum workflow we will be following will not have daily meetings, instead these will be replaced with daily reports through a messaging app. As there are only 2 members in this development team, we will also not have a Scrum master.
 
 ### Branching Workflow
 
