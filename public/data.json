@@ -1,0 +1,26 @@
+[
+    {
+        "modules": ["CS2030", "CS2030S"],
+        "type": "MRQ",
+        "difficulty": "easy", 
+        "question": "What are valid format specifiers for the String.format() method?",
+        "correct_answers": ["%f", "%d","%s"], 
+        "incorrect_answers": ["%w","%z","%q"]
+    },
+    {
+        "modules": ["CS2030", "CS2030S"],
+        "type": "MRQ",
+        "difficulty": "easy", 
+        "question": "In Java, what does the method signature consist of? Choose all the applicable options.",
+        "correct_answers": ["Method name", "Parameter list (number, type and order of its parameters)"], 
+        "incorrect_answers": ["Access modifier","Return type","Exception", "Method body"]
+    },
+    {
+        "modules": ["CS2030", "CS2030S"],
+        "type": "MCQ",
+        "difficulty": "easy", 
+        "question": "What is a package in java?",
+        "correct_answers": ["Collection of related classes and interfaces which are bundled together"], 
+        "incorrect_answers": ["Collection of related classes which are bundled together","Collection of related interfaces which are bundled together","Collection of related objects and classes which are bundled together", "None of the others"]
+    }
+]

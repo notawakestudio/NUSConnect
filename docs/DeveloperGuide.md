@@ -93,3 +93,21 @@ Priorities:
 | `* *`    | teaching staff | be able to monitor the progress of my students         | meet my module requirements                |
 | `* *`    | teaching staff | create quizzes for students to attempt         | test easily misunderstood concepts                 |
 | `* *`    | teaching staff | provide feedback to students for their attempted exercises         | clarify any doubts on the spot |
+
+
+## **Quiz**
+
+```javaScript
+{
+    "modules": ["CS2030", "CS2030S"], // for cases of variants
+    "type": "MRQ", // MCQ, MRQ
+    "difficulty": "easy", // easy, medium, hard
+    "question": "What are valid format specifiers for the String.format() method?",
+    "correct_answers": ["%f", "%d","%s"], // consider cases of MRQ
+    "incorrect_answers": ["%w","%z","%q"],
+    // consider adding more properties such as tags, isSeries etc
+}
+```
+- User sees a question
+- User click on options, which will be saved
+- When user click on submit at the end
