@@ -3,6 +3,7 @@ import QuestionCard from '../components/quiz/QuestionCard'
 import { fetchQuizQuestions } from '../components/quiz/API'
 import { QuestionState } from '../components/quiz/API'
 import Link from 'next/link'
+import { hasSameContent } from '../components/common/Util'
 
 export type AnswerObject = {
   question: string
@@ -20,7 +21,6 @@ export default function Quiz(): JSX.Element {
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(true)
 
-  console.log(questions)
   const startQuiz = (): void => {
     setLoading(true)
     setGameOver(false)
@@ -33,16 +33,18 @@ export default function Quiz(): JSX.Element {
     setNumber(0)
     setLoading(false)
   }
-  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const checkAnswer = (currentAnswer): void => {
+    console.log(currentAnswer)
     if (!gameOver) {
       // Users answer
-      const answer = [e.currentTarget.value]
+      const answer = currentAnswer
       // check answer against correct answer
-      const correct = questions[number].correct_answers === answer
+      const correct = hasSameContent(currentAnswer, questions[number].correct_answers)
       // add score if answer is correct
       if (correct) {
         setScore((prev) => prev + 1)
       }
+      console.log(correct)
       // save answer in the array for use answers
       const answerObject = {
         question: questions[number].question,

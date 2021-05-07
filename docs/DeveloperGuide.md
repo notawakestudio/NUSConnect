@@ -108,3 +108,6 @@ Priorities:
     // consider adding more properties such as tags, isSeries etc
 }
 ```
+- User sees a question
+- User click on options, which will be saved
+- When user click on submit at the end
