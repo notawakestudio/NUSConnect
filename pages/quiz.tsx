@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import QuestionCard from '../components/quiz/QuestionCard'
 import { fetchQuizQuestions } from '../components/quiz/API'
-import { QuestionState, Difficulty } from '../components/quiz/API'
+import { QuestionState } from '../components/quiz/API'
+import Link from 'next/link'
 
 export type AnswerObject = {
   question: string
-  answer: string
+  answer: string[]
   correct: boolean
-  correctAnswer: string
+  correctAnswers: string[]
 }
-const TOTAL_QUESTIONS = 10
+const TOTAL_QUESTIONS = 3
 
 export default function Quiz(): JSX.Element {
   const [loading, setLoading] = useState(false)
@@ -20,11 +21,11 @@ export default function Quiz(): JSX.Element {
   const [gameOver, setGameOver] = useState(true)
 
   console.log(questions)
-  const startQuiz = async (): Promise => {
+  const startQuiz = (): void => {
     setLoading(true)
     setGameOver(false)
 
-    const newQuestions = await fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY)
+    const newQuestions = fetchQuizQuestions()
 
     setQuestions(newQuestions)
     setScore(0)
@@ -35,9 +36,9 @@ export default function Quiz(): JSX.Element {
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>): void => {
     if (!gameOver) {
       // Users answer
-      const answer = e.currentTarget.value
+      const answer = [e.currentTarget.value]
       // check answer against correct answer
-      const correct = questions[number].correct_answer === answer
+      const correct = questions[number].correct_answers === answer
       // add score if answer is correct
       if (correct) {
         setScore((prev) => prev + 1)
@@ -47,7 +48,7 @@ export default function Quiz(): JSX.Element {
         question: questions[number].question,
         answer,
         correct,
-        correctAnswer: questions[number].correct_answer,
+        correctAnswers: questions[number].correct_answers,
       }
       setUserAnswers((prev) => [...prev, answerObject])
     }
@@ -63,15 +64,16 @@ export default function Quiz(): JSX.Element {
   }
 
   return (
-    <div className="container mx-auto text-center">
+    <div className="container mx-auto text-center flex flex-col">
       <h1>Quiz</h1>
+      <Link href="/">Back</Link>
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-        <button className="start" onClick={startQuiz}>
+        <button className="start self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={startQuiz}>
           Start
         </button>
       ) : null}
 
-      {!gameOver ? <p className="score">Score:</p> : null}
+      {!gameOver ? <p className="score">Score: {score}</p> : null}
       {loading && <p>Loading Questions ...</p>}
       {!loading && !gameOver && (
         <QuestionCard
@@ -84,7 +86,7 @@ export default function Quiz(): JSX.Element {
         />
       )}
       {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? (
-        <button className="next" onClick={nextQuestion}>
+        <button className="next self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={nextQuestion}>
           Next Question
         </button>
       ) : null}

@@ -1,27 +1,32 @@
-import { shuffleArray } from './Util'
+import { shuffleStringArray } from '../common/Util'
+import data from '../../public/data.json'
+
 export enum Difficulty {
   EASY = 'easy',
   MEDIUM = 'medium',
   HARD = 'hard',
 }
 
+export enum Type {
+  MCQ = 'MCQ',
+  MRQ = 'MRQ',
+}
+
 export type Question = {
-  category: string
-  correct_answer: string
-  difficulty: string
-  incorrect_answers: string[]
   question: string
+  correct_answers: string[]
+  incorrect_answers: string[]
+  modules: string[]
+  difficulty: string
   type: string
 }
 
 export type QuestionState = Question & {
   answers: string[]
 }
-export const fetchQuizQuestions = async (amount: number, difficulty: Difficulty) => {
-  const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple`
-  const data = await (await fetch(endpoint)).json()
-  return data.results.map((question: Question) => ({
+export const fetchQuizQuestions = (): QuestionState[] => {
+  return data.map((question: Question) => ({
     ...question,
-    answers: shuffleArray([...question.incorrect_answers, question.correct_answer]),
+    answers: shuffleStringArray([...question.incorrect_answers, ...question.correct_answers]),
   }))
 }
