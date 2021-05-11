@@ -98,16 +98,33 @@ Priorities:
 ## **Quiz**
 
 ```javaScript
+//question
 {
+    "id": 
     "modules": ["CS2030", "CS2030S"], // for cases of variants
     "type": "MRQ", // MCQ, MRQ
     "difficulty": "easy", // easy, medium, hard
     "question": "What are valid format specifiers for the String.format() method?",
     "correct_answers": ["%f", "%d","%s"], // consider cases of MRQ
     "incorrect_answers": ["%w","%z","%q"],
+    "author":"",
+    "isDraft":boolean,
     // consider adding more properties such as tags, isSeries etc
 }
 ```
+- User starts a quiz
 - User sees a question
-- User click on options, which will be saved
+- User clicks on options, which will be saved
 - When user click on submit at the end
+- Show score and update XP
+- User to redo quizzes
+```javaScript
+//quiz
+{
+    "name": "quiz1",
+    "questions":[],
+    "description":"",
+    "tags":[],
+    "author":""
+}
+```
