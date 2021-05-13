@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { AnswerObject } from '../../pages/quiz'
 
-type QuestionCardProps = {
+type QuestionItemProps = {
   question: string
   answers: string[]
   callback: (answer: string[]) => void
@@ -10,7 +10,7 @@ type QuestionCardProps = {
   totalQuestions: number
 }
 
-const QuestionCard: React.FC<QuestionCardProps> = ({ question, answers, callback, userAnswer, questionNumber, totalQuestions }) => {
+const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, callback, userAnswer, questionNumber, totalQuestions }) => {
   const [currentAnswer, setCurrentAnswer] = useState([])
   const updateAnswer = (option: string): void => {
     if (currentAnswer.includes(option)) {
@@ -24,11 +24,11 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, answers, callback
       <p className="number">
         Question: {questionNumber} / {totalQuestions}
       </p>
-      <p className="bg-gray-200" dangerouslySetInnerHTML={{ __html: question }}></p>
-      <div className="bg-green-200 min-h-min flex justify-evenly flex-wrap">
+      <p className="text-center " dangerouslySetInnerHTML={{ __html: question }}></p>
+      <div className="bg-white-200 dark:bg-gray-800 dark:text-white w-prose flex justify-center flex-wrap">
         {answers.map((answer) => (
-          <div className="w-1/2" key={answer}>
-            <button className={`break-normal p-2 m-2 ${currentAnswer.includes(answer) ? 'bg-green-700' : 'bg-blue-200'}`} onClick={(e) => updateAnswer(e.currentTarget.value)} value={answer}>
+          <div className="w-full text-left" key={answer}>
+            <button className={`break-normal p-2 m-2 ${currentAnswer.includes(answer) ? 'bg-blue-700' : 'bg-gray-200'}`} onClick={(e) => updateAnswer(e.currentTarget.value)} value={answer}>
               <span className="" dangerouslySetInnerHTML={{ __html: answer }}></span>
             </button>
           </div>
@@ -47,4 +47,4 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, answers, callback
   )
 }
 
-export default QuestionCard
+export default QuestionItem
