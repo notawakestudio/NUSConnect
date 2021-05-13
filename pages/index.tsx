@@ -6,7 +6,7 @@ import NavBar from '../components/common/NavBar'
 
 export default function Home(): JSX.Element {
   return (
-    <body>
+    <>
       <Head>
         <title>Dashboard</title>
         <meta name="description" content="Dashboard" />
@@ -20,6 +20,6 @@ export default function Home(): JSX.Element {
         </Link>
         <Footer />
       </div>
-    </body>
+    </>
   )
 }

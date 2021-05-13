@@ -1,9 +1,30 @@
 const Footer = (): JSX.Element => {
   return (
-    <footer className="my-2 p-2 mx-auto shadow-inner max-w-max font-bold bg-gray-600 text-gray-100">
-      <a href="" target="_blank" rel="noopener noreferrer">
-        Powered by <span className="text-gray-200">NotAwakeStudio</span>
-      </a>
+    <footer className="bg-white dark:bg-gray-800 w-full py-8">
+      <div className="max-w-screen-xl mx-auto px-4">
+        <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-between">
+          <li className="my-2">
+            <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+              FAQ
+            </a>
+          </li>
+          <li className="my-2">
+            <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+              About
+            </a>
+          </li>
+          <li className="my-2">
+            <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+              Github
+            </a>
+          </li>
+          <li className="my-2">
+            <a href="" className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" target="_blank" rel="noopener noreferrer">
+              Powered by NotAwakeStudio
+            </a>
+          </li>
+        </ul>
+      </div>
     </footer>
   )
 }
