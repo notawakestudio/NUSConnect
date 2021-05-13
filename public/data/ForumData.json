@@ -1,0 +1,32 @@
+[
+    {
+        "title": "How to post a quiz",
+        "content":"This is a test message",
+        "date": "12 April 2020",
+        "tags": ["Question", "Tip", "Help"], 
+        "week": "Week 1",
+        "isEdited": false, 
+        "author": "Alan Tan",
+        "upVotes": 10
+    },
+    {
+        "title": "How to post a forum post",
+        "content":"This is a test message",
+        "date": "13 April 2020",
+        "tags": ["Question"], 
+        "week": "Week 1",
+        "isEdited": false, 
+        "author": "Alan Tan",
+        "upVotes": 10
+    },
+    {
+        "title": "How to post a forum post without posting a forum post",
+        "content":"This is a test message",
+        "date": "14 April 2020",
+        "tags": [], 
+        "week": "Week 1",
+        "isEdited": false, 
+        "author": "Alan Tan",
+        "upVotes": 10
+    },
+]
