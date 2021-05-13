@@ -128,3 +128,22 @@ Priorities:
     "author":""
 }
 ```
+
+
+## **Forum**
+
+```javascript
+
+{
+    "id": 
+    "modules": ["CS2030", "CS2030S"], // for cases of variants
+    "type": "MRQ", // MCQ, MRQ
+    "difficulty": "easy", // easy, medium, hard
+    "question": "What are valid format specifiers for the String.format() method?",
+    "correct_answers": ["%f", "%d","%s"], // consider cases of MRQ
+    "incorrect_answers": ["%w","%z","%q"],
+    "author":"",
+    "isDraft":boolean,
+    // consider adding more properties such as tags, isSeries etc
+}
+```

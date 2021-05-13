@@ -1,5 +1,5 @@
 import { shuffleStringArray } from '../common/Util'
-import data from '../../public/data.json'
+import data from '../../public/data/QuizData.json'
 
 export enum Difficulty {
   EASY = 'easy',
@@ -24,6 +24,7 @@ export type Question = {
 export type QuestionState = Question & {
   answers: string[]
 }
+
 export const fetchQuizQuestions = (): QuestionState[] => {
   return data.map((question: Question) => ({
     ...question,
