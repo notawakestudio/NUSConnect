@@ -27,9 +27,9 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, answers, callback
       <p className="bg-gray-200" dangerouslySetInnerHTML={{ __html: question }}></p>
       <div className="bg-green-200 min-h-min flex justify-evenly flex-wrap">
         {answers.map((answer) => (
-          <div key={answer}>
-            <button className={`min-w-max min-h-max p-2 m-2 ${currentAnswer.includes(answer) ? 'bg-green-700' : 'bg-blue-200'}`} onClick={(e) => updateAnswer(e.currentTarget.value)} value={answer}>
-              <span dangerouslySetInnerHTML={{ __html: answer }}></span>
+          <div className="w-1/2" key={answer}>
+            <button className={`break-normal p-2 m-2 ${currentAnswer.includes(answer) ? 'bg-green-700' : 'bg-blue-200'}`} onClick={(e) => updateAnswer(e.currentTarget.value)} value={answer}>
+              <span className="" dangerouslySetInnerHTML={{ __html: answer }}></span>
             </button>
           </div>
         ))}

@@ -1,6 +1,4 @@
 const Answer = () => {
-    return (
-        
-    )
+  return <div>test</div>
 }
 export default Answer

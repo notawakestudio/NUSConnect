@@ -65,6 +65,16 @@ export default function Quiz(): JSX.Element {
     }
   }
 
+  const previousQuestion = (): void => {
+    // move on to the previous question if not the last question
+    const nextQuestion = number - 1
+    if (nextQuestion === 0) {
+      return
+    } else {
+      setNumber(nextQuestion)
+    }
+  }
+
   return (
     <div className="container mx-auto text-center flex flex-col">
       <h1>Quiz</h1>
@@ -87,7 +97,7 @@ export default function Quiz(): JSX.Element {
           callback={checkAnswer}
         />
       )}
-      {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? (
+      {!gameOver && !loading && number !== TOTAL_QUESTIONS - 1 ? (
         <button className="next self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={nextQuestion}>
           Next Question
         </button>
