@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-const QuizListItem = (): JSX.Element => {
+const QuizListItem = ({ quiz }): JSX.Element => {
   return (
-    <Link href="/quiz">
+    <Link href={`/quizzes/${quiz.id}`}>
       <li className="flex flex-row hover:bg-green-500">
         <div className="select-none cursor-pointer flex flex-1 items-center p-4">
           <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
@@ -11,8 +11,8 @@ const QuizListItem = (): JSX.Element => {
             </a>
           </div>
           <div className="flex-1 pl-1 mr-16">
-            <div className="font-medium dark:text-white">Quiz title</div>
-            <div className="text-gray-600 dark:text-gray-200 text-sm">Author</div>
+            <div className="font-medium dark:text-white">{quiz.title}</div>
+            <div className="text-gray-600 dark:text-gray-200 text-sm">{quiz.author}</div>
           </div>
           <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Created date</div>
           <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Number of attempts</div>
