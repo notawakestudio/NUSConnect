@@ -5,29 +5,38 @@ const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
 
   useEffect(() => {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setIsDarkMode(true)
+    } else {
+      setIsDarkMode(false)
+    }
+  }, [])
+  useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
+      localStorage.theme = 'dark'
     } else {
       document.documentElement.classList.remove('dark')
+      localStorage.theme = 'light'
     }
   }, [isDarkMode])
   return (
-    <header className="sticky top-0 z-50 w-full shadow-md bg-white dark:bg-gray-700 items-center h-16 rounded-sm">
+    <header className="sticky top-0 w-full shadow-md bg-white dark:bg-gray-700 items-center h-16 rounded-sm">
       <div className="flex flex-col justify-center h-full px-3 mx-auto flex-center">
         <div className="items-center pl-1 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
           <div className="container left-60 flex w-3/4 h-auto">
-            <div className="flex w-full h-full">
+            <div className="flex w-full h-10">
               <Link href="/">
-                <button className="py-2 px-4  bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
+                <button className="px-4 bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
                   Home
                 </button>
               </Link>
               <Search />
               <button
-                className="py-2 px-4  bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
+                className="py-2 px-4 text-xs flex justify-center items-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center sm:text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
                 onClick={() => setIsDarkMode(!isDarkMode)}
               >
-                Toggle Dark Mode
+                Dark Mode
               </button>
             </div>
           </div>

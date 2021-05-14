@@ -20,12 +20,12 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, callback
     }
   }
   return (
-    <div>
+    <div className="max-w-prose">
       <p className="number">
         Question: {questionNumber} / {totalQuestions}
       </p>
-      <p className="text-center " dangerouslySetInnerHTML={{ __html: question }}></p>
-      <div className="bg-white-200 dark:bg-gray-800 dark:text-white w-prose flex justify-center flex-wrap">
+      <p className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2" dangerouslySetInnerHTML={{ __html: question }}></p>
+      <div className="shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 flex justify-center flex-wrap">
         {answers.map((answer) => (
           <div className="w-full text-left" key={answer}>
             <button className={`break-normal p-2 m-2 ${currentAnswer.includes(answer) ? 'bg-blue-700' : 'bg-gray-200'}`} onClick={(e) => updateAnswer(e.currentTarget.value)} value={answer}>
@@ -35,7 +35,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, callback
         ))}
       </div>
       <button
-        className="self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="self-center invisible bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={() => {
           callback(currentAnswer)
           setCurrentAnswer([])

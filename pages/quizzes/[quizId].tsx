@@ -16,7 +16,6 @@ export type AnswerObject = {
   correct: boolean
   correctAnswers: string[]
 }
-const TOTAL_QUESTIONS = 3
 
 export default function Quiz(): JSX.Element {
   const [loading, setLoading] = useState(false)
@@ -63,7 +62,7 @@ export default function Quiz(): JSX.Element {
   const nextQuestion = (): void => {
     // move on to the next question if not the last question
     const nextQuestion = number + 1
-    if (nextQuestion === TOTAL_QUESTIONS) {
+    if (nextQuestion === questions.length) {
       setGameOver(true)
     } else {
       setNumber(nextQuestion)
@@ -96,7 +95,7 @@ export default function Quiz(): JSX.Element {
         <div className="container mx-auto text-center flex flex-col items-center">
           <h1 className="px-4 py-2 text-base font-bold">Quiz Title</h1>
 
-          {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+          {gameOver || userAnswers.length === questions.length ? (
             <div className="shadow-lg rounded-t-xl bg-blue-500 w-full md:w-64 p-6 dark:bg-gray-800">
               <p className="text-white text-xl">Ready?</p>
               <div className="mt-4">
@@ -123,7 +122,7 @@ export default function Quiz(): JSX.Element {
           {!loading && !gameOver && (
             <QuestionItem
               questionNumber={number + 1}
-              totalQuestions={TOTAL_QUESTIONS}
+              totalQuestions={questions.length}
               question={questions[number].question}
               answers={questions[number].answers}
               userAnswer={userAnswers ? userAnswers[number] : undefined}
@@ -132,7 +131,7 @@ export default function Quiz(): JSX.Element {
           )}
           {!gameOver && !loading ? (
             <>
-              <Pagination numItem={TOTAL_QUESTIONS} onClickChange={changeQuestion} onClickNext={nextQuestion} onClickPrevious={previousQuestion} />
+              <Pagination numItem={questions.length} onClickChange={changeQuestion} onClickNext={nextQuestion} onClickPrevious={previousQuestion} />
             </>
           ) : null}
         </div>
