@@ -1,6 +1,6 @@
 import { shuffleStringArray } from '../common/Util'
 import QuestionBank from '../../public/data/QuestionBank.json'
-import QuizData from '../../public/data/QUizData.json'
+import QuizData from '../../public/data/QuizData.json'
 
 export enum Difficulty {
   EASY = 'easy',

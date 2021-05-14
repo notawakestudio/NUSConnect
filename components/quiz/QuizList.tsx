@@ -1,6 +1,6 @@
 import Search from '../common/Search'
 import QuizListItem from './QuizListItem'
-import QuizData from '../../public/data/QUizData.json'
+import QuizData from '../../public/data/QuizData.json'
 
 const QuizList = (): JSX.Element => {
   return (
