@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Search from './Search'
+import { BsSun, BsMoon } from 'react-icons/bs'
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
 
@@ -33,10 +34,10 @@ const NavBar = (): JSX.Element => {
               </Link>
               <Search />
               <button
-                className="py-2 px-4 text-xs flex justify-center items-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center sm:text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
+                className="py-2 px-4 text-2xl flex justify-center items-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
                 onClick={() => setIsDarkMode(!isDarkMode)}
               >
-                Dark Mode
+                {isDarkMode ? <BsMoon /> : <BsSun />}
               </button>
             </div>
           </div>
