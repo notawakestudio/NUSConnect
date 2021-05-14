@@ -1,5 +1,6 @@
 import Search from '../common/Search'
 import QuizListItem from './QuizListItem'
+import QuizData from '../../public/data/QUizData.json'
 
 const QuizList = (): JSX.Element => {
   return (
@@ -12,11 +13,9 @@ const QuizList = (): JSX.Element => {
         </div>
       </div>
       <ul className="flex flex-col divide divide-y">
-        <QuizListItem />
-        <QuizListItem />
-        <QuizListItem />
-        <QuizListItem />
-        <QuizListItem />
+        {QuizData.map((quiz) => {
+          return <QuizListItem key={quiz.id} quiz={quiz} />
+        })}
       </ul>
     </div>
   )

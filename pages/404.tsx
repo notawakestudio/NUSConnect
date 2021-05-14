@@ -1,4 +1,4 @@
-export default function Custom404() {
+export default function Custom404(): JSX.Element {
   return (
     <section>
       <div className="bg-black text-white">

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnswerObject } from '../../pages/quiz'
+import { AnswerObject } from '../../pages/quizzes/[quizId]'
 
 type QuestionItemProps = {
   question: string

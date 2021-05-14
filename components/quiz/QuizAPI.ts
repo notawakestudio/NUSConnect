@@ -1,5 +1,6 @@
 import { shuffleStringArray } from '../common/Util'
-import data from '../../public/data/QuizData.json'
+import QuestionBank from '../../public/data/QuestionBank.json'
+import QuizData from '../../public/data/QUizData.json'
 
 export enum Difficulty {
   EASY = 'easy',
@@ -25,9 +26,12 @@ export type QuestionState = Question & {
   answers: string[]
 }
 
-export const fetchQuizQuestions = (): QuestionState[] => {
-  return data.map((question: Question) => ({
-    ...question,
-    answers: shuffleStringArray([...question.incorrect_answers, ...question.correct_answers]),
-  }))
+export const fetchQuizQuestions = (quizId: string): QuestionState[] => {
+  const selectedQuiz = QuizData.filter((quiz) => quiz['id'] === quizId)[0]['questions']
+  return QuestionBank.filter((question) => selectedQuiz.includes(question['id'])).map((question: Question) => {
+    return {
+      ...question,
+      answers: shuffleStringArray([...question.incorrect_answers, ...question.correct_answers]),
+    }
+  })
 }
