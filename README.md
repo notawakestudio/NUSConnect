@@ -1,11 +1,12 @@
-# NUS Game (Orbital project for AY20/21)
 
+![poster](https://github.com/notawakestudio/NUSConnect/blob/main/public/NotAwake.png?raw=true)
+# NUS Connect (Orbital project for AY20/21)
 ### Tech Stack
 
 - Nextjs
 - TypeScript
 - Tailwind CSS
-- Jest & React testing library
+- Jest & React testing library & Cypress
 
 ### Resources
 
@@ -20,11 +21,11 @@
 ### Setup Guide
 
 ```
-npx create-next-app nus-game
+yarn install
 yarn dev
 ```
 
-- tailwindcss
+- configure tailwindcss
 
 ```
 yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
