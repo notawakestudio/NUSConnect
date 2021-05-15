@@ -5,7 +5,7 @@ const Hero = (): JSX.Element => {
         <div className="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
           <div className="flex flex-col w-full lg:w-1/3 justify-center items-start p-8">
             <h1 className="text-sm md:text-1xl p-2 text-purple-300 tracking-loose">NotAwakeStudio Presents</h1>
-            <h2 className="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2">NUS Connect : Complete Your Learning Loop Today</h2>
+            <h2 className="font-bold text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2">NUS Connect : Complete Your Learning Loop Today</h2>
             <p className="text-sm md:text-base dark:text-gray-50 mb-4">Let the learning begin!</p>
             <a href="#" className="bg-transparent hover:bg-purple-300 text-purple-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-purple-300 hover:border-transparent">
               Explore Now

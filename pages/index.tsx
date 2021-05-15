@@ -4,18 +4,20 @@ import React from 'react'
 import Footer from '../components/common/Footer'
 import NavBar from '../components/common/NavBar'
 import Hero from '../components/landingPage/Hero'
+import Pricing from '../components/landingPage/Pricing'
+import Team from '../components/landingPage/Team'
 
 export default function Home(): JSX.Element {
   return (
     <>
       <Head>
-        <title>Dashboard</title>
-        <meta name="description" content="Dashboard" />
+        <title>NUS Connect | NotAwakeStudio</title>
+        <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
       <Hero />
-      <div className="container mx-auto pt-2 text-center">
+      <div className="container mx-auto pt-2 text-center  ">
         <div className="container flex flex-col mx-auto w-full items-center justify-center">
           <ul className="flex flex-col">
             <Link href="/quiz">
@@ -46,8 +48,11 @@ export default function Home(): JSX.Element {
             </Link>
           </ul>
         </div>
-        <Footer />
+        <Pricing />
+        <h2 className="text-center font-bold text-2xl pb-2">Our Team</h2>
+        <Team />
       </div>
+      <Footer />
     </>
   )
 }
