@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import Footer from '../components/common/Footer'
 import NavBar from '../components/common/NavBar'
+import Hero from '../components/landingPage/Hero'
 
 export default function Home(): JSX.Element {
   return (
@@ -13,9 +14,8 @@ export default function Home(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
+      <Hero />
       <div className="container mx-auto pt-2 text-center">
-        <h1>Dashboard</h1>
-
         <div className="container flex flex-col mx-auto w-full items-center justify-center">
           <ul className="flex flex-col">
             <Link href="/quiz">

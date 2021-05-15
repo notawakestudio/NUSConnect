@@ -20,7 +20,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, callback
     }
   }
   return (
-    <div className="max-w-prose">
+    <div className="font-fira max-w-prose">
       <p className="number">
         Question: {questionNumber} / {totalQuestions}
       </p>
