@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
+import { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 import QuestionItem from '../../components/quiz/QuestionItem'
-import { fetchQuizQuestions } from '../../components/quiz/QuizAPI'
+import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
 import { QuestionState } from '../../components/quiz/QuizAPI'
 import { hasSameContent } from '../../components/common/Util'
 import NavBar from '../../components/common/NavBar'
@@ -16,9 +17,24 @@ export type AnswerObject = {
   correct: boolean
   correctAnswers: string[]
 }
-const TOTAL_QUESTIONS = 3
 
-export default function Quiz(): JSX.Element {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = getAllQuizId()
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const quizTitle = fetchQuizTitle(params.quizId as string)
+  return {
+    props: {
+      quizTitle,
+    },
+  }
+}
+export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionState[]>([])
   const [number, setNumber] = useState(0)
@@ -63,7 +79,7 @@ export default function Quiz(): JSX.Element {
   const nextQuestion = (): void => {
     // move on to the next question if not the last question
     const nextQuestion = number + 1
-    if (nextQuestion === TOTAL_QUESTIONS) {
+    if (nextQuestion === questions.length) {
       setGameOver(true)
     } else {
       setNumber(nextQuestion)
@@ -89,14 +105,13 @@ export default function Quiz(): JSX.Element {
       <NavBar />
       <div className="container mx-auto pt-2 text-center">
         <Head>
-          <title>View Selected Quiz</title>
+          <title>View Selected Quiz | NUS Connect</title>
           <meta name="description" content="View Selected Quiz" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="container mx-auto text-center flex flex-col items-center">
-          <h1 className="px-4 py-2 text-base font-bold">Quiz Title</h1>
-
-          {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+          <h1 className="px-4 py-2 text-base font-bold">{quizTitle}</h1>
+          {gameOver || userAnswers.length === questions.length ? (
             <div className="shadow-lg rounded-t-xl bg-blue-500 w-full md:w-64 p-6 dark:bg-gray-800">
               <p className="text-white text-xl">Ready?</p>
               <div className="mt-4">
@@ -123,16 +138,17 @@ export default function Quiz(): JSX.Element {
           {!loading && !gameOver && (
             <QuestionItem
               questionNumber={number + 1}
-              totalQuestions={TOTAL_QUESTIONS}
+              totalQuestions={questions.length}
               question={questions[number].question}
               answers={questions[number].answers}
+              type={questions[number].type}
               userAnswer={userAnswers ? userAnswers[number] : undefined}
               callback={checkAnswer}
             />
           )}
           {!gameOver && !loading ? (
             <>
-              <Pagination numItem={TOTAL_QUESTIONS} onClickChange={changeQuestion} onClickNext={nextQuestion} onClickPrevious={previousQuestion} />
+              <Pagination numItem={questions.length} onClickChange={changeQuestion} onClickNext={nextQuestion} onClickPrevious={previousQuestion} />
             </>
           ) : null}
         </div>
