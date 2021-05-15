@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 import QuestionItem from '../../components/quiz/QuestionItem'
-import { fetchQuizQuestions, fetchQuizTitle, getAllQuizPaths } from '../../components/quiz/QuizAPI'
+import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
 import { QuestionState } from '../../components/quiz/QuizAPI'
 import { hasSameContent } from '../../components/common/Util'
 import NavBar from '../../components/common/NavBar'
@@ -19,7 +19,7 @@ export type AnswerObject = {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = getAllQuizPaths()
+  const paths = getAllQuizId()
   return {
     paths,
     fallback: false,
@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   }
 }
-export default function Quiz({ quizTitle }): JSX.Element {
+export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionState[]>([])
   const [number, setNumber] = useState(0)
@@ -141,6 +141,7 @@ export default function Quiz({ quizTitle }): JSX.Element {
               totalQuestions={questions.length}
               question={questions[number].question}
               answers={questions[number].answers}
+              type={questions[number].type}
               userAnswer={userAnswers ? userAnswers[number] : undefined}
               callback={checkAnswer}
             />
