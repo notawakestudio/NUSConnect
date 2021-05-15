@@ -1,6 +1,10 @@
 import Head from 'next/head'
+import Footer from '../components/common/Footer'
 import NavBar from '../components/common/NavBar'
+import SideBarA from '../components/common/SideBarA'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
+import { GiSwordman } from 'react-icons/gi'
+import { GrSemantics } from 'react-icons/gr'
 
 export default function DashBoard(): JSX.Element {
   const schedule = fetchModuleData('xft5nj9NXr_RXl3LEyt2g')
@@ -14,46 +18,7 @@ export default function DashBoard(): JSX.Element {
       <NavBar />
       <main className="bg-gray-100 dark:bg-gray-800 relative h-screen overflow-hidden">
         <div className="flex items-start justify-between">
-          <div className="h-screen hidden lg:block shadow-lg relative w-80">
-            <div className="bg-white dark:bg-gray-700">
-              <nav className="mt-6">
-                <div>
-                  <a className="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start border-l-4 border-purple-500" href="#">
-                    <span className="text-left">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1472 992v480q0 26-19 45t-45 19h-384v-384h-256v384h-384q-26 0-45-19t-19-45v-480q0-1 .5-3t.5-3l575-474 575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7l-692-577-692 577q-12 8-24 7-13-2-21-11l-62-74q-8-10-7-23.5t11-21.5l719-599q32-26 76-26t76 26l244 204v-195q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z"></path>
-                      </svg>
-                    </span>
-                    <span className="mx-2 text-sm font-normal">Home</span>
-                  </a>
-                  <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent" href="#">
-                    <span className="text-left">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1070 1178l306-564h-654l-306 564h654zm722-282q0 182-71 348t-191 286-286 191-348 71-348-71-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z"></path>
-                      </svg>
-                    </span>
-                    <span className="mx-2 text-sm font-normal">Setting</span>
-                  </a>
-                  <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent" href="#">
-                    <span className="text-left">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z"></path>
-                      </svg>
-                    </span>
-                    <span className="mx-2 text-sm font-normal">Resources</span>
-                  </a>
-                  <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent" href="#">
-                    <span className="text-left">
-                      <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M580 461q0-41-25-66t-66-25q-43 0-76 25.5t-33 65.5q0 39 33 64.5t76 25.5q41 0 66-24.5t25-65.5zm743 507q0-28-25.5-50t-65.5-22q-27 0-49.5 22.5t-22.5 49.5q0 28 22.5 50.5t49.5 22.5q40 0 65.5-22t25.5-51zm-236-507q0-41-24.5-66t-65.5-25q-43 0-76 25.5t-33 65.5q0 39 33 64.5t76 25.5q41 0 65.5-24.5t24.5-65.5zm635 507q0-28-26-50t-65-22q-27 0-49.5 22.5t-22.5 49.5q0 28 22.5 50.5t49.5 22.5q39 0 65-22t26-51zm-266-397q-31-4-70-4-169 0-311 77t-223.5 208.5-81.5 287.5q0 78 23 152-35 3-68 3-26 0-50-1.5t-55-6.5-44.5-7-54.5-10.5-50-10.5l-253 127 72-218q-290-203-290-490 0-169 97.5-311t264-223.5 363.5-81.5q176 0 332.5 66t262 182.5 136.5 260.5zm592 561q0 117-68.5 223.5t-185.5 193.5l55 181-199-109q-150 37-218 37-169 0-311-70.5t-223.5-191.5-81.5-264 81.5-264 223.5-191.5 311-70.5q161 0 303 70.5t227.5 192 85.5 263.5z"></path>
-                      </svg>
-                    </span>
-                    <span className="mx-2 text-sm font-normal">Feedback</span>
-                  </a>
-                </div>
-              </nav>
-            </div>
-          </div>
+          <SideBarA />
           <div className="flex flex-col w-full md:space-y-4">
             <header className="w-full h-16 z-40 flex items-center justify-between">
               <div className="block lg:hidden ml-6">
@@ -73,8 +38,8 @@ export default function DashBoard(): JSX.Element {
                 </div>
               </div>
             </header>
-            <div className="overflow-auto h-screen pb-24 px-4 md:px-6">
-              <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">Good afternoon, Xiao Ming</h1>
+            <div className="px-4 md:px-6">
+              <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">Good afternoon</h1>
               <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
                 <div className="w-full md:w-6/12">
                   <div className="shadow-lg w-full bg-white dark:bg-gray-700 relative overflow-hidden">
@@ -82,22 +47,13 @@ export default function DashBoard(): JSX.Element {
                       <div className="flex items-center justify-between px-4 py-6 space-x-4">
                         <div className="flex items-center">
                           <span className="rounded-full relative p-5 bg-yellow-100">
-                            <svg
-                              width="40"
-                              fill="currentColor"
-                              height="40"
-                              className="text-yellow-500 h-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                              viewBox="0 0 1792 1792"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M1362 1185q0 153-99.5 263.5t-258.5 136.5v175q0 14-9 23t-23 9h-135q-13 0-22.5-9.5t-9.5-22.5v-175q-66-9-127.5-31t-101.5-44.5-74-48-46.5-37.5-17.5-18q-17-21-2-41l103-135q7-10 23-12 15-2 24 9l2 2q113 99 243 125 37 8 74 8 81 0 142.5-43t61.5-122q0-28-15-53t-33.5-42-58.5-37.5-66-32-80-32.5q-39-16-61.5-25t-61.5-26.5-62.5-31-56.5-35.5-53.5-42.5-43.5-49-35.5-58-21-66.5-8.5-78q0-138 98-242t255-134v-180q0-13 9.5-22.5t22.5-9.5h135q14 0 23 9t9 23v176q57 6 110.5 23t87 33.5 63.5 37.5 39 29 15 14q17 18 5 38l-81 146q-8 15-23 16-14 3-27-7-3-3-14.5-12t-39-26.5-58.5-32-74.5-26-85.5-11.5q-95 0-155 43t-60 111q0 26 8.5 48t29.5 41.5 39.5 33 56 31 60.5 27 70 27.5q53 20 81 31.5t76 35 75.5 42.5 62 50 53 63.5 31.5 76.5 13 94z"></path>
-                            </svg>
+                            <GiSwordman size={20} />
                           </span>
                           <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">Level 2</p>
                         </div>
                         <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
                           100
-                          <span className="text-xs text-gray-400">/Experience Points</span>
+                          <span className="text-xs text-gray-400"> EXP</span>
                         </div>
                       </div>
                       <div className="w-full h-3 bg-gray-100">
@@ -118,16 +74,7 @@ export default function DashBoard(): JSX.Element {
                       <p className="text-2xl text-black dark:text-white font-bold">1st</p>
                       <p className="text-gray-400 text-sm">Rank</p>
                       <span className="rounded-full absolute p-4 bg-purple-500 top-2 right-4">
-                        <svg
-                          width="40"
-                          fill="currentColor"
-                          height="40"
-                          className="text-white h-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                          viewBox="0 0 1792 1792"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M1362 1185q0 153-99.5 263.5t-258.5 136.5v175q0 14-9 23t-23 9h-135q-13 0-22.5-9.5t-9.5-22.5v-175q-66-9-127.5-31t-101.5-44.5-74-48-46.5-37.5-17.5-18q-17-21-2-41l103-135q7-10 23-12 15-2 24 9l2 2q113 99 243 125 37 8 74 8 81 0 142.5-43t61.5-122q0-28-15-53t-33.5-42-58.5-37.5-66-32-80-32.5q-39-16-61.5-25t-61.5-26.5-62.5-31-56.5-35.5-53.5-42.5-43.5-49-35.5-58-21-66.5-8.5-78q0-138 98-242t255-134v-180q0-13 9.5-22.5t22.5-9.5h135q14 0 23 9t9 23v176q57 6 110.5 23t87 33.5 63.5 37.5 39 29 15 14q17 18 5 38l-81 146q-8 15-23 16-14 3-27-7-3-3-14.5-12t-39-26.5-58.5-32-74.5-26-85.5-11.5q-95 0-155 43t-60 111q0 26 8.5 48t29.5 41.5 39.5 33 56 31 60.5 27 70 27.5q53 20 81 31.5t76 35 75.5 42.5 62 50 53 63.5 31.5 76.5 13 94z"></path>
-                        </svg>
+                        <GrSemantics />
                       </span>
                     </div>
                   </div>
@@ -145,14 +92,14 @@ export default function DashBoard(): JSX.Element {
                 </button>
                 <span className="text-sm text-gray-400">Jump to a different week</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-4">
                 {schedule.map((weekly) => {
                   return (
                     <div className="w-full" key={weekly['id']}>
                       <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                         <p className="text-sm w-max text-gray-700 dark:text-white font-semibold border-b border-gray-200">Week {weekly['week']}</p>
                         <div className="flex items-end space-x-2 my-6">
-                          <p className="text-5xl text-black dark:text-white font-bold">Annoucement: </p>
+                          <p className="text-3xl text-black dark:text-white font-semibold">Annoucement: </p>
                           <span className="text-green-500 text-xl font-bold flex items-center">22</span>
                         </div>
                         <div className="dark:text-white">
@@ -182,6 +129,7 @@ export default function DashBoard(): JSX.Element {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   )
 }
