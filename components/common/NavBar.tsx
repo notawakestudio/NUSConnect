@@ -43,7 +43,7 @@ const NavBar = (): JSX.Element => {
           </div>
           <div className="p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">
             <a href="#" className="block ">
-              <img alt="profil" src="https://timesofindia.indiatimes.com/photo/67586673.cms" className="mx-auto object-cover rounded-full h-10 w-10 " />
+              <img alt="profile" src="https://timesofindia.indiatimes.com/photo/67586673.cms" className="mx-auto object-cover rounded-full h-10 w-10 " />
             </a>
           </div>
         </div>

@@ -35,3 +35,7 @@ export const fetchQuizQuestions = (quizId: string): QuestionState[] => {
     }
   })
 }
+
+export const fetchQuizTitle = (quizId: string): string => {
+  return QuizData.filter((quiz) => quiz['id'] === quizId)[0]['title']
+}

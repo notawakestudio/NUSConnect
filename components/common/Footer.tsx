@@ -14,12 +14,27 @@ const Footer = (): JSX.Element => {
             </a>
           </li>
           <li className="m-2">
-            <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+            <a
+              target="_blank"
+              className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              href="https://github.com/notawakestudio/NUSConnect"
+              rel="noreferrer"
+            >
               Github
             </a>
           </li>
           <li className="m-2">
-            <a href="" className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" target="_blank" rel="noopener noreferrer">
+            <a
+              target="_blank"
+              className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              href="https://notawakestudio.github.io/NUSConnect/"
+              rel="noreferrer"
+            >
+              Documentation
+            </a>
+          </li>
+          <li className="m-2">
+            <a href="#" className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" target="_blank" rel="noopener noreferrer">
               Powered by NotAwakeStudio
             </a>
           </li>

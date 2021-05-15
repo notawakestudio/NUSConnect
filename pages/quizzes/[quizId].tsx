@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import QuestionItem from '../../components/quiz/QuestionItem'
-import { fetchQuizQuestions } from '../../components/quiz/QuizAPI'
+import { fetchQuizQuestions, fetchQuizTitle } from '../../components/quiz/QuizAPI'
 import { QuestionState } from '../../components/quiz/QuizAPI'
 import { hasSameContent } from '../../components/common/Util'
 import NavBar from '../../components/common/NavBar'
@@ -93,7 +93,7 @@ export default function Quiz(): JSX.Element {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="container mx-auto text-center flex flex-col items-center">
-          <h1 className="px-4 py-2 text-base font-bold">Quiz Title</h1>
+          <h1 className="px-4 py-2 text-base font-bold">{fetchQuizTitle(quizId)}</h1>
 
           {gameOver || userAnswers.length === questions.length ? (
             <div className="shadow-lg rounded-t-xl bg-blue-500 w-full md:w-64 p-6 dark:bg-gray-800">

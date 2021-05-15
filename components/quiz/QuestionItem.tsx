@@ -27,7 +27,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, callback
       <p className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2" dangerouslySetInnerHTML={{ __html: question }}></p>
       <div className="shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 flex justify-center flex-wrap">
         {answers.map((answer) => (
-          <div className="w-full text-left" key={answer}>
+          <div className="w-full border-b text-left" key={answer}>
             <button className={`break-normal p-2 m-2 ${currentAnswer.includes(answer) ? 'bg-blue-700' : 'bg-gray-200'}`} onClick={(e) => updateAnswer(e.currentTarget.value)} value={answer}>
               <span className="" dangerouslySetInnerHTML={{ __html: answer }}></span>
             </button>
