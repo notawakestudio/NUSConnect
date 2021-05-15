@@ -26,6 +26,8 @@ export default function Quiz(): JSX.Element {
   const [gameOver, setGameOver] = useState(true)
   const router = useRouter()
   const { quizId } = router.query
+  const quizTitle = 'CS2030'
+  //fetchQuizTitle(quizId as string)
   const startQuiz = (): void => {
     setLoading(true)
     setGameOver(false)
@@ -93,8 +95,7 @@ export default function Quiz(): JSX.Element {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="container mx-auto text-center flex flex-col items-center">
-          <h1 className="px-4 py-2 text-base font-bold">{fetchQuizTitle(quizId)}</h1>
-
+          <h1 className="px-4 py-2 text-base font-bold">{quizTitle}</h1>
           {gameOver || userAnswers.length === questions.length ? (
             <div className="shadow-lg rounded-t-xl bg-blue-500 w-full md:w-64 p-6 dark:bg-gray-800">
               <p className="text-white text-xl">Ready?</p>

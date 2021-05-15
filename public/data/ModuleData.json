@@ -1,0 +1,43 @@
+[{    
+    "id":"xft5nj9NXr_RXl3LEyt2g",
+    "title":"CS2030",
+    "schedule": [
+        {
+            "id":"rOS6Pt4tnuaSYrbZ2hpQF",
+            "week":"1",
+            "tasks":[
+                {
+                    "id":"MpGV4bzRpbNj683Pt-ful",
+                    "description":"Do lab exercise 1"
+                },
+                {
+                    "id":"H4xpTq9xv2su0gSgmb-zM",
+                    "description":"Watch Lecture 1"
+                },
+                {
+                    "id":"_IjmtkyP9lJedgxjm4HRe",
+                    "description":"Do quiz 1"
+                }
+            ]
+        },
+        {
+            "id":"DC1sUrAHk8_8wI_aKXsk6",
+            "week":"2",
+            "tasks":[
+                {
+                    "id":"M4xxA3AKD698Lu0DLsJha",
+                    "description":"Do lab exercise 2"
+                },
+                {
+                    "id":"j7w1d1jtZi8RaMmyyzAhS",
+                    "description":"Watch Lecture 2"
+                },
+                {
+                    "id":"JQwImlrOoUjAtVr1dVhKj",
+                    "description":"Do quiz 2"
+                }
+            ]
+        }
+    ]
+    
+}]
