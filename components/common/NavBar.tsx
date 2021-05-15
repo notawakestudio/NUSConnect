@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Search from './Search'
 import { BsSun, BsMoon } from 'react-icons/bs'
+import QuickLink from './QuickLink'
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
 
@@ -22,7 +23,7 @@ const NavBar = (): JSX.Element => {
     }
   }, [isDarkMode])
   return (
-    <header className="sticky top-0 w-full shadow-md bg-white dark:bg-black items-center h-16 rounded-sm">
+    <header className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black items-center h-16 rounded-sm">
       <div className="flex flex-col justify-center h-full px-3 mx-auto flex-center">
         <div className="items-center pl-1 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
           <div className="container left-60 flex w-3/4 h-auto">
@@ -33,6 +34,7 @@ const NavBar = (): JSX.Element => {
                 </button>
               </Link>
               <Search />
+              <QuickLink />
               <button
                 className="py-2 px-4 text-2xl flex justify-center items-center  hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-yellow-300 transition ease-in duration-200 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
                 onClick={() => setIsDarkMode(!isDarkMode)}

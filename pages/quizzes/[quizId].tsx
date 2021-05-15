@@ -88,7 +88,7 @@ export default function Quiz(): JSX.Element {
       <NavBar />
       <div className="container mx-auto pt-2 text-center">
         <Head>
-          <title>View Selected Quiz</title>
+          <title>View Selected Quiz | NUS Connect</title>
           <meta name="description" content="View Selected Quiz" />
           <link rel="icon" href="/favicon.ico" />
         </Head>

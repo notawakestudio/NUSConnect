@@ -1,6 +1,13 @@
+import Head from 'next/head'
+
 export default function Custom404(): JSX.Element {
   return (
     <section>
+      <Head>
+        <title>404 Not Found | NUS Connect</title>
+        <meta name="description" content="404 Not Found" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="bg-black text-white">
         <div className="flex h-screen">
           <div className="m-auto text-center">
