@@ -1,6 +1,7 @@
 import { shuffleStringArray } from '../common/Util'
 import QuestionBank from '../../public/data/QuestionBank.json'
 import QuizData from '../../public/data/QuizData.json'
+import Quiz from '../../pages/quiz'
 
 export enum Difficulty {
   EASY = 'easy',
@@ -38,4 +39,14 @@ export const fetchQuizQuestions = (quizId: string): QuestionState[] => {
 
 export const fetchQuizTitle = (quizId: string): string => {
   return QuizData.filter((quiz) => quiz['id'] === quizId)[0]['title']
+}
+
+export function getAllQuizPaths() {
+  return QuizData.map((quiz) => {
+    return {
+      params: {
+        quizId: quiz['id'],
+      },
+    }
+  })
 }

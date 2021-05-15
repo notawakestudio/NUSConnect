@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
+import { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 import QuestionItem from '../../components/quiz/QuestionItem'
-import { fetchQuizQuestions, fetchQuizTitle } from '../../components/quiz/QuizAPI'
+import { fetchQuizQuestions, fetchQuizTitle, getAllQuizPaths } from '../../components/quiz/QuizAPI'
 import { QuestionState } from '../../components/quiz/QuizAPI'
 import { hasSameContent } from '../../components/common/Util'
 import NavBar from '../../components/common/NavBar'
@@ -17,7 +18,23 @@ export type AnswerObject = {
   correctAnswers: string[]
 }
 
-export default function Quiz(): JSX.Element {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = getAllQuizPaths()
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const quizTitle = fetchQuizTitle(params.quizId as string)
+  return {
+    props: {
+      quizTitle,
+    },
+  }
+}
+export default function Quiz({ quizTitle }): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionState[]>([])
   const [number, setNumber] = useState(0)
@@ -26,8 +43,6 @@ export default function Quiz(): JSX.Element {
   const [gameOver, setGameOver] = useState(true)
   const router = useRouter()
   const { quizId } = router.query
-  const quizTitle = 'CS2030'
-  //fetchQuizTitle(quizId as string)
   const startQuiz = (): void => {
     setLoading(true)
     setGameOver(false)
