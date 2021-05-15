@@ -5,19 +5,35 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 import QuestionItem from '../../components/quiz/QuestionItem'
 import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
-import { QuestionState } from '../../components/quiz/QuizAPI'
+import { QuestionWithAnswersMixed } from '../../components/quiz/QuizAPI'
 import { hasSameContent } from '../../components/common/Util'
 import NavBar from '../../components/common/NavBar'
 import Footer from '../../components/common/Footer'
 import Pagination from '../../components/common/Pagination'
 
-export type AnswerObject = {
+class AnswerObject {
   question: string
+  qnNumOneBased: number
   answer: string[]
-  correct: boolean
+  isCorrect: boolean
   correctAnswers: string[]
-}
+  constructor(question, qnNumOneBased, correctAnswers) {
+    this.qnNumOneBased = qnNumOneBased
+    this.question = question
+    this.answer = []
+    this.isCorrect = false
+    this.correctAnswers = correctAnswers
+  }
 
+  updateAnswer(answer: string[]): AnswerObject {
+    this.answer = answer
+    return this
+  }
+  updateCorrect(isCorrect: boolean): AnswerObject {
+    this.isCorrect = isCorrect
+    return this
+  }
+}
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = getAllQuizId()
   return {
@@ -34,10 +50,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   }
 }
+
 export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element {
   const [loading, setLoading] = useState(false)
-  const [questions, setQuestions] = useState<QuestionState[]>([])
-  const [number, setNumber] = useState(0)
+  const [questions, setQuestions] = useState<QuestionWithAnswersMixed[]>([])
+  const [currQnNumOneBased, setCurrQnNumOneBased] = useState(1)
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(true)
@@ -46,58 +63,66 @@ export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element 
   const startQuiz = (): void => {
     setLoading(true)
     setGameOver(false)
-
-    const newQuestions = fetchQuizQuestions(quizId as string)
-    setQuestions(newQuestions)
+    const questions = fetchQuizQuestions(quizId as string)
+    setUserAnswers(
+      Array(questions.length)
+        .fill(0)
+        .map((_, index) => {
+          return new AnswerObject(questions[index].question, index + 1, questions[index].correct_answers)
+        })
+    )
+    setQuestions(questions)
     setScore(0)
-    setUserAnswers([])
-    setNumber(0)
+    setCurrQnNumOneBased(1)
     setLoading(false)
   }
-  const checkAnswer = (currentAnswer): void => {
-    console.log(currentAnswer)
-    if (!gameOver) {
-      // Users answer
-      const answer = currentAnswer
-      // check answer against correct answer
-      const correct = hasSameContent(currentAnswer, questions[number].correct_answers)
-      // add score if answer is correct
-      if (correct) {
-        setScore((prev) => prev + 1)
-      }
-      console.log(correct)
-      // save answer in the array for use answers
-      const answerObject = {
-        question: questions[number].question,
-        answer,
-        correct,
-        correctAnswers: questions[number].correct_answers,
-      }
-      setUserAnswers((prev) => [...prev, answerObject])
-    }
+
+  const updateTotalScore = (): void => {
+    setScore(
+      userAnswers.reduce((memo, answerObject) => {
+        return memo + (answerObject.isCorrect ? 1 : 0)
+      }, 0)
+    )
   }
+  const saveProgress = (currentAnswer: string[]): void => {
+    const isCorrect = hasSameContent(currentAnswer, questions[currQnNumOneBased - 1].correct_answers)
+    setUserAnswers((prev) => {
+      return prev.map((answerObject) => {
+        if (answerObject.qnNumOneBased !== currQnNumOneBased) {
+          return answerObject
+        } else {
+          return answerObject.updateAnswer(currentAnswer).updateCorrect(isCorrect)
+        }
+      })
+    })
+  }
+  // useEffect(() => {
+  // debug
+  //   console.log(userAnswers)
+  // })
+
   const nextQuestion = (): void => {
     // move on to the next question if not the last question
-    const nextQuestion = number + 1
-    if (nextQuestion === questions.length) {
+    const nextQuestion = currQnNumOneBased + 1
+    if (nextQuestion > questions.length) {
       setGameOver(true)
     } else {
-      setNumber(nextQuestion)
+      setCurrQnNumOneBased(nextQuestion)
     }
   }
 
   const previousQuestion = (): void => {
     // move on to the previous question if not the last question
-    const previousQuestion = number - 1
-    if (previousQuestion === -1) {
+    const previousQuestion = currQnNumOneBased - 1
+    if (previousQuestion === 0) {
       console.log('Cant')
       return
     } else {
-      setNumber(previousQuestion)
+      setCurrQnNumOneBased(previousQuestion)
     }
   }
   const changeQuestion = (selectedQuestion: number): void => {
-    setNumber(selectedQuestion - 1)
+    setCurrQnNumOneBased(selectedQuestion)
   }
 
   return (
@@ -105,13 +130,13 @@ export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element 
       <NavBar />
       <div className="container mx-auto pt-2 text-center">
         <Head>
-          <title>View Selected Quiz | NUS Connect</title>
-          <meta name="description" content="View Selected Quiz" />
+          <title>Attempt Quiz | NUS Connect</title>
+          <meta name="description" content="Attempt Quiz" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="container mx-auto text-center flex flex-col items-center">
           <h1 className="px-4 py-2 text-base font-bold">{quizTitle}</h1>
-          {gameOver || userAnswers.length === questions.length ? (
+          {gameOver ? (
             <div className="shadow-lg rounded-t-xl bg-blue-500 w-full md:w-64 p-6 dark:bg-gray-800">
               <p className="text-white text-xl">Ready?</p>
               <div className="mt-4">
@@ -133,24 +158,25 @@ export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element 
             </div>
           ) : null}
 
-          {!gameOver ? <p className="score">Score: {score}</p> : null}
+          {!gameOver ? (
+            <p className="score">
+              Score: {score} / {questions.length}
+            </p>
+          ) : null}
           {loading && <p>Loading Questions ...</p>}
           {!loading && !gameOver && (
             <QuestionItem
-              questionNumber={number + 1}
+              questionNumber={currQnNumOneBased}
               totalQuestions={questions.length}
-              question={questions[number].question}
-              answers={questions[number].answers}
-              type={questions[number].type}
-              userAnswer={userAnswers ? userAnswers[number] : undefined}
-              callback={checkAnswer}
+              question={questions[currQnNumOneBased - 1].question}
+              answers={questions[currQnNumOneBased - 1].answers}
+              type={questions[currQnNumOneBased - 1].type}
+              userAnswer={userAnswers[currQnNumOneBased - 1].answer}
+              updateTotalScore={updateTotalScore}
+              saveProgress={saveProgress}
             />
           )}
-          {!gameOver && !loading ? (
-            <>
-              <Pagination numItem={questions.length} onClickChange={changeQuestion} onClickNext={nextQuestion} onClickPrevious={previousQuestion} />
-            </>
-          ) : null}
+          {!gameOver && !loading ? <Pagination numItem={questions.length} onClickChange={changeQuestion} onClickNext={nextQuestion} onClickPrevious={previousQuestion} /> : null}
         </div>
       </div>
       <Footer />

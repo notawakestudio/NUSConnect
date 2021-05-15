@@ -23,11 +23,11 @@ export type Question = {
   type: string
 }
 
-export type QuestionState = Question & {
+export type QuestionWithAnswersMixed = Question & {
   answers: string[]
 }
 
-export const fetchQuizQuestions = (quizId: string): QuestionState[] => {
+export const fetchQuizQuestions = (quizId: string): QuestionWithAnswersMixed[] => {
   const selectedQuiz = QuizData.filter((quiz) => quiz['id'] === quizId)[0]['questions']
   return QuestionBank.filter((question) => selectedQuiz.includes(question['id'])).map((question: Question) => {
     return {
