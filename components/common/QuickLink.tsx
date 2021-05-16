@@ -1,17 +1,18 @@
 import { useState } from 'react'
+import { BsBookmarks } from 'react-icons/bs'
 
 const QuickLink = (): JSX.Element => {
   const [collapse, setCollapse] = useState<boolean>(true)
   return (
-    <div className="relative text-left mx-1">
+    <div className="relative mx-1">
       <div>
         <button
           type="button"
-          className="px-2 py-2 w-24 bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+          className="px-2 mr-1 flex justify-center items-center py-2 h-10 w-10 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
           id="options-menu"
           onClick={() => setCollapse(!collapse)}
         >
-          Quick Link
+          <BsBookmarks />
         </button>
       </div>
       <div className={`origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${collapse ? 'invisible' : ''}`}>

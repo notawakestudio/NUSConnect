@@ -14,10 +14,9 @@ const QuizListItem = ({ quiz }): JSX.Element => {
             <div className="font-medium dark:text-white">{quiz.title}</div>
             <div className="text-gray-600 dark:text-gray-200 text-sm">{quiz.author}</div>
           </div>
-          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Created date</div>
-          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Number of attempts</div>
-          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Rating</div>
-          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Tags</div>
+          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Created on: {quiz.created}</div>
+          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Number of attempts: {quiz.attempt}</div>
+          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Upvote: {quiz.upvote}</div>
           <button className="w-24 text-right flex justify-end">
             <svg
               width="20"
