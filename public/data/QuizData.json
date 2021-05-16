@@ -1,26 +1,20 @@
 [
     {
-        "id":"D0YlLZVQFm21OvnDH-9yX",
+        "id":"TxRDDtSEpnpodO0d-3ygJ",
         "title":"CS2030 Quiz 1",
         "author":"Yongliang",
-        "questions": ["hB3qZ_f_CI0EsD_WRsRX8"]
-    },
-    {
-        "id":"TxRDDtSEpnpodO0d-3ygJ",
-        "title":"CS2030 Quiz 2",
-        "author":"Yongliang",
-        "questions": ["hB3qZ_f_CI0EsD_WRsRX8", "CxcBhgLQeq_ez8MxeDe0p"]
+        "questions": ["gf669ye6dy4ltJSkKb_tZ", "SUdbM9KBpsbywHQvxpFir","YQdkspzjHcwTL3txI2Bc8"]
     },
     {
         "id":"DnFFpNWyXk0gIwMlxP4Z2",
-        "title":"CS2030 Quiz 3",
+        "title":"CS2030 Quiz 2",
         "author":"Yongliang",
         "questions": ["hB3qZ_f_CI0EsD_WRsRX8", "CxcBhgLQeq_ez8MxeDe0p","dgC_OXQwPq5MG_VwMQLLz"]
     },
     {
         "id":"2MCYftI-pKIeQ3fOuOpOw",
-        "title":"CS2030 Quiz 4",
+        "title":"CS2030 Combined Quiz",
         "author":"Yongliang",
-        "questions": ["hB3qZ_f_CI0EsD_WRsRX8", "CxcBhgLQeq_ez8MxeDe0p","dgC_OXQwPq5MG_VwMQLLz"]
+        "questions": ["gf669ye6dy4ltJSkKb_tZ", "SUdbM9KBpsbywHQvxpFir","YQdkspzjHcwTL3txI2Bc8","hB3qZ_f_CI0EsD_WRsRX8", "CxcBhgLQeq_ez8MxeDe0p","dgC_OXQwPq5MG_VwMQLLz"]
     }
 ]
