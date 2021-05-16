@@ -9,3 +9,12 @@ export const hasSameContent = (arrayA: string[], arrayB: string[]): boolean => {
     return arrayA.filter((x) => arrayB.includes(x)).length === arrayA.length
   }
 }
+
+export const getReadableDate = (): string => {
+  const date = new Date().toLocaleString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+  return date
+}

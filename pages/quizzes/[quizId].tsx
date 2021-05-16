@@ -105,7 +105,9 @@ export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element 
     // move on to the next question if not the last question
     const nextQuestion = currQnNumOneBased + 1
     if (nextQuestion > questions.length) {
-      setGameOver(true)
+      // setGameOver(true)
+      console.log('Cant')
+      return
     } else {
       setCurrQnNumOneBased(nextQuestion)
     }

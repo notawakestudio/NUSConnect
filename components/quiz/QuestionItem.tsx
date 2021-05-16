@@ -1,5 +1,5 @@
 import Answer from './Answer'
-
+import { useRouter } from 'next/router'
 type QuestionItemProps = {
   question: string
   answers: string[]
@@ -23,6 +23,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, updateTo
       }
     }
   }
+  const router = useRouter()
 
   return (
     <div className="font-fira max-w-prose">
@@ -36,12 +37,36 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, updateTo
         ))}
       </div>
       <button
-        className="self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={() => {
           updateTotalScore()
         }}
       >
-        Confirm & Check Answer
+        Check
+      </button>
+      <button
+        className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => {
+          updateTotalScore()
+        }}
+      >
+        Save
+      </button>
+      <button
+        className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => {
+          updateTotalScore()
+        }}
+      >
+        Submit
+      </button>
+      <button
+        className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => {
+          router.push('/quiz')
+        }}
+      >
+        Back to Quiz List
       </button>
     </div>
   )
