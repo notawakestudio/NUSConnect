@@ -1,10 +1,19 @@
 import Link from 'next/link'
+export type QuizItem = {
+  id: string
+  title: string
+  author: string
+  created: string
+  week: string
+  tags: string[]
+  questions: string[]
+}
 
-const QuizListItem = ({ quiz }): JSX.Element => {
+const QuizListItem = ({ quiz }: { quiz: QuizItem }): JSX.Element => {
   return (
     <Link href={`/quizzes/${quiz.id}`}>
-      <li className="flex flex-row hover:bg-green-500">
-        <div className="select-none cursor-pointer flex flex-1 items-center p-4">
+      <li className="flex flex-row text-left hover:bg-green-500">
+        <div className="select-none cursor-pointer flex flex-1  items-center p-4 ">
           <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
             <a href="#" className="block relative">
               <img alt="profil" src="https://timesofindia.indiatimes.com/photo/67586673.cms" className="mx-auto object-cover rounded-full h-10 w-10 " />
@@ -12,11 +21,14 @@ const QuizListItem = ({ quiz }): JSX.Element => {
           </div>
           <div className="flex-1 pl-1 mr-16">
             <div className="font-medium dark:text-white">{quiz.title}</div>
-            <div className="text-gray-600 dark:text-gray-200 text-sm">{quiz.author}</div>
           </div>
-          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Created on: {quiz.created}</div>
-          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Number of attempts: {quiz.attempt}</div>
-          <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Upvote: {quiz.upvote}</div>
+          <div className="">
+            <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Created on: {quiz.created}</div>
+            <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Author: {quiz.author}</div>
+            <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Week: {quiz.week}</div>
+            <div className="text-gray-600 dark:text-gray-200 text-xs px-2">Tags: {quiz.tags.reduce((memo, tag) => memo + ' #' + tag, '')}</div>
+          </div>
+
           <button className="w-24 text-right flex justify-end">
             <svg
               width="20"
