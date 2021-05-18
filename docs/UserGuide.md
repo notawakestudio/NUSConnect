@@ -3,6 +3,16 @@ layout: default
 title: User Guide
 description: Find out how to start using the project
 ---
+
+## **Useful links**
+- [Timeline](Timeline)
+- [Testing guide](TestingGuide)
+- [Developer guide](DeveloperGuide)
+- [User guide](UserGuide)
+- [Configuration guide](ConfigurationGuide)
+- [DevOps guide](DevOpsGuide)
+- [Workflow guide](WorkflowGuide)
+
 ## **Table Of Content**
 
 * Table of Contents 
@@ -16,7 +26,8 @@ With our background as teaching assistants for the module CS2030(Programming met
 We hope that our project becomes a source of external motivating factors that nudge students to learn the materials by heart. We want students to feel good doing assignments, and be rewarded with virtual points and record their attempts for further analysis. We also want students to try alternative ways of learning, via questions and answers in a forum, via quizzes that are self generated or created by the TAs, and via consolidating their learning into articles to be shared with other module students in the wiki.
 
 ## **Quickstart**
-In progress...
+Login with a variety of options (Google, Github, etc) and start your journey today!
+
 ## **Pages and Functionalities**
 While our dream is to make learning fun for every student regardless of module, we hope to first create a pilot platform where targeted students studying CS2030/S will have the best learning experience in their life.
 
@@ -48,4 +59,7 @@ Finally, our final goal is to branch this out to every CS module and then to eve
 
 
 ## **Frequently Asked Questions (FAQ)**
-In progress...
+
+Q: Can I use the website without logging in?
+
+A: Our system comes with a gamified profile that tracks the progress of users who actively participate in various activities. Thus, we recommend users to login and create a profile with us. However, some features of the website will be kept public to allow users to access the materials easily.
