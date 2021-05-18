@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import Footer from '../components/common/Footer'
 import NavBar from '../components/common/NavBar'
+import Feature from '../components/landingPage/Feature'
 import Hero from '../components/landingPage/Hero'
 import Pricing from '../components/landingPage/Pricing'
 import Team from '../components/landingPage/Team'
@@ -61,9 +62,11 @@ export default function Home(): JSX.Element {
             </Link>
           </ul>
         </div>
-        <Pricing />
+        <Feature />
         <Team />
+        <Pricing />
       </div>
+
       <Footer />
     </>
   )
