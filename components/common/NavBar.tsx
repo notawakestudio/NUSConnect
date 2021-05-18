@@ -49,19 +49,17 @@ const NavBar = (): JSX.Element => {
               </button>
             </div>
           </div>
-          <div className="inline-flex h-full w-2 py-2  text-center">
-            <a href="#" className="inline-flex text-center px-72">
-              <Link href="/">
-                <img alt="NUSConnectBanner" src="./NUSConnectBanner.png" className="mx-auto h-auto w-auto" />
-              </Link>
-            </a>
+          <div className="inline-flex h-full w-2 py-2 text-center">
+            <Link href="/">
+              <img alt="NUSConnectBanner" src="https://github.com/notawakestudio/NUSConnect/blob/add-forum/public/NUSConnectBanner.png?raw=true" className="mx-auto cursor-pointer" />
+            </Link>
           </div>
           {/* <Link href="/">
             <a href="#" className="inline-flex h-full w-full py-2 text-center ">
               <img alt="NUSConnectBanner" src="./NUSConnectBanner.png" className="mx-auto" />
             </a>
           </Link> */}
-          <div className="p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">
+          <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
             <a href="#" className="block ">
               <img alt="profile" src="https://timesofindia.indiatimes.com/photo/67586673.cms" className="mx-auto object-cover rounded-full h-10 w-10 " />
             </a>
