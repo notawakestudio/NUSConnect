@@ -3,6 +3,16 @@ layout: default
 title: Configuration Guide
 description: Find out how to setup the project and start development
 ---
+
+## **Useful links**
+- [Timeline](Timeline)
+- [Testing guide](TestingGuide)
+- [Developer guide](DeveloperGuide)
+- [User guide](UserGuide)
+- [Configuration guide](ConfigurationGuide)
+- [DevOps guide](DevOpsGuide)
+- [Workflow guide](WorkflowGuide)
+
 ## **Table Of Content**
 
 * Table of Contents 

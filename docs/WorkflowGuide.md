@@ -1,8 +1,18 @@
 ---
 layout: default
 title: Workflow Guide
-description: Find out the worflow of used to develop the project
+description: Find out the workflow of used to develop the project
 ---
+
+## **Useful links**
+- [Timeline](Timeline)
+- [Testing guide](TestingGuide)
+- [Developer guide](DeveloperGuide)
+- [User guide](UserGuide)
+- [Configuration guide](ConfigurationGuide)
+- [DevOps guide](DevOpsGuide)
+- [Workflow guide](WorkflowGuide)
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
