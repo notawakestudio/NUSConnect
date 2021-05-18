@@ -3,6 +3,16 @@ layout: default
 title: Developer Guide
 description: Find out the technical details behind the project
 ---
+
+## **Useful links**
+- [Timeline](Timeline)
+- [Testing guide](TestingGuide)
+- [Developer guide](DeveloperGuide)
+- [User guide](UserGuide)
+- [Configuration guide](ConfigurationGuide)
+- [DevOps guide](DevOpsGuide)
+- [Workflow guide](WorkflowGuide)
+
 ## **Table Of Content**
 
 * Table of Contents 
@@ -39,7 +49,7 @@ We hope that our project becomes a source of external motivating factors that nu
 - [Testing guide](TestingGuide)
 - [Configuration guide](ConfigurationGuide)
 - [DevOps guide](DevOpsGuide)
-- [Workflow guide](Workflow)
+- [Workflow guide](WorkflowGuide)
 
 ---
 

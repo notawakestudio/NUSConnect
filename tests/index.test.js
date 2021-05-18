@@ -5,7 +5,7 @@ describe("Home", () => {
     it("renders without crashing", () => {
         render(<Home />);
         expect(
-            screen.getByRole("heading", { level: 1 })
+            screen.getByRole("banner")
         ).toBeInTheDocument();
     });
 });
