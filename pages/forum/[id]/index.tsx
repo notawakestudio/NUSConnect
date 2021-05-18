@@ -1,9 +1,6 @@
 import Head from 'next/head'
-import React, { Context, useState } from 'react'
-import { useRouter } from 'next/router'
-import Footer from '../../../components/common/Footer'
-import NavBar from '../../../components/common/NavBar'
-import Post from '../../../components/forum/Post'
+import React from 'react'
+import PostMainItem from '../../../components/forum/PostMainItem'
 import PostList from '../../../components/forum/PostList'
 import PostData from '../../../public/data/ForumData.json'
 import Layout from '../../../components/common/Layout'
@@ -20,9 +17,9 @@ const CurrentPost = ({ currentPost }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="flex flex-auto">
+        <div className="inline-flex">
           <PostList postList={PostData} />
-          <Post id={currentPost.id} />
+          <PostMainItem id={currentPost.id} />
         </div>
       </Layout>
     </>
