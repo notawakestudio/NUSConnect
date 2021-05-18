@@ -82,6 +82,12 @@ description: Find out the features and timeline of the product
 - Landing Page:
   - Landing Page UI design
   - Landing Page implemented
+-Forum:
+  - Forum UI design
+  - Forum UI implemented
+-Others:
+  - Nav Bar and footer
+  - Logo and Favicon
 
 ### **Second half**
 

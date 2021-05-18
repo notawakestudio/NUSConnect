@@ -10,7 +10,7 @@ import Team from '../components/landingPage/Team'
 
 export default function Home(): JSX.Element {
   return (
-    <>
+  <>
       <Head>
         <title>NUS Connect | NotAwakeStudio</title>
         <meta name="description" content="NUS Connect" />

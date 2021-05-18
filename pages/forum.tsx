@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
-import Post from '../components/forum/Post'
+import PostMainItem from '../components/forum/PostMainItem'
 import PostList from '../components/forum/PostList'
 import Layout from '../components/common/Layout'
 import PostData from '../public/data/ForumData.json'
@@ -18,7 +18,7 @@ export default function Forum({ posts }): JSX.Element {
       <Layout>
         <div className="flex flex-auto">
           <PostList postList={posts} />
-          <Post id={currentPostId} />
+          <div> There is nothing here </div>
         </div>
       </Layout>
     </>
