@@ -1,15 +1,14 @@
-import { useState } from 'react'
-import Link from 'next/link'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
-import { GetStaticProps, GetStaticPaths } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import QuestionItem from '../../components/quiz/QuestionItem'
-import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
-import { QuestionWithAnswersMixed } from '../../components/quiz/QuizAPI'
-import { hasSameContent } from '../../components/common/Util'
-import NavBar from '../../components/common/NavBar'
+import { useState } from 'react'
 import Footer from '../../components/common/Footer'
+import NavBar from '../../components/common/NavBar'
 import Pagination from '../../components/common/Pagination'
+import { hasSameContent } from '../../components/common/Util'
+import QuestionItem from '../../components/quiz/QuestionItem'
+import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId, QuestionWithAnswersMixed } from '../../components/quiz/QuizAPI'
 
 class AnswerObject {
   question: string

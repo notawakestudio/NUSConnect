@@ -1,10 +1,13 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import React from 'react'
-import Footer from '../components/common/Footer'
-import NavBar from '../components/common/NavBar'
+import React, { useState } from 'react'
+import Post from '../components/forum/Post'
+import PostList from '../components/forum/PostList'
+import Layout from '../components/common/Layout'
+import PostData from '../public/data/ForumData.json'
 
-export default function Home(): JSX.Element {
+export default function Forum({ posts }): JSX.Element {
+  const [currentPostId, setCurrentPostId] = useState(1)
+
   return (
     <>
       <Head>
@@ -12,11 +15,22 @@ export default function Home(): JSX.Element {
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar />
-      
-
-
-      <Footer />
+      <Layout>
+        <div className="flex flex-auto">
+          <PostList postList={posts} />
+          <Post id={currentPostId} />
+        </div>
+      </Layout>
     </>
   )
+}
+
+export const getStaticProps = async () => {
+  const posts = PostData
+
+  return {
+    props: {
+      posts,
+    },
+  }
 }
