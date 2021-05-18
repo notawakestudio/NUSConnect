@@ -9,6 +9,9 @@ description: Find out the features and timeline of the product
 * Table of Contents 
 {:toc}
 
+
+## Proposed Plan
+
 ## **1st month**
 
 ### **First half**
@@ -52,3 +55,25 @@ description: Find out the features and timeline of the product
 - Complete any unfinished features
 - Final bug fixing, web testing and functional testing
 - Final documentation update of user guide & developer guide.
+
+
+## Actual Plan
+
+## **1st month**
+
+### **First half**
+- V0.1 - Basic functionality 
+- Quiz:
+  - Quiz UI design
+  - Quiz UI implemented
+  - Quiz Basic functionality implmented (Ability to answer and move between questions)
+- Dashboard/ Profile page:
+  - Dashboard UI design
+  - Dashboard UI implemented
+- Landing Page:
+  - Landing Page UI design
+  - Landing Page implemented
+
+### **Second half**
+
+WIP
