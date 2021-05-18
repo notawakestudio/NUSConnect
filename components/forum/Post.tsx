@@ -1,4 +1,4 @@
-import { getPostData } from './ForumAPI.ts'
+import { getPostData } from './ForumAPI'
 
 const Post = ({ id }): JSX.Element => {
   const currentPost = getPostData(id)
