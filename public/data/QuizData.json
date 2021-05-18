@@ -2,28 +2,28 @@
     {
         "id":"TxRDDtSEpnpodO0d-3ygJ",
         "title":"CS2030 Quiz 1",
-        "author":"Yongliang",
-        "attempt":"1",
-        "upvote":"2",
+        "author":"Bob",
         "created":"May 11, 2021",
+        "week":"1",
+        "tags":["OOP","intro"],
         "questions": ["gf669ye6dy4ltJSkKb_tZ", "SUdbM9KBpsbywHQvxpFir","YQdkspzjHcwTL3txI2Bc8"]
     },
     {
         "id":"DnFFpNWyXk0gIwMlxP4Z2",
         "title":"CS2030 Quiz 2",
-        "author":"Yongliang",
-        "attempt":"1",
-        "upvote":"3",
+        "author":"Jun Xiong",
         "created":"May 12, 2021",
+        "week":"2",
+        "tags":["FP"],
         "questions": ["hB3qZ_f_CI0EsD_WRsRX8", "CxcBhgLQeq_ez8MxeDe0p","dgC_OXQwPq5MG_VwMQLLz"]
     },
     {
         "id":"2MCYftI-pKIeQ3fOuOpOw",
         "title":"CS2030 Combined Quiz",
         "author":"Yongliang",
-        "attempt":"1",
-        "upvote":"4",
         "created":"May 16, 2021",
+        "week":"3",
+        "tags":["OOP","intro"],
         "questions": ["gf669ye6dy4ltJSkKb_tZ", "SUdbM9KBpsbywHQvxpFir","YQdkspzjHcwTL3txI2Bc8","hB3qZ_f_CI0EsD_WRsRX8", "CxcBhgLQeq_ez8MxeDe0p","dgC_OXQwPq5MG_VwMQLLz"]
     }
 ]
