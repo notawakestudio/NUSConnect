@@ -11,7 +11,7 @@ export type QuizItem = {
 
 const QuizListItem = ({ quiz }: { quiz: QuizItem }): JSX.Element => {
   return (
-    <Link href={`/quizzes/${quiz.id}`}>
+    <Link href={`/quiz/${quiz.id}`}>
       <li className="flex flex-row text-left hover:bg-green-500">
         <div className="select-none cursor-pointer flex flex-1  items-center p-4 ">
           <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
