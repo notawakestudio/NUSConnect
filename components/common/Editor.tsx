@@ -1,21 +1,32 @@
-import { useState } from 'react'
-// import ReactMarkdown from 'react-markdown'
-// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import dynamic from 'next/dynamic'
+import 'react-markdown-editor-lite/lib/index.css'
+import MarkdownIt from 'markdown-it'
+import hljs from 'highlight.js'
+// This function can convert File object to a datauri string
+function onImageUpload(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onload = (data) => {
+      resolve(data.target.result)
+    }
+    reader.readAsDataURL(file)
+  })
+}
+const mdParser = new MarkdownIt({
+  highlight: function (str, lang) {
+    console.log(lang)
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return '<pre class="hljs"><code>' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + '</code></pre>'
+      } catch (__) {}
+    }
 
+    return '<pre class="hljs"><code>' + mdParser.utils.escapeHtml(str) + '</code></pre>'
+  },
+})
+const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
+  ssr: false,
+})
 export default function Editor(): JSX.Element {
-  const [markdown, setValue] = useState('')
-  // const components = {
-  //   code({ node, inline, className, children, ...props }) {
-  //     const match = /language-(\w+)/.exec(className || '')
-  //     return !inline && match ? <SyntaxHighlighter language={match[1]} PreTag="div" children={String(children).replace(/\n$/, '')} {...props} /> : <code className={className} {...props} />
-  //   },
-  // }
-  return (
-    <div className="container mx-auto text-center border ">
-      <textarea placeholder="Type in your markdown here" cols={50} rows={20} onChange={(e) => setValue(e.target.value)}>
-        {markdown}
-      </textarea>
-      {/* <ReactMarkdown components={components} children={markdown}></ReactMarkdown> */}
-    </div>
-  )
+  return <MdEditor onImageUpload={onImageUpload} style={{ height: '500px' }} renderHTML={(text) => mdParser.render(text)} />
 }

@@ -151,9 +151,9 @@ export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element 
                 <button
                   type="button"
                   className="py-2 px-4 mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
-                  onClick={startQuiz}
+                  onClick={() => router.push('/quiz')}
                 >
-                  <Link href="/quiz">Back To All Quizzes</Link>
+                  Back To All Quizzes
                 </button>
               </div>
             </div>
