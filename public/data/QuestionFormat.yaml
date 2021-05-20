@@ -1,0 +1,15 @@
+correct_answers: 
+  - "Collection of related classes and interfaces which are bundled together"
+difficulty: easy
+id: dgC_OXQwPq5MG_VwMQLLz
+incorrect_answers: 
+  - "We should declare fields as private as much as possible"
+  - "We should not throw exceptions that reveal internal implementation of a class as much as possible"
+  - "We should avoid using accessors and mutators (also known as getters and setters) to private fields as much as possible"
+  - "We should use polymorphism so that each class is responsible for handling its own behavior as much as possible"
+  - "None of the others"
+modules: 
+  - CS2030
+  - CS2030S
+question: "What is a package in java?"
+type: MCQ
