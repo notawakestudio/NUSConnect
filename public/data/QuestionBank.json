@@ -52,5 +52,22 @@
         "question": "Which of the following statements about good OO programming practice is LEAST appropriate?",
         "correct_answers": ["We should use Inheritance to reduce duplication of code between two classes as much as possible"], 
         "incorrect_answers": ["We should declare fields as private as much as possible","We should not throw exceptions that reveal internal implementation of a class as much as possible","We should avoid using accessors and mutators (also known as getters and setters) to private fields as much as possible", "We should use polymorphism so that each class is responsible for handling its own behavior as much as possible","None of the others"]
-    }
+    },
+    {
+        "id": "KXwyZwv3boKOzuBrUNo6b",
+        "type": "MCQ",
+        "difficulty": "hard", 
+        "modules": ["CS2030", "CS2030S"],
+        "question": "Consider the following code snippet\n```java\nOptional.of(\"Just a value\");\n```\nWhat is the purpose of the code?",
+        "correct_answers": [
+          "DK"
+        ],
+        "incorrect_answers": [
+          "Test **markdown** in option",
+          "1",
+          "2",
+          "```java\n public void fetch() throws IOException \n\n```",
+          "None of the others"
+        ]
+      }
 ]

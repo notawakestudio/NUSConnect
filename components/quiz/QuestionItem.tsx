@@ -1,5 +1,7 @@
 import Answer from './Answer'
 import { useRouter } from 'next/router'
+import { renderMdToHtml } from '../common/Util'
+import Editor from '../common/Editor'
 type QuestionItemProps = {
   question: string
   answers: string[]
@@ -30,7 +32,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, updateTo
       <p className="number">
         Question: {questionNumber} / {totalQuestions}
       </p>
-      <p className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2" dangerouslySetInnerHTML={{ __html: question }}></p>
+      <p className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2" dangerouslySetInnerHTML={{ __html: renderMdToHtml(question) }}></p>
       <div className="shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 flex justify-center flex-wrap">
         {answers.map((answer, index) => (
           <Answer key={index} type={type} answer={answer} userAnswer={userAnswer} updateAnswer={updateAnswer} />
@@ -68,6 +70,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, updateTo
       >
         Back to Quiz List
       </button>
+      <Editor />
     </div>
   )
 }

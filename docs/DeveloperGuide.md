@@ -139,6 +139,33 @@ Priorities:
 }
 ```
 
+#### Making a question
+
+To contribute a question, user first visit the `quiz/maker` page.
+
+User can then type in according to the format, the details of a question:
+```
+---
+type: MCQ
+modules: 
+- CS2030
+- CS2030S
+correct_answers: 
+- "Collection of related classes and interfaces which are bundled together"
+incorrect_answers: 
+- "We should declare fields as private as much as possible"
+- "We should not throw exceptions that reveal internal implementation of a class as much as possible"
+- "We should avoid using accessors and mutators (also known as getters and setters) to private fields as much as possible"
+- "We should use polymorphism so that each class is responsible for handling its own behavior as much as possible"
+- "None of the others"
+---
+"What is a package in java?"
+```
+The question details will also be shown on the right preview panel for checking of markdown behavior.
+Once done, user can click submit to upload the question to question bank. Note that the syntax has to be 
+validated to ensure user is submitting according to the specified format. The question text will be parsed
+to retrieve individual fields and converted to a JSON object posted to the backend. 
+The other details required for a quiz, such as an id and author id, will also be included in the JSON object to be saved. 
 
 ## **Forum**
 

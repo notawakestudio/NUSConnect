@@ -1,3 +1,5 @@
+import { renderMdToHtml } from '../common/Util'
+
 const Answer = ({ type, answer, userAnswer, updateAnswer }): JSX.Element => {
   return (
     <div className="w-full border-b text-left" key={answer}>
@@ -11,7 +13,7 @@ const Answer = ({ type, answer, userAnswer, updateAnswer }): JSX.Element => {
         <label className="inline-flex items-center mr-2">
           <input type={`${type === 'MRQ' ? 'checkbox' : 'radio'}`} readOnly className="form-radio h-5 w-5 text-gray-600" checked={userAnswer.includes(answer) ? true : false} />
         </label>
-        <p className="text-left" dangerouslySetInnerHTML={{ __html: answer }}></p>
+        <p className="text-left" dangerouslySetInnerHTML={{ __html: renderMdToHtml(answer) }}></p>
       </button>
     </div>
   )

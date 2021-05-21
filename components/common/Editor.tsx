@@ -3,7 +3,10 @@ import 'react-markdown-editor-lite/lib/index.css'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import { useState } from 'react'
-import matter from 'gray-matter' // This function can convert File object to a datauri string
+import matter from 'gray-matter'
+import { createQuestion } from '../quiz/QuizAPI'
+
+// This function can convert File object to a datauri string
 function onImageUpload(file): Promise<string | ArrayBuffer> {
   return new Promise((resolve) => {
     const reader = new FileReader()
@@ -30,16 +33,42 @@ const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
   ssr: false,
 })
 
-export default function Editor(): JSX.Element {
+function Editor({ height, handleSubmit }: { height: string; handleSubmit: (raw: string) => void }): JSX.Element {
   const [value, setValue] = useState('')
   const handleEditorChange = ({ html, text }: { html: HTMLElement; text: string }): void => {
     // const newValue = text.replace(/\d/g, '')
-    console.log(matter(text))
+    // console.log(matter(text)['content'])
     setValue(text)
   }
+
   return (
     <>
-      <MdEditor value={value} onChange={handleEditorChange} onImageUpload={onImageUpload} style={{ height: '500px' }} renderHTML={(text) => mdParser.render(text)} />
+      <MdEditor
+        id="editor"
+        value={value}
+        onChange={handleEditorChange}
+        onImageUpload={onImageUpload}
+        style={{ height: height }}
+        renderHTML={(text) => {
+          const content = matter(text).content
+          return mdParser.render(content)
+        }}
+      />
+      <button
+        onClick={() => handleSubmit(value)}
+        className="ml-1 px-4 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+      >
+        Submit
+      </button>
     </>
   )
 }
+
+Editor.defaultProps = {
+  height: '500px',
+  handleSubmit: (value: string): void => {
+    console.log(value)
+  },
+}
+
+export default Editor
