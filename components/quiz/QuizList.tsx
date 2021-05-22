@@ -1,22 +1,20 @@
 import Search from '../common/Search'
-import QuizListItem from './QuizListItem'
+import QuizListItem, { QuizItem } from './QuizListItem'
 import { useRouter } from 'next/router'
-import { fetchAllQuizzes } from './QuizAPI'
-import { useEffect, useState } from 'react'
 
-const QuizList = (): JSX.Element => {
+const QuizList = ({ quizzes }: { quizzes: QuizItem[] }): JSX.Element => {
   const router = useRouter()
-  const [quizItems, setQuizItems] = useState([])
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      const quizzes = await fetchAllQuizzes()
-      const quizItems = quizzes.map((quiz) => {
-        return <QuizListItem key={quiz.id} quiz={quiz} />
-      })
-      setQuizItems(quizItems)
-    }
-    fetchData()
-  }, [])
+  // const [quizItems, setQuizItems] = useState([])
+  // useEffect(() => {
+  //   const fetchData = async (): Promise<void> => {
+  //     const quizzes = await fetchAllQuizzes()
+  //     const quizItems = quizzes.map((quiz) => {
+  //       return <QuizListItem key={quiz.id} quiz={quiz} />
+  //     })
+  //     setQuizItems(quizItems)
+  //   }
+  //   fetchData()
+  // }, [])
   return (
     <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-t-lg shadow">
       <div className="px-4 py-5 sm:px-6 border-b w-full">
@@ -28,7 +26,11 @@ const QuizList = (): JSX.Element => {
           <Search />
         </div>
       </div>
-      <ul className="flex flex-col divide divide-y">{quizItems}</ul>
+      <ul className="flex flex-col divide divide-y">
+        {quizzes.map((quiz) => {
+          return <QuizListItem key={quiz.id} quiz={quiz} />
+        })}
+      </ul>
     </div>
   )
 }
