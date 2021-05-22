@@ -1,7 +1,6 @@
 import Answer from './Answer'
 import { useRouter } from 'next/router'
 import { renderMdToHtml } from '../common/Util'
-import Editor from '../common/Editor'
 type QuestionItemProps = {
   question: string
   answers: string[]
@@ -70,7 +69,6 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, updateTo
       >
         Back to Quiz List
       </button>
-      <Editor />
     </div>
   )
 }

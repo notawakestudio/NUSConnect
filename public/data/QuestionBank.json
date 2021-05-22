@@ -54,20 +54,18 @@
         "incorrect_answers": ["We should declare fields as private as much as possible","We should not throw exceptions that reveal internal implementation of a class as much as possible","We should avoid using accessors and mutators (also known as getters and setters) to private fields as much as possible", "We should use polymorphism so that each class is responsible for handling its own behavior as much as possible","None of the others"]
     },
     {
-        "id": "KXwyZwv3boKOzuBrUNo6b",
+        "id": "mtCHNvypLt4TKizuqmP6f",
         "type": "MCQ",
         "difficulty": "hard", 
         "modules": ["CS2030", "CS2030S"],
-        "question": "Consider the following code snippet\n```java\nOptional.of(\"Just a value\");\n```\nWhat is the purpose of the code?",
+        "question": "```java\nclass Main {\n  public static void main (String[] args) {\n    List list = new ArrayList();\n    list.add(\"hello\");\n    list.add(2);\n    System.out.print(list.get(0) instanceof Object);\n    System.out.print(list.get(1) instanceof Integer);\n  }\n}\n```",
         "correct_answers": [
-          "DK"
-        ],
-        "incorrect_answers": [
-          "Test **markdown** in option",
-          "1",
-          "2",
-          "```java\n public void fetch() throws IOException \n\n```",
-          "None of the others"
-        ]
+            "truetrue"
+          ],
+          "incorrect_answers": [
+            "Falsetrue",
+            "The code does not compile.",
+            "truefalse"
+          ]
       }
 ]

@@ -1,4 +1,4 @@
-import Editor from '../../components/common/Editor'
+import MDEditor from '../../components/common/MDEditor'
 import Layout from '../../components/common/Layout'
 import Head from 'next/head'
 import matter from 'gray-matter'
@@ -19,7 +19,7 @@ export default function Maker(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1 className="text-center text-xl py-4">Make a Question</h1>
-      <Editor handleSubmit={handleSubmit} />
+      <MDEditor handleSubmit={handleSubmit} />
     </Layout>
   )
 }

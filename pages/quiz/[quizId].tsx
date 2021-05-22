@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Footer from '../../components/common/Footer'
+import MDEditor from '../../components/common/MDEditor'
 import NavBar from '../../components/common/NavBar'
 import Pagination from '../../components/common/Pagination'
 import { hasSameContent } from '../../components/common/Util'
@@ -177,6 +178,7 @@ export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element 
             />
           )}
           {!gameOver && !loading ? <Pagination numItem={questions.length} onClickChange={changeQuestion} onClickNext={nextQuestion} onClickPrevious={previousQuestion} /> : null}
+          <MDEditor />
         </div>
       </div>
       <Footer />

@@ -4,7 +4,6 @@ import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import { useState } from 'react'
 import matter from 'gray-matter'
-import { createQuestion } from '../quiz/QuizAPI'
 
 // This function can convert File object to a datauri string
 function onImageUpload(file): Promise<string | ArrayBuffer> {
@@ -33,7 +32,7 @@ const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
   ssr: false,
 })
 
-function Editor({ height, handleSubmit }: { height: string; handleSubmit: (raw: string) => void }): JSX.Element {
+function MDEditor({ height, handleSubmit }: { height: string; handleSubmit: (raw: string) => void }): JSX.Element {
   const [value, setValue] = useState('')
   const handleEditorChange = ({ html, text }: { html: HTMLElement; text: string }): void => {
     // const newValue = text.replace(/\d/g, '')
@@ -64,11 +63,11 @@ function Editor({ height, handleSubmit }: { height: string; handleSubmit: (raw: 
   )
 }
 
-Editor.defaultProps = {
+MDEditor.defaultProps = {
   height: '500px',
   handleSubmit: (value: string): void => {
     console.log(value)
   },
 }
 
-export default Editor
+export default MDEditor
