@@ -25,7 +25,6 @@ export const getReadableDate = (): string => {
 export const renderMdToHtml = (raw: string): string => {
   const mdParser = new MarkdownIt({
     highlight: function (str, lang) {
-      console.log(lang)
       if (lang && hljs.getLanguage(lang)) {
         try {
           return '<pre class="hljs"><code>' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + '</code></pre>'

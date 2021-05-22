@@ -34,7 +34,7 @@ class AnswerObject {
   }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = getAllQuizId()
+  const paths = await getAllQuizId()
   return {
     paths,
     fallback: false,
@@ -42,15 +42,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const quizTitle = fetchQuizTitle(params.quizId as string)
+  const quizId = params.quizId as string
+  const quizTitle = await fetchQuizTitle(quizId)
+  const quizQuestions = await fetchQuizQuestions(quizId)
   return {
     props: {
       quizTitle,
+      quizQuestions,
     },
   }
 }
 
-export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element {
+export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; quizQuestions: QuestionWithAnswersMixed[] }): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionWithAnswersMixed[]>([])
   const [currQnNumOneBased, setCurrQnNumOneBased] = useState(1)
@@ -58,19 +61,17 @@ export default function Quiz({ quizTitle }: { quizTitle: string }): JSX.Element 
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(true)
   const router = useRouter()
-  const { quizId } = router.query
-  const startQuiz = (): void => {
+  const startQuiz = async (): Promise<void> => {
     setLoading(true)
     setGameOver(false)
-    const questions = fetchQuizQuestions(quizId as string)
     setUserAnswers(
-      Array(questions.length)
+      Array(quizQuestions.length)
         .fill(0)
         .map((_, index) => {
-          return new AnswerObject(questions[index].question, index + 1, questions[index].correct_answers)
+          return new AnswerObject(quizQuestions[index].question, index + 1, quizQuestions[index].correct_answers)
         })
     )
-    setQuestions(questions)
+    setQuestions(quizQuestions)
     setScore(0)
     setCurrQnNumOneBased(1)
     setLoading(false)
