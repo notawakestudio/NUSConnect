@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import React from 'react'
-import Footer from '../components/common/Footer'
-import NavBar from '../components/common/NavBar'
-import QuizList from '../components/quiz/QuizList'
+import Footer from '../../components/common/Footer'
+import NavBar from '../../components/common/NavBar'
+import QuizList from '../../components/quiz/QuizList'
 
 export default function Quiz(): JSX.Element {
   return (

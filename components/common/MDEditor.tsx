@@ -32,8 +32,8 @@ const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
   ssr: false,
 })
 
-function MDEditor({ height, handleSubmit }: { height: string; handleSubmit: (raw: string) => void }): JSX.Element {
-  const [value, setValue] = useState('')
+function MDEditor({ height, handleSubmit, defaultContent }: { height: string; handleSubmit: (raw: string) => void; defaultContent: string }): JSX.Element {
+  const [value, setValue] = useState(defaultContent)
   const handleEditorChange = ({ html, text }: { html: HTMLElement; text: string }): void => {
     // const newValue = text.replace(/\d/g, '')
     // console.log(matter(text)['content'])
@@ -64,6 +64,7 @@ function MDEditor({ height, handleSubmit }: { height: string; handleSubmit: (raw
 }
 
 MDEditor.defaultProps = {
+  defaultContent: '',
   height: '500px',
   handleSubmit: (value: string): void => {
     console.log(value)
