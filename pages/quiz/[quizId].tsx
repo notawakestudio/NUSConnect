@@ -1,15 +1,15 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useState } from 'react'
 import Footer from '../../components/common/Footer'
 import MDEditor from '../../components/common/MDEditor'
 import NavBar from '../../components/common/NavBar'
 import Pagination from '../../components/common/Pagination'
 import { hasSameContent } from '../../components/common/Util'
-import QuestionItem from '../../components/quiz/QuestionItem'
-import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId, QuestionWithAnswersMixed } from '../../components/quiz/QuizAPI'
-
+import Question from '../../components/quiz/Question'
+import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
+import { QuestionWithAnswersMixed } from '../../components/quiz/types'
 class AnswerObject {
   question: string
   qnNumOneBased: number
@@ -34,7 +34,12 @@ class AnswerObject {
   }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = await getAllQuizId()
+  const quizIds = await getAllQuizId()
+  const paths = quizIds.map((quizId) => {
+    return {
+      params: quizId,
+    }
+  })
   return {
     paths,
     fallback: false,
@@ -60,7 +65,6 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(true)
-  const router = useRouter()
   const startQuiz = async (): Promise<void> => {
     setLoading(true)
     setGameOver(false)
@@ -96,10 +100,6 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
       })
     })
   }
-  // useEffect(() => {
-  // debug
-  //   console.log(userAnswers)
-  // })
 
   const nextQuestion = (): void => {
     // move on to the next question if not the last question
@@ -149,13 +149,14 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
                 >
                   Start
                 </button>
-                <button
-                  type="button"
-                  className="py-2 px-4 mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
-                  onClick={() => router.push('/quiz')}
-                >
-                  Back To All Quizzes
-                </button>
+                <Link href="/quiz">
+                  <a
+                    type="button"
+                    className="py-2 px-4 mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                  >
+                    Back To All Quizzes
+                  </a>
+                </Link>
               </div>
             </div>
           ) : null}
@@ -167,7 +168,7 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
           ) : null}
           {loading && <p>Loading Questions ...</p>}
           {!loading && !gameOver && (
-            <QuestionItem
+            <Question
               questionNumber={currQnNumOneBased}
               totalQuestions={questions.length}
               question={questions[currQnNumOneBased - 1].question}

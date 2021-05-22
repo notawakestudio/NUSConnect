@@ -1,7 +1,7 @@
 import Answer from './Answer'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { renderMdToHtml } from '../common/Util'
-type QuestionItemProps = {
+type QuestionProps = {
   question: string
   answers: string[]
   updateTotalScore: () => void
@@ -12,19 +12,20 @@ type QuestionItemProps = {
   totalQuestions: number
 }
 
-const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, updateTotalScore, saveProgress, type, userAnswer, questionNumber, totalQuestions }) => {
+const Question = ({ question, answers, updateTotalScore, saveProgress, type, userAnswer, questionNumber, totalQuestions }: QuestionProps): JSX.Element => {
   const updateAnswer = (selectedOption: string): void => {
     if (userAnswer.includes(selectedOption)) {
       saveProgress([...userAnswer].filter((x) => x !== selectedOption))
     } else {
       if (type === 'MCQ') {
         saveProgress([selectedOption])
-      } else {
+      } else if (type === 'MRQ') {
         saveProgress([...userAnswer, selectedOption])
+      } else {
+        console.log('other question types')
       }
     }
   }
-  const router = useRouter()
 
   return (
     <div className="font-fira max-w-prose">
@@ -33,8 +34,8 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, updateTo
       </p>
       <p className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2" dangerouslySetInnerHTML={{ __html: renderMdToHtml(question) }}></p>
       <div className="shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 flex justify-center flex-wrap">
-        {answers.map((answer, index) => (
-          <Answer key={index} type={type} answer={answer} userAnswer={userAnswer} updateAnswer={updateAnswer} />
+        {answers.map((answerText, index) => (
+          <Answer key={index} type={type} answerText={answerText} userAnswer={userAnswer} updateAnswer={updateAnswer} />
         ))}
       </div>
       <button
@@ -61,16 +62,11 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, answers, updateTo
       >
         Submit
       </button>
-      <button
-        className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => {
-          router.push('/quiz')
-        }}
-      >
-        Back to Quiz List
-      </button>
+      <Link href="/quiz">
+        <a className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to Quiz List</a>
+      </Link>
     </div>
   )
 }
 
-export default QuestionItem
+export default Question

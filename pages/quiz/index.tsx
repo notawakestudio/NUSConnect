@@ -5,7 +5,7 @@ import Footer from '../../components/common/Footer'
 import NavBar from '../../components/common/NavBar'
 import { fetchAllQuizzes } from '../../components/quiz/QuizAPI'
 import QuizList from '../../components/quiz/QuizList'
-import { QuizItem } from '../../components/quiz/QuizListItem'
+import { Quiz } from '../../components/quiz/types'
 
 export const getStaticProps: GetStaticProps = async () => {
   const quizzes = await fetchAllQuizzes()
@@ -16,7 +16,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-export default function Quiz({ quizzes }: { quizzes: QuizItem[] }): JSX.Element {
+export default function QuizPage({ quizzes }: { quizzes: Quiz[] }): JSX.Element {
   return (
     <div className="grid">
       <NavBar />
