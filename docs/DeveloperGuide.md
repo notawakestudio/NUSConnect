@@ -157,3 +157,33 @@ Priorities:
     // consider adding more properties such as tags, isSeries etc
 }
 ```
+
+```javascript
+
+{
+    "id": 1,
+    "title": "There's a new DEV theme in town for all you 10x hackers out there (plus one actually useful new feature)",
+    "description": "There's a new DEV theme in town for all you 10x hackers out there (plus one actually useful new feature)",
+    "tags": "meta, changelog, css, ux",
+    "slug": "there-s-a-new-dev-theme-in-town-for-all-you-10x-hackers-out-there-plus-one-actually-useful-new-feature-2kgk",
+    "path": "/devteam/there-s-a-new-dev-theme-in-town-for-all-you-10x-hackers-out-there-plus-one-actually-useful-new-feature-2kgk",
+    "url": "https://dev.to/devteam/there-s-a-new-dev-theme-in-town-for-all-you-10x-hackers-out-there-plus-one-actually-useful-new-feature-2kgk",
+    "canonical_url": "https://dev.to/devteam/there-s-a-new-dev-theme-in-town-for-all-you-10x-hackers-out-there-plus-one-actually-useful-new-feature-2kgk",
+    "comments_count": 37,
+    "positive_reactions_count": 12,
+    "created_at": "2019-10-24T13:41:29Z",
+    "edited_at": "2019-10-24T13:56:35Z",
+    "published_at": "2019-10-24T13:52:17Z",
+    "last_comment_at": "2019-10-25T08:12:43Z",
+    "user": {
+        "name": "Ben Halpern",
+        "username": "ben",
+        "twitter_username": "bendhalpern",
+        "github_username": "benhalpern",
+        "website_url": "http://benhalpern.com",
+        "profile_image": "https://res.cloudinary.com/practicaldev/image/fetch/s--Y1sq1tFG--/c_fill,f_auto,fl_progressive,h_640,q_auto,w_640/https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/1/f451a206-11c8-4e3d-8936-143d0a7e65bb.png",
+        "profile_image_90": "https://res.cloudinary.com/practicaldev/image/fetch/s--DcW51A6v--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/1/f451a206-11c8-4e3d-8936-143d0a7e65bb.png"
+    }
+}
+
+```
