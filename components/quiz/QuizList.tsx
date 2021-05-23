@@ -10,7 +10,9 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
         <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">All Quizzes</h3>
         <div className="flex justify-center">
           <Link href="/quiz/make">
-            <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Contribute A Quiz</a>
+            <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+              Contribute A Quiz
+            </a>
           </Link>
           <Search />
         </div>

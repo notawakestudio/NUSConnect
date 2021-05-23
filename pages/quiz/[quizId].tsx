@@ -3,12 +3,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import Footer from '../../components/common/Footer'
-import MDEditor from '../../components/common/MDEditor'
 import NavBar from '../../components/common/NavBar'
 import Pagination from '../../components/common/Pagination'
 import { hasSameContent } from '../../components/common/Util'
 import Question from '../../components/quiz/Question'
 import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
+import ScoreCard from '../../components/quiz/ScoreCard'
 import { QuestionWithAnswersMixed } from '../../components/quiz/types'
 class AnswerObject {
   question: string
@@ -31,6 +31,9 @@ class AnswerObject {
   updateCorrect(isCorrect: boolean): AnswerObject {
     this.isCorrect = isCorrect
     return this
+  }
+  hasAttempted(): boolean {
+    return this.answer.length !== 0
   }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -58,7 +61,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 }
 
-export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; quizQuestions: QuestionWithAnswersMixed[] }): JSX.Element {
+export default function Quiz({
+  quizTitle,
+  quizQuestions,
+}: {
+  quizTitle: string
+  quizQuestions: QuestionWithAnswersMixed[]
+}): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionWithAnswersMixed[]>([])
   const [currQnNumOneBased, setCurrQnNumOneBased] = useState(1)
@@ -72,7 +81,11 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
       Array(quizQuestions.length)
         .fill(0)
         .map((_, index) => {
-          return new AnswerObject(quizQuestions[index].question, index + 1, quizQuestions[index].correct_answers)
+          return new AnswerObject(
+            quizQuestions[index].question,
+            index + 1,
+            quizQuestions[index].correct_answers
+          )
         })
     )
     setQuestions(quizQuestions)
@@ -87,9 +100,20 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
         return memo + (answerObject.isCorrect ? 1 : 0)
       }, 0)
     )
+    setGameOver(true)
   }
+
+  const attemptedAllQuestions = (): boolean => {
+    return userAnswers.reduce((memo, answerObject) => {
+      return memo && answerObject.hasAttempted()
+    }, true)
+  }
+
   const saveProgress = (currentAnswer: string[]): void => {
-    const isCorrect = hasSameContent(currentAnswer, questions[currQnNumOneBased - 1].correct_answers)
+    const isCorrect = hasSameContent(
+      currentAnswer,
+      questions[currQnNumOneBased - 1].correct_answers
+    )
     setUserAnswers((prev) => {
       return prev.map((answerObject) => {
         if (answerObject.qnNumOneBased !== currQnNumOneBased) {
@@ -145,15 +169,13 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
                 <button
                   type="button"
                   className="py-2 px-4  bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
-                  onClick={startQuiz}
-                >
+                  onClick={startQuiz}>
                   Start
                 </button>
                 <Link href="/quiz">
                   <a
                     type="button"
-                    className="py-2 px-4 mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
-                  >
+                    className="py-2 px-4 mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg ">
                     Back To All Quizzes
                   </a>
                 </Link>
@@ -161,10 +183,14 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
             </div>
           ) : null}
 
-          {!gameOver ? (
-            <p className="score">
-              Score: {score} / {questions.length}
-            </p>
+          {gameOver ? (
+            <ScoreCard
+              child={
+                <p className={`score ${score === questions.length ? 'text-green-500' : ''}`}>
+                  Score: {score} / {questions.length}
+                </p>
+              }
+            />
           ) : null}
           {loading && <p>Loading Questions ...</p>}
           {!loading && !gameOver && (
@@ -177,10 +203,17 @@ export default function Quiz({ quizTitle, quizQuestions }: { quizTitle: string; 
               userAnswer={userAnswers[currQnNumOneBased - 1].answer}
               updateTotalScore={updateTotalScore}
               saveProgress={saveProgress}
+              attemptedAllQuestions={attemptedAllQuestions}
             />
           )}
-          {!gameOver && !loading ? <Pagination numItem={questions.length} onClickChange={changeQuestion} onClickNext={nextQuestion} onClickPrevious={previousQuestion} /> : null}
-          <MDEditor />
+          {!gameOver && !loading ? (
+            <Pagination
+              numItem={questions.length}
+              onClickChange={changeQuestion}
+              onClickNext={nextQuestion}
+              onClickPrevious={previousQuestion}
+            />
+          ) : null}
         </div>
       </div>
       <Footer />

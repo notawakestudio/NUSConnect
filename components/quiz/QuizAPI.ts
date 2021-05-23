@@ -106,12 +106,14 @@ export async function fetchAllQuizzes(): Promise<Quiz[]> {
 // MOCK - for later use in test cases
 export const fetchQuizQuestions_MOCK = (quizId: string): QuestionWithAnswersMixed[] => {
   const selectedQuiz = QuizData.filter((quiz) => quiz['id'] === quizId)[0]['questions']
-  return QuestionBank.filter((question) => selectedQuiz.includes(question['id'])).map((question: Question) => {
-    return {
-      ...question,
-      answers: shuffleStringArray([...question.incorrect_answers, ...question.correct_answers]),
+  return QuestionBank.filter((question) => selectedQuiz.includes(question['id'])).map(
+    (question: Question) => {
+      return {
+        ...question,
+        answers: shuffleStringArray([...question.incorrect_answers, ...question.correct_answers]),
+      }
     }
-  })
+  )
 }
 
 export function getAllQuizId_MOCK() {
