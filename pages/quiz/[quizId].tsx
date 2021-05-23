@@ -172,13 +172,11 @@ export default function Quiz({
           ) : null}
 
           {quizMode === QuizMode.ENDING ? (
-            <ScoreCard
-              child={
-                <p className={`score ${score === questions.length ? 'text-green-500' : ''}`}>
-                  Score: {score} / {questions.length}
-                </p>
-              }
-            />
+            <ScoreCard>
+              <p className={`score ${score === questions.length ? 'text-green-500' : ''}`}>
+                Score: {score} / {questions.length}
+              </p>
+            </ScoreCard>
           ) : null}
           {loading && <p>Loading Questions ...</p>}
           {!loading && (quizMode === QuizMode.TAKING || quizMode === QuizMode.REVIEWING) && (
