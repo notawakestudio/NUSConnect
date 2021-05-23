@@ -1,4 +1,6 @@
-const ScoreCard = ({ children }: { children: HTMLElement }): JSX.Element => {
+import { ReactNode } from 'react'
+
+const ScoreCard = ({ children }: { children: ReactNode }): JSX.Element => {
   return (
     <div className="my-2 bg-white rounded-lg shadow-md p-6">
       <div className="w-16 mx-auto relative -mt-10 mb-3">
