@@ -117,6 +117,7 @@ Main considerations
 - CRUD & Database interaction
 - Search and filter
 - Linkage with other components 
+
 #### Quiz
 A quiz is make up of 
 - meta data
