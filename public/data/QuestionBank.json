@@ -52,5 +52,20 @@
         "question": "Which of the following statements about good OO programming practice is LEAST appropriate?",
         "correct_answers": ["We should use Inheritance to reduce duplication of code between two classes as much as possible"], 
         "incorrect_answers": ["We should declare fields as private as much as possible","We should not throw exceptions that reveal internal implementation of a class as much as possible","We should avoid using accessors and mutators (also known as getters and setters) to private fields as much as possible", "We should use polymorphism so that each class is responsible for handling its own behavior as much as possible","None of the others"]
-    }
+    },
+    {
+        "id": "mtCHNvypLt4TKizuqmP6f",
+        "type": "MCQ",
+        "difficulty": "hard", 
+        "modules": ["CS2030", "CS2030S"],
+        "question": "```java\nclass Main {\n  public static void main (String[] args) {\n    List list = new ArrayList();\n    list.add(\"hello\");\n    list.add(2);\n    System.out.print(list.get(0) instanceof Object);\n    System.out.print(list.get(1) instanceof Integer);\n  }\n}\n```",
+        "correct_answers": [
+            "truetrue"
+          ],
+          "incorrect_answers": [
+            "Falsetrue",
+            "The code does not compile.",
+            "truefalse"
+          ]
+      }
 ]

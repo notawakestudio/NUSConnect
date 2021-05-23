@@ -38,6 +38,20 @@ Lastly we want all their learning activities to be tracked and gamified to provi
 ### **Motivation**
 - Gamification of tasks and visualization of student’s progress
 
+#### **Badges**
+
+Milestones
+- sign up
+- first task done
+- first quiz taken
+- first forum post
+
+#### **Experience Points**
+
+Leveling system
+- consider using Fibonacci sequence
+- 0	1	1	2	3	5	8	13	21	34	55	89	144	233	377	610	987	1597	2584	4181	6765
+
 ### **Learning opportunities**
 
 - Forum
@@ -53,10 +67,8 @@ Lastly we want all their learning activities to be tracked and gamified to provi
   Allowing the student to view the progress they have made in each individual week of the semester. 
 - Be the goto place for students when they need information or want to do anything related to the module.
 
-
 ## **Moving forward**
 Finally, our final goal is to branch this out to every CS module and then to every NUS module and become the “forum” for NUS where everyone can come to view content and interact with peers taking the same mod. We hope to start small but grow big as we implement more features and make taking a new mod become a better experience. 
-
 
 ## **Frequently Asked Questions (FAQ)**
 
