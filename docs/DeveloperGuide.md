@@ -255,6 +255,12 @@ Extensions:
 }
 
 ```
+
+
+### Login Functionality
+
+Login is done with [next-auth](https://next-auth.js.org) and has the following providers implemented: GitHub and Google. To check if someone is signed in, the useSession() hook is implemted and to save the state between pages, `Provider` from next-auth/client is implemented. If the application is ready for deployment, change the `NEXTAUTH_URL` in .env to the canonical URL of the website.
+
 ## **Glossary**
 
 | Term     | Description                               |
@@ -262,3 +268,6 @@ Extensions:
 | quiz     | a collection of questions                 |
 | question | includes question text and answer options |
 | answer   | a possible option for a question          |
+| forum    | a collection of posts by users            |
+| post     | a way of communication between users      |
+

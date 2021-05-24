@@ -5,9 +5,46 @@ import SideBarA from '../components/common/SideBarA'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
 import { GiSwordman } from 'react-icons/gi'
 import { GrSemantics } from 'react-icons/gr'
+import { useSession } from 'next-auth/client'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 export default function DashBoard(): JSX.Element {
   const schedule = fetchModuleData('xft5nj9NXr_RXl3LEyt2g')
+  const [session, loading] = useSession()
+  const [name, setName] = useState('user')
+  const router = useRouter()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('/api/userData')
+      const json = await res.json()
+      if (json.name) {
+        setName(json.name)
+      }
+    }
+    fetchData()
+  }, [session])
+
+  if (typeof window !== 'undefined' && loading) return null
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/')
+    }
+  })
+  
+  if (!session) {
+    router.push('/')
+    return (
+      <>
+        <div>
+          <h1>Please sign in first</h1>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <Head>
@@ -39,7 +76,7 @@ export default function DashBoard(): JSX.Element {
               </div>
             </header>
             <div className="px-4 md:px-6">
-              <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">Good afternoon</h1>
+              <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">Good afternoon {name} </h1>
               <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
                 <div className="w-full md:w-6/12">
                   <div className="shadow-lg w-full bg-white dark:bg-gray-700 relative overflow-hidden">
