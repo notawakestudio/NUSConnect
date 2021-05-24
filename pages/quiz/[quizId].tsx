@@ -9,33 +9,8 @@ import { hasSameContent } from '../../components/common/Util'
 import Question from '../../components/quiz/Question'
 import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
 import ScoreCard from '../../components/quiz/ScoreCard'
-import { QuestionWithAnswersMixed } from '../../components/quiz/types'
-class AnswerObject {
-  question: string
-  qnNumOneBased: number
-  answer: string[]
-  isCorrect: boolean
-  correctAnswers: string[]
-  constructor(question, qnNumOneBased, correctAnswers) {
-    this.qnNumOneBased = qnNumOneBased
-    this.question = question
-    this.answer = []
-    this.isCorrect = false
-    this.correctAnswers = correctAnswers
-  }
-
-  updateAnswer(answer: string[]): AnswerObject {
-    this.answer = answer
-    return this
-  }
-  updateCorrect(isCorrect: boolean): AnswerObject {
-    this.isCorrect = isCorrect
-    return this
-  }
-  hasAttempted(): boolean {
-    return this.answer.length !== 0
-  }
-}
+import { QuestionWithAnswersMixed, QuizMode } from '../../components/quiz/types'
+import AnswerObject from '../../components/quiz/AnswerObject'
 export const getStaticPaths: GetStaticPaths = async () => {
   const quizIds = await getAllQuizId()
   const paths = quizIds.map((quizId) => {
@@ -73,10 +48,10 @@ export default function Quiz({
   const [currQnNumOneBased, setCurrQnNumOneBased] = useState(1)
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [score, setScore] = useState(0)
-  const [gameOver, setGameOver] = useState(true)
-  const startQuiz = async (): Promise<void> => {
+  const [quizMode, setQuizMode] = useState(QuizMode.STARTING)
+  const startQuiz = (): void => {
     setLoading(true)
-    setGameOver(false)
+    setQuizMode(QuizMode.TAKING)
     setUserAnswers(
       Array(quizQuestions.length)
         .fill(0)
@@ -94,13 +69,18 @@ export default function Quiz({
     setLoading(false)
   }
 
+  const reviewQuiz = (): void => {
+    setCurrQnNumOneBased(1)
+    setQuizMode(QuizMode.REVIEWING)
+  }
+
   const updateTotalScore = (): void => {
     setScore(
       userAnswers.reduce((memo, answerObject) => {
         return memo + (answerObject.isCorrect ? 1 : 0)
       }, 0)
     )
-    setGameOver(true)
+    setQuizMode(QuizMode.ENDING)
   }
 
   const attemptedAllQuestions = (): boolean => {
@@ -162,7 +142,7 @@ export default function Quiz({
         </Head>
         <div className="container mx-auto text-center flex flex-col items-center">
           <h1 className="px-4 py-2 text-base font-bold">{quizTitle}</h1>
-          {gameOver ? (
+          {quizMode === QuizMode.STARTING || quizMode === QuizMode.ENDING ? (
             <div className="shadow-lg rounded-t-xl bg-blue-500 w-full md:w-64 p-6 dark:bg-gray-800">
               <p className="text-white text-xl">Ready?</p>
               <div className="mt-4">
@@ -172,6 +152,14 @@ export default function Quiz({
                   onClick={startQuiz}>
                   Start
                 </button>
+                {quizMode === QuizMode.ENDING && (
+                  <button
+                    type="button"
+                    className="py-2 px-4 mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                    onClick={reviewQuiz}>
+                    Review
+                  </button>
+                )}
                 <Link href="/quiz">
                   <a
                     type="button"
@@ -183,17 +171,15 @@ export default function Quiz({
             </div>
           ) : null}
 
-          {gameOver ? (
-            <ScoreCard
-              child={
-                <p className={`score ${score === questions.length ? 'text-green-500' : ''}`}>
-                  Score: {score} / {questions.length}
-                </p>
-              }
-            />
+          {quizMode === QuizMode.ENDING ? (
+            <ScoreCard>
+              <p className={`score ${score === questions.length ? 'text-green-500' : ''}`}>
+                Score: {score} / {questions.length}
+              </p>
+            </ScoreCard>
           ) : null}
           {loading && <p>Loading Questions ...</p>}
-          {!loading && !gameOver && (
+          {!loading && (quizMode === QuizMode.TAKING || quizMode === QuizMode.REVIEWING) && (
             <Question
               questionNumber={currQnNumOneBased}
               totalQuestions={questions.length}
@@ -201,12 +187,14 @@ export default function Quiz({
               answers={questions[currQnNumOneBased - 1].answers}
               type={questions[currQnNumOneBased - 1].type}
               userAnswer={userAnswers[currQnNumOneBased - 1].answer}
+              correct_answers={questions[currQnNumOneBased - 1].correct_answers}
               updateTotalScore={updateTotalScore}
               saveProgress={saveProgress}
               attemptedAllQuestions={attemptedAllQuestions}
+              quizMode={quizMode}
             />
           )}
-          {!gameOver && !loading ? (
+          {!loading && (quizMode === QuizMode.TAKING || quizMode === QuizMode.REVIEWING) ? (
             <Pagination
               numItem={questions.length}
               onClickChange={changeQuestion}

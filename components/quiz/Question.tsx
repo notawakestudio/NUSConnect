@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { renderMdToHtml } from '../common/Util'
 import Alert from '../common/Alert'
 import { useState } from 'react'
+import { QuizMode } from './types'
 type QuestionProps = {
   question: string
   answers: string[]
@@ -13,6 +14,8 @@ type QuestionProps = {
   userAnswer: string[]
   questionNumber: number
   totalQuestions: number
+  quizMode: QuizMode
+  correct_answers: string[]
 }
 
 const Question = ({
@@ -25,9 +28,14 @@ const Question = ({
   userAnswer,
   questionNumber,
   totalQuestions,
+  quizMode,
+  correct_answers,
 }: QuestionProps): JSX.Element => {
   const [alert, setAlert] = useState(false)
   const updateAnswer = (selectedOption: string): void => {
+    if (quizMode === QuizMode.REVIEWING) {
+      return
+    }
     if (userAnswer.includes(selectedOption)) {
       saveProgress([...userAnswer].filter((x) => x !== selectedOption))
     } else {
@@ -58,6 +66,8 @@ const Question = ({
             answerText={answerText}
             userAnswer={userAnswer}
             updateAnswer={updateAnswer}
+            correct_answers={correct_answers}
+            quizMode={quizMode}
           />
         ))}
       </div>
@@ -70,7 +80,7 @@ const Question = ({
             setAlert(true)
           }
         }}>
-        Submit
+        {quizMode === QuizMode.TAKING ? 'Submit' : 'Done'}
       </button>
       <Link href="/quiz">
         <a className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
