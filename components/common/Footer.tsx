@@ -4,12 +4,16 @@ const Footer = (): JSX.Element => {
       <div className="max-w-screen-xl mx-auto px-4">
         <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-between">
           <li className="m-2">
-            <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+            <a
+              className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              href="#">
               FAQ
             </a>
           </li>
           <li className="m-2">
-            <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+            <a
+              className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              href="#">
               About
             </a>
           </li>
@@ -18,8 +22,7 @@ const Footer = (): JSX.Element => {
               target="_blank"
               className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
               href="https://github.com/notawakestudio/NUSConnect"
-              rel="noreferrer"
-            >
+              rel="noreferrer">
               Github
             </a>
           </li>
@@ -28,13 +31,16 @@ const Footer = (): JSX.Element => {
               target="_blank"
               className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
               href="https://notawakestudio.github.io/NUSConnect/"
-              rel="noreferrer"
-            >
+              rel="noreferrer">
               Documentation
             </a>
           </li>
           <li className="m-2">
-            <a href="#" className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" target="_blank" rel="noopener noreferrer">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              target="_blank"
+              rel="noopener noreferrer">
               Powered by NotAwakeStudio
             </a>
           </li>

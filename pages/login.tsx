@@ -2,11 +2,10 @@ import Head from 'next/head'
 import Link from 'next/link'
 import React from 'react'
 import { signIn, signOut, useSession } from 'next-auth/client'
-import { Redirect } from 'react-router'
 import Layout from '../components/common/Layout'
 
 export default function Home(): JSX.Element {
-  const [session, loading] = useSession()
+  const [session] = useSession()
 
   return (
     <div className="">
@@ -68,7 +67,7 @@ export default function Home(): JSX.Element {
             <div>
               Signed in as {session.user.name} <br />
               <button>
-                <Link href="/secret">To the quiz page</Link> <br />
+                <Link href="/quiz">To the quiz page</Link> <br />
               </button>
               <br />
               <button

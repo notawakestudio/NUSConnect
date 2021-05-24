@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import React from 'react'
-import PostMainItem from '../../../components/forum/PostMainItem'
-import PostList from '../../../components/forum/PostList'
-import PostData from '../../../public/data/ForumData.json'
-import Layout from '../../../components/common/Layout'
+import PostMainItem from '../../components/forum/PostMainItem'
+import PostList from '../../components/forum/PostList'
+import PostData from '../../public/data/ForumData.json'
+import Layout from '../../components/common/Layout'
 
 const CurrentPost = ({ currentPost }) => {
   // const router = useRouter()
