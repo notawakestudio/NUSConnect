@@ -18,7 +18,7 @@ export default function Home(): JSX.Element {
       {/* for some reason there are errors here, it works but typescript does not like it  */}
 
       <Layout>
-        <div className="container flex justify-center">
+        <div className="container flex justify-center py-4">
           {!session && (
             <div>
               <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
@@ -28,7 +28,9 @@ export default function Home(): JSX.Element {
                 <div className="flex-column gap-4 item-center">
                   <button
                     type="button"
-                    onClick={() => signIn('github')}
+                    onClick={() =>
+                      signIn('github', { callbackUrl: 'http://localhost:3000/dashboard' })
+                    }
                     className="mb-3 py-2 px-4 flex justify-center items-center  bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                     <img
                       className="w-5 h-5 mr-2"
@@ -38,7 +40,9 @@ export default function Home(): JSX.Element {
                   </button>
                   <button
                     type="button"
-                    onClick={() => signIn('google')}
+                    onClick={() =>
+                      signIn('google', { callbackUrl: 'http://localhost:3000/dashboard' })
+                    }
                     className="py-2 px-4 flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                     <svg
                       width="20"
@@ -64,15 +68,11 @@ export default function Home(): JSX.Element {
             </div>
           )}
           {session && (
-            <div>
-              Signed in as {session.user.name} <br />
-              <button>
-                <Link href="/quiz">To the quiz page</Link> <br />
-              </button>
-              <br />
+            <div className="flex-column">
+              <span className="flex py-2 text-center mr-3">Signed in as {session.user.name}</span>
               <button
                 className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200"
-                onClick={() => signOut()}>
+                onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}>
                 Sign Out <br />
               </button>
             </div>

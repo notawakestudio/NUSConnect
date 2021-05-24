@@ -1,19 +1,18 @@
+import { useSession } from 'next-auth/client'
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
+import { GrSemantics } from 'react-icons/gr'
+import Auth from '../components/common/Auth'
 import Footer from '../components/common/Footer'
 import NavBar from '../components/common/NavBar'
 import SideBarA from '../components/common/SideBarA'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
-import { GiSwordman } from 'react-icons/gi'
-import { GrSemantics } from 'react-icons/gr'
-import Auth, { NameContext, useName } from '../components/common/Auth'
-import { useContext, useEffect, useState } from 'react'
-import { useSession } from 'next-auth/client'
 
 export default function DashBoard(): JSX.Element {
   const schedule = fetchModuleData('xft5nj9NXr_RXl3LEyt2g')
-  const [session, loading] = useSession()
+  const [session] = useSession()
   const [name, setName] = useState('user')
-  const [picutre, setPicture] = useState()
+  const [picture, setPicture] = useState()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,7 +85,7 @@ export default function DashBoard(): JSX.Element {
                             <img
                               className=" rounded-full relative w-10 h-10"
                               alt="profile-pic"
-                              src={picutre}></img>
+                              src={picture}></img>
                             <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
                               Level 2
                             </p>

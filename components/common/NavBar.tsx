@@ -3,13 +3,35 @@ import React, { useEffect, useState } from 'react'
 import { BsSun, BsMoon } from 'react-icons/bs'
 import { AiOutlineHome } from 'react-icons/ai'
 import { RiDashboardLine } from 'react-icons/ri'
+import { useSession } from 'next-auth/client'
 
 import QuickLink from './QuickLink'
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+  const [session] = useSession()
+  const [name, setName] = useState('user')
+  const [picture, setPicture] = useState()
 
   useEffect(() => {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    const fetchData = async () => {
+      const res = await fetch('/api/userData')
+      const json = await res.json()
+      if (json.name) {
+        setName(json.name)
+      }
+      if (json.image) {
+        setPicture(json.image)
+      }
+      console.log(json) // name, email and image are the output.
+    }
+    fetchData()
+  }, [session])
+
+  useEffect(() => {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
       setIsDarkMode(true)
     } else {
       setIsDarkMode(false)
@@ -43,20 +65,28 @@ const NavBar = (): JSX.Element => {
               <QuickLink />
               <button
                 className="py-2 px-4 text-2xl flex justify-center items-center  hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-yellow-300 transition ease-in duration-200 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
-                onClick={() => setIsDarkMode(!isDarkMode)}
-              >
+                onClick={() => setIsDarkMode(!isDarkMode)}>
                 {isDarkMode ? <BsMoon /> : <BsSun />}
               </button>
             </div>
           </div>
           <div className="inline-flex h-full py-2 text-center">
             <Link href="/">
-              <img alt="NUSConnectBanner" src="https://github.com/notawakestudio/NUSConnect/blob/add-forum/public/NUSConnectBanner.png?raw=true" className="mx-auto cursor-pointer" />
+              <img
+                alt="NUSConnectBanner"
+                src="https://github.com/notawakestudio/NUSConnect/blob/add-forum/public/NUSConnectBanner.png?raw=true"
+                className="mx-auto cursor-pointer"
+              />
             </Link>
           </div>
           <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
-            <a href="#" className="block ">
-              <img alt="profile" src="https://timesofindia.indiatimes.com/photo/67586673.cms" className="mx-auto object-cover rounded-full h-10 w-10 " />
+            <span className="flex p-5">Signed in as {name}</span>
+            <a href="/login" className="block ">
+              <img
+                alt="profile"
+                src={picture}
+                className="mx-auto object-cover rounded-full h-10 w-10 "
+              />
             </a>
           </div>
         </div>
