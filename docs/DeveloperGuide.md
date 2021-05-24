@@ -260,7 +260,7 @@ Extensions:
 
 ### Login Functionality
 
-Login is done with [next-auth](https://next-auth.js.org) and has the following providers implemented: GitHub and Google. To check if someone is signed in, the useSession() hook is implemted and to save the state between pages, `Provider` from next-auth/client is implemented. If the application is ready for deployment, change the `NEXTAUTH_URL` in .env to the canonical URL of the website.
+Login is done with [next-auth](https://next-auth.js.org) and has the following providers implemented: GitHub and Google. To check if someone is signed in, the useSession() hook is implemented and to save the state between pages, `Provider` from next-auth/client is implemented. If the application is ready for deployment, change the `NEXTAUTH_URL` in .env to the canonical URL of the website.
 
 ## **Glossary**
 
