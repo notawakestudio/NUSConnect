@@ -32,3 +32,10 @@ export enum QuestionType {
   MCQ = 'MCQ',
   MRQ = 'MRQ',
 }
+
+export enum QuizMode {
+  STARTING = 'Starting',
+  TAKING = 'Taking',
+  REVIEWING = 'Reviewing',
+  ENDING = 'Ending',
+}
