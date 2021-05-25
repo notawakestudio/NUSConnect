@@ -15,9 +15,7 @@ export default function Login(): JSX.Element {
             <div className="flex-column gap-4 item-center">
               <button
                 type="button"
-                onClick={() =>
-                  signIn('github', { callbackUrl: `${process.env.NEXTAUTH_URL}/dashboard` })
-                }
+                onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
                 className="mb-3 py-2 px-4 flex justify-center items-center  bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                 <img
                   className="w-5 h-5 mr-2"
@@ -27,9 +25,7 @@ export default function Login(): JSX.Element {
               </button>
               <button
                 type="button"
-                onClick={() =>
-                  signIn('google', { callbackUrl: `${process.env.NEXTAUTH_URL}/dashboard` })
-                }
+                onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
                 className="py-2 px-4 flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                 <svg
                   width="20"
@@ -43,7 +39,7 @@ export default function Login(): JSX.Element {
                 Connect with google
               </button>
             </div>
-            <div className="flex items-center justify-center mt-6">
+            <div className="hidden flex items-center justify-center mt-6">
               <a
                 href="#"
                 target="_blank"

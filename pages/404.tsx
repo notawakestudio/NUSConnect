@@ -12,7 +12,12 @@ export default function Custom404(): JSX.Element {
         <div className="flex h-screen">
           <div className="m-auto text-center">
             <div>
-              <svg width="631" height="379" viewBox="0 0 631 379" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="631"
+                height="379"
+                viewBox="0 0 631 379"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0)">
                   <path
                     d="M317.524 379C488.625 379 627.33 368.857 627.33 356.346C627.33 343.834 488.625 333.692 317.524 333.692C146.423 333.692 7.71875 343.834 7.71875 356.346C7.71875 368.857 146.423 379 317.524 379Z"
@@ -117,8 +122,15 @@ export default function Custom404(): JSX.Element {
                     d="M276.705 3.47015C276.798 3.47015 276.89 3.47423 276.982 3.47789C275.022 3.5566 273.166 4.472 271.805 6.03147C270.443 7.59095 269.683 9.67293 269.683 11.8394C269.683 14.0058 270.443 16.0878 271.805 17.6472C273.166 19.2067 275.022 20.1221 276.982 20.2008C276.89 20.2045 276.798 20.2086 276.705 20.2086C274.697 20.2066 272.771 19.324 271.352 17.7547C269.932 16.1853 269.135 14.0577 269.135 11.8394C269.135 9.62099 269.932 7.49336 271.352 5.92404C272.771 4.35472 274.697 3.47211 276.705 3.47015Z"
                     fill="black"
                   />
-                  <path opacity="0.1" d="M301.642 26.127C300.367 27.1889 298.814 27.7637 297.217 27.7645H288.351C286.754 27.7637 285.2 27.1889 283.925 26.127H301.642Z" fill="black" />
-                  <path d="M358.896 86.7696C358.896 86.7696 360.806 92.8491 362.554 91.2304L361.16 83.2837L358.896 86.7696Z" fill="#FBBEBE" />
+                  <path
+                    opacity="0.1"
+                    d="M301.642 26.127C300.367 27.1889 298.814 27.7637 297.217 27.7645H288.351C286.754 27.7637 285.2 27.1889 283.925 26.127H301.642Z"
+                    fill="black"
+                  />
+                  <path
+                    d="M358.896 86.7696C358.896 86.7696 360.806 92.8491 362.554 91.2304L361.16 83.2837L358.896 86.7696Z"
+                    fill="#FBBEBE"
+                  />
                   <path
                     d="M591.34 272.169C593.119 272.883 595.024 273.131 596.905 272.894C598.786 272.656 600.591 271.939 602.178 270.8C603.765 269.66 605.091 268.129 606.051 266.327C607.011 264.525 607.579 262.501 607.711 260.415C607.842 258.329 607.532 256.238 606.807 254.306C606.082 252.375 604.96 250.656 603.531 249.285C602.101 247.914 600.403 246.929 598.57 246.406C596.737 245.884 594.819 245.839 592.968 246.275L593.274 253.224L590.297 247.269C587.376 248.785 585.119 251.52 584.023 254.873C583.633 256.048 583.397 257.277 583.32 258.525C583.132 261.453 583.813 264.369 585.26 266.831C586.708 269.293 588.842 271.167 591.34 272.169Z"
                     fill="#57B894"
@@ -258,8 +270,12 @@ export default function Custom404(): JSX.Element {
                 </defs>
               </svg>
             </div>
-            <p className="text-sm md:text-base text-yellow-300 p-2 mb-4">The stuff you were looking for doesn't exist</p>
-            <a href="/" className="bg-transparent hover:bg-yellow-300 text-yellow-300 hover:text-white rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent">
+            <p className="text-sm md:text-base text-yellow-300 p-2 mb-4">
+              The stuff you were looking for doesn't exist
+            </p>
+            <a
+              href="/"
+              className="bg-transparent hover:bg-yellow-300 text-yellow-300 hover:text-white rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent">
               Go Back
             </a>
           </div>
