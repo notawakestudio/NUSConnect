@@ -1,7 +1,7 @@
-import { getPostData } from './ForumAPI'
+import { getPostById } from './ForumAPI'
 
 const PostMainItem = ({ id }): JSX.Element => {
-  const currentPost = getPostData(id)
+  const currentPost = getPostById(id)
   const tags = currentPost.tags
 
   return (

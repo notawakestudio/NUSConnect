@@ -23,7 +23,7 @@ const PostList = ({ postList }): JSX.Element => {
                 {' '}
                 Week 1
               </h4>
-              <ul className="flex flex-col">
+              <ul className="flex flex-col w-auto">
                 {postList.map((post) => {
                   return <PostListItem key={post.id} post={post} />
                 })}
