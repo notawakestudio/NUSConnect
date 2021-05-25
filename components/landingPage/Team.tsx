@@ -14,12 +14,12 @@ const Team = (): JSX.Element => {
               Liu Yongliang
             </h3>
             <p className="font-body">Developer</p>
-            <p className="font-body text-sm mb-4">Half Dreaming & Half Sleeping</p>
+            {/* <p className="font-body text-sm mb-4">Half Dreaming & Half Sleeping</p>
             <a
               className="font-body text-blue-500 hover:text-gray-800"
               href="mailto:notawakestudio@gmail.com">
               notawakestudio@gmail.com
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="text-center">
@@ -33,12 +33,12 @@ const Team = (): JSX.Element => {
               Ong Jun Xiong
             </h3>
             <p className="font-body">Developer</p>
-            <p className="font-body text-sm mb-4">Half Dreaming & Half Sleeping</p>
+            {/* <p className="font-body text-sm mb-4">Half Dreaming & Half Sleeping</p>
             <a
               className="font-body text-blue-500 hover:text-gray-800"
               href="mailto:notawakestudio@gmail.com">
               notawakestudio@gmail.com
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
