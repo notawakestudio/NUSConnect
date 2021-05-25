@@ -10,8 +10,6 @@ export default async (req, res) => {
       image: session.user.image ? session.user.image : 'empty',
     })
   } else {
-    res.send({
-      error: 'You need to be signed in.',
-    })
+    res.redirect('../../login')
   }
 }
