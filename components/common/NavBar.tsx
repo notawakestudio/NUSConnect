@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineHome } from 'react-icons/ai'
 import { BsMoon, BsSun } from 'react-icons/bs'
 import { RiDashboardLine } from 'react-icons/ri'
+import Image from 'next/image'
 import QuickLink from './QuickLink'
 
 const NavBar = (): JSX.Element => {
@@ -49,9 +50,20 @@ const NavBar = (): JSX.Element => {
   return (
     <header className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black items-center h-16">
       <div className="flex flex-col justify-center h-full px-3 mx-auto flex-center">
-        <div className="items-center pl-1 flex h-full w-full lg:max-w-68 sm:pr-2 sm:ml-0">
+        <div className="items-center justify-between pl-1 flex h-full w-full lg:max-w-68 sm:pr-2 sm:ml-0">
           <div className="container left-60 flex w-auto h-auto">
-            <div className="flex w-full h-10">
+            <div className="flex w-full h-10 ">
+              <div className=" flex px-2 text-center justify-center">
+                <Link href="/">
+                  <Image
+                    alt="NUSConnectBanner"
+                    src="/NUSConnectBanner.png"
+                    height={48}
+                    width={200}
+                    className="mx-auto cursor-pointer"
+                  />
+                </Link>
+              </div>
               <Link href="/">
                 <button className="px-4 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
                   <AiOutlineHome />
@@ -70,37 +82,29 @@ const NavBar = (): JSX.Element => {
               </button>
             </div>
           </div>
-          <div className="inline-flex h-full py-2 text-center">
-            <Link href="/">
-              <img
-                alt="NUSConnectBanner"
-                src="https://github.com/notawakestudio/NUSConnect/blob/add-forum/public/NUSConnectBanner.png?raw=true"
-                className="mx-auto cursor-pointer"
-              />
-            </Link>
-          </div>
+
           {!session && (
-            <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
-              <span className="flex p-5">Not signed in</span>
+            <div className="p-1 flex items-center">
               <a href="/login" className="block">
-                <img
-                  alt="profile"
-                  src="https://timesofindia.indiatimes.com/photo/67586673.cms"
-                  className="mx-auto object-cover rounded-full h-10 w-10 cursor-pointer"
-                />
+                <span className="flex p-5 font-bold">Login</span>
               </a>
+              <img
+                alt="profile"
+                src="https://timesofindia.indiatimes.com/photo/67586673.cms"
+                className="mx-auto object-cover rounded-full h-10 w-10 cursor-pointer"
+              />
             </div>
           )}
           {session && (
             <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
-              <span className="flex p-5">Signed in as {name}</span>
               <a href="/login" className="block">
-                <img
-                  alt="profile"
-                  src={picture}
-                  className="mx-auto object-cover rounded-full h-10 w-10 "
-                />
+                <span className="flex p-5 font-bold">{name}</span>
               </a>
+              <img
+                alt="profile"
+                src={picture}
+                className="mx-auto object-cover rounded-full h-10 w-10 "
+              />
             </div>
           )}
         </div>
