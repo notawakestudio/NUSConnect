@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/client'
 import React from 'react'
 import { useContext, useEffect, useState } from 'react'
-import Login from '../../pages/login'
+import Login from './Login'
 
 export const NameContext = React.createContext('user')
 
