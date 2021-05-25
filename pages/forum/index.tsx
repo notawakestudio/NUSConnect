@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import React from 'react'
-import Layout from '../../components/common/Layout'
-import PostList from '../../components/forum/PostList'
-import PostData from '../../public/data/ForumData.json'
 import Auth from '../../components/common/Auth'
+import Layout from '../../components/common/Layout'
+import { getAllPosts } from '../../components/forum/ForumAPI'
+import PostList from '../../components/forum/PostList'
 
-export default function Forum({ posts }): JSX.Element {
+export default function Forum(): JSX.Element {
   return (
     <>
       <Head>
@@ -16,20 +16,11 @@ export default function Forum({ posts }): JSX.Element {
       <Auth>
         <Layout>
           <div className="flex">
-            <PostList postList={posts} />
-            <div> There is nothing here </div>
+            <PostList postList={getAllPosts()} />
+            {/* <div> There is nothing here </div> */}
           </div>
         </Layout>
       </Auth>
     </>
   )
-}
-
-export const getStaticProps = async () => {
-  const posts = PostData
-  return {
-    props: {
-      posts,
-    },
-  }
 }

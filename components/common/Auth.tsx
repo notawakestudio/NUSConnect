@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/client'
 import React from 'react'
 import { useContext, useEffect, useState } from 'react'
+import Login from '../../pages/login'
 
 export const NameContext = React.createContext('user')
 
@@ -27,7 +28,7 @@ export default function Auth({ children }): JSX.Element {
 
   // to-do redirect to a better page
   if (!session) {
-    return <div>test</div>
+    return <Login></Login>
   }
 
   return (
