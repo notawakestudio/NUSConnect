@@ -57,7 +57,7 @@ const NavBar = (): JSX.Element => {
                   <AiOutlineHome />
                 </button>
               </Link>
-              <Link href="/dashboard">
+              <Link href={session ? '/dashboard' : '/login'}>
                 <button className="ml-1 px-4 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
                   <RiDashboardLine />
                 </button>
@@ -82,11 +82,11 @@ const NavBar = (): JSX.Element => {
           {!session && (
             <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
               <span className="flex p-5">Not signed in</span>
-              <a href="/login" className="block ">
+              <a href="/login" className="block">
                 <img
                   alt="profile"
                   src="https://timesofindia.indiatimes.com/photo/67586673.cms"
-                  className="mx-auto object-cover rounded-full h-10 w-10 "
+                  className="mx-auto object-cover rounded-full h-10 w-10 cursor-pointer"
                 />
               </a>
             </div>
@@ -94,7 +94,7 @@ const NavBar = (): JSX.Element => {
           {session && (
             <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
               <span className="flex p-5">Signed in as {name}</span>
-              <a href="/login" className="block ">
+              <a href="/login" className="block">
                 <img
                   alt="profile"
                   src={picture}
