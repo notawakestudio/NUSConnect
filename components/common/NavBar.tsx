@@ -1,11 +1,11 @@
+import { useSession } from 'next-auth/client'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { BsSun, BsMoon } from 'react-icons/bs'
 import { AiOutlineHome } from 'react-icons/ai'
+import { BsMoon, BsSun } from 'react-icons/bs'
 import { RiDashboardLine } from 'react-icons/ri'
-import { useSession } from 'next-auth/client'
-
 import QuickLink from './QuickLink'
+
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
@@ -79,16 +79,30 @@ const NavBar = (): JSX.Element => {
               />
             </Link>
           </div>
-          <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
-            <span className="flex p-5">Signed in as {name}</span>
-            <a href="/login" className="block ">
-              <img
-                alt="profile"
-                src={picture}
-                className="mx-auto object-cover rounded-full h-10 w-10 "
-              />
-            </a>
-          </div>
+          {!session && (
+            <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
+              <span className="flex p-5">Not signed in</span>
+              <a href="/login" className="block ">
+                <img
+                  alt="profile"
+                  src="https://timesofindia.indiatimes.com/photo/67586673.cms"
+                  className="mx-auto object-cover rounded-full h-10 w-10 "
+                />
+              </a>
+            </div>
+          )}
+          {session && (
+            <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
+              <span className="flex p-5">Signed in as {name}</span>
+              <a href="/login" className="block ">
+                <img
+                  alt="profile"
+                  src={picture}
+                  className="mx-auto object-cover rounded-full h-10 w-10 "
+                />
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </header>

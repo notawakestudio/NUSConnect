@@ -1,7 +1,6 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import React from 'react'
 import { signIn, signOut, useSession } from 'next-auth/client'
+import Head from 'next/head'
+import React from 'react'
 import Layout from '../components/common/Layout'
 
 export default function Home(): JSX.Element {
