@@ -6,7 +6,7 @@ import { getAllPostId, getAllPosts, getPostById } from '../../components/forum/F
 import PostList from '../../components/forum/PostList'
 import PostMainItem from '../../components/forum/PostMainItem'
 
-export default function CurrentPost({ currentPost }): JSX.Element {
+export default function CurrentPost({ currentPost, postList }): JSX.Element {
   return (
     <>
       <Head>
@@ -17,7 +17,7 @@ export default function CurrentPost({ currentPost }): JSX.Element {
       <Layout>
         <div className="flex">
           <div className="max-w-md">
-            <PostList postList={getAllPosts()} />
+            <PostList postList={postList} />
           </div>
           <div className="flex-grow">
             <PostMainItem post={currentPost} />
@@ -45,10 +45,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postId = params.postId as string
   const currentPost = getPostById(postId)
+  const postList = getAllPosts()
 
   return {
     props: {
       currentPost,
+      postList,
     },
   }
 }
