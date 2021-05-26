@@ -1,3 +1,4 @@
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import Auth from '../../components/common/Auth'
@@ -5,7 +6,16 @@ import Layout from '../../components/common/Layout'
 import { getAllPosts } from '../../components/forum/ForumAPI'
 import PostList from '../../components/forum/PostList'
 
-export default function Forum(): JSX.Element {
+export const getStaticProps: GetStaticProps = async () => {
+  const postList = await getAllPosts()
+  return {
+    props: {
+      postList,
+    },
+  }
+}
+
+export default function Forum({ postList }): JSX.Element {
   return (
     <>
       <Head>
@@ -16,7 +26,7 @@ export default function Forum(): JSX.Element {
       <Auth>
         <Layout>
           <div className="flex">
-            <PostList postList={getAllPosts()} />
+            <PostList postList={postList} />
             {/* <div> There is nothing here </div> */}
           </div>
         </Layout>
