@@ -2,7 +2,19 @@
     {
         "id" : "1a",
         "title": "How to post a quiz",
-        "content":"This is a test message",
+        "content":"This is a short message",
+        "date": "12 April 2020",
+        "tags": ["Question", "Tip", "Help"], 
+        "week": "Week 1",
+        "isEdited": false, 
+        "author": "Alan Tan",
+        "upVotes": "10",
+        "test": 10
+    },
+    {
+        "id" : "1c",
+        "title": "How to post a quiz",
+        "content":"This is a longer message, This is a longer message,  This is a longer message",
         "date": "12 April 2020",
         "tags": ["Question", "Tip", "Help"], 
         "week": "Week 1",

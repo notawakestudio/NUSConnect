@@ -1,17 +1,15 @@
-import { getPostById } from './ForumAPI'
-
-const PostMainItem = ({ id }): JSX.Element => {
-  const currentPost = getPostById(id)
+const PostMainItem = ({ post }): JSX.Element => {
+  const currentPost = post
   const tags = currentPost.tags
 
   return (
     <div className="mt-10">
-      <div className="p-12 flex flex-col items-start overflow-hidden shadow-lg rounded-lg h-full w-full my ">
+      <div className="p-12 flex-col items-start shadow-lg rounded-lg">
         <h2 className="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">
           {currentPost.title}
         </h2>
         <p className="leading-relaxed mb-8">{currentPost.content}</p>
-        <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100  w-full">
+        <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100">
           <div className="flex flex-wrap justify-start items-center mt-4">
             {tags.map((tag) => (
               <div
@@ -50,7 +48,7 @@ const PostMainItem = ({ id }): JSX.Element => {
           </span>
         </div>
         <a className="inline-flex items-center">
-          <span className="flex-grow flex flex-col pl-4">
+          <span className="flex flex-col pl-2">
             <span className="title-font font-medium text-gray-900">{currentPost.author} </span>
             <span className="text-gray-400 text-xs tracking-widest mt-0.5">Level 10</span>
           </span>

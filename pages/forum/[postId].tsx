@@ -15,9 +15,13 @@ export default function CurrentPost({ currentPost }): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="inline-flex">
-          <PostList postList={getAllPosts()} />
-          <PostMainItem id={currentPost.id} />
+        <div className="flex">
+          <div className="max-w-md">
+            <PostList postList={getAllPosts()} />
+          </div>
+          <div className="flex-grow">
+            <PostMainItem post={currentPost} />
+          </div>
         </div>
       </Layout>
     </>
