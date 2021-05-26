@@ -10,6 +10,7 @@ const API_MAKE_QUESTION = 'https://1ieznu.deta.dev/quiz/make'
 const API_GET_ALL_QUESTION = 'https://1ieznu.deta.dev/quiz/question'
 const API_SUBMIT_QUIZ = 'https://1ieznu.deta.dev/quiz/collate'
 const API_GET_ALL_QUIZ = 'https://1ieznu.deta.dev/quiz/quiz'
+const API_GET_QUESTION_BY_ID = 'https://1ieznu.deta.dev/quiz/question/'
 
 export const fetchQuizById = async (quizId: string): Promise<Quiz> => {
   const quiz = await fetch(API_GET_QUIZ_BY_ID + quizId).then((response) => response.json())
@@ -18,6 +19,17 @@ export const fetchQuizById = async (quizId: string): Promise<Quiz> => {
 export const fetchQuizTitle = async (quizId: string): Promise<string> => {
   const quiz = await fetchQuizById(quizId)
   return quiz['title']
+}
+
+export const fetchQuestionById = async (questionId: string): Promise<Quiz> => {
+  const question = await fetch(API_GET_QUESTION_BY_ID + questionId).then((response) =>
+    response.json()
+  )
+  return question
+}
+export const fetchQuestionTitle = async (questionId: string): Promise<string> => {
+  const question = await fetchQuestionById(questionId)
+  return question['question']
 }
 
 export const fetchQuizQuestions = async (quizId: string): Promise<QuestionWithAnswersMixed[]> => {
@@ -68,6 +80,58 @@ export function createQuestion(json: GrayMatterFile<any>): void {
   })
 }
 
+export function makeQuestion(question): void {
+  const requestBody = {
+    id: nanoid(),
+    type: question['type'],
+    modules: question['modules'],
+    question: question['question'],
+    correct_answers: question['correct_answers'],
+    incorrect_answers: question['incorrect_answers'],
+  }
+  fetch(API_MAKE_QUESTION, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
+}
+
+export function makeQuiz(quiz): void {
+  const requestBody: Quiz = {
+    id: nanoid(),
+    date: getReadableDate(),
+    title: quiz['title'],
+    author: quiz['author'],
+    modules: quiz['modules'],
+    questions: quiz['questions'],
+    tags: quiz['tags'],
+    week: quiz['week'],
+  }
+  fetch(API_SUBMIT_QUIZ, {
+    method: 'POST',
+    mode: 'no-cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(requestBody),
+  }).then((response) => {
+    console.log(response)
+  })
+}
 export async function fetchAllQuestions(): Promise<Question[]> {
   return await fetch(API_GET_ALL_QUESTION).then((response) => response.json())
 }
