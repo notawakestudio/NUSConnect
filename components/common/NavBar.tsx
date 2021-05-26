@@ -10,11 +10,11 @@ import QuickLink from './QuickLink'
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
-  const [name, setName] = useState('user')
-  const [picture, setPicture] = useState()
+  const [name, setName] = useState('')
+  const [picture, setPicture] = useState(undefined)
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       const res = await fetch('/api/userData')
       const json = await res.json()
       if (json.name) {
@@ -23,7 +23,6 @@ const NavBar = (): JSX.Element => {
       if (json.image) {
         setPicture(json.image)
       }
-      console.log(json) // name, email and image are the output.
     }
     fetchData()
   }, [session])
@@ -54,15 +53,13 @@ const NavBar = (): JSX.Element => {
           <div className="container left-60 flex w-auto h-auto">
             <div className="flex w-full h-10 ">
               <div className=" flex px-2 text-center justify-center">
-                <Link href="/">
-                  <Image
-                    alt="NUSConnectBanner"
-                    src="/NUSConnectBanner.png"
-                    height={48}
-                    width={200}
-                    className="mx-auto cursor-pointer"
-                  />
-                </Link>
+                <Image
+                  alt="NUSConnectBanner"
+                  src="/NUSConnectBanner.png"
+                  height={48}
+                  width={200}
+                  className="mx-auto cursor-pointer"
+                />
               </div>
               <Link href="/">
                 <button className="px-4 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
@@ -85,22 +82,29 @@ const NavBar = (): JSX.Element => {
 
           {!session && (
             <div className="p-1 flex items-center">
-              <a href="/login" className="block">
-                <span className="flex p-5 font-bold">Login</span>
-              </a>
-              <img
+              <Link href="/login">
+                <span className="flex p-5 font-bold cursor-pointer">Login</span>
+              </Link>
+              <Image
+                width={40}
+                height={40}
                 alt="profile"
-                src="https://timesofindia.indiatimes.com/photo/67586673.cms"
+                src="/cat.jpg"
                 className="mx-auto object-cover rounded-full h-10 w-10 cursor-pointer"
               />
             </div>
           )}
-          {session && (
-            <div className="p-1 flex items-center justify-end w-1/4 mr-4 sm:mr-0 sm:right-auto">
-              <a href="/login" className="block">
-                <span className="flex p-5 font-bold">{name}</span>
-              </a>
-              <img
+          {session && picture && (
+            <div className="p-1 flex items-center">
+              <Link href="/login">
+                <span className="flex p-5 font-bold cursor-pointer border-r">Logout</span>
+              </Link>
+              <Link href="/dashboard">
+                <span className="flex p-5 font-bold cursor-pointer">{name}</span>
+              </Link>
+              <Image
+                width={40}
+                height={40}
                 alt="profile"
                 src={picture}
                 className="mx-auto object-cover rounded-full h-10 w-10 "
