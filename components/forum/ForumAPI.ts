@@ -16,7 +16,19 @@ import data from '../../public/data/ForumData.json'
 //   return data.map(Post);
 // }
 
-export const getPostData = (postId) => {
-  // console.log(postId)
-  return data.filter((post) => post['id'] === postId)[0]
+export const getAllPosts = () => {
+  return data
+}
+
+export const getPostById = (id: string) => {
+  return getAllPosts().filter((post) => post['id'] === id)[0]
+}
+
+export async function getAllPostId(): Promise<{ postId }[]> {
+  const posts = getAllPosts()
+  return posts.map((post) => {
+    return {
+      postId: post['id'],
+    }
+  })
 }

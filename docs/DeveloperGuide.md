@@ -214,18 +214,31 @@ Extensions:
 ```javascript
 
 {
-    "id": 
-    "modules": ["CS2030", "CS2030S"], // for cases of variants
-    "type": "MRQ", // MCQ, MRQ
-    "difficulty": "easy", // easy, medium, hard
-    "question": "What are valid format specifiers for the String.format() method?",
-    "correct_answers": ["%f", "%d","%s"], // consider cases of MRQ
-    "incorrect_answers": ["%w","%z","%q"],
-    "author":"",
-    "isDraft":boolean,
-    // consider adding more properties such as tags, isSeries etc
+    "id": 1,
+    "title": "There's a new DEV theme in town for all you 10x hackers out there (plus one actually useful new feature)",
+    "description": "There's a new DEV theme in town for all you 10x hackers out there (plus one actually useful new feature)",
+    "tags": "meta, changelog, css, ux",
+    "comments_count": 37,
+    "positive_reactions_count": 12,
+    "created_at": "2019-10-24T13:41:29Z",
+    "edited_at": "2019-10-24T13:56:35Z",
+    "published_at": "2019-10-24T13:52:17Z",
+    "last_comment_at": "2019-10-25T08:12:43Z",
+    "user": {
+        "id" : "MW2ShqnYWA1HdN0dpmhwa"
+        "name": "alex john",
+        "username": "alex",
+        "github_username": "alex",
+        "google_username": "alex"
+    }
 }
+
 ```
+
+
+### Login Functionality
+
+Login is done with [next-auth](https://next-auth.js.org) and has the following providers implemented: GitHub and Google. To check if someone is signed in, the useSession() hook is implemented and to save the state between pages, `Provider` from next-auth/client is implemented. If the application is ready for deployment, change the `NEXTAUTH_URL` in .env to the canonical URL of the website.
 
 ## **Glossary**
 
@@ -234,3 +247,6 @@ Extensions:
 | quiz     | a collection of questions                 |
 | question | includes question text and answer options |
 | answer   | a possible option for a question          |
+| forum    | a collection of posts by users            |
+| post     | a way of communication between users      |
+
