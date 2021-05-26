@@ -4,8 +4,8 @@ const PostListItem = ({ post }): JSX.Element => {
   const tags = post.tags
 
   return (
-    <Link href="/forum/[forumId]" as={`/forum/${post.id}`}>
-      <div className="overflow-hidden shadow-lg rounded-lg h-full w-full md:w-full cursor-pointer mb-1">
+    <Link href={`/forum/${post.id}`}>
+      <div className="overflow-hidden shadow-lg rounded-lg h-full w-full md:w-full cursor-pointer m-auto">
         <a href="#" className="w-full block h-full">
           <div className="bg-white dark:bg-gray-800 hover:bg-gray-200 w-full p-4">
             <p className="text-indigo-400 text-sm font-small">{post.title}</p>

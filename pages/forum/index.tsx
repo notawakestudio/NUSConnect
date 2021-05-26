@@ -6,7 +6,7 @@ import Layout from '../../components/common/Layout'
 import { getAllPosts } from '../../components/forum/ForumAPI'
 import PostList from '../../components/forum/PostList'
 
-export default function Forum({ posts }): JSX.Element {
+export default function Forum({ postList }): JSX.Element {
   return (
     <>
       <Head>
@@ -17,7 +17,7 @@ export default function Forum({ posts }): JSX.Element {
       <Auth>
         <Layout>
           <div className="flex">
-            <PostList postList={posts} />
+            <PostList postList={postList} />
             {/* <div> There is nothing here </div> */}
           </div>
         </Layout>
@@ -27,10 +27,10 @@ export default function Forum({ posts }): JSX.Element {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = getAllPosts()
+  const postList = getAllPosts()
   return {
     props: {
-      posts,
+      postList,
     },
   }
 }

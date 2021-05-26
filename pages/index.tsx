@@ -7,11 +7,8 @@ import Feature from '../components/landingPage/Feature'
 import Hero from '../components/landingPage/Hero'
 import Pricing from '../components/landingPage/Pricing'
 import Team from '../components/landingPage/Team'
-import { signIn, signOut, useSession } from 'next-auth/client'
 
 export default function Home(): JSX.Element {
-  const [session, loading] = useSession()
-
   return (
     <>
       <Head>
