@@ -5,36 +5,62 @@
         {
             "id":"rOS6Pt4tnuaSYrbZ2hpQF",
             "week":"1",
+            "announcement":"Welcome to your first week of CS2030!",
             "tasks":[
                 {
                     "id":"MpGV4bzRpbNj683Pt-ful",
-                    "description":"Do lab exercise 1"
+                    "description":"Do lab exercise 1",
+                    "link":"",
+                    "exp":30
                 },
                 {
                     "id":"H4xpTq9xv2su0gSgmb-zM",
-                    "description":"Watch Lecture 1"
+                    "description":"Watch Lecture 1",
+                    "link":"",
+                    "exp":20
                 },
                 {
                     "id":"_IjmtkyP9lJedgxjm4HRe",
-                    "description":"Do quiz 1"
+                    "description":"Do quiz 1",
+                    "link":"/quiz/TxRDDtSEpnpodO0d-3ygJ",
+                    "exp":20
+                },
+                {
+                    "id":"CXBn9kNPqslJrNxiiUF-E",
+                    "description":"Post a question in forum",
+                    "link":"/forum",
+                    "exp":5
+                },
+                {
+                    "id":"9EhirbgFD6Pi849NYz39g",
+                    "description":"Answer a question in forum",
+                    "link":"/forum",
+                    "exp":5
                 }
             ]
         },
         {
             "id":"DC1sUrAHk8_8wI_aKXsk6",
             "week":"2",
+            "announcement":"Hi guys, for this week, please remember to finish your previous lab exercises and watch the lectures",
             "tasks":[
                 {
                     "id":"M4xxA3AKD698Lu0DLsJha",
-                    "description":"Do lab exercise 2"
+                    "description":"Do lab exercise 2",
+                    "link":"",
+                    "exp":30
                 },
                 {
                     "id":"j7w1d1jtZi8RaMmyyzAhS",
-                    "description":"Watch Lecture 2"
+                    "description":"Watch Lecture 2",
+                    "link":"",
+                    "exp":30
                 },
                 {
                     "id":"JQwImlrOoUjAtVr1dVhKj",
-                    "description":"Do quiz 2"
+                    "description":"Do quiz 2",
+                    "link":"/quiz/osauqg9tqEi3yzYHlDbf7",
+                    "exp":20
                 }
             ]
         }
