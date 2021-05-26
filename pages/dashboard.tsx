@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/client'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { GrSemantics } from 'react-icons/gr'
 import Auth from '../components/common/Auth'
@@ -150,37 +151,38 @@ export default function DashBoard(): JSX.Element {
                           <p className="text-sm w-max text-gray-700 dark:text-white font-semibold border-b border-gray-200">
                             Week {weekly['week']}
                           </p>
-                          <div className="flex items-end space-x-2 my-6">
-                            <p className="text-3xl text-black dark:text-white font-semibold">
-                              Annoucement:{' '}
+                          <div className="flex-col items-end space-x-2 my-6">
+                            <p className="text-xl text-black dark:text-white font-semibold">
+                              Annoucement:
+                              <br />
                             </p>
                             <span className="text-green-500 text-xl font-bold flex items-center">
-                              22
+                              {weekly['announcement']}
                             </span>
                           </div>
                           <div className="dark:text-white">
                             {weekly['tasks'].map((task) => {
                               return (
-                                <div
-                                  key={task['id']}
-                                  className="flex items-center pb-2 mb-2 text-sm sm:space-x-12  justify-between border-b border-gray-200">
-                                  <p>{task['description']}</p>
-                                  <div className="flex items-end text-xs">
-                                    30
-                                    <span className="flex items-center">
-                                      <svg
-                                        width="20"
-                                        fill="currentColor"
-                                        height="20"
-                                        className="h-3 text-green-500"
-                                        viewBox="0 0 1792 1792"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
-                                      </svg>
-                                      exp
-                                    </span>
+                                <Link href={task['link']} key={task['id']}>
+                                  <div className="flex items-center pb-2 mb-2 text-sm sm:space-x-12 cursor-pointer justify-between border-b border-gray-200">
+                                    <p>{task['description']}</p>
+                                    <div className="flex items-end text-xs">
+                                      {task['exp']}
+                                      <span className="flex items-center">
+                                        <svg
+                                          width="20"
+                                          fill="currentColor"
+                                          height="20"
+                                          className="h-3 text-green-500"
+                                          viewBox="0 0 1792 1792"
+                                          xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
+                                        </svg>
+                                        exp
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
+                                </Link>
                               )
                             })}
                           </div>
