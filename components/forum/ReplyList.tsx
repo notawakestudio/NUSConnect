@@ -1,4 +1,3 @@
-import React from 'react'
 import { Reply } from './ForumAPI'
 import ReplyListItem from './ReplyItem'
 
