@@ -1,7 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import Layout from '../../components/common/Layout'
 import {
   getAllPostId,
   getAllPosts,
@@ -10,7 +9,7 @@ import {
   Post,
   Reply,
 } from '../../components/forum/ForumAPI'
-import PostList from '../../components/forum/PostList'
+import ForumLayout from '../../components/forum/ForumLayout'
 import PostMain from '../../components/forum/PostMain'
 import ReplyList from '../../components/forum/ReplyList'
 
@@ -30,17 +29,12 @@ export default function CurrentPost({
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <div className="flex mt-10">
-          <div className="max-w-md min-w-md flex-shrink-0">
-            <PostList postList={postList} />
-          </div>
-          <div className="flex-grow flex-col">
-            <PostMain post={currentPost} />
-            <ReplyList replies={replies} />
-          </div>
+      <ForumLayout postList={postList}>
+        <div className="flex-grow flex-col">
+          <PostMain post={currentPost} />
+          <ReplyList replies={replies} />
         </div>
-      </Layout>
+      </ForumLayout>
     </>
   )
 }

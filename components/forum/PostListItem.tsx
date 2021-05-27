@@ -6,7 +6,7 @@ const PostListItem = ({ post }): JSX.Element => {
   const author = post.author_id
   const date = post.created_date
   const title = post.title
-  const maxLength = 128
+  const maxLength = 175
   const content = post.content
   const trimmedContent = post.content.substring(0, maxLength) + '...'
 

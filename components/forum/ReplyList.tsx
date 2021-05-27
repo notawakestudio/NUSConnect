@@ -1,5 +1,5 @@
 import { Reply } from './ForumAPI'
-import ReplyListItem from './ReplyItem'
+import ReplyListItem from './ReplyListItem'
 
 const ReplyList = ({ replies }: { replies: Reply[] }): JSX.Element => {
   return (

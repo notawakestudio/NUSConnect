@@ -1,6 +1,6 @@
 import TextContainer from './TextContainer'
 
-const Empty = (): JSX.Element => {
+const ForumHome = (): JSX.Element => {
   return (
     <TextContainer>
       <div className="p-4 flex flex-col self-center items-center ">
@@ -11,4 +11,4 @@ const Empty = (): JSX.Element => {
   )
 }
 
-export default Empty
+export default ForumHome

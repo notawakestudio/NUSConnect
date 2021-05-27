@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Search from '../common/Search'
 import PostListItem from './PostListItem'
 
@@ -13,9 +14,11 @@ const PostList = ({ postList }): JSX.Element => {
                   All Posts
                 </h3>
                 <div className="flex justify-center">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2 rounded-lg">
-                    New Post
-                  </button>
+                  <Link href="/forum/create-post">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2 rounded-lg">
+                      New Post
+                    </button>
+                  </Link>
                   <Search />
                 </div>
               </div>
