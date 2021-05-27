@@ -6,11 +6,12 @@ import Footer from '../../components/common/Footer'
 import NavBar from '../../components/common/NavBar'
 import Pagination from '../../components/common/Pagination'
 import { hasSameContent } from '../../components/common/Util'
+import AnswerObject from '../../components/quiz/AnswerObject'
 import Question from '../../components/quiz/Question'
 import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
 import ScoreCard from '../../components/quiz/ScoreCard'
 import { QuestionWithAnswersMixed, QuizMode } from '../../components/quiz/types'
-import AnswerObject from '../../components/quiz/AnswerObject'
+
 export const getStaticPaths: GetStaticPaths = async () => {
   const quizIds = await getAllQuizId()
   const paths = quizIds.map((quizId) => {
