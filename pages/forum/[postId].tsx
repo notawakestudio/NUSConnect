@@ -5,7 +5,6 @@ import Layout from '../../components/common/Layout'
 import {
   getAllPostId,
   getAllPosts,
-  getAllReplies,
   getPostById,
   getRelatedReplies,
   Post,

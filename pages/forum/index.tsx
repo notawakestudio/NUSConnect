@@ -3,6 +3,7 @@ import Head from 'next/head'
 import React from 'react'
 import Auth from '../../components/common/Auth'
 import Layout from '../../components/common/Layout'
+import Empty from '../../components/forum/Empty'
 import { getAllPosts } from '../../components/forum/ForumAPI'
 import PostList from '../../components/forum/PostList'
 
@@ -16,9 +17,13 @@ export default function Forum({ postList }): JSX.Element {
       </Head>
       <Auth>
         <Layout>
-          <div className="flex">
-            <PostList postList={postList} />
-            {/* <div> There is nothing here </div> */}
+          <div className="flex flex-row flex-nowrap mt-10">
+            <div className="max-w-md min-w-md flex-shrink-0">
+              <PostList postList={postList} />
+            </div>
+            <div className="flex content-center justify-center self-center">
+              <Empty />
+            </div>
           </div>
         </Layout>
       </Auth>
