@@ -44,12 +44,7 @@ export default function NewPost() {
                     <option>Save and Publish</option>
                     <option>Save Draft</option>
                   </select>
-                  <button
-                    role="submit"
-                    className="p-3 bg-blue-500 text-white hover:bg-blue-400"
-                    required>
-                    Submit
-                  </button>
+                  <button className="p-3 bg-blue-500 text-white hover:bg-blue-400">Submit</button>
                 </div>
               </form>
             </div>
