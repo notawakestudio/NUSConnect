@@ -3,6 +3,6 @@ module.exports = {
       webpack5: true,
     },
     images: {
-      domains:['lh3.googleusercontent.com','raw.githubusercontent.com']
+      domains:['lh3.googleusercontent.com','raw.githubusercontent.com','avatars.githubusercontent.com']
     }
 }

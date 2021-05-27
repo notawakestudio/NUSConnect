@@ -1,21 +1,21 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import ForumHome from '../../components/forum/ForumHome'
-import { getAllPosts } from '../../components/forum/ForumAPI'
+import { getAllPosts, Post } from '../../components/forum/ForumAPI'
 import ForumLayout from '../../components/forum/ForumLayout'
+import NewPost from '../../components/forum/NewPost'
 
-export default function Forum({ postList }): JSX.Element {
+export default function CreatePost({ postList }: { postList: Post[] }): JSX.Element {
   return (
     <>
       <Head>
-        <title>Forum</title>
+        <title>New Post</title>
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ForumLayout postList={postList}>
-        <div className="flex content-center justify-center self-center">
-          <ForumHome />
+        <div className="flex-grow flex-col">
+          <NewPost />
         </div>
       </ForumLayout>
     </>

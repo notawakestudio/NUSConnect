@@ -1,12 +1,27 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import Layout from '../../components/common/Layout'
-import { getAllPostId, getAllPosts, getPostById } from '../../components/forum/ForumAPI'
-import PostList from '../../components/forum/PostList'
-import PostMainItem from '../../components/forum/PostMainItem'
+import {
+  getAllPostId,
+  getAllPosts,
+  getPostById,
+  getRelatedReplies,
+  Post,
+  Reply,
+} from '../../components/forum/ForumAPI'
+import ForumLayout from '../../components/forum/ForumLayout'
+import PostMain from '../../components/forum/PostMain'
+import ReplyList from '../../components/forum/ReplyList'
 
-export default function CurrentPost({ currentPost }): JSX.Element {
+export default function CurrentPost({
+  currentPost,
+  postList,
+  replies,
+}: {
+  currentPost: Post
+  postList: Post[]
+  replies: Reply[]
+}): JSX.Element {
   return (
     <>
       <Head>
@@ -14,12 +29,12 @@ export default function CurrentPost({ currentPost }): JSX.Element {
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <div className="inline-flex">
-          <PostList postList={getAllPosts()} />
-          <PostMainItem id={currentPost.id} />
+      <ForumLayout postList={postList}>
+        <div className="flex-grow flex-col">
+          <PostMain post={currentPost} />
+          <ReplyList replies={replies} />
         </div>
-      </Layout>
+      </ForumLayout>
     </>
   )
 }
@@ -41,10 +56,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postId = params.postId as string
   const currentPost = getPostById(postId)
+  const postList = getAllPosts()
+  const replies = getRelatedReplies(postId)
 
   return {
     props: {
       currentPost,
+      postList,
+      replies,
     },
   }
 }
