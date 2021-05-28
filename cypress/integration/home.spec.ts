@@ -1,6 +1,4 @@
-/// <reference types="cypress" />
-
-context('Landing homepage', () => {
+describe('Landing homepage', () => {
   beforeEach(() => {
     cy.visit('/')
   })
