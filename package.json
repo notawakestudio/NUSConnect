@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "formik": "^2.2.8",
@@ -21,8 +22,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-markdown-editor-lite": "^1.2.4",
-    "yup": "^0.32.9",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.12.0",
@@ -32,6 +33,7 @@
     "@typescript-eslint/parser": "^4.22.1",
     "autoprefixer": "^10.2.5",
     "cross-env": "^7.0.3",
+    "cypress": "^7.4.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
