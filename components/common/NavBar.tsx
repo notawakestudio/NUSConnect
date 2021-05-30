@@ -100,7 +100,7 @@ const NavBar = (): JSX.Element => {
                 <span className="flex p-5 font-bold cursor-pointer border-r">Logout</span>
               </Link>
               <Link href="/dashboard">
-                <span className="flex p-5 font-bold cursor-pointer">{name}</span>
+                <span className="flex pl-1 font-bold cursor-pointer">{name}</span>
               </Link>
               <Image
                 width={40}
