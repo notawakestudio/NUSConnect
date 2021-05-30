@@ -30,7 +30,7 @@ export default function CurrentPost({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ForumLayout postList={postList}>
-        <div className="flex-grow flex-col">
+        <div className="flex-grow flex-col ml-4">
           <PostMain post={currentPost} />
           <ReplyList replies={replies} />
         </div>

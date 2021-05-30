@@ -10,33 +10,35 @@ export default function NewPost() {
             <div className="p-6 bg-white border-b border-gray-200">
               <form method="POST" action="action.php">
                 <div className="mb-4">
-                  <label className="text-xl text-gray-600">
-                    Title <span className="text-red-500">*</span>
+                  <label className="text-lg text-gray-800">
+                    Title *
+                    <input
+                      type="text"
+                      className="border border-gray-300 p-2 w-full rounded-lg"
+                      name="title"
+                      id="title"
+                      value=""
+                      required></input>
                   </label>
-                  <input
-                    type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
-                    name="title"
-                    id="title"
-                    value=""
-                    required></input>
                 </div>
 
                 <div className="mb-4">
-                  <label className="text-xl text-gray-600">Description</label>
-                  <input
-                    type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
-                    name="description"
-                    id="description"
-                    placeholder="(Optional)"></input>
+                  <label className="text-lg text-gray-800">
+                    Description
+                    <input
+                      type="text"
+                      className="border border-gray-300 p-2 w-full rounded-lg"
+                      name="description"
+                      id="description"
+                      placeholder="(Optional)"></input>
+                  </label>
                 </div>
 
                 <div className="mb-8">
                   <label className="text-xl text-gray-600">
-                    Content <span className="text-red-500">*</span>
+                    Content *
+                    <textarea name="content" className="border-2 border-gray-500"></textarea>
                   </label>
-                  <textarea name="content" className="border-2 border-gray-500"></textarea>
                 </div>
 
                 <div className="flex p-1">

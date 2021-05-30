@@ -9,10 +9,10 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
   return (
     <TextContainer>
       <div className="p-8">
-        <h2 className="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">
+        <h2 className="text-2xl title-font font-medium text-gray-900 mt-4 mb-4 max-w-prose">
           {currentPost.title}
         </h2>
-        <p className="leading-relaxed mb-4">{currentPost.content}</p>
+        <p className="leading-relaxed mb-4 ">{currentPost.content}</p>
         <div className="flex items-center pb-4 mb-4 border-b-2 border-gray-100">
           <div className="flex flex-wrap justify-start items-center mt-4">
             {tags.map((tag) => (
