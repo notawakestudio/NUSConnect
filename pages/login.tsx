@@ -13,7 +13,7 @@ export default function LoginPage(): JSX.Element {
       </Head>
 
       <Layout>
-        <Login></Login>
+        <Login />
       </Layout>
     </div>
   )

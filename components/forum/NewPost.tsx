@@ -3,7 +3,7 @@ import TextContainer from './TextContainer'
 
 export default function NewPost() {
   return (
-    <div className="mt-10">
+    <div className="mt-10 ml-4">
       <TextContainer>
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -24,7 +24,7 @@ export default function NewPost() {
 
                 <div className="mb-4">
                   <label className="text-lg text-gray-800">
-                    Description
+                    Tags
                     <input
                       type="text"
                       className="border border-gray-300 p-2 w-full rounded-lg"
@@ -34,15 +34,22 @@ export default function NewPost() {
                   </label>
                 </div>
 
-                <div className="mb-8">
+                {/* <div className="mb-8 flex-col">
                   <label className="text-xl text-gray-600">
-                    Content *
-                    <textarea name="content" className="border-2 border-gray-500"></textarea>
+                    Content *{' '}
+                    <textarea name="content" className="border border-gray-500"></textarea>
                   </label>
+                </div> */}
+
+                <div className="flex-col mb-8">
+                  <p className="text-xl text-gray-600">Content *</p>
+                  <textarea
+                    name="content"
+                    className="border border-gray-500 flex min-w-full"></textarea>
                 </div>
 
-                <div className="flex p-1">
-                  <select className="border-2 border-gray-300 border-r p-2" name="action">
+                <div className="flex">
+                  <select className="border border-gray-300 border-r p-2" name="action">
                     <option>Save and Publish</option>
                     <option>Save Draft</option>
                   </select>
