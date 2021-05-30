@@ -144,7 +144,7 @@ export default function Quiz({
         <div className="container mx-auto text-center flex flex-col items-center">
           <h1 className="px-4 py-2 text-base font-bold">{quizTitle}</h1>
           {quizMode === QuizMode.STARTING || quizMode === QuizMode.ENDING ? (
-            <div className="shadow-lg rounded-t-xl bg-blue-500 w-full md:w-64 p-6 dark:bg-gray-800">
+            <div className="shadow-lg rounded-t-xl bg-blue-500 md:w-64 p-6 dark:bg-gray-800">
               <p className="text-white text-xl">Ready?</p>
               <div className="mt-4">
                 <button

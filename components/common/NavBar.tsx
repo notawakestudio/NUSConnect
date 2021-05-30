@@ -52,12 +52,12 @@ const NavBar = (): JSX.Element => {
         <div className="items-center justify-between pl-1 flex h-full w-full lg:max-w-68 sm:pr-2 sm:ml-0">
           <div className="container left-60 flex w-auto h-auto">
             <div className="flex w-full h-10 ">
-              <div className=" flex px-2 text-center justify-center">
+              <div className="hidden sm:flex px-2 text-center justify-center">
                 <Image
                   alt="NUSConnectBanner"
                   src="/NUSConnectBanner.png"
-                  height={48}
-                  width={200}
+                  height={50}
+                  width={180}
                   className="mx-auto cursor-pointer"
                 />
               </div>
@@ -100,7 +100,7 @@ const NavBar = (): JSX.Element => {
                 <span className="flex p-5 font-bold cursor-pointer border-r">Logout</span>
               </Link>
               <Link href="/dashboard">
-                <span className="flex p-5 font-bold cursor-pointer">{name}</span>
+                <span className="flex pl-1 font-bold cursor-pointer">{name}</span>
               </Link>
               <Image
                 width={40}
