@@ -11,6 +11,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^27.1.0",
+    "@ckeditor/ckeditor5-react": "^2.1.0",
     "@next-auth/firebase-adapter": "^0.0.2-pr.18.173",
     "firebase": "^8.6.3",
     "formik": "^2.2.8",

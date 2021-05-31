@@ -42,7 +42,7 @@ export default function Login(): JSX.Element {
       {session && (
         <div className="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-800 w-64 m-auto border">
           <div className="w-full h-full text-center font-semibold">
-            <div className="flex h-full flex-col justify-between">
+            <div className="flex h-full flex-col">
               <p className="text-gray-600 dark:text-gray-100 text-md py-2 px-6">
                 You are logged in as {session.user.name}
               </p>

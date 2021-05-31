@@ -1,5 +1,6 @@
 import React from 'react'
 import TextContainer from './TextContainer'
+import TextEditor from './TextEditor'
 
 export default function NewPost() {
   return (
@@ -24,13 +25,8 @@ export default function NewPost() {
 
                 <div className="mb-4">
                   <label className="text-lg text-gray-800">
-                    Tags
-                    <input
-                      type="text"
-                      className="border border-gray-300 p-2 w-full rounded-lg"
-                      name="description"
-                      id="description"
-                      placeholder="(Optional)"></input>
+                    Select Tags
+                    <button className>Tag</button>
                   </label>
                 </div>
 
@@ -43,9 +39,7 @@ export default function NewPost() {
 
                 <div className="flex-col mb-8">
                   <p className="text-xl text-gray-600">Content *</p>
-                  <textarea
-                    name="content"
-                    className="border border-gray-500 flex min-w-full"></textarea>
+                  <TextEditor />
                 </div>
 
                 <div className="flex">

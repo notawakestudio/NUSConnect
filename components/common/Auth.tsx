@@ -31,9 +31,5 @@ export default function Auth({ children }): JSX.Element {
     return <Login></Login>
   }
 
-  return (
-    <NameContext.Provider value={name}>
-      <div>{children}</div>
-    </NameContext.Provider>
-  )
+  return <NameContext.Provider value={name}>{children}</NameContext.Provider>
 }

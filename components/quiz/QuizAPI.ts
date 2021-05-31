@@ -16,6 +16,7 @@ export const fetchQuizById = async (quizId: string): Promise<Quiz> => {
   const quiz = await fetch(API_GET_QUIZ_BY_ID + quizId).then((response) => response.json())
   return quiz
 }
+
 export const fetchQuizTitle = async (quizId: string): Promise<string> => {
   const quiz = await fetchQuizById(quizId)
   return quiz['title']
@@ -27,6 +28,7 @@ export const fetchQuestionById = async (questionId: string): Promise<Quiz> => {
   )
   return question
 }
+
 export const fetchQuestionTitle = async (questionId: string): Promise<string> => {
   const question = await fetchQuestionById(questionId)
   return question['question']
