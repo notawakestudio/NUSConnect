@@ -8,7 +8,7 @@ import { FcMenu } from 'react-icons/fc'
 import Auth from '../components/common/Auth'
 import Footer from '../components/common/Footer'
 import NavBar from '../components/common/NavBar'
-import SideBarA from '../components/common/SideBarA'
+import SideBar from '../components/common/SideBar'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
 
 export default function DashBoard(): JSX.Element {
@@ -16,7 +16,7 @@ export default function DashBoard(): JSX.Element {
   const [session] = useSession()
   const [name, setName] = useState('user')
   const [picture, setPicture] = useState()
-
+  const [showTopBar, setShowTopBar] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch('/api/userData')
@@ -42,17 +42,34 @@ export default function DashBoard(): JSX.Element {
         <NavBar />
         <main className="bg-gray-100 dark:bg-gray-800 relative h-screen overflow-hidden">
           <div className="flex items-start justify-between">
-            <SideBarA />
+            <SideBar />
             <div className="flex flex-col w-full md:space-y-4">
               <header className="w-full h-16 z-40 flex items-center justify-between">
-                <div className="block lg:hidden ml-6">
-                  <button className="flex p-2 items-center rounded-full bg-white shadow text-gray-500 text-md">
+                <div className="block md:hidden ml-6">
+                  <button
+                    className="flex p-2 items-center rounded-full bg-white shadow text-gray-500 text-md"
+                    onClick={() => {
+                      setShowTopBar(!showTopBar)
+                    }}>
                     <FcMenu />
                   </button>
                 </div>
+                {showTopBar && (
+                  <div className="md:hidden bg-white flex cursor-pointer">
+                    <Link href="/quiz">
+                      <div className="px-2 border rounded">Quiz</div>
+                    </Link>
+                    <Link href="/forum">
+                      <div className="px-2 border rounded">Forum</div>
+                    </Link>
+                    <Link href="/login">
+                      <div className="px-2 border rounded">Logout</div>
+                    </Link>
+                  </div>
+                )}
                 <div className="relative z-20 flex flex-col justify-end h-full px-3 md:w-full">
                   <div className="relative p-1 flex items-center w-full space-x-4 justify-end">
-                    <button className="flex p-2 items-center rounded-full bg-white shadow text-gray-400 hover:text-gray-700 text-md">
+                    <button className="flex p-2 mb-2 items-center rounded-full bg-white shadow text-gray-400 hover:text-gray-700 text-md">
                       <GrNotification />
                     </button>
                   </div>

@@ -1,43 +1,160 @@
+import Link from 'next/link'
+import { BiBookReader } from 'react-icons/bi'
+import { MdForum } from 'react-icons/md'
+
 const SideBar = (): JSX.Element => {
   return (
-    <div className="h-screen hidden lg:block shadow-lg relative w-80">
-      <div className="bg-white dark:bg-gray-700">
-        <nav className="mt-6">
-          <div>
-            <a className="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start border-l-4 border-purple-500" href="#">
-              <span className="text-left">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1472 992v480q0 26-19 45t-45 19h-384v-384h-256v384h-384q-26 0-45-19t-19-45v-480q0-1 .5-3t.5-3l575-474 575 474q1 2 1 6zm223-69l-62 74q-8 9-21 11h-3q-13 0-21-7l-692-577-692 577q-12 8-24 7-13-2-21-11l-62-74q-8-10-7-23.5t11-21.5l719-599q32-26 76-26t76 26l244 204v-195q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z"></path>
-                </svg>
+    <div className="min-h-screen hidden relative w-48 lg:w-56 md:flex flex-col flex-auto flex-shrink-0 ">
+      <div className="fixed flex flex-col top-18 left-0 w-48 lg:w-56 dark:bg-gray-900 h-full shadow-lg">
+        <div className="flex items-center pl-6 h-20 border-b dark:border-gray-800">
+          <div className="ml-1">
+            <p className="ml-1 text-md font-medium tracking-wide truncate dark:text-gray-100 font-sans">
+              Student
+            </p>
+            <div className="badge">
+              <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-800 bg-blue-100 rounded-full">
+                Admin
               </span>
-              <span className="mx-2 text-sm font-normal">Home</span>
-            </a>
-            <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent" href="#">
-              <span className="text-left">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1070 1178l306-564h-654l-306 564h654zm722-282q0 182-71 348t-191 286-286 191-348 71-348-71-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z"></path>
-                </svg>
-              </span>
-              <span className="mx-2 text-sm font-normal">Setting</span>
-            </a>
-            <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent" href="#">
-              <span className="text-left">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z"></path>
-                </svg>
-              </span>
-              <span className="mx-2 text-sm font-normal">Resources</span>
-            </a>
-            <a className="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent" href="#">
-              <span className="text-left">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M580 461q0-41-25-66t-66-25q-43 0-76 25.5t-33 65.5q0 39 33 64.5t76 25.5q41 0 66-24.5t25-65.5zm743 507q0-28-25.5-50t-65.5-22q-27 0-49.5 22.5t-22.5 49.5q0 28 22.5 50.5t49.5 22.5q40 0 65.5-22t25.5-51zm-236-507q0-41-24.5-66t-65.5-25q-43 0-76 25.5t-33 65.5q0 39 33 64.5t76 25.5q41 0 65.5-24.5t24.5-65.5zm635 507q0-28-26-50t-65-22q-27 0-49.5 22.5t-22.5 49.5q0 28 22.5 50.5t49.5 22.5q39 0 65-22t26-51zm-266-397q-31-4-70-4-169 0-311 77t-223.5 208.5-81.5 287.5q0 78 23 152-35 3-68 3-26 0-50-1.5t-55-6.5-44.5-7-54.5-10.5-50-10.5l-253 127 72-218q-290-203-290-490 0-169 97.5-311t264-223.5 363.5-81.5q176 0 332.5 66t262 182.5 136.5 260.5zm592 561q0 117-68.5 223.5t-185.5 193.5l55 181-199-109q-150 37-218 37-169 0-311-70.5t-223.5-191.5-81.5-264 81.5-264 223.5-191.5 311-70.5q161 0 303 70.5t227.5 192 85.5 263.5z"></path>
-                </svg>
-              </span>
-              <span className="mx-2 text-sm font-normal">Feedback</span>
-            </a>
+            </div>
           </div>
-        </nav>
+        </div>
+        <div className="overflow-y-auto overflow-x-hidden flex-grow">
+          <ul className="flex flex-col py-6 space-y-1">
+            <li className="px-5">
+              <div className="flex flex-row items-center h-8">
+                <div className="flex font-semibold text-sm text-gray-300 my-4 font-sans uppercase">
+                  Dashboard
+                </div>
+              </div>
+            </li>
+            <li>
+              <Link href="/dashboard">
+                <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                  <span className="inline-flex justify-center items-center ml-4">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                  </span>
+                  <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                    Home
+                  </span>
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link href="/quiz">
+                <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                  <span className="inline-flex justify-center items-center ml-4">
+                    <BiBookReader size={20} />
+                  </span>
+                  <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                    Quiz
+                  </span>
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link href="/forum">
+                <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                  <span className="inline-flex justify-center items-center ml-4">
+                    <MdForum size={20} />
+                  </span>
+                  <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                    Forum
+                  </span>
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link href="#">
+                <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                  <span className="inline-flex justify-center items-center ml-4">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                    </svg>
+                  </span>
+                  <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                    Inbox
+                  </span>
+                  <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-blue-100 rounded-full">
+                    New
+                  </span>
+                </div>
+              </Link>
+            </li>
+            <li className="px-5">
+              <div className="flex flex-row items-center h-8">
+                <div className="flex font-semibold text-sm text-gray-300 my-4 font-sans uppercase">
+                  Settings
+                </div>
+              </div>
+            </li>
+            <li>
+              <Link href="#">
+                <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                  <span className="inline-flex justify-center items-center ml-4">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                  </span>
+                  <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                    Profile
+                  </span>
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link href="/login">
+                <div className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-red-500 pr-6 cursor-pointer">
+                  <span className="inline-flex justify-center items-center ml-4 text-red-400">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                  </span>
+                  <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                    Logout
+                  </span>
+                </div>
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   )
