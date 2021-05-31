@@ -6,19 +6,28 @@ import PostList from './PostList'
 export default function ForumLayout({
   children,
   postList,
+  isIndex,
 }: {
   children?: JSX.Element | JSX.Element[]
   postList: Post[]
+  isIndex?: boolean
 }): JSX.Element {
   return (
     <>
       <Auth>
         <Layout>
           <div className="flex flex-row flex-nowrap mt-10">
-            <div className="max-w-md min-w-md flex-shrink-0">
-              <PostList postList={postList} />
-            </div>
-            {children}
+            {isIndex && (
+              <div className="lg:max-w-md lg:flex-shrink-0 mx-2">
+                <PostList postList={postList} />
+              </div>
+            )}
+            {!isIndex && (
+              <div className="hidden lg:flex lg:max-w-md lg:flex-shrink-0 mx-2">
+                <PostList postList={postList} />
+              </div>
+            )}
+            <div className="mx-2 flex-grow">{children}</div>
           </div>
         </Layout>
       </Auth>

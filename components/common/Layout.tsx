@@ -5,7 +5,7 @@ export default function Layout({ children }): JSX.Element {
   return (
     <>
       <NavBar />
-      <div className="container mx-auto justify-content">{children}</div>
+      <div className="my-4 container mx-auto justify-content">{children}</div>
       <Footer />
     </>
   )

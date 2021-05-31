@@ -1,0 +1,275 @@
+[{
+  "id": "xft5nj9NXr_RXl3LEyt2g",
+  "title": "CS2030",
+  "users": [{
+    "id": "user_id",
+    "role": "admin", // can be student, teacher
+    "exp": "abc",
+    "completedTasks": []
+  }],
+  "questions": [{
+      "id": "hB3qZ_f_CI0EsD_WRsRX8",
+      "modules": ["CS2030", "CS2030S"],
+      "type": "MRQ",
+      "difficulty": "easy",
+      "question": "What are valid format specifiers for the String.format() method?",
+      "correct_answers": ["%f", "%d", "%s"],
+      "incorrect_answers": ["%w", "%z", "%q"]
+    },
+    {
+      "id": "CxcBhgLQeq_ez8MxeDe0p",
+      "modules": ["CS2030", "CS2030S"],
+      "type": "MRQ",
+      "difficulty": "hard",
+      "question": "In Java, what does the method signature consist of? Choose all the applicable options.",
+      "correct_answers": ["Method name", "Parameter list (number, type and order of its parameters)"],
+      "incorrect_answers": ["Access modifier", "Return type", "Exception", "Method body"]
+    },
+    {
+      "id": "dgC_OXQwPq5MG_VwMQLLz",
+      "modules": ["CS2030", "CS2030S"],
+      "type": "MCQ",
+      "difficulty": "easy",
+      "question": "What is a package in java?",
+      "correct_answers": ["Collection of related classes and interfaces which are bundled together"],
+      "incorrect_answers": ["Collection of related classes which are bundled together", "Collection of related interfaces which are bundled together", "Collection of related objects and classes which are bundled together", "None of the others"]
+    },
+    {
+      "id": "YQdkspzjHcwTL3txI2Bc8",
+      "modules": ["CS2030", "CS2030S"],
+      "type": "MRQ",
+      "difficulty": "medium",
+      "question": "When do we use the “static” keyword in java? Select all that apply.",
+      "correct_answers": ["For constants", "For aggregated data", "For the main method", "For factory methods"],
+      "incorrect_answers": ["For overriding methods", "For class level access"]
+    },
+    {
+      "id": "SUdbM9KBpsbywHQvxpFir",
+      "modules": ["CS2030", "CS2030S"],
+      "type": "MCQ",
+      "difficulty": "easy",
+      "question": "Which of the following is NOT a principle of object-oriented programming?",
+      "correct_answers": ["Immutability"],
+      "incorrect_answers": ["Abstraction", "Encapsulation", "Inheritance", "Polymorphism"]
+    },
+    {
+      "id": "gf669ye6dy4ltJSkKb_tZ",
+      "modules": ["CS2030", "CS2030S"],
+      "type": "MCQ",
+      "difficulty": "hard",
+      "question": "Which of the following statements about good OO programming practice is LEAST appropriate?",
+      "correct_answers": ["We should use Inheritance to reduce duplication of code between two classes as much as possible"],
+      "incorrect_answers": ["We should declare fields as private as much as possible", "We should not throw exceptions that reveal internal implementation of a class as much as possible", "We should avoid using accessors and mutators (also known as getters and setters) to private fields as much as possible", "We should use polymorphism so that each class is responsible for handling its own behavior as much as possible", "None of the others"]
+    },
+    {
+      "id": "mtCHNvypLt4TKizuqmP6f",
+      "type": "MCQ",
+      "difficulty": "hard",
+      "modules": ["CS2030", "CS2030S"],
+      "question": "```java\nclass Main {\n  public static void main (String[] args) {\n    List list = new ArrayList();\n    list.add(\"hello\");\n    list.add(2);\n    System.out.print(list.get(0) instanceof Object);\n    System.out.print(list.get(1) instanceof Integer);\n  }\n}\n```",
+      "correct_answers": [
+        "truetrue"
+      ],
+      "incorrect_answers": [
+        "Falsetrue",
+        "The code does not compile.",
+        "truefalse"
+      ]
+    }
+  ],
+  "quiz": [{
+      "id": "TxRDDtSEpnpodO0d-3ygJ",
+      "title": "CS2030 Quiz 1",
+      "author": "Bob",
+      "created": "May 11, 2021",
+      "week": "1",
+      "tags": ["OOP", "intro"],
+      "questions": ["mtCHNvypLt4TKizuqmP6f", "gf669ye6dy4ltJSkKb_tZ", "SUdbM9KBpsbywHQvxpFir", "YQdkspzjHcwTL3txI2Bc8"]
+    },
+    {
+      "id": "DnFFpNWyXk0gIwMlxP4Z2",
+      "title": "CS2030 Quiz 2",
+      "author": "Jun Xiong",
+      "created": "May 12, 2021",
+      "week": "2",
+      "tags": ["FP"],
+      "questions": ["hB3qZ_f_CI0EsD_WRsRX8", "CxcBhgLQeq_ez8MxeDe0p", "dgC_OXQwPq5MG_VwMQLLz"]
+    },
+    {
+      "id": "2MCYftI-pKIeQ3fOuOpOw",
+      "title": "CS2030 Combined Quiz",
+      "author": "Yongliang",
+      "created": "May 16, 2021",
+      "week": "3",
+      "tags": ["OOP", "intro"],
+      "questions": ["gf669ye6dy4ltJSkKb_tZ", "SUdbM9KBpsbywHQvxpFir", "YQdkspzjHcwTL3txI2Bc8", "hB3qZ_f_CI0EsD_WRsRX8", "CxcBhgLQeq_ez8MxeDe0p", "dgC_OXQwPq5MG_VwMQLLz"]
+    }
+  ],
+  "forum": {
+    "posts": [{
+        "id": "1a",
+        "author_id": "Alan_Tan",
+        "title": "How to post a quiz",
+        "content": "This is a short message",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "tags": ["Question", "Tip", "Help"],
+        "week": "Week 1",
+        "reply_count": "37",
+        "up_votes": "10",
+        "is_edited": false
+      },
+      {
+        "id": "1b",
+        "author_id": "Alan_Tan",
+        "title": "How to post a quiz",
+        "content": "This is a longer message, This is a longer message",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "tags": ["Question"],
+        "week": "Week 1",
+        "reply_count": "37",
+        "up_votes": "10",
+        "is_edited": false
+      },
+      {
+        "id": "1c",
+        "author_id": "Alan_Tan",
+        "title": "How to post a quiz",
+        "content": "This is a longest message,This is a longest message, This is a longest message,This is a longest message, This is a longest message,This is a longest message, This is a longest message,This is a longest message, This is a longest message,This is a longest message, This is a longest message, This is a longest message, This is a longest message",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "tags": [],
+        "week": "Week 1",
+        "reply_count": "37",
+        "up_votes": "10",
+        "is_edited": false
+      }
+    ],
+    "reply": [{
+        "id": "reply1",
+        "post_id": "1a",
+        "author_id": "Alan_Tan",
+        "content": "This is a reply message",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "up_votes": "10",
+        "is_edited": false
+      },
+      {
+        "id": "reply2",
+        "post_id": "1a",
+        "author_id": "Alan_Tan",
+        "content": "This is a reply message",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "up_votes": "10",
+        "is_edited": false
+      },
+      {
+        "id": "reply3",
+        "post_id": "1a",
+        "author_id": "Alan_Tan",
+        "content": "This is a reply message",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "up_votes": "10",
+        "is_edited": false
+      },
+      {
+        "id": "reply1",
+        "post_id": "1c",
+        "author_id": "Alan_Tan",
+        "content": "This is a reply message",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "up_votes": "10",
+        "is_edited": false
+      },
+      {
+        "id": "reply2",
+        "post_id": "1c",
+        "author_id": "Alan_Tan",
+        "content": "This is a longer reply message, This is a longer reply message, This is a longer reply message, This is a longer reply message",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "up_votes": "10",
+        "is_edited": false
+      },
+      {
+        "id": "reply3",
+        "post_id": "1c",
+        "author_id": "Alan_Tan",
+        "content": "This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message, This is a longest reply message,",
+        "created_date": "12 April 2020",
+        "edited_date": "12 April 2020",
+        "up_votes": "10",
+        "is_edited": false
+      }
+    ]
+  },
+  "tasks": [{
+      "id": "MpGV4bzRpbNj683Pt-ful",
+      "description": "Do lab exercise 1",
+      "link": "",
+      "exp": 30,
+      "type": "lab", //create_quiz, do_quiz, create_post, reply_post, special...
+      "week": "week_1",
+      "deadline": "week_2"
+    },
+    {
+      "id": "H4xpTq9xv2su0gSgmb-zM",
+      "description": "Watch Lecture 1",
+      "link": "",
+      "exp": 20,
+      "type": "do_quiz", //create_quiz, do_quiz, create_post, reply_post, special...
+      "week": "week_1",
+      "deadline": "week_2"
+    },
+    {
+      "id": "_IjmtkyP9lJedgxjm4HRe",
+      "description": "Do quiz 1",
+      "link": "/quiz/TxRDDtSEpnpodO0d-3ygJ",
+      "exp": 20
+    },
+    {
+      "id": "CXBn9kNPqslJrNxiiUF-E",
+      "description": "Post a question in forum",
+      "link": "/forum",
+      "exp": 5
+    },
+    {
+      "id": "9EhirbgFD6Pi849NYz39g",
+      "description": "Answer a question in forum",
+      "link": "/forum",
+      "exp": 5
+    },
+    {
+      "id": "M4xxA3AKD698Lu0DLsJha",
+      "description": "Do lab exercise 2",
+      "link": "",
+      "exp": 30
+    }, {
+      "id": "j7w1d1jtZi8RaMmyyzAhS",
+      "description": "Watch Lecture 2",
+      "link": "",
+      "exp": 30
+    }, {
+      "id": "JQwImlrOoUjAtVr1dVhKj",
+      "description": "Do quiz 2",
+      "link": "/quiz/osauqg9tqEi3yzYHlDbf7",
+      "exp": 20
+    }
+  ],
+  "schedule": [{
+      "id": "rOS6Pt4tnuaSYrbZ2hpQF",
+      "week": "1",
+      "announcement": "Welcome to your first week of CS2030!"
+    },
+    {
+      "id": "DC1sUrAHk8_8wI_aKXsk6",
+      "week": "2",
+      "announcement": "Hi guys, for this week, please remember to finish your previous lab exercises and watch the lectures"
+    }
+  ]
+}]

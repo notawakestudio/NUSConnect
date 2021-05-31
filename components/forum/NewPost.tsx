@@ -3,44 +3,53 @@ import TextContainer from './TextContainer'
 
 export default function NewPost() {
   return (
-    <div className="mt-10">
+    <div className="mt-10 ml-4">
       <TextContainer>
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 bg-white border-b border-gray-200">
               <form method="POST" action="action.php">
                 <div className="mb-4">
-                  <label className="text-xl text-gray-600">
-                    Title <span className="text-red-500">*</span>
+                  <label className="text-lg text-gray-800">
+                    Title *
+                    <input
+                      type="text"
+                      className="border border-gray-300 p-2 w-full rounded-lg"
+                      name="title"
+                      id="title"
+                      value=""
+                      required></input>
                   </label>
-                  <input
-                    type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
-                    name="title"
-                    id="title"
-                    value=""
-                    required></input>
                 </div>
 
                 <div className="mb-4">
-                  <label className="text-xl text-gray-600">Description</label>
-                  <input
-                    type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
-                    name="description"
-                    id="description"
-                    placeholder="(Optional)"></input>
-                </div>
-
-                <div className="mb-8">
-                  <label className="text-xl text-gray-600">
-                    Content <span className="text-red-500">*</span>
+                  <label className="text-lg text-gray-800">
+                    Tags
+                    <input
+                      type="text"
+                      className="border border-gray-300 p-2 w-full rounded-lg"
+                      name="description"
+                      id="description"
+                      placeholder="(Optional)"></input>
                   </label>
-                  <textarea name="content" className="border-2 border-gray-500"></textarea>
                 </div>
 
-                <div className="flex p-1">
-                  <select className="border-2 border-gray-300 border-r p-2" name="action">
+                {/* <div className="mb-8 flex-col">
+                  <label className="text-xl text-gray-600">
+                    Content *{' '}
+                    <textarea name="content" className="border border-gray-500"></textarea>
+                  </label>
+                </div> */}
+
+                <div className="flex-col mb-8">
+                  <p className="text-xl text-gray-600">Content *</p>
+                  <textarea
+                    name="content"
+                    className="border border-gray-500 flex min-w-full"></textarea>
+                </div>
+
+                <div className="flex">
+                  <select className="border border-gray-300 border-r p-2" name="action">
                     <option>Save and Publish</option>
                     <option>Save Draft</option>
                   </select>

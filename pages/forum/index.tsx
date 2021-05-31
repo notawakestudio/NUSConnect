@@ -13,7 +13,7 @@ export default function Forum({ postList }): JSX.Element {
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ForumLayout postList={postList}>
+      <ForumLayout postList={postList} isIndex={true}>
         <div className="flex content-center justify-center self-center">
           <ForumHome />
         </div>

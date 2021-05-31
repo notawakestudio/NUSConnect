@@ -40,13 +40,13 @@ export default function Login(): JSX.Element {
         </div>
       )}
       {session && (
-        <div className="shadow-lg mt-4 rounded-2xl p-4 bg-white dark:bg-gray-800 w-64 m-auto">
+        <div className="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-800 w-64 m-auto border">
           <div className="w-full h-full text-center font-semibold">
             <div className="flex h-full flex-col justify-between">
               <p className="text-gray-600 dark:text-gray-100 text-md py-2 px-6">
                 You are logged in as {session.user.name}
               </p>
-              <div className="flex items-center justify-between gap-4 w-full mt-8">
+              <div className="flex items-center justify-center gap-4 w-full mt-4">
                 <button
                   className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200"
                   onClick={() => signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/login` })}>
