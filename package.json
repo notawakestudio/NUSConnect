@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "cyopen": "cypress open",
+    "cyrun": "cypress run"
   },
   "dependencies": {
     "@next-auth/firebase-adapter": "^0.0.2-pr.18.173",
@@ -27,6 +29,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^7.0.6",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@types/react": "^17.0.4",
@@ -34,6 +37,7 @@
     "@typescript-eslint/parser": "^4.22.1",
     "autoprefixer": "^10.2.5",
     "cross-env": "^7.0.3",
+    "cypress": "^7.4.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
