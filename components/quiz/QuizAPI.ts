@@ -27,7 +27,7 @@ export const fetchQuestionById = async (questionId: string): Promise<Quiz> => {
   )
   return question
 }
-export const fetchQuestionTitle = async (questionId: string): Promise<string> => {
+export const fetchQuestionText = async (questionId: string): Promise<string> => {
   const question = await fetchQuestionById(questionId)
   return question['question']
 }
