@@ -36,19 +36,22 @@ const QuestionForm = (): JSX.Element => {
       </Head>
       <Layout>
         <div className="flex justify-center mx-auto">
-          <Link href="/quiz/quizMaker">Go make a quiz</Link>
+          <Link href="/quiz/make-quiz">Done? Go make a quiz</Link>
         </div>
         <Formik
           initialValues={initialValues}
           validationSchema={Yup.object({
             modules: Yup.array().required('Required'),
             type: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-            question: Yup.string().required('Required'),
+            question: Yup.string().trim().required('Required'),
+            correct_answers: Yup.array().min(1, 'Must have at least one').of(Yup.string().required()),
+            incorrect_answers: Yup.array().min(1).of(Yup.string().required())
           })}
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values)
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2))
+              alert("DONE")
+              // alert(JSON.stringify(values, null, 2))
               setSubmitting(false)
             }, 400)
           }}>
@@ -67,8 +70,8 @@ const QuestionForm = (): JSX.Element => {
                     <h2 className="max-w-sm mx-auto md:w-2/12">Meta data</h2>
                     <div className="max-w-md mx-auto md:w-10/12">
                       <div className=" relative ">
-                        <label htmlFor="type">Question Type</label>
-                        <div role="group" aria-labelledby="my-radio-group">
+                        <label htmlFor="type">Type</label>
+                        <div role="group" aria-labelledby="my-radio-group" className="flex">
                           <label htmlFor="type" className="mr-2">
                             <Field type="radio" name="type" value="MCQ" />
                             MCQ
@@ -77,20 +80,9 @@ const QuestionForm = (): JSX.Element => {
                             <Field type="radio" name="type" value="MRQ" />
                             MRQ
                           </label>
-                          <div>Picked: {formik.values.type}</div>
+                          <div className="pl-2">Picked: {formik.values.type}</div>
                         </div>
                         <ErrorMessage name="type" />
-                        <hr />
-                        <label htmlFor="modules">Modules</label>
-                        <div role="group" aria-labelledby="checkbox-group">
-                          {formik.values.modules.map((module, index) => (
-                            <label key={index} className="mr-2">
-                              <Field type="checkbox" name="modules" value={module} />
-                              {module}
-                            </label>
-                          ))}
-                        </div>
-                        <ErrorMessage name="modules" />
                       </div>
                     </div>
                   </div>
@@ -110,7 +102,7 @@ const QuestionForm = (): JSX.Element => {
                   </div>
                   <hr />
                   <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
-                    <h2 className="max-w-sm mx-auto md:w-2/12">Correct Answers</h2>
+                    <h2 className="max-w-sm mx-auto md:w-2/12">Correct Answer(s)</h2>
                     <div className="max-w-md mx-auto space-y-5 md:w-10/12">
                       <FieldArray name="correct_answers">
                         {({ remove, push }) => (
