@@ -4,12 +4,12 @@
         "author_id": "Alan_Tan",
         "title": "How to post a quiz",
         "content":"This is a short message",
-        "created_date": "12 April 2020",
-        "edited_date": "12 April 2020",
+        "created_date": 1622557680592,
+        "edited_date": 1622557680592,
         "tags": ["Question", "Tip", "Help"], 
         "week": "Week 1",
-        "reply_count": "37",
-        "up_votes": "10",
+        "reply_count": 37,
+        "up_votes": 10,
         "is_edited": false
     },
     {
@@ -17,12 +17,12 @@
         "author_id": "Alan_Tan",
         "title": "How to post a quiz",
         "content":"This is a longer message, This is a longer message",
-        "created_date": "12 April 2020",
-        "edited_date": "12 April 2020",
+        "created_date": 1622557680592,
+        "edited_date": 1622557680592,
         "tags": ["Question"], 
         "week": "Week 1",
-        "reply_count": "37",
-        "up_votes": "10",
+        "reply_count": 37,
+        "up_votes": 10,
         "is_edited": false
     },
     {
@@ -30,12 +30,12 @@
         "author_id": "Alan_Tan",
         "title": "How to post a quiz, with a long message, , with a long message, with a long message, with a long message, with a long message, with a long message",
         "content":"This is a longest message,This is a longest message, This is a longest message,This is a longest message, This is a longest message,This is a longest message, This is a longest message,This is a longest message, This is a longest message,This is a longest message, This is a longest message, This is a longest message, This is a longest message",
-        "created_date": "12 April 2020",
-        "edited_date": "12 April 2020",
-        "tags": [], 
+        "created_date": 1622557680592,
+        "edited_date": 1622557680592,
+        "tags": ["Question"],
         "week": "Week 1",
-        "reply_count": "37",
-        "up_votes": "10",
+        "reply_count": 37,
+        "up_votes": 10,
         "is_edited": false
     }
 ]

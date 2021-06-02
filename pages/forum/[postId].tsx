@@ -7,9 +7,10 @@ import {
   getPostById,
   getRelatedReplies,
   Post,
-  Reply,
+  Reply
 } from '../../components/forum/ForumAPI'
 import ForumLayout from '../../components/forum/ForumLayout'
+import NewReply from '../../components/forum/NewReply'
 import PostMain from '../../components/forum/PostMain'
 import ReplyList from '../../components/forum/ReplyList'
 
@@ -33,6 +34,7 @@ export default function CurrentPost({
         <div className="flex-grow flex-col ml-4">
           <PostMain post={currentPost} />
           <ReplyList replies={replies} />
+          <NewReply postId={currentPost.id} />
         </div>
       </ForumLayout>
     </>

@@ -37,6 +37,7 @@ const NavBar = (): JSX.Element => {
       setIsDarkMode(false)
     }
   }, [])
+
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
@@ -46,6 +47,7 @@ const NavBar = (): JSX.Element => {
       localStorage.theme = 'light'
     }
   }, [isDarkMode])
+  
   return (
     <header className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black items-center h-16">
       <div className="flex flex-col justify-center h-full px-3 mx-auto flex-center">

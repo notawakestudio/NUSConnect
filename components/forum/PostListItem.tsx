@@ -1,10 +1,11 @@
 import Link from 'next/link'
+import { showCurrentDateTime } from '../common/Util'
 import TextContainer from './TextContainer'
 
 const PostListItem = ({ post }): JSX.Element => {
   const tags = post.tags
   const author = post.author_id
-  const date = post.created_date
+  const date = showCurrentDateTime(post.created_date)
   const title = post.title
   const maxLength = 175
   const content = post.content
@@ -19,7 +20,7 @@ const PostListItem = ({ post }): JSX.Element => {
               {author} posted {date}
             </p>
             <p className="text-indigo-400 text-base font-small">{title}</p>
-            <p className="text-gray-500 dark:text-gray-300 font-light text-sm">
+            <p className="text-gray-500 dark:text-gray-300 font-light text-sm overflow-ellipsis overflow-hidden">
               {content.length > maxLength ? trimmedContent : content}
             </p>
             <div className="flex flex-wrap justify-starts items-center mt-2">
