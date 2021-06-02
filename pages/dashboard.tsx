@@ -17,6 +17,7 @@ export default function DashBoard(): JSX.Element {
   const [name, setName] = useState('user')
   const [picture, setPicture] = useState()
   const [showTopBar, setShowTopBar] = useState(false)
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch('/api/userData')
