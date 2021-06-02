@@ -1,7 +1,12 @@
 import { nanoid } from 'nanoid'
-import forum_data from '../../public/data/ForumData.json'
-import reply_data from '../../public/data/ReplyData.json'
 import { getCurrentDateTime, getCurrentWeek } from '../common/Util'
+
+const API_GET_ALL_POST = 'https://1ieznu.deta.dev/forum/post'
+const API_GET_POST_BY_ID = 'https://1ieznu.deta.dev/forum/post/'
+const API_SUBMIT_POST = 'https://1ieznu.deta.dev/post/make'
+const API_GET_ALL_REPLY = 'https://1ieznu.deta.dev/forum/reply'
+const API_GET_REPLY_BY_ID = 'https://1ieznu.deta.dev/forum/reply/'
+const API_SUBMIT_REPLY = 'https://1ieznu.deta.dev/reply/make'
 
 export type Post = {
   id: string
@@ -28,20 +33,23 @@ export type Reply = {
   is_edited: boolean
 }
 
-export const getAllPosts = (): Post[] => {
-  return forum_data
+export const getAllPosts = async (): Promise<Post[]> => {
+  return await fetch(API_GET_ALL_POST).then((response) => response.json())
 }
 
-export const getAllReplies = (): Reply[] => {
-  return reply_data
+export const getAllReplies = async (): Promise<Reply[]> => {
+  return await fetch(API_GET_ALL_REPLY).then((response) => response.json())
 }
 
-export const getPostById = (id: string): Post => {
-  return getAllPosts().filter((post) => post['id'] === id)[0]
+export const getPostById = async (id: string): Promise<Post> => {
+  const post = await fetch(API_GET_POST_BY_ID + id).then((response) =>
+    response.json()
+  )
+  return post
 }
 
-export async function getAllPostId(): Promise<{ postId }[]> {
-  const posts = getAllPosts()
+export async function getAllPostId(): Promise<{ postId: string }[]> {
+  const posts = await getAllPosts()
   return posts.map((post) => {
     return {
       postId: post['id'],
@@ -49,8 +57,8 @@ export async function getAllPostId(): Promise<{ postId }[]> {
   })
 }
 
-export const getRelatedReplies = (postId: string): Reply[] => {
-  const replyList = getAllReplies()
+export const getRelatedReplies = async (postId: string): Promise<Reply[]> => {
+  const replyList = await getAllReplies()
   return replyList.filter((reply) => reply['post_id'] === postId)
 }
 
@@ -71,8 +79,21 @@ export function makePost(post: string[]): void {
     up_votes: 0,
     is_edited: false,
   }
-
-  console.log(requestBody)
+  fetch(API_SUBMIT_POST, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
 }
 
 export function makeReply(post: string[], postId: string): void {
@@ -88,11 +109,25 @@ export function makeReply(post: string[], postId: string): void {
     up_votes: 0,
     is_edited: false,
   }
-
-  console.log(requestBody)
+  fetch(API_SUBMIT_REPLY, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
 }
 
 //to-do update this to a proper tag getter
-export function getAllTags(): string[] {
-  return getPostById('1a').tags
+export async function getAllTags(): Promise<string[]> {
+  const post = await getPostById('1a')
+  return post.tags
 }

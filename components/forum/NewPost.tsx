@@ -11,15 +11,12 @@ const initialValues = {
   content: '',
 }
 
-export default function NewPost() {
+export default function NewPost({tags}:{tags:string[]}) {
   const [session] = useSession()
-
   const handleSubmit = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makePost(value)
   }
-
-  const tags = getAllTags()
 
   return (
     <div className="mt-10 ml-4">

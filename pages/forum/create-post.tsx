@@ -1,11 +1,17 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import { getAllPosts, Post } from '../../components/forum/ForumAPI'
+import { getAllPosts, getAllTags, Post } from '../../components/forum/ForumAPI'
 import ForumLayout from '../../components/forum/ForumLayout'
 import NewPost from '../../components/forum/NewPost'
 
-export default function CreatePost({ postList }: { postList: Post[] }): JSX.Element {
+export default function CreatePost({
+  postList,
+  tags,
+}: {
+  postList: Post[]
+  tags: string[]
+}): JSX.Element {
   return (
     <>
       <Head>
@@ -15,7 +21,7 @@ export default function CreatePost({ postList }: { postList: Post[] }): JSX.Elem
       </Head>
       <ForumLayout postList={postList}>
         <div className="flex-grow flex-col">
-          <NewPost />
+          <NewPost tags={tags} />
         </div>
       </ForumLayout>
     </>
@@ -23,10 +29,14 @@ export default function CreatePost({ postList }: { postList: Post[] }): JSX.Elem
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postList = getAllPosts()
+  const postList = await getAllPosts()
+  // const tags = await getAllTags() // TODO: FIX THIS
+  const tags = ['question','lecture1']
   return {
     props: {
       postList,
+      tags
     },
+    revalidate: 10, // In seconds
   }
 }

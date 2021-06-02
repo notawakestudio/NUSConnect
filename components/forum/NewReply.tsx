@@ -17,7 +17,8 @@ export default function NewReply({postId} : {postId: string}) {
     makeReply(value, postId)
   }
 
-  const tags = getAllTags()
+  // const tags = getAllTags() // TODO FIX THIS
+  const tags = ['hello', 'world']
 
   return (
     <div className="mt-8">
