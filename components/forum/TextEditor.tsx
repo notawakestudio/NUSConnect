@@ -36,3 +36,5 @@
 //     <div>Editor loading</div>
 //   )
 // }
+
+export {}

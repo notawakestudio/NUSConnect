@@ -1,10 +1,9 @@
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { useSession } from 'next-auth/client'
 import React from 'react'
-import TextContainer from './TextContainer'
-import TextEditor from './TextEditor'
-import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik'
 import * as Yup from 'yup'
 import { getAllTags, makePost } from './ForumAPI'
-import { useSession } from 'next-auth/client'
+import TextContainer from './TextContainer'
 
 const initialValues = {
   title: '',
@@ -98,9 +97,6 @@ export default function NewPost() {
           </Formik>
         </div>
       </TextContainer>
-      {/* <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
-
-      <script>CKEDITOR.replace( 'content' );</script> */}
     </div>
   )
 }
