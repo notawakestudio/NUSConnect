@@ -75,6 +75,24 @@ export function makePost(post: string[]): void {
   console.log(requestBody)
 }
 
+export function makeReply(post: string[], postId: string): void {
+  const currDate = getCurrentDateTime()
+
+  const requestBody: Reply = {
+    id: nanoid(),
+    post_id: postId,
+    author_id: post['author'],
+    content: post['content'],
+    created_date: currDate,
+    edited_date: currDate,
+    up_votes: 0,
+    is_edited: false,
+  }
+
+  console.log(requestBody)
+}
+
+//to-do update this to a proper tag getter
 export function getAllTags(): string[] {
   return getPostById('1a').tags
 }
