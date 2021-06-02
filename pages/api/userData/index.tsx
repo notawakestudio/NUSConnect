@@ -2,7 +2,6 @@ import { getSession } from 'next-auth/client'
 
 export default async (req, res): Promise<void> => {
   const session = await getSession({ req })
-
   if (session) {
     res.send({
       name: session.user.name,
