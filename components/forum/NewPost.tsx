@@ -21,8 +21,6 @@ export default function NewPost() {
 
   const tags = getAllTags()
 
-  console.log(tags)
-
   return (
     <div className="mt-10 ml-4">
       <TextContainer>
@@ -53,6 +51,7 @@ export default function NewPost() {
                   <div className="space-y-6 bg-white">
                     <div className="items-center w-full p-4 space-y-4 text-gray-500 flex-shrink-0">
                       <div className="relative min-w-full ">
+
                         <div id="checkbox-group"> Tags </div>
                         <div role="group" aria-labelledby="checkbox-group">
                           {tags.map((tag, index) => (
@@ -63,9 +62,9 @@ export default function NewPost() {
                           ))}
                         </div>
                         <hr />
+
                         <label htmlFor="title">Title</label>
                         <Field
-                          type={TextContainer}
                           name="title"
                           rows={5}
                           className="flex rounded-lg border-transparent border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
@@ -73,7 +72,7 @@ export default function NewPost() {
                         <ErrorMessage name="title" />
                         <hr />
 
-                        <label htmlFor="title">Content</label>
+                        <label htmlFor="content">Content</label>
                         <Field
                           name="content"
                           rows={5}
@@ -81,6 +80,7 @@ export default function NewPost() {
                           placeholder="content"></Field>
                         <ErrorMessage name="content" />
                         <hr />
+
                       </div>
                     </div>
                     <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
