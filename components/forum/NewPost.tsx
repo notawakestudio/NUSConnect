@@ -49,7 +49,7 @@ export default function NewPost() {
                   </div>
                   <div className="space-y-4 bg-white">
                     <div className="items-center w-full p-4 space-y-2 text-gray-500 flex-shrink-0 flex-col">
-                      <div id="checkbox-group"> Tags </div>
+                      <div id="checkbox-group"> Select Tags </div>
                       <div role="group" aria-labelledby="checkbox-group">
                         {tags.map((tag, index) => (
                           <span key={index} className="flex-row">
