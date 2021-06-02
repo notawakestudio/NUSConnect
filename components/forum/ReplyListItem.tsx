@@ -13,7 +13,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
             <a className="inline-flex items-center mt-4">
               <span className="flex flex-col">
                 <span className="title-font font-medium text-gray-900">
-                  {currentReply.author_id}{' '}
+                  {currentReply.author_id}
                 </span>
                 <span className="text-gray-400 text-xs tracking-widest mt-0.5">Level 10</span>
               </span>

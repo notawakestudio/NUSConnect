@@ -37,7 +37,7 @@ const QuestionForm = (): JSX.Element => {
       <Layout>
         <div className="flex justify-center mx-auto">
           <Link href="/quiz/quizMaker">Go make a quiz</Link>
-        </div>{' '}
+        </div>
         <Formik
           initialValues={initialValues}
           validationSchema={Yup.object({

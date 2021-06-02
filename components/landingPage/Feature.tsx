@@ -24,7 +24,6 @@ const Feature = (): JSX.Element => {
               <div className="px-4">
                 <h3 className="my-4 text-xl font-semibold dark:text-white">Forum</h3>
                 <p className="text-gray-500 dark:text-gray-300 leading-loose">
-                  {' '}
                   A forum for students to interact with one another, with live chatting, upvoting,
                   and many other features.
                 </p>

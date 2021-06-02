@@ -22,7 +22,6 @@ const PostList = ({ postList }): JSX.Element => {
               </div>
             </div>
             <h4 className="text-lg leading-6 font-medium text-gray-900 dark:text-white my-2">
-              {' '}
               Week 1
             </h4>
             <ul className="flex-col">
