@@ -53,8 +53,7 @@ export default function NewPost() {
                       <div role="group" aria-labelledby="checkbox-group">
                         {tags.map((tag, index) => (
                           <span key={index} className="flex-row">
-                            <label
-                              className="mr-4 appearance-none border border-indigo-400 rounded-lg">
+                            <label className="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-black uppercase transition bg-indigo-100 rounded shadow ripple hover:shadow-lg hover:bg-indigo-200 focus:outline-none">
                               <Field className="mr-2" type="checkbox" name="tags" value={tag} />
                               {tag}
                             </label>
@@ -67,7 +66,7 @@ export default function NewPost() {
                       <ContentTextArea
                         label="Content"
                         name="content"
-                        rows="6"
+                        rows={6}
                         placeholder="Leave a comment"
                       />
                       <br />
@@ -90,11 +89,19 @@ export default function NewPost() {
   )
 }
 
-const ContentTextArea = ({ label, ...props }) => {
+const ContentTextArea = ({
+  label,
+  ...props
+}: {
+  label: any
+  name: string
+  rows: number
+  placeholder: string
+}) => {
   const [field, meta] = useField(props)
   return (
     <>
-      <label htmlFor={props.id || props.name}>{label}</label>
+      <label htmlFor={props.name}>{label}</label>
       <textarea
         className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         {...field}
@@ -105,12 +112,20 @@ const ContentTextArea = ({ label, ...props }) => {
   )
 }
 
-const TitleTextInput = ({ label, ...props }) => {
+const TitleTextInput = ({
+  label,
+  ...props
+}: {
+  label: any
+  name: string
+  type: string
+  placeholder: string
+}) => {
   const [field, meta] = useField(props)
   return (
     <>
       <div className="flex">
-        <label htmlFor={props.id || props.name}>{label}</label>
+        <label htmlFor={props.name}>{label}</label>
         {meta.touched && meta.error ? <div className="ml-2 text-red-500">{meta.error}</div> : null}
       </div>
       <input

@@ -41,7 +41,7 @@ export default function NewReply({postId} : {postId: string}) {
                   <ContentTextArea
                     label="New comment"
                     name="content"
-                    rows="6"
+                    rows={6}
                     placeholder="Leave a comment"
                   />
                   <br />
@@ -62,11 +62,19 @@ export default function NewReply({postId} : {postId: string}) {
   )
 }
 
-const ContentTextArea = ({ label, ...props }) => {
+const ContentTextArea = ({
+  label,
+  ...props
+}: {
+  label: any
+  name: string
+  rows: number
+  placeholder: string
+}) => {
   const [field, meta] = useField(props)
   return (
     <>
-      <label htmlFor={props.id || props.name}>{label}</label>
+      <label htmlFor={props.name}>{label}</label>
       <textarea
         className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         {...field}
