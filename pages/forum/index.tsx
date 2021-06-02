@@ -23,10 +23,11 @@ export default function Forum({ postList }): JSX.Element {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postList = getAllPosts()
+  const postList = await getAllPosts()
   return {
     props: {
       postList,
     },
+    revalidate: 10, // In seconds
   }
 }

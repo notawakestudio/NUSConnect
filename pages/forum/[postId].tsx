@@ -57,9 +57,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postId = params.postId as string
-  const currentPost = getPostById(postId)
-  const postList = getAllPosts()
-  const replies = getRelatedReplies(postId)
+  const currentPost = await getPostById(postId)
+  const postList = await getAllPosts()
+  const replies = await getRelatedReplies(postId)
 
   return {
     props: {
@@ -67,5 +67,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       postList,
       replies,
     },
+    revalidate: 10, // In seconds
   }
 }
