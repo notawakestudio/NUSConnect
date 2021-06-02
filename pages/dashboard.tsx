@@ -78,7 +78,7 @@ export default function DashBoard(): JSX.Element {
               </header>
               <div className="px-4 md:px-6">
                 <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
-                  Good day! {name}{' '}
+                  Good day! {name}
                 </h1>
                 <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
                   <div className="w-full md:w-6/12">

@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+
 Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation(query => ({
@@ -12,3 +13,9 @@ Object.defineProperty(window, 'matchMedia', {
         dispatchEvent: jest.fn(),
     })),
 });
+
+//https://medium.com/@arivu_a/how-to-mock-functions-globally-in-jest-f267fedf7683
+const mockFetchPromise = Promise.resolve({
+    json: () => Promise.resolve({}),
+});
+global.fetch = jest.fn(() => mockFetchPromise);
