@@ -3,8 +3,24 @@ import * as Yup from 'yup'
 import Head from 'next/head'
 import Layout from '../../components/common/Layout'
 import Link from 'next/link'
-import { makeQuiz } from '../../components/quiz/QuizAPI'
+import { fetchAllQuestions, makeQuiz } from '../../components/quiz/QuizAPI'
 import { useSession } from 'next-auth/client'
+import CustomSelect from '../../components/common/CustomSelect'
+import { GetStaticProps } from 'next'
+import { renderMdToHtml } from '../../components/common/Util'
+
+export const getStaticProps: GetStaticProps = async () => {
+  const questions = await fetchAllQuestions()
+  const selectObjects = questions.map((question) => {
+    return { label: renderMdToHtml(question['question']), value: question['id'] }
+  })
+  return {
+    props: {
+      selectObjects,
+    },
+  }
+}
+
 const initialValues = {
   title: 'CS2030 Quiz 1',
   week: '1',
@@ -12,7 +28,11 @@ const initialValues = {
   tags: ['OOP', 'intro'],
   questions: ['3zCJecvK8nCUM06cjxQ_Z', 'BZRCIwXBleMwXzi_VximL'],
 }
-const QuizForm = (): JSX.Element => {
+const QuizForm = ({
+  selectObjects,
+}: {
+  selectObjects: { label: string; value: string }
+}): JSX.Element => {
   const [session] = useSession()
   const handleSubmit = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
@@ -27,7 +47,7 @@ const QuizForm = (): JSX.Element => {
       </Head>
       <Layout>
         <div className="flex justify-center mx-auto">
-          <Link href="/quiz/questionMaker">Go make more questions</Link>
+          <Link href="/quiz/make-question">Go make more questions</Link>
         </div>
         <Formik
           initialValues={initialValues}
@@ -39,7 +59,8 @@ const QuizForm = (): JSX.Element => {
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values)
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2))
+              // alert(JSON.stringify(values, null, 2))
+              alert("DONE")
               setSubmitting(false)
             }, 400)
           }}>
@@ -76,16 +97,6 @@ const QuizForm = (): JSX.Element => {
                           placeholder="week"></Field>
                         <ErrorMessage name="title" />
                         <hr />
-                        <label htmlFor="modules">Modules</label>
-                        <div role="group" aria-labelledby="checkbox-group">
-                          {formik.values.modules.map((module, index) => (
-                            <label key={index} className="mr-2">
-                              <Field type="checkbox" name="modules" value={module} />
-                              {module}
-                            </label>
-                          ))}
-                        </div>
-                        <ErrorMessage name="modules" />
                         <label htmlFor="tags">Tags</label>
                         <FieldArray name="tags">
                           {({ remove, push }) => (
@@ -126,40 +137,7 @@ const QuizForm = (): JSX.Element => {
                   <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
                     <h2 className="max-w-sm mx-auto md:w-2/12">Questions</h2>
                     <div className="max-w-md mx-auto space-y-5 md:w-10/12">
-                      <FieldArray name="questions">
-                        {({ remove, push }) => (
-                          <div>
-                            {formik.values.questions.length > 0 &&
-                              formik.values.questions.map((question, index) => (
-                                <div className="flex items-center my-2" key={index}>
-                                  <div className="col w-full">
-                                    <Field
-                                      rows={4}
-                                      className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                      name={`questions.${index}`}
-                                      placeholder="question ID"
-                                    />
-                                    <ErrorMessage name={`questions.${index}`} component="div" />
-                                  </div>
-                                  <div className="col ml-2">
-                                    <button
-                                      type="button"
-                                      className="secondary"
-                                      onClick={() => remove(index)}>
-                                      X
-                                    </button>
-                                  </div>
-                                </div>
-                              ))}
-                            <button
-                              type="button"
-                              className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                              onClick={() => push('')}>
-                              Add More
-                            </button>
-                          </div>
-                        )}
-                      </FieldArray>
+                      <Field component={CustomSelect} name="questions" options={selectObjects} />
                     </div>
                     <hr />
                   </div>
