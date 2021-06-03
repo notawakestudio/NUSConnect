@@ -28,6 +28,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       postList,
     },
-    revalidate: 10, // In seconds
+    revalidate: 5, // In seconds
   }
 }
