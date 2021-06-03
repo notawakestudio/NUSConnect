@@ -1,7 +1,7 @@
 import { Field, Form, Formik, useField } from 'formik'
 import { useSession } from 'next-auth/client'
 import React from 'react'
-import Select, { Option } from 'react-select'
+import { default as Select } from 'react-select'
 import * as Yup from 'yup'
 import { makePost } from './ForumAPI'
 import TextContainer from './TextContainer'
@@ -103,7 +103,7 @@ export const TagMultiSelect = ({
   const onChange = (option) => {
     form.setFieldValue(
       field.name,
-      isMulti ? (option as Option[]).map((item: Option) => item.value) : (option as Option).value
+      isMulti ? (option).map((item) => item.value) : (option).value
     )
   }
 
