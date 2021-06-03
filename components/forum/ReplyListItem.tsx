@@ -9,7 +9,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
     <div className="mt-10">
       <TextContainer>
         <div className="p-12">
-          <p className="leading-relaxed mb-8">{<span dangerouslySetInnerHTML={{ __html: renderMdToHtml(currentReply.content) }}/>}</p>
+          <p className="leading-relaxed mb-8">{<span className="prose lg:prose-lg" dangerouslySetInnerHTML={{ __html: renderMdToHtml(currentReply.content) }}/>}</p>
           <div className="flex items-center flex-wrap pt-4 mt-4 border-t-2 border-gray-200">
             <a className="inline-flex items-center mt-4">
               <span className="flex flex-col">

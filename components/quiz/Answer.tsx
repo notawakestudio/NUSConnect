@@ -39,7 +39,7 @@ const Answer = ({
           />
         </label>
         <p
-          className="text-left"
+          className="text-left prose lg:prose-lg"
           dangerouslySetInnerHTML={{ __html: renderMdToHtml(answerText) }}></p>
       </button>
     </div>

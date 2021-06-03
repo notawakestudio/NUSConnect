@@ -17,6 +17,7 @@
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "@firebase/firestore": "^2.3.2",
     "@next-auth/firebase-adapter": "^0.0.2-pr.18.173",
+    "@tailwindcss/typography": "^0.4.1",
     "firebase": "^8.6.3",
     "formik": "^2.2.8",
     "gray-matter": "^4.0.3",
