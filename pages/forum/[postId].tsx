@@ -13,6 +13,7 @@ import ForumLayout from '../../components/forum/ForumLayout'
 import NewReply from '../../components/forum/NewReply'
 import PostMain from '../../components/forum/PostMain'
 import ReplyList from '../../components/forum/ReplyList'
+import { useRouter } from 'next/router'
 
 export default function CurrentPost({
   currentPost,
@@ -23,6 +24,13 @@ export default function CurrentPost({
   postList: Post[]
   replies: Reply[]
 }): JSX.Element {
+  const router = useRouter()
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
   return (
     <>
       <Head>
@@ -30,6 +38,7 @@ export default function CurrentPost({
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <ForumLayout postList={postList}>
         <div className="flex-grow flex-col ml-4">
           <PostMain post={currentPost} />
@@ -51,7 +60,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   })
   return {
     paths,
-    fallback: false,
+    fallback: true,
   }
 }
 
@@ -67,6 +76,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       postList,
       replies,
     },
-    revalidate: 10, // In seconds
+    revalidate: 5, // In seconds
   }
 }
