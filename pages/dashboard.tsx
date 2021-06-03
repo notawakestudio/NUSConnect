@@ -11,13 +11,23 @@ import NavBar from '../components/common/NavBar'
 import SideBar from '../components/common/SideBar'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
 
+const userData = [
+  {
+    userId: 'ddHg168Fwz9VIP1wxbzK',
+    exp: 30,
+    displayName: 'Dreamer',
+    role: 'admin',
+    badges: ['a', 'b'],
+    completedTasks: [],
+  },
+]
 export default function DashBoard(): JSX.Element {
   const schedule = fetchModuleData('xft5nj9NXr_RXl3LEyt2g')
   const [session] = useSession()
   const [name, setName] = useState('user')
   const [picture, setPicture] = useState()
   const [showTopBar, setShowTopBar] = useState(false)
-
+  const [exp, setExp] = useState(0)
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch('/api/userData')
@@ -25,11 +35,20 @@ export default function DashBoard(): JSX.Element {
       if (json.name) {
         setName(json.name)
       }
+      if (session && userData.find(user => user.userId === session.userId)) {
+        setName(userData.find(user => user.userId === session.userId).displayName)
+      }
       if (json.image) {
         setPicture(json.image)
       }
     }
     fetchData()
+
+  }, [session])
+  useEffect(() => {
+    if (session) {
+      setExp(userData.find(user => user.userId === session.userId).exp)
+    }
   }, [session])
 
   return (
@@ -95,7 +114,7 @@ export default function DashBoard(): JSX.Element {
                             </p>
                           </div>
                           <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
-                            100
+                            {exp}
                             <span className="text-xs text-gray-400"> EXP</span>
                           </div>
                         </div>
