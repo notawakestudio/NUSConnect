@@ -56,7 +56,7 @@ const Question = ({
         Question: {questionNumber} / {totalQuestions}
       </p>
       <p
-        className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2"
+        className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2 prose lg:prose-lg"
         dangerouslySetInnerHTML={{ __html: renderMdToHtml(question) }}></p>
       <div className="shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 flex justify-center flex-wrap">
         {answers.map((answerText, index) => (
