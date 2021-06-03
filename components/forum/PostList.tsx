@@ -4,7 +4,7 @@ import PostListItem from './PostListItem'
 
 const PostList = ({ postList }): JSX.Element => {
   return (
-    <div className=" bg-white dark:bg-gray-800 ">
+    <div className="">
       <div className="flex flex-col items-center justify-start">
         <span className="text-gray-600 dark:text-gray-300 text-2xl font-bold">
           <div className="flex flex-col flex-grow w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg ">

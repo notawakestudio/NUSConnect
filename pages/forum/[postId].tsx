@@ -38,9 +38,9 @@ export default function CurrentPost({
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <ForumLayout postList={postList}>
-        <div className="flex-grow flex-col ml-4">
+        <div className="flex-grow flex-col space-y-4 lg:ml-4 lg:space-y-8">
           <PostMain post={currentPost} />
           <ReplyList replies={replies} />
           <NewReply postId={currentPost.id} />
