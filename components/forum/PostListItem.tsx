@@ -19,7 +19,7 @@ const PostListItem = ({ post }): JSX.Element => {
             <p className="text-grey-800 text-xs font-small">
               {author} posted {date}
             </p>
-            <p className="text-indigo-400 text-base font-small">{title}</p>
+            <p className="text-indigo-500 dark:text-indigo-400 text-base font-small">{title}</p>
             <p className="text-gray-500 dark:text-gray-300 font-light text-sm overflow-ellipsis overflow-hidden">
               {content.length > maxLength ? trimmedContent : content}
             </p>

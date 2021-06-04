@@ -31,7 +31,10 @@ export default function CreatePost({
 export const getStaticProps: GetStaticProps = async () => {
   const postList = await getAllPosts()
   // const tags = await getAllTags() // TODO: FIX THIS
-  const tags = ['question','lecture1']
+  const tags = [
+    { value: 'question', label: 'question' },
+    { value: 'lecture1', label: 'lecture1' },
+  ]
   return {
     props: {
       postList,

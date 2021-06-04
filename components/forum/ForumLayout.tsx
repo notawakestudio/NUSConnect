@@ -15,21 +15,23 @@ export default function ForumLayout({
   return (
     <>
       <Auth>
-        <Layout>
-          <div className="flex flex-row flex-nowrap mt-10">
-            {isIndex && (
-              <div className="lg:max-w-md lg:flex-shrink-0 mx-2">
-                <PostList postList={postList} />
-              </div>
-            )}
-            {!isIndex && (
-              <div className="hidden lg:flex lg:max-w-md lg:flex-shrink-0 mx-2">
-                <PostList postList={postList} />
-              </div>
-            )}
-            <div className="mx-2 flex-grow">{children}</div>
-          </div>
-        </Layout>
+        <div className="dark:bg-gray-800">
+          <Layout>
+            <div className="flex flex-row flex-nowrap mt-10">
+              {isIndex && (
+                <div className="lg:max-w-md lg:flex-shrink-0 mx-2">
+                  <PostList postList={postList} />
+                </div>
+              )}
+              {!isIndex && (
+                <div className="hidden lg:flex lg:max-w-sm lg:flex-shrink-0 mx-2 xl:max-w-sm">
+                  <PostList postList={postList} />
+                </div>
+              )}
+              <div className="mx-2 flex-grow">{children}</div>
+            </div>
+          </Layout>
+        </div>
       </Auth>
     </>
   )

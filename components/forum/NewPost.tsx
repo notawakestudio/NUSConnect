@@ -1,8 +1,9 @@
-import { ErrorMessage, Field, Form, Formik, useField } from 'formik'
+import { Field, Form, Formik, useField } from 'formik'
 import { useSession } from 'next-auth/client'
 import React from 'react'
+import { default as Select } from 'react-select'
 import * as Yup from 'yup'
-import { getAllTags, makePost } from './ForumAPI'
+import { makePost } from './ForumAPI'
 import TextContainer from './TextContainer'
 
 const initialValues = {
@@ -11,7 +12,7 @@ const initialValues = {
   content: '',
 }
 
-export default function NewPost({tags}:{tags:string[]}) {
+export default function NewPost({ tags }: { tags: string[] }) {
   const [session] = useSession()
   const handleSubmit = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
@@ -46,7 +47,9 @@ export default function NewPost({tags}:{tags:string[]}) {
                   </div>
                   <div className="space-y-4 bg-white">
                     <div className="items-center w-full p-4 space-y-2 text-gray-500 flex-shrink-0 flex-col">
-                      <div id="checkbox-group"> Tags </div>
+                      <div>Select Tags</div>
+                      <Field name={'tags'} component={TagMultiSelect} options={tags} />
+                      {/* <div id="checkbox-group"> Select Tags </div>
                       <div role="group" aria-labelledby="checkbox-group">
                         {tags.map((tag, index) => (
                           <span key={index} className="flex-row">
@@ -56,7 +59,7 @@ export default function NewPost({tags}:{tags:string[]}) {
                             </label>
                           </span>
                         ))}
-                      </div>
+                      </div> */}
                       <br />
                       <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
                       <br />
@@ -83,6 +86,45 @@ export default function NewPost({tags}:{tags:string[]}) {
         </div>
       </TextContainer>
     </div>
+  )
+}
+
+export const TagMultiSelect = ({
+  field,
+  form,
+  options,
+  isMulti = true,
+}: {
+  field: any
+  form: any
+  options: any
+  isMulti: boolean
+}) => {
+  const onChange = (option) => {
+    form.setFieldValue(
+      field.name,
+      isMulti ? (option).map((item) => item.value) : (option).value
+    )
+  }
+
+  const getValue = () => {
+    if (options) {
+      return isMulti
+        ? options.filter((option) => field.value.indexOf(option.value) >= 0)
+        : options.find((option) => option.value === field.value)
+    } else {
+      return isMulti ? [] : ('' as any)
+    }
+  }
+
+  return (
+    <Select
+      name={field.name}
+      value={getValue()}
+      onChange={onChange}
+      options={options}
+      isMulti={isMulti}
+    />
   )
 }
 
