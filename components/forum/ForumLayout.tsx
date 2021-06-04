@@ -17,14 +17,14 @@ export default function ForumLayout({
       <Auth>
         <div className="dark:bg-gray-800">
           <Layout>
-            <div className="flex flex-nowrap mt-10">
+            <div className="flex mt-10">
               {isIndex && (
                 <div className="lg:max-w-sm xl:max-w-md mx-2">
                   <PostList postList={postList} />
                 </div>
               )}
               {!isIndex && (
-                <div className="hidden lg:flex lg:max-w-sm xl:max-w-md mx-2">
+                <div className="hidden lg:flex lg:max-w-sm xl:max-w-md mx-2 flex-shrink-0">
                   <PostList postList={postList} />
                 </div>
               )}
