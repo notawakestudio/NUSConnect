@@ -46,7 +46,7 @@ export default function DashBoard(): JSX.Element {
 
   }, [session])
   useEffect(() => {
-    if (session) {
+    if (session && userData.find(user => user.userId === session.userId)) {
       setExp(userData.find(user => user.userId === session.userId).exp)
     }
   }, [session])
