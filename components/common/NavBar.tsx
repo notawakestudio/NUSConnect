@@ -51,7 +51,7 @@ const NavBar = (): JSX.Element => {
   }, [isDarkMode])
 
   return (
-    <div className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16">
+    <div className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16 overflow-hidden">
       <div className="flex h-full items-center justify-between">
         <div className="flex flex-row w-auto h-auto space-x-2 p-2">
           <Link href="/">
@@ -99,14 +99,13 @@ const NavBar = (): JSX.Element => {
           </div>
         )}
         {session && picture && (
-          <div className="p-1 h-full flex mt-4 text-gray-800 dark:text-gray-200">
+          <div className="p-1 h-full w-auto flex mt-4 text-gray-800 dark:text-gray-200">
             <div
-              className="flex flex-col h-full justify-items-end"
+              className="flex flex-col h-full justify-items-end flex-shrink-0"
               onMouseEnter={() => setCollapse(false)}
               onMouseLeave={() => setCollapse(true)}>
-              <button
-                type="button"
-                className="flex flex-row ml-2 items-center cursor-pointer "
+              <div
+                className="flex flex-row ml-2 items-center cursor-pointer select-none space-x-2"
                 onClick={() => setCollapse(!collapse)}>
                 <Image
                   width={40}
@@ -115,9 +114,11 @@ const NavBar = (): JSX.Element => {
                   src={picture}
                   className="mx-auto object-cover rounded-full h-10 w-10"
                 />
-                <span className="flex px-2 font-light">{name}</span>
+                <span className="hidden sm:flex font-light text-sm text-center whitespace-nowrap">
+                  {name}
+                </span>
                 <BiCaretDown />
-              </button>
+              </div>
               <div
                 className={`w-auto rounded-md mt-2 shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
                   collapse ? 'invisible' : ''
