@@ -13,7 +13,7 @@ const NavBar = (): JSX.Element => {
   const [session] = useSession()
   const [name, setName] = useState('')
   const [picture, setPicture] = useState(undefined)
-  const [collapse, setCollapse] = useState<boolean>(true)
+  const [profileCollapse, setProfileCollapse] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -51,7 +51,7 @@ const NavBar = (): JSX.Element => {
   }, [isDarkMode])
 
   return (
-    <div className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16 overflow-hidden">
+    <div className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16">
       <div className="flex h-full items-center justify-between">
         <div className="flex flex-row w-auto h-auto space-x-2 p-2">
           <Link href="/">
@@ -102,17 +102,17 @@ const NavBar = (): JSX.Element => {
           <div className="p-1 h-full w-auto flex mt-4 text-gray-800 dark:text-gray-200">
             <div
               className="flex flex-col h-full justify-items-end flex-shrink-0"
-              onMouseEnter={() => setCollapse(false)}
-              onMouseLeave={() => setCollapse(true)}>
+              onMouseEnter={() => setProfileCollapse(false)}
+              onMouseLeave={() => setProfileCollapse(true)}>
               <div
-                className="flex flex-row ml-2 items-center cursor-pointer select-none space-x-2"
-                onClick={() => setCollapse(!collapse)}>
+                className="flex flex-row ml-2 items-center cursor-pointer space-x-2"
+                onClick={() => setProfileCollapse(!profileCollapse)}>
                 <Image
                   width={40}
                   height={40}
                   alt="profile"
                   src={picture}
-                  className="mx-auto object-cover rounded-full h-10 w-10"
+                  className="object-cover rounded-full h-10 w-10"
                 />
                 <span className="hidden sm:flex font-light text-sm text-center whitespace-nowrap">
                   {name}
@@ -121,7 +121,7 @@ const NavBar = (): JSX.Element => {
               </div>
               <div
                 className={`w-auto rounded-md mt-2 shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
-                  collapse ? 'invisible' : ''
+                  profileCollapse ? 'invisible' : ''
                 }`}>
                 <div
                   className="py-2 text-md text-gray-700"
