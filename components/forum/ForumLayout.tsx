@@ -15,7 +15,7 @@ export default function ForumLayout({
   return (
     <>
       <Auth>
-        <div className="dark:bg-gray-800">
+        <div className="dark:bg-gray-800 w-full">
           <Layout>
             <div className="flex mt-10">
               {isIndex && (

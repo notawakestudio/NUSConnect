@@ -6,12 +6,14 @@ import { BsMoon, BsSun } from 'react-icons/bs'
 import { RiDashboardLine } from 'react-icons/ri'
 import Image from 'next/image'
 import QuickLink from './QuickLink'
+import { BiCaretDown } from 'react-icons/bi'
 
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
   const [name, setName] = useState('')
   const [picture, setPicture] = useState(undefined)
+  const [collapse, setCollapse] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -47,75 +49,97 @@ const NavBar = (): JSX.Element => {
       localStorage.theme = 'light'
     }
   }, [isDarkMode])
-  
+
   return (
-    <header className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black items-center h-16">
-      <div className="flex flex-col justify-center h-full px-3 mx-auto flex-center">
-        <div className="items-center justify-between pl-1 flex h-full w-full lg:max-w-68 sm:pr-2 sm:ml-0">
-          <div className="container left-60 flex w-auto h-auto">
-            <div className="flex w-full h-10 ">
-              <div className="hidden sm:flex px-2 text-center justify-center">
-                <Image
-                  alt="NUSConnectBanner"
-                  src="/NUSConnectBanner.png"
-                  height={50}
-                  width={180}
-                  className="mx-auto cursor-pointer"
-                />
-              </div>
-              <Link href="/">
-                <button className="px-4 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
-                  <AiOutlineHome />
-                </button>
-              </Link>
-              <Link href={session ? '/dashboard' : '/login'}>
-                <button className="ml-1 px-4 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
-                  <RiDashboardLine />
-                </button>
-              </Link>
-              <QuickLink />
+    <div className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16">
+      <div className="flex h-full items-center justify-between">
+        <div className="flex flex-row w-auto h-auto space-x-2 p-2">
+          <Link href="/">
+            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+              <AiOutlineHome />
+            </button>
+          </Link>
+          <Link href={session ? '/dashboard' : '/login'}>
+            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
+              <RiDashboardLine />
+            </button>
+          </Link>
+          <QuickLink />
+          <button
+            className="px-3 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-yellow-300 transition ease-in duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg border border-gray-300 shadow-md"
+            onClick={() => setIsDarkMode(!isDarkMode)}>
+            {isDarkMode ? <BsMoon /> : <BsSun />}
+          </button>
+        </div>
+
+        <div className="max-h-16 hidden md:flex items-center justify-center">
+          <div className="transform scale-50 max-w-lg">
+            <Image
+              alt="NUSConnectBanner"
+              src="/NUSConnectBanner.png"
+              height={514}
+              width={2343}
+              className="cursor-pointer"
+            />
+          </div>
+        </div>
+
+        {!session && (
+          <div className="p-1 flex items-center text-gray-800 dark:text-gray-200">
+            <Link href="/login">
+              <span className="flex px-2 font-light cursor-pointer border-r-2 border-gray-200 mr-2">
+                Login
+              </span>
+            </Link>
+            <Link href="/login">
+              <span className="flex px-2 py-1 font-light cursor-pointer border border-indigo-300 rounded-lg hover:bg-indigo-200">
+                Sign up
+              </span>
+            </Link>
+          </div>
+        )}
+        {session && picture && (
+          <div className="p-1 h-full flex mt-4 text-gray-800 dark:text-gray-200">
+            <div
+              className="flex flex-col h-full justify-items-end"
+              onMouseEnter={() => setCollapse(false)}
+              onMouseLeave={() => setCollapse(true)}>
               <button
-                className="py-2 px-4 text-2xl flex justify-center items-center  hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-yellow-300 transition ease-in duration-200 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
-                onClick={() => setIsDarkMode(!isDarkMode)}>
-                {isDarkMode ? <BsMoon /> : <BsSun />}
+                type="button"
+                className="flex flex-row ml-2 items-center cursor-pointer "
+                onClick={() => setCollapse(!collapse)}>
+                <Image
+                  width={40}
+                  height={40}
+                  alt="profile"
+                  src={picture}
+                  className="mx-auto object-cover rounded-full h-10 w-10"
+                />
+                <span className="flex px-2 font-light">{name}</span>
+                <BiCaretDown />
               </button>
+              <div
+                className={`w-auto rounded-md mt-2 shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
+                  collapse ? 'invisible' : ''
+                }`}>
+                <div
+                  className="py-2 text-md text-gray-700"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="options-menu">
+                  <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
+                    <Link href="/dashboard">Settings</Link>
+                  </div>
+                  <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
+                    <Link href="/login">Logout</Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          {!session && (
-            <div className="p-1 flex items-center">
-              <Link href="/login">
-                <span className="flex p-5 font-bold cursor-pointer">Login</span>
-              </Link>
-              <Image
-                width={40}
-                height={40}
-                alt="profile"
-                src="/cat.jpg"
-                className="mx-auto object-cover rounded-full h-10 w-10 cursor-pointer"
-              />
-            </div>
-          )}
-          {session && picture && (
-            <div className="p-1 flex items-center">
-              <Link href="/login">
-                <span className="flex p-5 font-bold cursor-pointer border-r">Logout</span>
-              </Link>
-              <Link href="/dashboard">
-                <span className="flex pl-1 font-bold cursor-pointer">{name}</span>
-              </Link>
-              <Image
-                width={40}
-                height={40}
-                alt="profile"
-                src={picture}
-                className="mx-auto object-cover rounded-full h-10 w-10 "
-              />
-            </div>
-          )}
-        </div>
+        )}
       </div>
-    </header>
+    </div>
   )
 }
 
