@@ -1,9 +1,9 @@
 import Answer from './Answer'
 import Link from 'next/link'
 import { renderMdToHtml } from '../common/Util'
-import Alert from '../common/Alert'
-import { useState } from 'react'
 import { QuizMode } from './types'
+import { toast } from 'react-toastify'
+
 type QuestionProps = {
   question: string
   answers: string[]
@@ -31,7 +31,6 @@ const Question = ({
   quizMode,
   correct_answers,
 }: QuestionProps): JSX.Element => {
-  const [alert, setAlert] = useState(false)
   const updateAnswer = (selectedOption: string): void => {
     if (quizMode === QuizMode.REVIEWING) {
       return
@@ -51,7 +50,6 @@ const Question = ({
 
   return (
     <div className="font-fira max-w-prose">
-      <Alert show={alert} setShow={setAlert} />
       <p className="number">
         Question: {questionNumber} / {totalQuestions}
       </p>
@@ -77,7 +75,7 @@ const Question = ({
           if (attemptedAllQuestions()) {
             updateTotalScore()
           } else {
-            setAlert(true)
+            toast.error("Please attempt all questions!");
           }
         }}>
         {quizMode === QuizMode.TAKING ? 'Submit' : 'Done'}

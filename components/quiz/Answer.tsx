@@ -20,7 +20,7 @@ const Answer = ({
     <div className="w-full border-b text-left" key={answerText}>
       <button
         className={`break-normal w-full flex items-center p-2 m-2 ${
-          userAnswer.includes(answerText) ? 'bg-blue-700 text-white' : 'bg-gray-100'
+          userAnswer.includes(answerText) ? 'bg-blue-200' : 'bg-gray-100'
         } ${
           quizMode === QuizMode.REVIEWING && correct_answers.includes(answerText)
             ? 'border-dotted border-green-500 border-4'
