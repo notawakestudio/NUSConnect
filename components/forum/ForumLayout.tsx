@@ -17,7 +17,7 @@ export default function ForumLayout({
       <Auth>
         <div className="dark:bg-gray-800 w-full">
           <Layout>
-            <div className="flex p-10">
+            <div className="flex">
               {isIndex && (
                 <div className="lg:max-w-sm xl:max-w-md mx-2">
                   <PostList postList={postList} />
