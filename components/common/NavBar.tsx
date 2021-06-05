@@ -6,8 +6,9 @@ import { BsMoon, BsSun } from 'react-icons/bs'
 import { RiDashboardLine } from 'react-icons/ri'
 import Image from 'next/image'
 import QuickLink from './QuickLink'
-import { BiCaretDown } from 'react-icons/bi'
+import { BiBookReader, BiCaretDown } from 'react-icons/bi'
 import Skeleton from 'react-loading-skeleton'
+import { MdForum } from 'react-icons/md'
 
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
@@ -55,21 +56,31 @@ const NavBar = (): JSX.Element => {
     <div
       className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16"
       aria-label="navbar">
-      <div className="flex h-full items-center justify-between items-start">
+      <div className="flex h-full items-center justify-between">
         <div className="flex flex-row w-auto h-auto space-x-2 p-2">
           <Link href="/">
-            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg h-10">
               <AiOutlineHome />
             </button>
           </Link>
-          <Link href={session ? '/dashboard' : '/login'}>
-            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
+          <Link href='/dashboard'>
+            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
               <RiDashboardLine />
+            </button>
+          </Link>
+          <Link href='/forum'>
+            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
+              <MdForum />
+            </button>
+          </Link>
+          <Link href='/quiz'>
+            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
+              <BiBookReader />
             </button>
           </Link>
           <QuickLink />
           <button
-            className="px-3 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-yellow-300 transition ease-in duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg border border-gray-300 shadow-md"
+            className="px-3 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-yellow-300 transition ease-in duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg border border-gray-300 shadow-md h-10"
             onClick={() => setIsDarkMode(!isDarkMode)}>
             {isDarkMode ? <BsMoon /> : <BsSun />}
           </button>
@@ -110,15 +121,15 @@ const NavBar = (): JSX.Element => {
               <div
                 className="flex flex-row ml-2 items-center cursor-pointer space-x-2"
                 onClick={() => setProfileCollapse(!profileCollapse)}>
-                  <Image
-                      width={40}
-                      height={40}
-                      alt="profile"
-                      src={picture}
-                      className="object-cover rounded-full h-10 w-10"
-                    />
+                <Image
+                  width={40}
+                  height={40}
+                  alt="profile"
+                  src={picture}
+                  className="object-cover rounded-full h-10 w-10"
+                />
                 <span className="hidden sm:flex font-light text-sm text-center whitespace-nowrap">
-                  {name ? name : <Skeleton width={120}/>}
+                  {name ? name : <Skeleton width={120} />}
                 </span>
                 <BiCaretDown />
               </div>
@@ -131,12 +142,16 @@ const NavBar = (): JSX.Element => {
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="options-menu">
-                  <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
-                    <Link href="/profile">Profile</Link>
-                  </div>
-                  <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
-                    <Link href="/login">Logout</Link>
-                  </div>
+                  <Link href="/profile">
+                    <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
+                      Profile
+                    </div>
+                  </Link>
+                  <Link href="/login">
+                    <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
+                      Logout
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
