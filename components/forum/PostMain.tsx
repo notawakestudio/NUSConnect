@@ -13,10 +13,10 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 ">
         <div className="flex justify-between px-2 flex-grow">
-          <div className="text-sm title-font font-medium text-gray-400 dark:text-gray-50">
+          <div className="text-xs sm:text-sm title-font font-medium text-gray-400 dark:text-gray-50">
             {currentPost.author_id}
           </div>
-          <div className="text-sm title-font font-medium text-gray-400 dark:text-gray-50">
+          <div className="text-xs sm:text-sm title-font font-medium text-gray-400 dark:text-gray-50">
             Last edited at {lastEdited}
           </div>
         </div>

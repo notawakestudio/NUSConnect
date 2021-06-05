@@ -57,8 +57,8 @@ const NavBar = (): JSX.Element => {
     <div
       className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16"
       aria-label="navbar">
-      <div className="flex flex-row h-full items-center justify-center xs:items-start xs:justify-between ">
-        <div className="flex flex-row w-auto h-full space-x-2 p-2 items-center">
+      <div className="flex flex-row h-full items-center justify-center xs:items-start xs:justify-between flex-grow">
+        <div className="flex flex-row h-full space-x-2 p-2 items-center">
           <Link href="/">
             <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg h-10">
               <AiOutlineHome />
