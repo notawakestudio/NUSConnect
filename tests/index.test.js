@@ -16,7 +16,7 @@ useSession.mockReturnValue([
 describe('Home', () => {
   it('renders Home without crashing', () => {
     render(<Home />)
-    expect(screen.getByLabelText('navbar')).toBeInTheDocument()
+    expect(screen.getByText('Explore Now')).toBeInTheDocument()
   })
   it('renders 404 without crashing', () => {
     render(<Custom404 />)
