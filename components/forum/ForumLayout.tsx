@@ -15,16 +15,16 @@ export default function ForumLayout({
   return (
     <>
       <Auth>
-        <div className="dark:bg-gray-800">
+        <div className="dark:bg-gray-800 w-full">
           <Layout>
-            <div className="flex flex-row flex-nowrap mt-10">
+            <div className="flex mt-10">
               {isIndex && (
-                <div className="lg:max-w-md lg:flex-shrink-0 mx-2">
+                <div className="lg:max-w-sm xl:max-w-md mx-2">
                   <PostList postList={postList} />
                 </div>
               )}
               {!isIndex && (
-                <div className="hidden lg:flex lg:max-w-sm lg:flex-shrink-0 mx-2 xl:max-w-sm">
+                <div className="hidden lg:flex lg:max-w-sm xl:max-w-md mx-2 flex-shrink-0">
                   <PostList postList={postList} />
                 </div>
               )}
