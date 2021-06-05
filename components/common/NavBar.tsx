@@ -51,7 +51,9 @@ const NavBar = (): JSX.Element => {
   }, [isDarkMode])
 
   return (
-    <div className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16">
+    <div
+      className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16"
+      aria-label="navbar">
       <div className="flex h-full items-center justify-between">
         <div className="flex flex-row w-auto h-auto space-x-2 p-2">
           <Link href="/">
