@@ -122,7 +122,7 @@ const NavBar = (): JSX.Element => {
                 <BiCaretDown />
               </div>
               <div
-                className={`w-auto rounded-md mt-2 shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
+                className={`w-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
                   profileCollapse ? 'invisible' : ''
                 }`}>
                 <div

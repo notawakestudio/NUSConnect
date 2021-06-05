@@ -15,7 +15,7 @@ const PostListItem = ({ post }): JSX.Element => {
     <Link href={`/forum/${post.id}`}>
       <a href="#" className="w-full block h-full my-2">
         <TextContainer>
-          <div className="hover:bg-gray-200 px-4 py-3 flex flex-col">
+          <div className="hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-3 flex flex-col">
             <div className="flex flex-row justify-between text-grey-600 dark:text-gray-300 text-xs font-thin">
               <span>{author}</span>
               <span>{date}</span>

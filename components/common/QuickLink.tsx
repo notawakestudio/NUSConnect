@@ -13,7 +13,7 @@ const QuickLink = (): JSX.Element => {
         <BsBookmarks />
       </button>
       <div
-        className={`origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
+        className={`origin-top-right absolute mt-2 w-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
           collapse ? 'invisible' : ''
         }`}>
         <div
