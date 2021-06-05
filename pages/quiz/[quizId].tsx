@@ -3,7 +3,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import Footer from '../../components/common/Footer'
-import NavBar from '../../components/common/NavBar'
 import Pagination from '../../components/common/Pagination'
 import { hasSameContent } from '../../components/common/Util'
 import AnswerObject from '../../components/quiz/AnswerObject'
@@ -135,7 +134,6 @@ export default function Quiz({
 
   return (
     <div className="grid">
-      <NavBar />
       <div className="container mx-auto pt-2 text-center">
         <Head>
           <title>Attempt Quiz | NUS Connect</title>
@@ -206,7 +204,6 @@ export default function Quiz({
           ) : null}
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

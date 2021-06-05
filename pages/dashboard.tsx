@@ -6,8 +6,6 @@ import { AiFillCaretDown, AiOutlineArrowUp } from 'react-icons/ai'
 import { GrFormCalendar, GrNotification, GrSemantics } from 'react-icons/gr'
 import { FcMenu } from 'react-icons/fc'
 import Auth from '../components/common/Auth'
-import Footer from '../components/common/Footer'
-import NavBar from '../components/common/NavBar'
 import SideBar from '../components/common/SideBar'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
 
@@ -59,7 +57,6 @@ export default function DashBoard(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Auth>
-        <NavBar />
         <main className="bg-gray-100 dark:bg-gray-800 relative h-screen overflow-hidden">
           <div className="flex items-start justify-between">
             <SideBar />
@@ -194,7 +191,6 @@ export default function DashBoard(): JSX.Element {
             </div>
           </div>
         </main>
-        <Footer />
       </Auth>
     </>
   )
