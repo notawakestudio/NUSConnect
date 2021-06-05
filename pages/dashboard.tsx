@@ -8,6 +8,7 @@ import { FcMenu } from 'react-icons/fc'
 import Auth from '../components/common/Auth'
 import SideBar from '../components/common/SideBar'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
+import Skeleton from 'react-loading-skeleton'
 
 const userData = [
   {
@@ -22,8 +23,8 @@ const userData = [
 export default function DashBoard(): JSX.Element {
   const schedule = fetchModuleData('xft5nj9NXr_RXl3LEyt2g')
   const [session] = useSession()
-  const [name, setName] = useState('user')
-  const [picture, setPicture] = useState()
+  const [name, setName] = useState<string>(undefined)
+  const [picture, setPicture] = useState('/white_profile-placeholder.png')
   const [showTopBar, setShowTopBar] = useState(false)
   const [exp, setExp] = useState(0)
   useEffect(() => {
@@ -57,7 +58,7 @@ export default function DashBoard(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Auth>
-        <main className="bg-gray-100 dark:bg-gray-800 relative h-screen overflow-hidden">
+        <main className="bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
           <div className="flex items-start justify-between">
             <SideBar />
             <div className="flex flex-col w-full md:space-y-4">
@@ -94,7 +95,7 @@ export default function DashBoard(): JSX.Element {
               </header>
               <div className="px-4 md:px-6">
                 <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
-                  Good day! {name}
+                  Good day! {name ? name : <Skeleton width={200}  />}
                 </h1>
                 <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
                   <div className="w-full md:w-6/12">

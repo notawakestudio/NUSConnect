@@ -5,7 +5,7 @@ export default function Login(): JSX.Element {
   const [session] = useSession()
 
   return (
-    <div className="container flex justify-center">
+    <div className="container flex justify-center mx-auto">
       {!session && (
         <div>
           <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
@@ -34,7 +34,11 @@ export default function Login(): JSX.Element {
                 href="#"
                 target="_blank"
                 className="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white">
-                <span className="ml-2">Don&#x27;t have an account?</span>
+                <span className="ml-2">
+                  Don&#x27;t have an account?
+                  <br /> Click on any of the above options
+                  <br /> and you are good to go!
+                </span>
               </a>
             </div>
           </div>
