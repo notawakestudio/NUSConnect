@@ -131,7 +131,7 @@ const NavBar = (): JSX.Element => {
                   aria-orientation="vertical"
                   aria-labelledby="options-menu">
                   <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
-                    <Link href="/dashboard">Settings</Link>
+                    <Link href="/profile">Profile</Link>
                   </div>
                   <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
                     <Link href="/login">Logout</Link>
