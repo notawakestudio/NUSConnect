@@ -55,7 +55,7 @@ const NavBar = (): JSX.Element => {
     <div
       className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16"
       aria-label="navbar">
-      <div className="flex h-full items-center justify-between">
+      <div className="flex h-full items-center justify-between items-start">
         <div className="flex flex-row w-auto h-auto space-x-2 p-2">
           <Link href="/">
             <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
@@ -123,7 +123,7 @@ const NavBar = (): JSX.Element => {
                 <BiCaretDown />
               </div>
               <div
-                className={`w-auto rounded-md mt-2 shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
+                className={`w-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
                   profileCollapse ? 'invisible' : ''
                 }`}>
                 <div
@@ -132,7 +132,7 @@ const NavBar = (): JSX.Element => {
                   aria-orientation="vertical"
                   aria-labelledby="options-menu">
                   <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
-                    <Link href="/dashboard">Settings</Link>
+                    <Link href="/profile">Profile</Link>
                   </div>
                   <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
                     <Link href="/login">Logout</Link>
