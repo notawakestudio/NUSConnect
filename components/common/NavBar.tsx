@@ -7,12 +7,13 @@ import { RiDashboardLine } from 'react-icons/ri'
 import Image from 'next/image'
 import QuickLink from './QuickLink'
 import { BiCaretDown } from 'react-icons/bi'
+import Skeleton from 'react-loading-skeleton'
 
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
-  const [name, setName] = useState('')
-  const [picture, setPicture] = useState(undefined)
+  const [name, setName] = useState<string>(undefined)
+  const [picture, setPicture] = useState('/white_profile-placeholder.png')
   const [profileCollapse, setProfileCollapse] = useState<boolean>(true)
 
   useEffect(() => {
@@ -109,15 +110,15 @@ const NavBar = (): JSX.Element => {
               <div
                 className="flex flex-row ml-2 items-center cursor-pointer space-x-2"
                 onClick={() => setProfileCollapse(!profileCollapse)}>
-                <Image
-                  width={40}
-                  height={40}
-                  alt="profile"
-                  src={picture}
-                  className="object-cover rounded-full h-10 w-10"
-                />
+                  <Image
+                      width={40}
+                      height={40}
+                      alt="profile"
+                      src={picture}
+                      className="object-cover rounded-full h-10 w-10"
+                    />
                 <span className="hidden sm:flex font-light text-sm text-center whitespace-nowrap">
-                  {name}
+                  {name ? name : <Skeleton width={120}/>}
                 </span>
                 <BiCaretDown />
               </div>
