@@ -34,7 +34,7 @@ export default function CurrentPost({
   return (
     <>
       <Head>
-        <title>Forum</title>
+        <title>Forum | NUS Connect</title>
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
