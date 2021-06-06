@@ -12,7 +12,7 @@ import { FcAnswers } from 'react-icons/fc'
 
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],
-  type: '',
+  type: 'MRQ',
   question:
     'Which of the following statements about good OO programming practice is LEAST appropriate?',
   answers: [
@@ -151,11 +151,14 @@ const QuestionForm = (): JSX.Element => {
                                                 isInvalid={form.errors.name && form.touched.name}>
                                                 <div className="flex-row flex items-center">
                                                   <FormLabel
-                                                    htmlFor="is_correct"
+                                                    htmlFor={`answer.${index}.is_correct`}
                                                     className="whitespace-nowrap content-center pt-1 pl-1">
                                                     Correct Answer
                                                   </FormLabel>
-                                                  <Checkbox {...field} id={answer.main} />
+                                                  <Checkbox
+                                                    {...field}
+                                                    id={`answer.${index}.is_correct`}
+                                                  />
                                                   <FormErrorMessage>
                                                     {form.errors.name}
                                                   </FormErrorMessage>
