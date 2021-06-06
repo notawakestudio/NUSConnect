@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { renderMdToHtml, showCurrentDateTime } from '../common/Util'
+import { renderMdToHtml, showCurrentDateTime, timeSince } from '../common/Util'
 import { Post, updatePostLikes } from './ForumAPI'
 import TextContainer from './TextContainer'
 import { FaRegComment, FaRegThumbsUp } from 'react-icons/fa'
@@ -9,24 +9,22 @@ import { toast } from 'react-toastify'
 const PostMain = ({ post }: { post: Post }): JSX.Element => {
   const currentPost = post
   const tags = currentPost.tags
-  const lastEdited = showCurrentDateTime(currentPost.edited_date)
+  const lastEdited = timeSince(currentPost.edited_date)
   const [upVotes, setUpVotes] = useState(currentPost.up_votes)
   const [liked, setLiked] = useState(false)
 
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 ">
-        <div className="flex justify-between px-2 flex-grow">
-          <div className="text-xs sm:text-sm title-font font-medium text-gray-400 dark:text-gray-50">
-            {currentPost.author_id}
-          </div>
-          <div className="text-xs sm:text-sm title-font font-medium text-gray-400 dark:text-gray-50">
-            Last edited at {lastEdited}
-          </div>
+        <div className="flex justify-between px-2 flex-grow text-xs sm:text-sm font-medium text-gray-400 dark:text-gray-100">
+          <span>{currentPost.author_id}</span>
+          <span>
+            {lastEdited} ago {currentPost.is_edited ? '(edited)' : ''}
+          </span>
         </div>
       </a>
       <div className="px-6 py-4">
-        <h2 className="text-xl title-font font-medium text-indigo-500 dark:text-indigo-400 mb-2">
+        <h2 className="text-xl font-medium text-indigo-500 dark:text-indigo-400 mb-2">
           {currentPost.title}
         </h2>
         <p className="leading-relaxed mb-6">

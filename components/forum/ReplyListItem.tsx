@@ -1,4 +1,4 @@
-import { renderMdToHtml, showCurrentDateTime } from '../common/Util'
+import { renderMdToHtml, showCurrentDateTime, timeSince } from '../common/Util'
 import { Reply, updateReplyLikes } from './ForumAPI'
 import TextContainer from './TextContainer'
 import { FaEdit, FaRegThumbsUp } from 'react-icons/fa'
@@ -10,11 +10,12 @@ import { toast } from 'react-toastify'
 
 const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   const currentReply = reply
-  const lastEdited = showCurrentDateTime(currentReply.edited_date)
+  const lastEdited = timeSince(currentReply.edited_date)
   const [editing, setEditing] = useState(false)
   const [session] = useSession()
   const [liked, setLiked] = useState(false)
   const [upVotes, setUpVotes] = useState(currentReply.up_votes)
+
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 dark:bg-gray-800">
@@ -23,9 +24,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
             {currentReply.author_id}
           </div>
           <div className="text-sm title-font font-medium text-gray-400 dark:text-gray-100">
-            {currentReply.is_edited
-              ? `Last edited at ${lastEdited}`
-              : `Created at ${showCurrentDateTime(currentReply.created_date)}`}
+            {lastEdited} ago {currentReply.is_edited ? '(edited)' : ''}
           </div>
         </div>
       </a>
@@ -58,7 +57,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
             <></>
           )}
           <button
-            disabled = {liked}
+            disabled={liked}
             onClick={() => {
               toast.success('Liked!', {
                 autoClose: 3000,
@@ -68,7 +67,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
               setLiked(true)
             }}
             className="text-gray-400 inline-flex items-center ml-auto text-sm py-1">
-            <FaRegThumbsUp color={`${liked ? "black": ""}`} className="w-4 h-4 mx-2" />
+            <FaRegThumbsUp color={`${liked ? 'black' : ''}`} className="w-4 h-4 mx-2" />
             {upVotes}
           </button>
         </div>

@@ -139,12 +139,12 @@ const NavBar = (): JSX.Element => {
                   </div>
                 </MenuButton>
                 <MenuList as="div" className={`${profileCollapse ? 'hidden' : ''}`}>
-                  <MenuItem>
-                    <Link href="/profile">Profile</Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link href="/login">Logout</Link>
-                  </MenuItem>
+                  <Link href="/profile">
+                    <MenuItem>Profile</MenuItem>
+                  </Link>
+                  <Link href="/login">
+                    <MenuItem>Logout</MenuItem>
+                  </Link>
                 </MenuList>
               </Menu>
             </div>
