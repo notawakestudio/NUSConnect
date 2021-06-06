@@ -1,13 +1,17 @@
 import { nanoid } from 'nanoid'
 import { renderMdToHtml, showCurrentDateTime } from '../common/Util'
-import { Post } from './ForumAPI'
+import { Post, updatePostLikes } from './ForumAPI'
 import TextContainer from './TextContainer'
 import { FaRegComment, FaRegThumbsUp } from 'react-icons/fa'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const PostMain = ({ post }: { post: Post }): JSX.Element => {
   const currentPost = post
   const tags = currentPost.tags
   const lastEdited = showCurrentDateTime(currentPost.edited_date)
+  const [upVotes, setUpVotes] = useState(currentPost.up_votes)
+  const [liked, setLiked] = useState(false)
 
   return (
     <TextContainer>
@@ -45,10 +49,20 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
               </div>
             ))}
           </div>
-          <span className="text-gray-400 mr-3 inline-flex items-center ml-auto text-sm pr-3 py-1 border-r-2 border-gray-200">
-            <FaRegThumbsUp className="w-4 h-4 mx-2" />
-            {currentPost.up_votes}
-          </span>
+          <button
+            disabled={liked}
+            onClick={() => {
+              toast.success('Liked!', {
+                autoClose: 3000,
+              })
+              updatePostLikes(upVotes + 1, currentPost.id)
+              setUpVotes(upVotes + 1)
+              setLiked(true)
+            }}
+            className="text-gray-400 mr-3 inline-flex items-center ml-auto text-sm pr-3 py-1 border-r-2 border-gray-200">
+            <FaRegThumbsUp color={`${liked ? 'black' : ''}`} className="w-4 h-4 mx-2" />
+            {upVotes}
+          </button>
           <span className="text-gray-400 inline-flex items-center text-sm">
             <FaRegComment className="w-4 h-4 mr-2" />6
           </span>

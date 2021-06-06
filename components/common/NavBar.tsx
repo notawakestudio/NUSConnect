@@ -9,14 +9,15 @@ import QuickLink from './QuickLink'
 import { BiBookReader, BiCaretDown } from 'react-icons/bi'
 import Skeleton from 'react-loading-skeleton'
 import { MdForum } from 'react-icons/md'
+import { useModule } from '../utils/store'
 
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
   const [name, setName] = useState<string>(undefined)
   const [picture, setPicture] = useState('/white_profile-placeholder.png')
-  const [profileCollapse, setProfileCollapse] = useState<boolean>(true)
-
+  const [profileCollapse, setProfileCollapse] = useState(true)
+  const { state } = useModule()
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       const res = await fetch('/api/userData')
@@ -63,17 +64,17 @@ const NavBar = (): JSX.Element => {
               <AiOutlineHome />
             </button>
           </Link>
-          <Link href='/dashboard'>
+          <Link href="/dashboard">
             <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
               <RiDashboardLine />
             </button>
           </Link>
-          <Link href='/forum'>
+          <Link href="/forum">
             <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
               <MdForum />
             </button>
           </Link>
-          <Link href='/quiz'>
+          <Link href="/quiz">
             <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
               <BiBookReader />
             </button>
@@ -114,6 +115,9 @@ const NavBar = (): JSX.Element => {
         )}
         {session && picture && (
           <div className="p-1 h-full w-auto flex mt-4 text-gray-800 dark:text-gray-200">
+            <button className="hidden md:block px-3 text-gray-600 dark:text-white h-10">
+              {state.module}
+            </button>
             <div
               className="flex flex-col h-full justify-items-end flex-shrink-0"
               onMouseEnter={() => setProfileCollapse(false)}
