@@ -116,7 +116,7 @@ const NavBar = (): JSX.Element => {
         )}
         {session && picture && (
           <div className="hidden xs:flex py-3 px-1 h-full w-auto text-gray-800 dark:text-gray-200">
-            <button className="hidden md:block px-3 text-gray-600 dark:text-white h-10">
+            <button className="hidden lg:block px-3 text-gray-600 dark:text-white h-10">
               {state.module}
             </button>
             <div className="flex">

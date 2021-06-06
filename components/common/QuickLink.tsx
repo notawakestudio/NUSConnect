@@ -1,3 +1,4 @@
+import { Tooltip } from '@chakra-ui/tooltip'
 import { useState } from 'react'
 import { BsBookmarks } from 'react-icons/bs'
 
@@ -5,13 +6,15 @@ const QuickLink = (): JSX.Element => {
   const [collapse, setCollapse] = useState<boolean>(true)
   return (
     <div className="relative hidden md:block">
-      <button
-        type="button"
-        className="px-3 w-10 h-10 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-        id="options-menu"
-        onClick={() => setCollapse(!collapse)}>
-        <BsBookmarks />
-      </button>
+      <Tooltip hasArrow label="Quick Links" aria-label="A tooltip">
+        <button
+          type="button"
+          className="px-3 w-10 h-10 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+          id="options-menu"
+          onClick={() => setCollapse(!collapse)}>
+          <BsBookmarks />
+        </button>
+      </Tooltip>
       <div
         className={`origin-top-right absolute mt-2 w-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
           collapse ? 'invisible' : ''
