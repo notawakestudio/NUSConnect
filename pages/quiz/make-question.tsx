@@ -8,10 +8,11 @@ import Layout from '../../components/common/Layout'
 import TextContainer from '../../components/common/TextContainer'
 import { makeQuestion } from '../../components/quiz/QuizAPI'
 import CustomSingleSelect from '../../components/common/CustomSingleSelect'
+import { FcAnswers } from 'react-icons/fc'
 
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],
-  type: 'MCQ',
+  type: '',
   question:
     'Which of the following statements about good OO programming practice is LEAST appropriate?',
   answers: [
@@ -39,8 +40,8 @@ const initialValues = {
 }
 
 const quizType = [
-  { label: 'mcq', value: 'mcq' },
-  { label: 'mrq', value: 'mrq' },
+  { label: 'MCQ', value: 'MCQ' },
+  { label: 'MRQ', value: 'MRQ' },
 ]
 
 const QuestionForm = (): JSX.Element => {
@@ -89,7 +90,7 @@ const QuestionForm = (): JSX.Element => {
                   <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
                     <h2 className="max-w-sm mx-auto md:w-2/12">Meta data</h2>
                     <div className="max-w-md mx-auto md:w-10/12">
-                      <Field component={CustomSingleSelect} name="questions" options={quizType} />
+                      <Field component={CustomSingleSelect} name="type" options={quizType} />
                     </div>
                   </div>
                   <hr />
@@ -115,8 +116,8 @@ const QuestionForm = (): JSX.Element => {
                           <div>
                             {formik.values.answers.length > 0 &&
                               formik.values.answers.map((answer, index) => (
-                                <div className="mb-4">
-                                  <TextContainer key={index}>
+                                <div className="mb-4" key={index}>
+                                  <TextContainer>
                                     <div className="flex flex-col items-center p-2">
                                       <div className="flex w-full items-center">
                                         <div className="col w-full">
@@ -142,30 +143,32 @@ const QuestionForm = (): JSX.Element => {
                                           </button>
                                         </div>
                                       </div>
-                                      <div className="col">
-                                        <Field name={`answers.${index}.is_correct`}>
-                                          {({ field, form }) => (
-                                            <FormControl
-                                              isInvalid={form.errors.name && form.touched.name}>
-                                              <div className="flex-row flex items-center">
-                                                <FormLabel
-                                                  htmlFor="is_correct"
-                                                  className="whitespace-nowrap content-center pt-1 pl-1">
-                                                  Correct Answer
-                                                </FormLabel>
-                                                <Checkbox {...field} id="is_correct" />
-                                                <FormErrorMessage>
-                                                  {form.errors.name}
-                                                </FormErrorMessage>
-                                              </div>
-                                            </FormControl>
-                                          )}
-                                        </Field>
-                                        <ErrorMessage
-                                          name={`answers.${index}.main`}
-                                          component="div"
-                                          className="field-error"
-                                        />
+                                      <div className="flex w-full justify-end">
+                                        <div className="mx-4">
+                                          <Field name={`answers.${index}.is_correct`}>
+                                            {({ field, form }) => (
+                                              <FormControl
+                                                isInvalid={form.errors.name && form.touched.name}>
+                                                <div className="flex-row flex items-center">
+                                                  <FormLabel
+                                                    htmlFor="is_correct"
+                                                    className="whitespace-nowrap content-center pt-1 pl-1">
+                                                    Correct Answer
+                                                  </FormLabel>
+                                                  <Checkbox {...field} id={answer.main} />
+                                                  <FormErrorMessage>
+                                                    {form.errors.name}
+                                                  </FormErrorMessage>
+                                                </div>
+                                              </FormControl>
+                                            )}
+                                          </Field>
+                                          <ErrorMessage
+                                            name={`answers.${index}.main`}
+                                            component="div"
+                                            className="field-error"
+                                          />
+                                        </div>
                                       </div>
                                     </div>
                                   </TextContainer>
