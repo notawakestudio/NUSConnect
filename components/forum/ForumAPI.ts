@@ -7,6 +7,9 @@ const API_SUBMIT_POST = 'https://1ieznu.deta.dev/post/make'
 const API_GET_ALL_REPLY = 'https://1ieznu.deta.dev/forum/reply'
 const API_GET_REPLY_BY_ID = 'https://1ieznu.deta.dev/forum/reply/'
 const API_SUBMIT_REPLY = 'https://1ieznu.deta.dev/reply/make'
+const API_UPDATE_REPLY = 'https://1ieznu.deta.dev/reply/update/'
+const API_UPDATE_REPLY_LIKES = 'https://1ieznu.deta.dev/reply/update/likes/'
+const API_UPDATE_POST_LIKES = 'https://1ieznu.deta.dev/post/update/likes/'
 
 export type Post = {
   id: string
@@ -96,14 +99,14 @@ export function makePost(post: string[]): void {
   })
 }
 
-export function makeReply(post: string[], postId: string): void {
+export function makeReply(reply: string[], postId: string): void {
   const currDate = getCurrentDateTime()
 
   const requestBody: Reply = {
     id: nanoid(),
     post_id: postId,
-    author_id: post['author'],
-    content: post['content'],
+    author_id: reply['author'],
+    content: reply['content'],
     created_date: currDate,
     edited_date: currDate,
     up_votes: 0,
@@ -130,4 +133,69 @@ export function makeReply(post: string[], postId: string): void {
 export async function getAllTags(): Promise<string[]> {
   const post = await getPostById('1a')
   return post.tags
+}
+
+export function updateReply(reply: string[], replyId: string): void {
+  const requestBody = {
+    content: reply['content'],
+    is_edited: true,
+    edited_date: getCurrentDateTime(),
+  }
+  fetch(API_UPDATE_REPLY + replyId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
+}
+
+export function updateReplyLikes(newCount: number, replyId: string): void {
+  const requestBody = {
+    up_votes: newCount,
+  }
+  fetch(API_UPDATE_REPLY_LIKES + replyId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
+}
+
+export function updatePostLikes(newCount: number, postId: string): void {
+  const requestBody = {
+    up_votes: newCount,
+  }
+  fetch(API_UPDATE_POST_LIKES + postId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
 }

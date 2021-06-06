@@ -9,6 +9,7 @@ import { BsMoon, BsSun } from 'react-icons/bs'
 import { MdForum } from 'react-icons/md'
 import { RiDashboardLine } from 'react-icons/ri'
 import Skeleton from 'react-loading-skeleton'
+import { useModule } from '../utils/store'
 import QuickLink from './QuickLink'
 
 const NavBar = (): JSX.Element => {
@@ -16,8 +17,8 @@ const NavBar = (): JSX.Element => {
   const [session] = useSession()
   const [name, setName] = useState<string>(undefined)
   const [picture, setPicture] = useState('/white_profile-placeholder.png')
-  const [profileCollapse, setProfileCollapse] = useState<boolean>(true)
-
+  const [profileCollapse, setProfileCollapse] = useState(true)
+  const { state } = useModule()
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       const res = await fetch('/api/userData')
@@ -115,6 +116,9 @@ const NavBar = (): JSX.Element => {
         )}
         {session && picture && (
           <div className="hidden xs:flex py-3 px-1 h-full w-auto text-gray-800 dark:text-gray-200">
+            <button className="hidden lg:block px-3 text-gray-600 dark:text-white h-10">
+              {state.module}
+            </button>
             <div className="flex">
               <Menu autoSelect={false}>
                 <MenuButton as="div" onMouseEnter={() => setProfileCollapse(false)}>

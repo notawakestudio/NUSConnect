@@ -15,7 +15,7 @@ export default function CreatePost({
   return (
     <>
       <Head>
-        <title>New Post</title>
+        <title>New Post | NUS Connect</title>
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
