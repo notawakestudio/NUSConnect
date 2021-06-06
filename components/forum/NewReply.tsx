@@ -1,36 +1,40 @@
-import { Field, Form, Formik, useField } from 'formik'
+import { Form, Formik, useField } from 'formik'
 import { useSession } from 'next-auth/client'
 import React from 'react'
+import { toast } from 'react-toastify'
 import * as Yup from 'yup'
-import { getAllTags, makeReply } from './ForumAPI'
+import { makeReply, updateReply } from './ForumAPI'
 import TextContainer from './TextContainer'
 
-const initialValues = {
-  content: '',
-}
-
-export default function NewReply({ postId }: { postId: string }) {
+export default function NewReply({ postId, content = '', label = 'New comment', id = '' }: { postId: string; content?: string; label?: string; id?:string }) {
   const [session] = useSession()
-
-  const handleSubmit = (value): void => {
+  const initialValues = {
+    content: content,
+  }
+  const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makeReply(value, postId)
   }
 
-  // const tags = getAllTags() // TODO FIX THIS
-  const tags = ['hello', 'world']
+  const handleSubmitEdit = (value): void => {
+    updateReply(value, id)
+  }
 
   return (
     <TextContainer>
       <Formik
         initialValues={initialValues}
         validationSchema={Yup.object({
-          content: Yup.string().required('required*'),
+          content: Yup.string().required('*required'),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          handleSubmit(values)
+          if (label === 'New comment') {
+            handleSubmitNew(values)
+          } else {
+            handleSubmitEdit(values)
+          }
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
+            toast(JSON.stringify(values, null, 2))
             setSubmitting(false)
           }, 400)
         }}>
@@ -38,7 +42,7 @@ export default function NewReply({ postId }: { postId: string }) {
           <Form>
             <div className="items-center w-full px-4 pt-4 text-gray-500 flex-shrink-0 dark:text-gray-300">
               <ContentTextArea
-                label="New comment"
+                label={label}
                 name="content"
                 rows={6}
                 placeholder="Leave a comment"
@@ -63,7 +67,7 @@ const ContentTextArea = ({
   label,
   ...props
 }: {
-  label: any
+  label: string
   name: string
   rows: number
   placeholder: string
