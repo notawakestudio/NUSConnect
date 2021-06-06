@@ -1,4 +1,4 @@
-import TextContainer from './TextContainer'
+import TextContainer from '../common/TextContainer'
 
 const ForumHome = (): JSX.Element => {
   return (

@@ -5,7 +5,7 @@ import Layout from '../../components/common/Layout'
 import Link from 'next/link'
 import { fetchAllQuestions, makeQuiz } from '../../components/quiz/QuizAPI'
 import { useSession } from 'next-auth/client'
-import CustomSelect from '../../components/common/CustomSelect'
+import CustomMultiSelect from '../../components/common/CustomMultiSelect'
 import { GetStaticProps } from 'next'
 import { renderMdToHtml } from '../../components/common/Util'
 
@@ -60,7 +60,7 @@ const QuizForm = ({
             handleSubmit(values)
             setTimeout(() => {
               // alert(JSON.stringify(values, null, 2))
-              alert("DONE")
+              alert('DONE')
               setSubmitting(false)
             }, 400)
           }}>
@@ -137,7 +137,11 @@ const QuizForm = ({
                   <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
                     <h2 className="max-w-sm mx-auto md:w-2/12">Questions</h2>
                     <div className="max-w-md mx-auto space-y-5 md:w-10/12">
-                      <Field component={CustomSelect} name="questions" options={selectObjects} />
+                      <Field
+                        component={CustomMultiSelect}
+                        name="questions"
+                        options={selectObjects}
+                      />
                     </div>
                     <hr />
                   </div>

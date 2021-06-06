@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { showCurrentDate } from '../common/Util'
-import TextContainer from './TextContainer'
+import TextContainer from '../common/TextContainer'
 
 const PostListItem = ({ post }): JSX.Element => {
   const tags = post.tags

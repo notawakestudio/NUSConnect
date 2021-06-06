@@ -1,7 +1,7 @@
 import { useField } from 'formik'
 import Select from 'react-select'
 
-export default function SelectField(props) {
+export default function CustomMultiSelect(props) {
   const [field, state, { setValue, setTouched }] = useField(props.field.name)
   const onChange = (value: Array<{ value: string; label: string }>) =>
     setValue(value.map((item) => item.value))

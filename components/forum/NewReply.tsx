@@ -4,9 +4,19 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import { makeReply, updateReply } from './ForumAPI'
-import TextContainer from './TextContainer'
+import TextContainer from '../common/TextContainer'
 
-export default function NewReply({ postId, content = '', label = 'New comment', id = '' }: { postId: string; content?: string; label?: string; id?:string }) {
+export default function NewReply({
+  postId,
+  content = '',
+  label = 'New comment',
+  id = '',
+}: {
+  postId: string
+  content?: string
+  label?: string
+  id?: string
+}) {
   const [session] = useSession()
   const initialValues = {
     content: content,
