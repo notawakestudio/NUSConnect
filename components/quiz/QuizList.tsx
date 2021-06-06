@@ -5,14 +5,14 @@ import { Quiz } from './types'
 
 const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
   return (
-    <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-t-lg shadow">
-      <div className="px-4 py-5 sm:px-6 border-b w-full">
-        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">All Quizzes</h3>
-        <div className="flex justify-center">
+    <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+      <div className="px-2 py-4 border-b">
+        <span className="flex text-lg leading-4 font-medium justify-center mb-2">All Quizzes</span>
+        <div className="xs:flex justify-center space-y-2 xs:space-y-0">
           <Link href="/quiz/make-question">
-            <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+            <button className="whitespace-nowrap bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2 rounded-lg content-center justify-center">
               Contribute A Quiz
-            </a>
+            </button>
           </Link>
           <Search />
         </div>
