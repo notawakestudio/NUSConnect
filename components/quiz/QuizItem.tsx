@@ -17,7 +17,6 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
           <div className="flex-col flex-1 text-gray-600 dark:text-gray-200 text-xs">
             <div>Author: {quiz.author}</div>
             <div>Week: {quiz.week}</div>
-            <div>Tags: {quiz.tags.reduce((memo, tag) => memo + ' #' + tag, '')}</div>
             <div className="flex flex-wrap justify-starts items-center mt-1">
               {tags.map((tag) => (
                 <div

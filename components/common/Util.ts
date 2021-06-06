@@ -68,26 +68,46 @@ export const timeSince = (date: any): any => {
   const currDate = getCurrentDateTime()
   var seconds = Math.floor((currDate - date) / 1000)
 
-  var interval = seconds / 31536000
+  var interval = seconds / 63072000
 
   if (interval > 1) {
     return Math.floor(interval) + ' years'
   }
-  interval = seconds / 2592000
+  interval = seconds / 31536000
+  if (interval > 1) {
+    return Math.floor(interval) + ' years'
+  }
+  interval = seconds / 5184000
   if (interval > 1) {
     return Math.floor(interval) + ' months'
   }
-  interval = seconds / 86400
+  interval = seconds / 2592000
+  if (interval > 1) {
+    return Math.floor(interval) + ' month'
+  }
+  interval = seconds / 172800
   if (interval > 1) {
     return Math.floor(interval) + ' days'
   }
-  interval = seconds / 3600
+  interval = seconds / 86400
+  if (interval > 1) {
+    return Math.floor(interval) + ' day'
+  }
+  interval = seconds / 7200
   if (interval > 1) {
     return Math.floor(interval) + ' hours'
   }
-  interval = seconds / 60
+  interval = seconds / 3600
+  if (interval > 1) {
+    return Math.floor(interval) + ' hour'
+  }
+  interval = seconds / 120
   if (interval > 1) {
     return Math.floor(interval) + ' minutes'
+  }
+  interval = seconds / 60
+  if (interval > 1) {
+    return Math.floor(interval) + ' minute'
   }
 
   return Math.floor(seconds) + ' seconds'
