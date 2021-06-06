@@ -13,13 +13,17 @@
     "cyrun": "cypress run"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.6.3",
     "@ckeditor/ckeditor5-build-classic": "^27.1.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
+    "@emotion/react": "11",
+    "@emotion/styled": "11",
     "@firebase/firestore": "^2.3.2",
     "@next-auth/firebase-adapter": "^0.0.2-pr.18.173",
     "@tailwindcss/typography": "^0.4.1",
     "firebase": "^8.6.3",
     "formik": "^2.2.8",
+    "framer-motion": "4",
     "gray-matter": "^4.0.3",
     "highlight.js": "^10.7.2",
     "markdown-it": "^12.0.6",

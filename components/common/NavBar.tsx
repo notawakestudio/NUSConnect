@@ -1,15 +1,16 @@
+import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
 import { useSession } from 'next-auth/client'
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineHome } from 'react-icons/ai'
-import { BsMoon, BsSun } from 'react-icons/bs'
-import { RiDashboardLine } from 'react-icons/ri'
-import Image from 'next/image'
-import QuickLink from './QuickLink'
 import { BiBookReader, BiCaretDown } from 'react-icons/bi'
-import Skeleton from 'react-loading-skeleton'
+import { BsMoon, BsSun } from 'react-icons/bs'
 import { MdForum } from 'react-icons/md'
+import { RiDashboardLine } from 'react-icons/ri'
+import Skeleton from 'react-loading-skeleton'
 import { useModule } from '../utils/store'
+import QuickLink from './QuickLink'
 
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
@@ -57,8 +58,8 @@ const NavBar = (): JSX.Element => {
     <div
       className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16"
       aria-label="navbar">
-      <div className="flex h-full items-center justify-between">
-        <div className="flex flex-row w-auto h-auto space-x-2 p-2">
+      <div className="flex flex-row h-full items-center justify-center xs:items-start xs:justify-between flex-grow">
+        <div className="flex flex-row h-full space-x-2 p-2 items-center">
           <Link href="/">
             <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg h-10">
               <AiOutlineHome />
@@ -87,8 +88,8 @@ const NavBar = (): JSX.Element => {
           </button>
         </div>
 
-        <div className="max-h-16 hidden md:flex items-center justify-center">
-          <div className="transform scale-50 max-w-lg">
+        <div className="h-16 hidden md:flex items-center w-auto">
+          <div className="w-56">
             <Image
               alt="NUSConnectBanner"
               src="/NUSConnectBanner.png"
@@ -100,7 +101,7 @@ const NavBar = (): JSX.Element => {
         </div>
 
         {!session && (
-          <div className="p-1 flex items-center text-gray-800 dark:text-gray-200">
+          <div className="hidden xs:flex py-4 px-2 items-center text-gray-800 dark:text-gray-200">
             <Link href="/login">
               <span className="flex px-2 font-light cursor-pointer border-r-2 border-gray-200 mr-2">
                 Login
@@ -114,50 +115,38 @@ const NavBar = (): JSX.Element => {
           </div>
         )}
         {session && picture && (
-          <div className="p-1 h-full w-auto flex mt-4 text-gray-800 dark:text-gray-200">
+          <div className="hidden xs:flex py-3 px-1 h-full w-auto text-gray-800 dark:text-gray-200">
             <button className="hidden md:block px-3 text-gray-600 dark:text-white h-10">
               {state.module}
             </button>
-            <div
-              className="flex flex-col h-full justify-items-end flex-shrink-0"
-              onMouseEnter={() => setProfileCollapse(false)}
-              onMouseLeave={() => setProfileCollapse(true)}>
-              <div
-                className="flex flex-row ml-2 items-center cursor-pointer space-x-2"
-                onClick={() => setProfileCollapse(!profileCollapse)}>
-                <Image
-                  width={40}
-                  height={40}
-                  alt="profile"
-                  src={picture}
-                  className="object-cover rounded-full h-10 w-10"
-                />
-                <span className="hidden sm:flex font-light text-sm text-center whitespace-nowrap">
-                  {name ? name : <Skeleton width={120} />}
-                </span>
-                <BiCaretDown />
-              </div>
-              <div
-                className={`w-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 ${
-                  profileCollapse ? 'invisible' : ''
-                }`}>
-                <div
-                  className="py-2 text-md text-gray-700"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu">
-                  <Link href="/profile">
-                    <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
-                      Profile
-                    </div>
-                  </Link>
-                  <Link href="/login">
-                    <div className="block px-3 py-2 hover:bg-indigo-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 cursor-pointer">
-                      Logout
-                    </div>
-                  </Link>
-                </div>
-              </div>
+            <div className="flex">
+              <Menu autoSelect={false}>
+                <MenuButton as="div" onMouseEnter={() => setProfileCollapse(false)}>
+                  <div className="flex flex-row items-center cursor-pointer space-x-2">
+                    <Image
+                      width={40}
+                      height={40}
+                      alt="profile"
+                      src={picture}
+                      className="object-cover rounded-full h-10 w-10"
+                    />
+                    <span className="hidden sm:flex font-light text-sm whitespace-nowrap">
+                      {name ? name : <Skeleton width={120} />}
+                    </span>
+                    <span className="hidden sm:flex">
+                      <BiCaretDown />
+                    </span>
+                  </div>
+                </MenuButton>
+                <MenuList as="div" className={`${profileCollapse ? 'hidden' : ''}`}>
+                  <MenuItem>
+                    <Link href="/profile">Profile</Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link href="/login">Logout</Link>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </div>
           </div>
         )}

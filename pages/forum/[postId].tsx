@@ -7,7 +7,7 @@ import {
   getPostById,
   getRelatedReplies,
   Post,
-  Reply
+  Reply,
 } from '../../components/forum/ForumAPI'
 import ForumLayout from '../../components/forum/ForumLayout'
 import NewReply from '../../components/forum/NewReply'
@@ -40,7 +40,7 @@ export default function CurrentPost({
       </Head>
 
       <ForumLayout postList={postList}>
-        <div className="flex-grow flex-col space-y-4 lg:ml-4 lg:space-y-8">
+        <div className="flex flex-col space-y-4 lg:ml-4 lg:space-y-8">
           <PostMain post={currentPost} />
           <ReplyList replies={replies} />
           <NewReply postId={currentPost.id} />
