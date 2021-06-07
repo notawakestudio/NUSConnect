@@ -82,13 +82,15 @@ export function createQuestion(json: GrayMatterFile<any>): void {
 }
 
 export function makeQuestion(question): void {
+  const answers = classifyAnswers(question['answers'])
+
   const requestBody = {
     id: nanoid(),
     type: question['type'],
     modules: question['modules'],
     question: question['question'],
-    correct_answers: question['correct_answers'],
-    incorrect_answers: question['incorrect_answers'],
+    correct_answers: answers[0],
+    incorrect_answers: answers[1],
   }
   fetch(API_MAKE_QUESTION, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -193,4 +195,14 @@ export function getAllQuizId_MOCK() {
 
 export const fetchQuizTitle_MOCK = (quizId: string): string => {
   return QuizData.filter((quiz) => quiz['id'] === quizId)[0]['title']
+}
+
+export const classifyAnswers = (answers: { main: string; is_correct: boolean }[]): string[][] => {
+  var correct_answers = []
+  var incorrect_answers = []
+
+  answers.forEach((value) =>
+    value.is_correct ? correct_answers.push(value.main) : incorrect_answers.push(value.main)
+  )
+  return [correct_answers, incorrect_answers]
 }

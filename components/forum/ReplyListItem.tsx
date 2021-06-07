@@ -1,6 +1,6 @@
 import { renderMdToHtml, showCurrentDateTime, timeSince } from '../common/Util'
 import { Reply, updateReplyLikes } from './ForumAPI'
-import TextContainer from './TextContainer'
+import TextContainer from '../common/TextContainer'
 import { FaEdit, FaRegThumbsUp } from 'react-icons/fa'
 import NewReply from '../../components/forum/NewReply'
 import { useState } from 'react'

@@ -4,7 +4,7 @@ import React from 'react'
 import { default as Select } from 'react-select'
 import * as Yup from 'yup'
 import { makePost } from './ForumAPI'
-import TextContainer from './TextContainer'
+import TextContainer from '../common/TextContainer'
 
 const initialValues = {
   title: '',
@@ -101,10 +101,7 @@ export const TagMultiSelect = ({
   isMulti: boolean
 }) => {
   const onChange = (option) => {
-    form.setFieldValue(
-      field.name,
-      isMulti ? (option).map((item) => item.value) : (option).value
-    )
+    form.setFieldValue(field.name, isMulti ? option.map((item) => item.value) : option.value)
   }
 
   const getValue = () => {

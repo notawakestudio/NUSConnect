@@ -1,10 +1,9 @@
 import { useField } from 'formik'
 import Select from 'react-select'
 
-export default function SelectField(props) {
+export default function CustomSingleSelect(props) {
   const [field, state, { setValue, setTouched }] = useField(props.field.name)
-  const onChange = (value: Array<{ value: string; label: string }>) =>
-    setValue(value.map((item) => item.value))
+  const onChange = (value: { value: string; label: string }) => setValue(value.value)
   return (
     <Select
       {...props}
@@ -13,8 +12,8 @@ export default function SelectField(props) {
       formatOptionLabel={function (data) {
         return <span dangerouslySetInnerHTML={{ __html: data.label }} />
       }}
-      isMulti
       isSearchable={true}
+      instanceId={field.value}
     />
   )
 }

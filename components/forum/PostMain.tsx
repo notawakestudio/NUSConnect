@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import { renderMdToHtml, showCurrentDateTime, timeSince } from '../common/Util'
 import { Post, updatePostLikes } from './ForumAPI'
-import TextContainer from './TextContainer'
+import TextContainer from '../common/TextContainer'
 import { FaRegComment, FaRegThumbsUp } from 'react-icons/fa'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
