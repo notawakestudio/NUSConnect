@@ -1,24 +1,53 @@
 import { Field, Form, Formik, useField } from 'formik'
+import { nanoid } from 'nanoid'
 import { useSession } from 'next-auth/client'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { default as Select } from 'react-select'
+import { toast } from 'react-toastify'
 import * as Yup from 'yup'
-import { makePost } from './ForumAPI'
+import { makePost, Post, updatePost } from './ForumAPI'
 import TextContainer from './TextContainer'
 
-const initialValues = {
+const allAvailableTags = ['question','lecture1']
+const defaultPost = { 
+  id: nanoid(),
+  author_id: 'string',
   title: '',
-  tags: [],
   content: '',
+  created_date: 0,
+  edited_date: 0,
+  tags: [],
+  week: '1',
+  reply_count: 1,
+  up_votes: 1,
+  is_edited: false
 }
 
-export default function NewPost({ tags }: { tags: string[] }) {
+export default function NewPost({
+  label = 'Make a post',
+  currentPost = defaultPost,
+}: {
+  label?: string
+  currentPost?: Post
+}) {
+  const tags = allAvailableTags.map((tag) => {
+    return { value: tag, label: tag }
+  })
+  const initialValues = {
+    title: currentPost.title,
+    tags: currentPost.tags,
+    content: currentPost.content,
+  }
   const [session] = useSession()
-  const handleSubmit = (value): void => {
+  const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makePost(value)
   }
-
+  const handleSubmitUpdate = (value): void => {
+    updatePost(value, currentPost)
+  }
+  const router = useRouter()
   return (
     <div className="mt-10 ml-4">
       <TextContainer>
@@ -29,9 +58,15 @@ export default function NewPost({ tags }: { tags: string[] }) {
               title: Yup.string().required('required*'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              handleSubmit(values)
+              if (label === 'Make a post') {
+                handleSubmitNew(values)
+              } else {
+                handleSubmitUpdate(values)
+              }
               setTimeout(() => {
-                alert(JSON.stringify(values, null, 2))
+                toast(JSON.stringify(values, null, 2), {
+                  onClose: () => router.reload(),
+                })
                 setSubmitting(false)
               }, 400)
             }}>
@@ -41,7 +76,7 @@ export default function NewPost({ tags }: { tags: string[] }) {
                   <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
                     <div className="max-w-sm mx-auto md:w-full md:mx-0">
                       <div className="inline-flex items-center space-x-4">
-                        <h1 className="text-gray-600">Make a post</h1>
+                        <h1 className="text-gray-600">{label}</h1>
                       </div>
                     </div>
                   </div>

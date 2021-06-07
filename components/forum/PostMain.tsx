@@ -1,10 +1,15 @@
 import { nanoid } from 'nanoid'
-import { renderMdToHtml, showCurrentDateTime, timeSince } from '../common/Util'
-import { Post, updatePostLikes } from './ForumAPI'
+import { renderMdToHtml, timeSince } from '../common/Util'
+import { deletePost, Post, updatePostLikes } from './ForumAPI'
 import TextContainer from './TextContainer'
-import { FaRegComment, FaRegThumbsUp } from 'react-icons/fa'
+import { FaEdit, FaRegComment, FaRegThumbsUp } from 'react-icons/fa'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import NewPost from './NewPost'
+import { useSession } from 'next-auth/client'
+import { VscPreview } from 'react-icons/vsc'
+import { RiDeleteBin5Line } from 'react-icons/ri'
+import { useRouter } from 'next/router'
 
 const PostMain = ({ post }: { post: Post }): JSX.Element => {
   const currentPost = post
@@ -12,7 +17,9 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
   const lastEdited = timeSince(currentPost.edited_date)
   const [upVotes, setUpVotes] = useState(currentPost.up_votes)
   const [liked, setLiked] = useState(false)
-
+  const [editing, setEditing] = useState(false)
+  const [session] = useSession()
+  const router = useRouter()
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 ">
@@ -27,15 +34,41 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
         <h2 className="text-xl font-medium text-indigo-500 dark:text-indigo-400 mb-2">
           {currentPost.title}
         </h2>
-        <p className="leading-relaxed mb-6">
-          {
-            <span
-              className="prose-sm lg:prose dark:text-white font-normal"
-              dangerouslySetInnerHTML={{ __html: renderMdToHtml(currentPost.content) }}
-            />
-          }
-        </p>
+        {editing ? (
+          <NewPost label="Edit post" currentPost={currentPost} />
+        ) : (
+          <p className="leading-relaxed mb-6">
+            {
+              <span
+                className="prose-sm lg:prose dark:text-white font-normal"
+                dangerouslySetInnerHTML={{ __html: renderMdToHtml(currentPost.content) }}
+              />
+            }
+          </p>
+        )}
         <div className="flex items-center">
+          {session && session.user.name === currentPost.author_id ? (
+            <>
+              <button
+                onClick={() => setEditing(!editing)}
+                className="text-gray-400 mr-2 inline-flex items-center text-sm">
+                {editing ? <VscPreview className="w-4 h-4" /> : <FaEdit className="w-4 h-4" />}
+              </button>
+              <button
+                onClick={() => {
+                  setEditing(!editing)
+                  toast.warn('Deleted! Redirecting to forum homepage!', {
+                    onClose: () => router.push('/forum'),
+                  })
+                  deletePost(currentPost.id)
+                }}
+                className="text-gray-400 mr-2 inline-flex items-center text-sm">
+                {editing ? <RiDeleteBin5Line className="w-4 h-4" /> : ''}
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
           <div className="flex flex-wrap justify-start items-center">
             {tags.map((tag) => (
               <div className="mr-2 mb-1">

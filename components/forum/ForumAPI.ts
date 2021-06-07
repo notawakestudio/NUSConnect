@@ -10,6 +10,7 @@ const API_SUBMIT_REPLY = 'https://1ieznu.deta.dev/reply/make'
 const API_UPDATE_REPLY = 'https://1ieznu.deta.dev/reply/update/'
 const API_UPDATE_REPLY_LIKES = 'https://1ieznu.deta.dev/reply/update/likes/'
 const API_UPDATE_POST_LIKES = 'https://1ieznu.deta.dev/post/update/likes/'
+const API_UPDATE_POST = 'https://1ieznu.deta.dev/post/update/'
 
 export type Post = {
   id: string
@@ -186,6 +187,78 @@ export function updatePostLikes(newCount: number, postId: string): void {
   fetch(API_UPDATE_POST_LIKES + postId, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
+}
+
+export function updatePost(update: string[], currPost: Post): void {
+  const requestBody = {
+    title: update['title'],
+    content: update['content'],
+    tags: update['tags'],
+    is_edited: true,
+    edited_date: getCurrentDateTime(),
+  }
+  if (update['title'] === currPost.title) {
+    delete requestBody['title']
+  }
+  if (update['content'] === currPost.content) {
+    delete requestBody['content']
+  }
+  if (update['tags'] === currPost.tags) {
+    delete requestBody['tags']
+  }
+  fetch(API_UPDATE_POST + currPost.id, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
+}
+
+export function deletePost(postId: string): void {
+  const requestBody = {}
+  fetch(API_UPDATE_POST + postId, {
+    method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+  })
+}
+
+export function deleteReply(replyId: string): void {
+  const requestBody = {}
+  fetch(API_UPDATE_REPLY + replyId, {
+    method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
