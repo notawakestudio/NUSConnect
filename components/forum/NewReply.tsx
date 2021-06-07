@@ -1,5 +1,6 @@
 import { Form, Formik, useField } from 'formik'
 import { useSession } from 'next-auth/client'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
@@ -29,7 +30,7 @@ export default function NewReply({
   const handleSubmitEdit = (value): void => {
     updateReply(value, id)
   }
-
+  const router = useRouter()
   return (
     <TextContainer>
       <Formik
@@ -44,7 +45,9 @@ export default function NewReply({
             handleSubmitEdit(values)
           }
           setTimeout(() => {
-            toast(JSON.stringify(values, null, 2))
+            toast(JSON.stringify(values, null, 2), {
+              onClose: () => router.reload(),
+            })
             setSubmitting(false)
           }, 400)
         }}>
