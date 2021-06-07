@@ -7,7 +7,7 @@ import { default as Select } from 'react-select'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import { makePost, Post, updatePost } from './ForumAPI'
-import TextContainer from './TextContainer'
+import TextContainer from '../common/TextContainer'
 
 const allAvailableTags = ['question','lecture1']
 const defaultPost = { 
@@ -136,10 +136,7 @@ export const TagMultiSelect = ({
   isMulti: boolean
 }) => {
   const onChange = (option) => {
-    form.setFieldValue(
-      field.name,
-      isMulti ? (option).map((item) => item.value) : (option).value
-    )
+    form.setFieldValue(field.name, isMulti ? option.map((item) => item.value) : option.value)
   }
 
   const getValue = () => {
