@@ -1,6 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
-import React from 'react'
 import {
   getAllPostId,
   getAllPosts,
@@ -8,6 +7,9 @@ import {
   getRelatedReplies,
   Post,
   Reply,
+  useAllPosts,
+  useAllRelatedReplies,
+  usePost,
 } from '../../components/forum/ForumAPI'
 import ForumLayout from '../../components/forum/ForumLayout'
 import NewReply from '../../components/forum/NewReply'
@@ -18,14 +20,18 @@ import { useRouter } from 'next/router'
 export default function CurrentPost({
   currentPost,
   postList,
-  replies,
+  replyList,
+  postId,
 }: {
   currentPost: Post
   postList: Post[]
-  replies: Reply[]
+  replyList: Reply[]
+  postId:  string
 }): JSX.Element {
   const router = useRouter()
-
+  const { posts } = useAllPosts(postList)
+  const { post } = usePost(currentPost, postId)
+  const { replies } = useAllRelatedReplies(replyList, postId)
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
@@ -39,11 +45,11 @@ export default function CurrentPost({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ForumLayout postList={postList}>
+      <ForumLayout postList={posts}>
         <div className="flex flex-col space-y-4 lg:ml-4 lg:space-y-8">
-          <PostMain post={currentPost} />
+          <PostMain post={post} />
           <ReplyList replies={replies} />
-          <NewReply postId={currentPost.id} />
+          <NewReply postId={postId} />
         </div>
       </ForumLayout>
     </>
@@ -52,7 +58,6 @@ export default function CurrentPost({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsToLoad = await getAllPostId()
-
   const paths = postsToLoad.map((postId) => {
     return {
       params: postId,
@@ -68,13 +73,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postId = params.postId as string
   const currentPost = await getPostById(postId)
   const postList = await getAllPosts()
-  const replies = await getRelatedReplies(postId)
+  const replyList = await getRelatedReplies(postId)
 
   return {
     props: {
       currentPost,
       postList,
-      replies,
+      replyList,
+      postId,
     },
     revalidate: 5, // In seconds
   }

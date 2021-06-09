@@ -1,7 +1,5 @@
 import { Form, Formik, useField } from 'formik'
 import { useSession } from 'next-auth/client'
-import { useRouter } from 'next/router'
-import React from 'react'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import { makeReply, updateReply } from './ForumAPI'
@@ -12,11 +10,13 @@ export default function NewReply({
   content = '',
   label = 'New comment',
   id = '',
+  setEditing = function(bool){}
 }: {
   postId: string
   content?: string
   label?: string
   id?: string
+  setEditing?: (bool: boolean) => void
 }) {
   const [session] = useSession()
   const initialValues = {
@@ -28,9 +28,9 @@ export default function NewReply({
   }
 
   const handleSubmitEdit = (value): void => {
-    updateReply(value, id)
+    updateReply(value,  postId, id)
+    setEditing(false)
   }
-  const router = useRouter()
   return (
     <TextContainer>
       <Formik
@@ -45,9 +45,7 @@ export default function NewReply({
             handleSubmitEdit(values)
           }
           setTimeout(() => {
-            toast(JSON.stringify(values, null, 2), {
-              onClose: () => router.reload(),
-            })
+            toast(JSON.stringify(values, null, 2))
             setSubmitting(false)
           }, 400)
         }}>

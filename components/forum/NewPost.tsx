@@ -27,9 +27,11 @@ const defaultPost = {
 export default function NewPost({
   label = 'Make a post',
   currentPost = defaultPost,
+  setEditing = function  (bool)  {},
 }: {
   label?: string
   currentPost?: Post
+  setEditing?: (bool: boolean) => void
 }) {
   const tags = allAvailableTags.map((tag) => {
     return { value: tag, label: tag }
@@ -62,11 +64,10 @@ export default function NewPost({
                 handleSubmitNew(values)
               } else {
                 handleSubmitUpdate(values)
+                setEditing(false)
               }
               setTimeout(() => {
-                toast(JSON.stringify(values, null, 2), {
-                  onClose: () => router.reload(),
-                })
+                toast(JSON.stringify(values, null, 2))
                 setSubmitting(false)
               }, 400)
             }}>

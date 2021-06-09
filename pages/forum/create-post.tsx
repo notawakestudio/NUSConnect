@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import { getAllPosts, Post } from '../../components/forum/ForumAPI'
+import { getAllPosts, Post, useAllPosts } from '../../components/forum/ForumAPI'
 import ForumLayout from '../../components/forum/ForumLayout'
 import NewPost from '../../components/forum/NewPost'
 
@@ -10,6 +10,7 @@ export default function CreatePost({
 }: {
   postList: Post[]
 }): JSX.Element {
+  const { posts } = useAllPosts(postList)
   return (
     <>
       <Head>
@@ -17,7 +18,7 @@ export default function CreatePost({
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ForumLayout postList={postList}>
+      <ForumLayout postList={posts}>
         <div className="flex-grow flex-col">
           <NewPost />
         </div>

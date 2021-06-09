@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { deletePost, Post, updatePostLikes } from './ForumAPI'
+import { API_GET_ALL_POST, deletePost, Post, updatePostLikes, useAllPosts } from './ForumAPI'
 import { FaEdit, FaRegComment, FaRegThumbsUp } from 'react-icons/fa'
 import { renderMdToHtml, timeSince } from '../common/Util'
 import TextContainer from '../common/TextContainer'
@@ -10,6 +10,7 @@ import { useSession } from 'next-auth/client'
 import { VscPreview } from 'react-icons/vsc'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { useRouter } from 'next/router'
+import { mutate } from 'swr'
 
 const PostMain = ({ post }: { post: Post }): JSX.Element => {
   const currentPost = post
@@ -20,6 +21,7 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
   const [editing, setEditing] = useState(false)
   const [session] = useSession()
   const router = useRouter()
+  const { posts } = useAllPosts()
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 ">
@@ -35,7 +37,7 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
           {currentPost.title}
         </h2>
         {editing ? (
-          <NewPost label="Edit post" currentPost={currentPost} />
+          <NewPost label="Edit post" currentPost={currentPost} setEditing={setEditing} />
         ) : (
           <p className="leading-relaxed mb-6">
             {
@@ -60,6 +62,9 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
                   toast.warn('Deleted! Redirecting to forum homepage!', {
                     onClose: () => router.push('/forum'),
                   })
+                  // update the local data immediately, but disable the revalidation
+                  const updatedPosts = posts.filter((post) => post.id !== currentPost.id)
+                  mutate(API_GET_ALL_POST, [...updatedPosts], false)
                   deletePost(currentPost.id)
                 }}
                 className="text-gray-400 mr-2 inline-flex items-center text-sm">
