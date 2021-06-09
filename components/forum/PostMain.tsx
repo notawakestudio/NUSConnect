@@ -75,10 +75,10 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
             <></>
           )}
           <div className="flex flex-wrap justify-start items-center">
-            {tags.map((tag) => (
+            {tags.map((tag, index) => (
               <div className="mr-2 mb-1">
                 <div
-                  key={nanoid()}
+                  key={tag}
                   className="text-xs py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
                   #{tag}
                 </div>

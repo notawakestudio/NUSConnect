@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import { makeReply, updateReply } from './ForumAPI'
 import TextContainer from '../common/TextContainer'
+import { mutate } from 'swr'
 
 export default function NewReply({
   postId,
@@ -45,7 +46,7 @@ export default function NewReply({
             handleSubmitEdit(values)
           }
           setTimeout(() => {
-            toast(JSON.stringify(values, null, 2))
+            toast.success('Successful!')
             setSubmitting(false)
           }, 400)
         }}>

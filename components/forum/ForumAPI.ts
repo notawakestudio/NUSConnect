@@ -42,13 +42,14 @@ export type Reply = {
 const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
 
 export const useAllPosts = (initialData = [] as Post[]) => {
-  const { data, error } = useSWR(API_GET_ALL_POST, fetcher, {
+  const { data, error, mutate } = useSWR(API_GET_ALL_POST, fetcher, {
     initialData: initialData,
   })
   return {
     posts: data,
     isLoading: !error && !data,
     isError: error,
+    mutate: mutate,
   }
 }
 
@@ -122,6 +123,7 @@ export function makePost(post: string[]): void {
     up_votes: 0,
     is_edited: false,
   }
+  mutate(API_GET_ALL_POST, (posts: Post[]) => [...posts, requestBody], false)
   fetch(API_SUBMIT_POST, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin
@@ -154,6 +156,7 @@ export function makeReply(reply: string[], postId: string): void {
     up_votes: 0,
     is_edited: false,
   }
+    mutate(API_GET_REPLY_BY_POSTID + postId, (replies: Reply[]) => [...replies, requestBody], false)
   fetch(API_SUBMIT_REPLY, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin
@@ -303,6 +306,11 @@ export function deletePost(postId: string): void {
 
 export function deleteReply(replyId: string, postId: string): void {
   const requestBody = {}
+  mutate(
+    API_GET_REPLY_BY_POSTID + postId,
+    (replies: Reply[]) => [...replies].filter((reply) => reply.id !== replyId),
+    false
+  )
   fetch(API_UPDATE_REPLY + replyId, {
     method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
