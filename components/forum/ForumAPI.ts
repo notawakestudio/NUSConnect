@@ -1,11 +1,13 @@
 import { nanoid } from 'nanoid'
+import useSWR, { mutate } from 'swr'
 import { getCurrentDateTime, getCurrentWeek } from '../common/Util'
 
-const API_GET_ALL_POST = 'https://1ieznu.deta.dev/forum/post'
+export const API_GET_ALL_POST = 'https://1ieznu.deta.dev/forum/post'
 const API_GET_POST_BY_ID = 'https://1ieznu.deta.dev/forum/post/'
 const API_SUBMIT_POST = 'https://1ieznu.deta.dev/post/make'
 const API_GET_ALL_REPLY = 'https://1ieznu.deta.dev/forum/reply'
 const API_GET_REPLY_BY_ID = 'https://1ieznu.deta.dev/forum/reply/'
+const API_GET_REPLY_BY_POSTID = 'https://1ieznu.deta.dev/forum/reply/related/'
 const API_SUBMIT_REPLY = 'https://1ieznu.deta.dev/reply/make'
 const API_UPDATE_REPLY = 'https://1ieznu.deta.dev/reply/update/'
 const API_UPDATE_REPLY_LIKES = 'https://1ieznu.deta.dev/reply/update/likes/'
@@ -37,6 +39,41 @@ export type Reply = {
   is_edited: boolean
 }
 
+const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
+
+export const useAllPosts = (initialData = [] as Post[]) => {
+  const { data, error } = useSWR(API_GET_ALL_POST, fetcher, {
+    initialData: initialData,
+  })
+  return {
+    posts: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const useAllRelatedReplies = (initialData: Reply[], postId: string) => {
+  const { data, error } = useSWR(API_GET_REPLY_BY_POSTID + postId, fetcher, {
+    initialData: initialData,
+  })
+  return {
+    replies: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const usePost = (initialData: Post, postId: string) => {
+  const { data, error } = useSWR(API_GET_POST_BY_ID + postId, fetcher, {
+    initialData: initialData,
+  })
+  return {
+    post: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const getAllPosts = async (): Promise<Post[]> => {
   return await fetch(API_GET_ALL_POST).then((response) => response.json())
 }
@@ -62,8 +99,10 @@ export async function getAllPostId(): Promise<{ postId: string }[]> {
 }
 
 export const getRelatedReplies = async (postId: string): Promise<Reply[]> => {
-  const replyList = await getAllReplies()
-  return replyList.filter((reply) => reply['post_id'] === postId)
+  const replyList = await fetch(API_GET_REPLY_BY_POSTID + postId).then((response) =>
+    response.json()
+  )
+  return replyList
 }
 
 export function makePost(post: string[]): void {
@@ -97,6 +136,8 @@ export function makePost(post: string[]): void {
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
     console.log(response)
+    // trigger a revalidation (refetch) to make sure our local data is correct
+    mutate(API_GET_ALL_POST)
   })
 }
 
@@ -127,6 +168,7 @@ export function makeReply(reply: string[], postId: string): void {
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
     console.log(response)
+    mutate(API_GET_REPLY_BY_POSTID + postId)
   })
 }
 
@@ -136,7 +178,7 @@ export async function getAllTags(): Promise<string[]> {
   return post.tags
 }
 
-export function updateReply(reply: string[], replyId: string): void {
+export function updateReply(reply: string[], postId: string, replyId: string): void {
   const requestBody = {
     content: reply['content'],
     is_edited: true,
@@ -156,6 +198,7 @@ export function updateReply(reply: string[], replyId: string): void {
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
     console.log(response)
+    mutate(API_GET_REPLY_BY_POSTID + postId)
   })
 }
 
@@ -198,6 +241,7 @@ export function updatePostLikes(newCount: number, postId: string): void {
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
     console.log(response)
+    mutate(API_GET_POST_BY_ID + postId)
   })
 }
 
@@ -232,6 +276,7 @@ export function updatePost(update: string[], currPost: Post): void {
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
     console.log(response)
+    mutate(API_GET_POST_BY_ID + currPost.id)
   })
 }
 
@@ -251,10 +296,12 @@ export function deletePost(postId: string): void {
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
     console.log(response)
+    // trigger a revalidation (refetch) to make sure our local data is correct
+    mutate(API_GET_ALL_POST)
   })
 }
 
-export function deleteReply(replyId: string): void {
+export function deleteReply(replyId: string, postId: string): void {
   const requestBody = {}
   fetch(API_UPDATE_REPLY + replyId, {
     method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
@@ -270,5 +317,6 @@ export function deleteReply(replyId: string): void {
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
     console.log(response)
+    mutate(API_GET_REPLY_BY_POSTID + postId)
   })
 }

@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import Search from '../common/Search'
+import { Post } from './ForumAPI'
 import PostListItem from './PostListItem'
 
-const PostList = ({ postList }): JSX.Element => {
+const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
   return (
     <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
       <div className="px-2 py-4 border-b">
@@ -18,9 +19,11 @@ const PostList = ({ postList }): JSX.Element => {
       </div>
       <h4 className="text-lg leading-6 font-medium my-2">Week 1</h4>
       <div className="flex flex-col">
-        {postList.map((post) => {
-          return <PostListItem key={post.id} post={post} />
-        })}
+        {postList
+          .sort((postA, postB) => (postA.edited_date < postB.edited_date ? 1 : -1))
+          .map((post) => {
+            return <PostListItem key={post.id} post={post} />
+          })}
       </div>
     </div>
   )

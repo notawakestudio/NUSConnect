@@ -5,7 +5,7 @@ import TextContainer from '../common/TextContainer'
 const PostListItem = ({ post }): JSX.Element => {
   const tags = post.tags
   const author = post.author_id
-  const date = showCurrentDate(post.created_date)
+  const date = showCurrentDate(post.edited_date)
   const title = post.title
   const maxLength = 175
   const content = post.content
