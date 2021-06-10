@@ -1,7 +1,6 @@
 import { Field, Form, Formik, useField } from 'formik'
 import { nanoid } from 'nanoid'
 import { useSession } from 'next-auth/client'
-import { useRouter } from 'next/router'
 import React from 'react'
 import { default as Select } from 'react-select'
 import { toast } from 'react-toastify'
@@ -49,7 +48,6 @@ export default function NewPost({
   const handleSubmitUpdate = (value): void => {
     updatePost(value, currentPost)
   }
-  const router = useRouter()
   return (
     <div className="mt-10 ml-4">
       <TextContainer>
@@ -67,7 +65,7 @@ export default function NewPost({
                 setEditing(false)
               }
               setTimeout(() => {
-                toast(JSON.stringify(values, null, 2))
+                toast.success('Successful!')
                 setSubmitting(false)
               }, 400)
             }}>

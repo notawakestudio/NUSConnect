@@ -1,6 +1,5 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import React from 'react'
 import ForumHome from '../../components/forum/ForumHome'
 import { getAllPosts, useAllPosts } from '../../components/forum/ForumAPI'
 import ForumLayout from '../../components/forum/ForumLayout'
@@ -14,9 +13,9 @@ export default function Forum({ postList }): JSX.Element {
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ForumLayout postList={posts} isIndex={true}>
+      <ForumLayout postList={posts}>
         <div className="flex content-center justify-center self-center">
-          <ForumHome />
+          <ForumHome postCount={posts.length} />
         </div>
       </ForumLayout>
     </>
