@@ -6,7 +6,7 @@ import { AiFillCaretDown, AiOutlineArrowUp } from 'react-icons/ai'
 import { GrFormCalendar, GrNotification, GrSemantics } from 'react-icons/gr'
 import { FcMenu } from 'react-icons/fc'
 import Auth from '../components/common/Auth'
-import SideBar from '../components/common/SideBar'
+import SidebarLayout from '../components/common/SidebarLayout'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
 import Skeleton from 'react-loading-skeleton'
 
@@ -34,19 +34,18 @@ export default function DashBoard(): JSX.Element {
       if (json.name) {
         setName(json.name)
       }
-      if (session && userData.find(user => user.userId === session.userId)) {
-        setName(userData.find(user => user.userId === session.userId).displayName)
+      if (session && userData.find((user) => user.userId === session.userId)) {
+        setName(userData.find((user) => user.userId === session.userId).displayName)
       }
       if (json.image) {
         setPicture(json.image)
       }
     }
     fetchData()
-
   }, [session])
   useEffect(() => {
-    if (session && userData.find(user => user.userId === session.userId)) {
-      setExp(userData.find(user => user.userId === session.userId).exp)
+    if (session && userData.find((user) => user.userId === session.userId)) {
+      setExp(userData.find((user) => user.userId === session.userId).exp)
     }
   }, [session])
 
@@ -60,136 +59,115 @@ export default function DashBoard(): JSX.Element {
       <Auth>
         <main className="bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
           <div className="flex items-start justify-between">
-            <SideBar />
-            <div className="flex flex-col w-full md:space-y-4">
-              <header className="w-full h-16 z-40 flex items-center justify-between">
-                <div className="block md:hidden ml-6">
-                  <button
-                    className="flex p-2 items-center rounded-full bg-white shadow text-gray-500 text-md"
-                    onClick={() => {
-                      setShowTopBar(!showTopBar)
-                    }}>
-                    <FcMenu />
-                  </button>
-                </div>
-                {showTopBar && (
-                  <div className="md:hidden bg-white flex cursor-pointer">
-                    <Link href="/quiz">
-                      <div className="px-2 border rounded">Quiz</div>
-                    </Link>
-                    <Link href="/forum">
-                      <div className="px-2 border rounded">Forum</div>
-                    </Link>
-                    <Link href="/login">
-                      <div className="px-2 border rounded">Logout</div>
-                    </Link>
-                  </div>
-                )}
-                <div className="relative z-20 flex flex-col justify-end h-full px-3 md:w-full">
-                  <div className="relative p-1 flex items-center w-full space-x-4 justify-end">
-                    <button className="flex p-2 mb-2 items-center rounded-full bg-white shadow text-gray-400 hover:text-gray-700 text-md">
-                      <GrNotification />
-                    </button>
-                  </div>
-                </div>
-              </header>
-              <div className="px-4 md:px-6">
-                <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
-                  Good day! {name ? name : <Skeleton width={200}  />}
-                </h1>
-                <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
-                  <div className="w-full md:w-6/12">
-                    <div className="shadow-lg w-full bg-white dark:bg-gray-700 relative overflow-hidden">
-                      <a href="#" className="w-full h-full block">
-                        <div className="flex items-center justify-between px-4 py-6 space-x-4">
-                          <div className="flex items-center">
-                            <img
-                              className=" rounded-full relative w-10 h-10"
-                              alt="profile-pic"
-                              src={picture}></img>
-                            <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
-                              Level 2
-                            </p>
-                          </div>
-                          <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
-                            {exp}
-                            <span className="text-xs text-gray-400"> EXP</span>
-                          </div>
-                        </div>
-                        <div className="w-full h-3 bg-gray-100">
-                          <div className="w-2/5 h-full text-center text-xs text-white bg-green-400"></div>
-                        </div>
-                      </a>
+            <SidebarLayout>
+              <div className="flex flex-col w-full md:space-y-4">
+                <header className="w-full h-16 z-40 flex justify-end">
+                  <div className="relative z-20 flex flex-col justify-end h-full px-3 md:w-full">
+                    <div className="relative p-1 flex items-center w-full space-x-4 justify-end">
+                      <button className="flex p-2 mb-2 items-center rounded-full bg-white shadow text-gray-400 hover:text-gray-700 text-md">
+                        <GrNotification />
+                      </button>
                     </div>
                   </div>
-                  <div className="flex items-center w-full md:w-1/2 space-x-4">
-                    <div className="w-1/2">
-                      <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
-                        <p className="text-2xl text-black dark:text-white font-bold">12</p>
-                        <p className="text-gray-400 text-sm">Badges</p>
+                </header>
+                <div className="px-4 md:px-6">
+                  <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
+                    Good day! {name ? name : <Skeleton width={200} />}
+                  </h1>
+                  <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
+                    <div className="w-full md:w-6/12">
+                      <div className="shadow-lg w-full bg-white dark:bg-gray-700 relative overflow-hidden">
+                        <a href="#" className="w-full h-full block">
+                          <div className="flex items-center justify-between px-4 py-6 space-x-4">
+                            <div className="flex items-center">
+                              <img
+                                className=" rounded-full relative w-10 h-10"
+                                alt="profile-pic"
+                                src={picture}></img>
+                              <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
+                                Level 2
+                              </p>
+                            </div>
+                            <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
+                              {exp}
+                              <span className="text-xs text-gray-400"> EXP</span>
+                            </div>
+                          </div>
+                          <div className="w-full h-3 bg-gray-100">
+                            <div className="w-2/5 h-full text-center text-xs text-white bg-green-400"></div>
+                          </div>
+                        </a>
                       </div>
                     </div>
-                    <div className="w-1/2">
-                      <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
-                        <p className="text-2xl text-black dark:text-white font-bold">1st</p>
-                        <p className="text-gray-400 text-sm">Rank</p>
-                        <span className="rounded-full absolute p-4 bg-purple-500 top-2 right-4">
-                          <GrSemantics />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <button className="flex items-center text-gray-400 text-md border-gray-300 border px-4 py-2 rounded-tl-sm rounded-bl-full rounded-r-full">
-                    <GrFormCalendar size="30" className="mr-2 text-gray-400" />
-                    Current Week
-                    <AiFillCaretDown />
-                  </button>
-                  <span className="text-sm text-gray-400">Jump to a different week</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-4">
-                  {schedule.map((weekly) => {
-                    return (
-                      <div className="w-full" key={weekly['id']}>
+                    <div className="flex items-center w-full md:w-1/2 space-x-4">
+                      <div className="w-1/2">
                         <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
-                          <p className="text-sm w-max text-gray-700 dark:text-white font-semibold border-b border-gray-200">
-                            Week {weekly['week']}
-                          </p>
-                          <div className="flex-col items-end space-x-2 my-6">
-                            <p className="text-xl text-black dark:text-white font-semibold">
-                              Annoucement:
-                              <br />
-                            </p>
-                            <span className="text-green-500 text-xl font-bold flex items-center">
-                              {weekly['announcement']}
-                            </span>
-                          </div>
-                          <div className="dark:text-white">
-                            {weekly['tasks'].map((task) => {
-                              return (
-                                <Link href={task['link']} key={task['id']}>
-                                  <div className="flex items-center pb-2 mb-2 text-sm sm:space-x-12 cursor-pointer justify-between border-b border-gray-200">
-                                    <p>{task['description']}</p>
-                                    <div className="flex items-end text-xs">
-                                      {task['exp']}
-                                      <span className="flex items-center">
-                                        <AiOutlineArrowUp className="h-3 text-green-500" />
-                                        exp
-                                      </span>
-                                    </div>
-                                  </div>
-                                </Link>
-                              )
-                            })}
-                          </div>
+                          <p className="text-2xl text-black dark:text-white font-bold">12</p>
+                          <p className="text-gray-400 text-sm">Badges</p>
                         </div>
                       </div>
-                    )
-                  })}
+                      <div className="w-1/2">
+                        <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
+                          <p className="text-2xl text-black dark:text-white font-bold">1st</p>
+                          <p className="text-gray-400 text-sm">Rank</p>
+                          <span className="rounded-full absolute p-4 bg-purple-500 top-2 right-4">
+                            <GrSemantics />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <button className="flex items-center text-gray-400 text-md border-gray-300 border px-4 py-2 rounded-tl-sm rounded-bl-full rounded-r-full">
+                      <GrFormCalendar size="30" className="mr-2 text-gray-400" />
+                      Current Week
+                      <AiFillCaretDown />
+                    </button>
+                    <span className="text-sm text-gray-400">Jump to a different week</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-4">
+                    {schedule.map((weekly) => {
+                      return (
+                        <div className="w-full" key={weekly['id']}>
+                          <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
+                            <p className="text-sm w-max text-gray-700 dark:text-white font-semibold border-b border-gray-200">
+                              Week {weekly['week']}
+                            </p>
+                            <div className="flex-col items-end space-x-2 my-6">
+                              <p className="text-xl text-black dark:text-white font-semibold">
+                                Annoucement:
+                                <br />
+                              </p>
+                              <span className="text-green-500 text-xl font-bold flex items-center">
+                                {weekly['announcement']}
+                              </span>
+                            </div>
+                            <div className="dark:text-white">
+                              {weekly['tasks'].map((task) => {
+                                return (
+                                  <Link href={task['link']} key={task['id']}>
+                                    <div className="flex items-center pb-2 mb-2 text-sm sm:space-x-12 cursor-pointer justify-between border-b border-gray-200">
+                                      <p>{task['description']}</p>
+                                      <div className="flex items-end text-xs">
+                                        {task['exp']}
+                                        <span className="flex items-center">
+                                          <AiOutlineArrowUp className="h-3 text-green-500" />
+                                          exp
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </Link>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
+            </SidebarLayout>
           </div>
         </main>
       </Auth>
