@@ -29,7 +29,7 @@ export default function QuizPage({ quizzes }: { quizzes: Quiz[] }): JSX.Element 
       <Auth>
         <div className="dark:bg-gray-800 w-full">
           <Layout>
-            <div className="container text-center bg-white dark:bg-gray-800">
+            <div className="flex w-full text-center bg-white dark:bg-gray-800">
               <QuizList quizzes={quizzes} />
             </div>
           </Layout>
