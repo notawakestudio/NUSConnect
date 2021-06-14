@@ -41,12 +41,10 @@ export type Reply = {
 
 const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
 
-export const useAllPosts = (initialData = [] as Post[]) => {
-  const { data, error, mutate } = useSWR(API_GET_ALL_POST, fetcher, {
-    initialData: initialData,
-  })
+export const useAllPosts = () => {
+  const { data, error, mutate } = useSWR(API_GET_ALL_POST, fetcher)
   return {
-    posts: data,
+    posts: data as Post[],
     isLoading: !error && !data,
     isError: error,
     mutate: mutate,
@@ -84,9 +82,7 @@ export const getAllReplies = async (): Promise<Reply[]> => {
 }
 
 export const getPostById = async (id: string): Promise<Post> => {
-  const post = await fetch(API_GET_POST_BY_ID + id).then((response) =>
-    response.json()
-  )
+  const post = await fetch(API_GET_POST_BY_ID + id).then((response) => response.json())
   return post
 }
 
@@ -156,7 +152,7 @@ export function makeReply(reply: string[], postId: string): void {
     up_votes: 0,
     is_edited: false,
   }
-    mutate(API_GET_REPLY_BY_POSTID + postId, (replies: Reply[]) => [...replies, requestBody], false)
+  mutate(API_GET_REPLY_BY_POSTID + postId, (replies: Reply[]) => [...replies, requestBody], false)
   fetch(API_SUBMIT_REPLY, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin

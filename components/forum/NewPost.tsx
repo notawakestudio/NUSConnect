@@ -8,8 +8,26 @@ import * as Yup from 'yup'
 import { makePost, Post, updatePost } from './ForumAPI'
 import TextContainer from '../common/TextContainer'
 
-const allAvailableTags = ['question','lecture1']
-const defaultPost = { 
+export const allAvailableTags = [
+  'Question',
+  'Lecture',
+  'Quiz',
+  'Admin',
+  'week1',
+  'week2',
+  'week3',
+  'week4',
+  'week5',
+  'week6',
+  'week7',
+  'week8',
+  'week9',
+  'week10',
+  'week11',
+  'week12',
+  'week13',
+]
+const defaultPost = {
   id: nanoid(),
   author_id: 'string',
   title: '',
@@ -20,13 +38,13 @@ const defaultPost = {
   week: '1',
   reply_count: 1,
   up_votes: 1,
-  is_edited: false
+  is_edited: false,
 }
 
 export default function NewPost({
   label = 'Make a post',
   currentPost = defaultPost,
-  setEditing = function  (bool)  {},
+  setEditing = function (bool) {},
 }: {
   label?: string
   currentPost?: Post

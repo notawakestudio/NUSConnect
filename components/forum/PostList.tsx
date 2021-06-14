@@ -3,7 +3,17 @@ import Search from '../common/Search'
 import { Post } from './ForumAPI'
 import PostListItem from './PostListItem'
 
-const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
+const PostList = ({
+  postList,
+  isLoading,
+  query,
+  setQuery,
+}: {
+  postList: Post[]
+  isLoading: boolean
+  query: string
+  setQuery: (state: string) => void
+}): JSX.Element => {
   return (
     <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
       <div className="px-2 py-4 border-b">
@@ -14,17 +24,21 @@ const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
               New Post
             </button>
           </Link>
-          <Search />
+          <Search query={query} setQuery={setQuery} />
         </div>
       </div>
       <h4 className="text-lg leading-6 font-medium my-2">Week 1</h4>
-      <div className="flex flex-col">
-        {postList
-          .sort((postA, postB) => (postA.edited_date < postB.edited_date ? 1 : -1))
-          .map((post) => {
-            return <PostListItem key={post.id} post={post} />
-          })}
-      </div>
+      {isLoading ? (
+        <span>Loading</span>
+      ) : (
+        <div className="flex flex-col">
+          {postList
+            .sort((postA, postB) => (postA.edited_date < postB.edited_date ? 1 : -1))
+            .map((post) => {
+              return <PostListItem key={post.id} post={post} />
+            })}
+        </div>
+      )}
     </div>
   )
 }

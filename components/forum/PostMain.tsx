@@ -75,7 +75,7 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
             <></>
           )}
           <div className="flex flex-wrap justify-start items-center">
-            {tags.map((tag, index) => (
+            {tags.map((tag) => (
               <div className="mr-2 mb-1">
                 <div
                   key={tag}
@@ -92,7 +92,6 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
                 autoClose: 3000,
               })
               updatePostLikes(upVotes + 1, currentPost.id)
-              setUpVotes(upVotes + 1)
               setLiked(true)
             }}
             className="text-gray-400 mr-3 inline-flex items-center ml-auto text-sm pr-3 py-1 border-r-2 border-gray-200">
