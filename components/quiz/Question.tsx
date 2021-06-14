@@ -1,7 +1,5 @@
-import { Avatar } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { FaRegThumbsUp } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { renderMdToHtml } from '../common/Util'
 import { getPostById, Post } from '../forum/ForumAPI'
@@ -62,8 +60,6 @@ const Question = ({
     }
     getPost()
   }, [])
-
-  // const post = getPostById('1a')
 
   return (
     <div className="font-fira">

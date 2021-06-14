@@ -1,13 +1,16 @@
-import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik'
-import * as Yup from 'yup'
-import Head from 'next/head'
-import Layout from '../../components/common/Layout'
-import Link from 'next/link'
-import { fetchAllQuestions, makeQuiz } from '../../components/quiz/QuizAPI'
-import { useSession } from 'next-auth/client'
-import CustomMultiSelect from '../../components/common/CustomMultiSelect'
+import { Button, useToast } from '@chakra-ui/react'
+import { Field, FieldArray, Form, Formik } from 'formik'
 import { GetStaticProps } from 'next'
+import { useSession } from 'next-auth/client'
+import Head from 'next/head'
+import Link from 'next/link'
+import React from 'react'
+import { GrFormNextLink } from 'react-icons/gr'
+import * as Yup from 'yup'
+import CustomMultiSelect from '../../components/common/CustomMultiSelect'
+import Layout from '../../components/common/Layout'
 import { renderMdToHtml } from '../../components/common/Util'
+import { fetchAllQuestions, makeQuiz } from '../../components/quiz/QuizAPI'
 
 export const getStaticProps: GetStaticProps = async () => {
   const questions = await fetchAllQuestions()
@@ -22,11 +25,11 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 const initialValues = {
-  title: 'CS2030 Quiz 1',
-  week: '1',
+  title: '',
+  week: '',
   modules: ['CS2030', 'CS2030S'],
-  tags: ['OOP', 'intro'],
-  questions: ['3zCJecvK8nCUM06cjxQ_Z', 'BZRCIwXBleMwXzi_VximL'],
+  tags: [''],
+  questions: [''],
 }
 const QuizForm = ({
   selectObjects,
@@ -38,6 +41,18 @@ const QuizForm = ({
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makeQuiz(value)
   }
+  const errorToast = useToast()
+
+  function showToast(error) {
+    errorToast({
+      title: 'Error',
+      description: error,
+      status: 'error',
+      duration: 9000,
+      position: 'top-right',
+      isClosable: true,
+    })
+  }
   return (
     <>
       <Head>
@@ -45,120 +60,138 @@ const QuizForm = ({
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <div className="flex justify-center mx-auto">
-          <Link href="/quiz/make-question">Go make more questions</Link>
-        </div>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={Yup.object({
-            modules: Yup.array().required('Required'),
-            title: Yup.string().required('Required'),
-            questions: Yup.array().required('Required'),
-          })}
-          onSubmit={(values, { setSubmitting }) => {
-            handleSubmit(values)
-            setTimeout(() => {
-              // alert(JSON.stringify(values, null, 2))
-              alert('DONE')
-              setSubmitting(false)
-            }, 400)
-          }}>
-          {(formik) => (
-            <section className="bg-gray-100 bg-opacity-20">
-              <Form className="container max-w-3xl mx-auto shadow-md md:w-3/4">
-                <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
-                  <div className="max-w-sm mx-auto md:w-full md:mx-0">
-                    <div className="inline-flex items-center space-x-4">
-                      <h1 className="text-gray-600">Make a quiz</h1>
+      <div className="dark:bg-gray-800 dark:text-gray-200">
+        <Layout>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={Yup.object({
+              modules: Yup.array().required('Required'),
+              title: Yup.string().required('Please name your quiz'),
+              week: Yup.string().required('Please enter current week'),
+              questions: Yup.array().required('Please select at least one question'),
+            })}
+            onSubmit={(values, { setSubmitting }) => {
+              handleSubmit(values)
+              setTimeout(() => {
+                // alert(JSON.stringify(values, null, 2))
+                alert('DONE')
+                setSubmitting(false)
+              }, 400)
+            }}>
+            {(formik) => (
+              <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200">
+                <Form className="container max-w-3xl mx-auto shadow-md md:w-3/4">
+                  <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
+                    <div className="flex justify-between text-gray-600 dark:text-gray-200">
+                      <h1 className="text-lg font-semibold">Make a quiz</h1>
+                      <h1 className="text-lg font-semibold flex items-center">
+                        <Button className="dark:bg-blue-500 dark:hover:bg-blue-700">
+                          <Link href="/quiz/make-question">Done? Make a question!</Link>
+                          <GrFormNextLink className="ml-1" />
+                        </Button>
+                      </h1>
                     </div>
                   </div>
-                </div>
-                <div className="space-y-6 bg-white">
-                  <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
-                    <h2 className="max-w-sm mx-auto md:w-2/12">Meta data</h2>
-                    <div className="max-w-md mx-auto md:w-10/12">
-                      <div className=" relative ">
-                        <label htmlFor="title">Title</label>
-                        <Field
-                          name="title"
-                          rows={5}
-                          className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                          placeholder="title"></Field>
-                        <ErrorMessage name="title" />
-                        <hr />
-                        <label htmlFor="week">Week</label>
-                        <Field
-                          name="week"
-                          type="number"
-                          min={0}
-                          max={13}
-                          className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                          placeholder="week"></Field>
-                        <ErrorMessage name="title" />
-                        <hr />
-                        <label htmlFor="tags">Tags</label>
-                        <FieldArray name="tags">
-                          {({ remove, push }) => (
-                            <div>
-                              {formik.values.tags.length > 0 &&
-                                formik.values.tags.map((tag, index) => (
-                                  <div className="flex items-center my-2" key={index}>
-                                    <div className="col w-full">
-                                      <Field
-                                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        name={`tags.${index}`}
-                                      />
-                                      <ErrorMessage name={`tags.${index}`} component="div" />
+                  <div className="space-y-6 bg-white dark:bg-gray-800">
+                    <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+                      <h2 className="max-w-sm mx-auto md:w-2/12">Meta data</h2>
+                      <div className="max-w-md mx-auto md:w-10/12">
+                        <div className=" relative ">
+                          <label htmlFor="title">Title</label>
+                          {formik.errors.title && formik.touched.title ? (
+                            <div className="text-xs font-bold text-red-600">* required </div>
+                          ) : null}
+                          <Field
+                            name="title"
+                            rows={5}
+                            className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            placeholder="title"></Field>
+                          <label htmlFor="week">Week</label>
+                          {formik.errors.week && formik.touched.week ? (
+                            <div className="text-xs font-bold text-red-600">* required </div>
+                          ) : null}
+                          <Field
+                            name="week"
+                            type="number"
+                            min={0}
+                            max={13}
+                            className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            placeholder="week"></Field>
+                          <label htmlFor="tags">Tags</label>
+                          <FieldArray name="tags">
+                            {({ remove, push }) => (
+                              <div>
+                                {formik.values.tags.length > 0 &&
+                                  formik.values.tags.map((tag, index) => (
+                                    <div className="flex items-center my-2" key={index}>
+                                      <div className="col w-full">
+                                        <Field
+                                          className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                          name={`tags.${index}`}
+                                        />
+                                      </div>
+                                      <div className="col ml-2">
+                                        <button
+                                          type="button"
+                                          className="secondary"
+                                          onClick={() => remove(index)}>
+                                          X
+                                        </button>
+                                      </div>
                                     </div>
-                                    <div className="col ml-2">
-                                      <button
-                                        type="button"
-                                        className="secondary"
-                                        onClick={() => remove(index)}>
-                                        X
-                                      </button>
-                                    </div>
-                                  </div>
-                                ))}
-                              <button
-                                type="button"
-                                className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                                onClick={() => push('')}>
-                                Add More
-                              </button>
-                            </div>
-                          )}
-                        </FieldArray>
+                                  ))}
+                                <button
+                                  type="button"
+                                  className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                                  onClick={() => push('')}>
+                                  Add More
+                                </button>
+                              </div>
+                            )}
+                          </FieldArray>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <hr />
-                  <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
-                    <h2 className="max-w-sm mx-auto md:w-2/12">Questions</h2>
-                    <div className="max-w-md mx-auto space-y-5 md:w-10/12">
-                      <Field
-                        component={CustomMultiSelect}
-                        name="questions"
-                        options={selectObjects}
-                      />
+                    <hr />
+                    <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+                      <h2 className="max-w-sm mx-auto md:w-2/12">Questions</h2>
+                      <div className="max-w-md mx-auto space-y-5 md:w-10/12">
+                        {formik.errors.questions && formik.touched.questions ? (
+                          <div className="text-xs font-bold text-red-600">* required </div>
+                        ) : null}
+                        <Field
+                          component={CustomMultiSelect}
+                          name="questions"
+                          options={selectObjects}
+                        />
+                      </div>
                     </div>
                     <hr />
+                    <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
+                      <button
+                        type="submit"
+                        className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                        onClick={() => {
+                          if (formik.errors.title && formik.touched.title) {
+                            showToast(formik.errors.title)
+                          }
+                          if (formik.errors.week && formik.touched.week) {
+                            showToast(formik.errors.week)
+                          }
+                          if (formik.errors.questions && formik.touched.questions) {
+                            showToast(formik.errors.questions)
+                          }
+                        }}>
+                        Save
+                      </button>
+                    </div>
                   </div>
-                  <hr />
-                  <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
-                    <button
-                      type="submit"
-                      className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </Form>
-            </section>
-          )}
-        </Formik>
-      </Layout>
+                </Form>
+              </section>
+            )}
+          </Formik>
+        </Layout>
+      </div>
     </>
   )
 }

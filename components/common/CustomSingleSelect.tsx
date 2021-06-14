@@ -14,6 +14,20 @@ export default function CustomSingleSelect(props) {
       }}
       isSearchable={true}
       instanceId={field.name}
+      styles={customStyles}
     />
   )
+}
+
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? 'red' : 'blue',
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1
+    const transition = 'opacity 300ms'
+
+    return { ...provided, opacity, transition }
+  },
 }
