@@ -17,7 +17,7 @@ const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
           <Search />
         </div>
       </div>
-      <div className="overflow-auto ">
+      <div className="overflow-auto min-w-full">
         <h4 className="text-lg leading-6 font-medium my-2 text-center">Week 1</h4>
         <div className="flex flex-col ">
           {postList
