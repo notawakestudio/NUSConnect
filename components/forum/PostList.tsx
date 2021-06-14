@@ -3,7 +3,15 @@ import Search from '../common/Search'
 import { Post } from './ForumAPI'
 import PostListItem from './PostListItem'
 
-const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
+const PostList = ({
+  postList,
+  query,
+  setQuery,
+}: {
+  postList: Post[]
+  query: string
+  setQuery: (state: string) => void
+}): JSX.Element => {
   return (
     <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 max-h-screen">
       <div className="px-2 py-4 border-b">
@@ -14,7 +22,7 @@ const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
               New Post
             </button>
           </Link>
-          <Search />
+          <Search query={query} setQuery={setQuery} />
         </div>
       </div>
       <div className="overflow-auto min-w-full h-screen">
