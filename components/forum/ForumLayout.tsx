@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import Auth from '../../components/common/Auth'
 import Layout from '../../components/common/Layout'
 import TagBar from '../common/TagBar'
 import { Post, useAllPosts } from './ForumAPI'
@@ -49,33 +48,29 @@ export default function ForumLayout({
   }, [isLoading, currTag, query, posts])
   return (
     <>
-      <Auth>
-        <div className="dark:bg-gray-800 w-full">
-          <Layout>
-            <TagBar currTag={currTag} setCurrTag={setCurrTag} />
-            <div className="inline lg:flex">
-              <div
-                className={`${
-                  router.pathname === '/forum'
-                    ? 'lg:max-w-sm xl:max-w-md mx-2'
-                    : 'hidden lg:flex lg:max-w-sm xl:max-w-md mx-2 flex-shrink-0'
-                }`}>
-                {isLoading ? (
-                  <Spinner size="xl" />
-                ) : (
-                  <PostList
-                    postList={filteredPosts}
-                    isLoading={isLoading}
-                    query={query}
-                    setQuery={setQuery}
-                  />
-                )}
-              </div>
-              <div className="mx-2 flex-grow">{children}</div>
+      <div className="dark:bg-gray-800 w-full">
+        <Layout>
+          <TagBar currTag={currTag} setCurrTag={setCurrTag} />
+          <div className="inline lg:flex">
+            <div
+              className={`${
+                router.pathname === '/forum' ? '' : 'hidden lg:flex flex-shrink-0'
+              } lg:w-96 xl:max-w-md mx-2`}>
+              {isLoading ? (
+                <Spinner size="xl" />
+              ) : (
+                <PostList
+                  postList={filteredPosts}
+                  isLoading={isLoading}
+                  query={query}
+                  setQuery={setQuery}
+                />
+              )}
             </div>
-          </Layout>
-        </div>
-      </Auth>
+            <div className="mx-2 flex-grow">{children}</div>
+          </div>
+        </Layout>
+      </div>
     </>
   )
 }

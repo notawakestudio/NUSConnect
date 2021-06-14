@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import { makePost, Post, updatePost } from './ForumAPI'
 import TextContainer from '../common/TextContainer'
+import Auth from '../common/Auth'
 
 export const allAvailableTags = [
   'Question',
@@ -67,41 +68,42 @@ export default function NewPost({
     updatePost(value, currentPost)
   }
   return (
-    <div className="mt-10 ml-4">
-      <TextContainer>
-        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <Formik
-            initialValues={initialValues}
-            validationSchema={Yup.object({
-              title: Yup.string().required('required*'),
-            })}
-            onSubmit={(values, { setSubmitting }) => {
-              if (label === 'Make a post') {
-                handleSubmitNew(values)
-              } else {
-                handleSubmitUpdate(values)
-                setEditing(false)
-              }
-              setTimeout(() => {
-                toast.success('Successful!')
-                setSubmitting(false)
-              }, 400)
-            }}>
-            {(formik) => (
-              <section className="bg-gray-100 bg-opacity-20">
-                <Form>
-                  <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
-                    <div className="max-w-sm mx-auto md:w-full md:mx-0">
-                      <div className="inline-flex items-center space-x-4">
-                        <h1 className="text-gray-600">{label}</h1>
+    <Auth>
+        <div className="mt-10 ml-4">
+          <TextContainer>
+            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+              <Formik
+                initialValues={initialValues}
+                validationSchema={Yup.object({
+                  title: Yup.string().required('required*'),
+                })}
+                onSubmit={(values, { setSubmitting }) => {
+                  if (label === 'Make a post') {
+                    handleSubmitNew(values)
+                  } else {
+                    handleSubmitUpdate(values)
+                    setEditing(false)
+                  }
+                  setTimeout(() => {
+                    toast.success('Successful!')
+                    setSubmitting(false)
+                  }, 400)
+                }}>
+                {(formik) => (
+                  <section className="bg-gray-100 bg-opacity-20">
+                    <Form>
+                      <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
+                        <div className="max-w-sm mx-auto md:w-full md:mx-0">
+                          <div className="inline-flex items-center space-x-4">
+                            <h1 className="text-gray-600">{label}</h1>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="space-y-4 bg-white">
-                    <div className="items-center w-full p-4 space-y-2 text-gray-500 flex-shrink-0 flex-col">
-                      <div>Select Tags</div>
-                      <Field name={'tags'} component={TagMultiSelect} options={tags} />
-                      {/* <div id="checkbox-group"> Select Tags </div>
+                      <div className="space-y-4 bg-white">
+                        <div className="items-center w-full p-4 space-y-2 text-gray-500 flex-shrink-0 flex-col">
+                          <div>Select Tags</div>
+                          <Field name={'tags'} component={TagMultiSelect} options={tags} />
+                          {/* <div id="checkbox-group"> Select Tags </div>
                       <div role="group" aria-labelledby="checkbox-group">
                         {tags.map((tag, index) => (
                           <span key={index} className="flex-row">
@@ -112,32 +114,43 @@ export default function NewPost({
                           </span>
                         ))}
                       </div> */}
-                      <br />
-                      <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
-                      <br />
-                      <ContentTextArea
-                        label="Content"
-                        name="content"
-                        rows={6}
-                        placeholder="Leave a comment"
-                      />
-                      <br />
-                    </div>
-                    <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
-                      <button
-                        type="submit"
-                        className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                        Post
-                      </button>
-                    </div>
-                  </div>
-                </Form>
-              </section>
-            )}
-          </Formik>
+                          <br />
+                          <TitleTextInput
+                    
+                               label="Title"
+                         
+                          name="title"
+              
+                                     type="text"
+   
+                                                placeholder="Title"
+        
+                                       />
+                          <br />
+                          <ContentTextArea
+                            label="Content"
+                            name="content"
+                            rows={6}
+                            placeholder="Leave a comment"
+                          />
+                          <br />
+                        </div>
+                        <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
+                          <button
+                            type="submit"
+                            className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                            Post
+                          </button>
+                        </div>
+                      </div>
+                    </Form>
+                  </section>
+                )}
+              </Formik>
+            </div>
+          </TextContainer>
         </div>
-      </TextContainer>
-    </div>
+    </Auth>
   )
 }
 

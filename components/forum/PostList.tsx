@@ -5,12 +5,10 @@ import PostListItem from './PostListItem'
 
 const PostList = ({
   postList,
-  isLoading,
   query,
   setQuery,
 }: {
   postList: Post[]
-  isLoading: boolean
   query: string
   setQuery: (state: string) => void
 }): JSX.Element => {
@@ -27,7 +25,7 @@ const PostList = ({
           <Search query={query} setQuery={setQuery} />
         </div>
       </div>
-      <div className="overflow-auto min-w-full">
+      <div className="overflow-auto min-w-full h-screen">
         <h4 className="text-lg leading-6 font-medium my-2 text-center">Week 1</h4>
         <div className="flex flex-col ">
           {postList
