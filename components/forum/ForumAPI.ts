@@ -74,16 +74,15 @@ export const usePost = (initialData: Post, postId: string) => {
 }
 
 export const getAllPosts = async (): Promise<Post[]> => {
-  return await fetch(API_GET_ALL_POST).then((response) => response.json())
+  return fetch(API_GET_ALL_POST).then((response) => response.json())
 }
 
 export const getAllReplies = async (): Promise<Reply[]> => {
-  return await fetch(API_GET_ALL_REPLY).then((response) => response.json())
+  return fetch(API_GET_ALL_REPLY).then((response) => response.json())
 }
 
 export const getPostById = async (id: string): Promise<Post> => {
-  const post = await fetch(API_GET_POST_BY_ID + id).then((response) => response.json())
-  return post
+  return fetch(API_GET_POST_BY_ID + id).then((response) => response.json())
 }
 
 export async function getAllPostId(): Promise<{ postId: string }[]> {

@@ -1,8 +1,9 @@
+import { Avatar } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState } from 'react'
-import Footer from '../../components/common/Footer'
+import React, { useState } from 'react'
+import { FaRegThumbsUp } from 'react-icons/fa'
 import Pagination from '../../components/common/Pagination'
 import { hasSameContent } from '../../components/common/Util'
 import AnswerObject from '../../components/quiz/AnswerObject'
@@ -140,12 +141,12 @@ export default function Quiz({
           <meta name="description" content="Attempt Quiz" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="container mx-auto text-center flex flex-col items-center">
-          <h1 className="px-4 py-2 text-base font-bold">{quizTitle}</h1>
+        <div className="container mx-auto text-center flex flex-col items-center py-4">
+          <h1 className="py-2 text-base font-bold">{quizTitle}</h1>
           {quizMode === QuizMode.STARTING || quizMode === QuizMode.ENDING ? (
-            <div className="shadow-lg rounded-t-xl bg-blue-500 md:w-64 p-6 dark:bg-gray-800">
+            <div className="shadow-lg rounded-xl bg-blue-500 md:w-64 p-6 dark:bg-gray-800">
               <p className="text-white text-xl">Ready?</p>
-              <div className="mt-4">
+              <div className="mt-4 flex flex-col">
                 <button
                   type="button"
                   className="py-2 px-4  bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
@@ -179,29 +180,52 @@ export default function Quiz({
             </ScoreCard>
           ) : null}
           {loading && <p>Loading Questions ...</p>}
-          {!loading && (quizMode === QuizMode.TAKING || quizMode === QuizMode.REVIEWING) && (
-            <Question
-              questionNumber={currQnNumOneBased}
-              totalQuestions={questions.length}
-              question={questions[currQnNumOneBased - 1].question}
-              answers={questions[currQnNumOneBased - 1].answers}
-              type={questions[currQnNumOneBased - 1].type}
-              userAnswer={userAnswers[currQnNumOneBased - 1].answer}
-              correct_answers={questions[currQnNumOneBased - 1].correct_answers}
-              updateTotalScore={updateTotalScore}
-              saveProgress={saveProgress}
-              attemptedAllQuestions={attemptedAllQuestions}
-              quizMode={quizMode}
-            />
+          {!loading && quizMode === QuizMode.TAKING && (
+            <>
+              <Question
+                questionNumber={currQnNumOneBased}
+                totalQuestions={questions.length}
+                question={questions[currQnNumOneBased - 1].question}
+                answers={questions[currQnNumOneBased - 1].answers}
+                type={questions[currQnNumOneBased - 1].type}
+                userAnswer={userAnswers[currQnNumOneBased - 1].answer}
+                correct_answers={questions[currQnNumOneBased - 1].correct_answers}
+                updateTotalScore={updateTotalScore}
+                saveProgress={saveProgress}
+                attemptedAllQuestions={attemptedAllQuestions}
+                quizMode={quizMode}
+              />
+              <Pagination
+                numItem={questions.length}
+                onClickChange={changeQuestion}
+                onClickNext={nextQuestion}
+                onClickPrevious={previousQuestion}
+              />
+            </>
           )}
-          {!loading && (quizMode === QuizMode.TAKING || quizMode === QuizMode.REVIEWING) ? (
-            <Pagination
-              numItem={questions.length}
-              onClickChange={changeQuestion}
-              onClickNext={nextQuestion}
-              onClickPrevious={previousQuestion}
-            />
-          ) : null}
+          {!loading && quizMode === QuizMode.REVIEWING && (
+            <>
+              <Question
+                questionNumber={currQnNumOneBased}
+                totalQuestions={questions.length}
+                question={questions[currQnNumOneBased - 1].question}
+                answers={questions[currQnNumOneBased - 1].answers}
+                type={questions[currQnNumOneBased - 1].type}
+                userAnswer={userAnswers[currQnNumOneBased - 1].answer}
+                correct_answers={questions[currQnNumOneBased - 1].correct_answers}
+                updateTotalScore={updateTotalScore}
+                saveProgress={saveProgress}
+                attemptedAllQuestions={attemptedAllQuestions}
+                quizMode={quizMode}
+              />
+              <Pagination
+                numItem={questions.length}
+                onClickChange={changeQuestion}
+                onClickNext={nextQuestion}
+                onClickPrevious={previousQuestion}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

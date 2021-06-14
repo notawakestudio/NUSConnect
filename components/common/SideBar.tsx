@@ -5,7 +5,7 @@ import { MdForum } from 'react-icons/md'
 const SideBar = (): JSX.Element => {
   return (
     <div className="min-h-screen hidden relative w-48 lg:w-56 md:flex flex-col flex-auto flex-shrink-0 ">
-      <div className="fixed flex flex-col top-18 left-0 w-48 lg:w-56 dark:bg-gray-900 h-full shadow-lg">
+      <div className="absolute flex flex-col to8p-18 left-0 w-48 lg:w-56 dark:bg-gray-900 h-full border-r-2 border-gray-200">
         <div className="flex items-center pl-6 h-20 border-b dark:border-gray-800">
           <div className="ml-1">
             <p className="ml-1 text-md font-medium tracking-wide truncate dark:text-gray-100 font-sans">

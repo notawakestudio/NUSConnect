@@ -9,7 +9,7 @@ export default function Forum(): JSX.Element {
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex content-center justify-center self-center">
+      <div className="container items-center justify-center">
         <ForumHome postCount={777} />
       </div>
     </>

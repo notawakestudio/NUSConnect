@@ -1,4 +1,10 @@
-const Search = ({ query, setQuery }): JSX.Element => {
+const Search = ({
+  query,
+  setQuery,
+}: {
+  query: string
+  setQuery: (query: string) => void
+}): JSX.Element => {
   return (
     <div className="shadow-md ml-2 rounded-lg border-2 flex">
       <input

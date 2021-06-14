@@ -2,7 +2,9 @@ import Link from 'next/link'
 
 const Footer = (): JSX.Element => {
   return (
-    <footer className="bg-white dark:bg-gray-900 w-full py-8" suppressHydrationWarning={true}>
+    <footer
+      className="bg-white dark:bg-gray-900 w-full py-8 border-t border-gray-200"
+      suppressHydrationWarning={true}>
       <div className="max-w-screen-xl mx-auto px-4">
         <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-between">
           <li className="m-2">
