@@ -59,7 +59,7 @@ const QuestionForm = (): JSX.Element => {
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="dark:bg-gray-800 dark:text-gray-200">
+      <div className="dark:bg-gray-800 dark:text-gray-200 ">
         <Layout>
           <Formik
             initialValues={initialValues}
@@ -79,14 +79,14 @@ const QuestionForm = (): JSX.Element => {
               }, 400)
             }}>
             {(formik) => (
-              <section className="bg-gray-100 bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200">
+              <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200">
                 <Form className="container max-w-3xl mx-auto shadow-md md:w-3/4">
                   <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
                     <div className="flex justify-between text-gray-600 dark:text-gray-200">
                       <h1 className="text-lg font-semibold">Make a question</h1>
                       <h1 className="text-lg font-semibold flex items-center">
                         <Button className="dark:bg-blue-500 dark:hover:bg-blue-700">
-                          <Link href="/quiz/make-quiz">Done? Go make a quiz</Link>
+                          <Link href="/quiz/make-quiz">Done? Go make a quiz!</Link>
                           <GrFormNextLink className="ml-1" />
                         </Button>
                       </h1>
