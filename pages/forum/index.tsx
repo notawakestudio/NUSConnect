@@ -14,7 +14,7 @@ export default function Forum({ postList }): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ForumLayout postList={posts}>
-        <div className="flex content-center justify-center self-center">
+        <div className="container items-center justify-center">
           <ForumHome postCount={posts.length} />
         </div>
       </ForumLayout>

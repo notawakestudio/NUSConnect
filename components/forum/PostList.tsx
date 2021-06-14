@@ -5,7 +5,7 @@ import PostListItem from './PostListItem'
 
 const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
   return (
-    <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+    <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 max-h-screen">
       <div className="px-2 py-4 border-b">
         <span className="flex text-lg leading-4 font-medium justify-center mb-2">All Posts</span>
         <div className="flex justify-center">
@@ -17,13 +17,15 @@ const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
           <Search />
         </div>
       </div>
-      <h4 className="text-lg leading-6 font-medium my-2">Week 1</h4>
-      <div className="flex flex-col">
-        {postList
-          .sort((postA, postB) => (postA.edited_date < postB.edited_date ? 1 : -1))
-          .map((post) => {
-            return <PostListItem key={post.id} post={post} />
-          })}
+      <div className="overflow-auto ">
+        <h4 className="text-lg leading-6 font-medium my-2 text-center">Week 1</h4>
+        <div className="flex flex-col ">
+          {postList
+            .sort((postA, postB) => (postA.edited_date < postB.edited_date ? 1 : -1))
+            .map((post) => {
+              return <PostListItem key={post.id} post={post} />
+            })}
+        </div>
       </div>
     </div>
   )

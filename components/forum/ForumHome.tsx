@@ -3,16 +3,16 @@ import TextContainer from '../common/TextContainer'
 
 const ForumHome = ({ postCount }: { postCount: number }): JSX.Element => {
   return (
-    <div className="hidden lg:flex self-center p-10 ">
+    <div className="hidden lg:flex p-8 min-h-screen w-full">
       <TextContainer>
-        <div className="p-4 flex flex-col items-center whitespace-nowrap">
-          <p className="leading-relaxed mb-4"> You have 3 unread posts</p>
-          <p className="leading-relaxed mb-4"> Contribute by adding a new post</p>
-          <p className="leading-relaxed mb-4">
+        <div className="p-4 whitespace-nowrap text-center min-h-screen min-w-full">
+          <div className="leading-relaxed mb-4 "> You have 3 unread posts</div>
+          <div className="leading-relaxed mb-4 "> Contribute by adding a new post</div>
+          <div className="leading-relaxed mb-4 ">
             Join the discussions to help others with their queries
-          </p>
+          </div>
           <StatGroup>
-            <Stat>
+            <Stat className="text-center">
               <StatLabel>Number of Posts</StatLabel>
               <StatNumber>{postCount}</StatNumber>
               <StatHelpText>
