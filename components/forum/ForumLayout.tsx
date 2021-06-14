@@ -59,12 +59,7 @@ export default function ForumLayout({
               {isLoading ? (
                 <Spinner size="xl" />
               ) : (
-                <PostList
-                  postList={filteredPosts}
-                  isLoading={isLoading}
-                  query={query}
-                  setQuery={setQuery}
-                />
+                <PostList postList={filteredPosts} query={query} setQuery={setQuery} />
               )}
             </div>
             <div className="mx-2 flex-grow">{children}</div>
