@@ -13,7 +13,7 @@ export default function CustomSingleSelect(props) {
         return <span dangerouslySetInnerHTML={{ __html: data.label }} />
       }}
       isSearchable={true}
-      instanceId={field.value}
+      instanceId={field.name}
     />
   )
 }
