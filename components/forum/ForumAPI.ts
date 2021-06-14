@@ -41,12 +41,10 @@ export type Reply = {
 
 const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
 
-export const useAllPosts = (initialData = [] as Post[]) => {
-  const { data, error, mutate } = useSWR(API_GET_ALL_POST, fetcher, {
-    initialData: initialData,
-  })
+export const useAllPosts = () => {
+  const { data, error, mutate } = useSWR(API_GET_ALL_POST, fetcher)
   return {
-    posts: data,
+    posts: data as Post[],
     isLoading: !error && !data,
     isError: error,
     mutate: mutate,

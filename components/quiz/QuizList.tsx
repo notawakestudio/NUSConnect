@@ -29,7 +29,7 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
               Contribute A Quiz
             </button>
           </Link>
-          <Search />
+          {/* <Search /> */}
         </div>
       </div>
       <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
