@@ -5,16 +5,16 @@ import Login from './Login'
 
 export const NameContext = React.createContext('user')
 
-export function useName() {
+export function useName(): string {
   return useContext(NameContext)
 }
 
-export default function Auth({ children }): JSX.Element {
+export default function Auth({ children }: { children: React.ReactNode }): JSX.Element {
   const [session, loading] = useSession()
   const [name, setName] = useState('user')
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       const res = await fetch('/api/userData')
       const json = await res.json()
       if (json.name) {

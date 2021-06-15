@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import { showCurrentDate } from '../common/Util'
 import TextContainer from '../common/TextContainer'
+import { Post } from './ForumAPI'
 
-const PostListItem = ({ post }): JSX.Element => {
+const PostListItem = ({ post }: { post: Post }): JSX.Element => {
   const tags = post.tags
   const author = post.author_id
   const date = showCurrentDate(post.edited_date)

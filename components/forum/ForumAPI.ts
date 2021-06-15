@@ -6,7 +6,7 @@ export const API_GET_ALL_POST = 'https://1ieznu.deta.dev/forum/post'
 const API_GET_POST_BY_ID = 'https://1ieznu.deta.dev/forum/post/'
 const API_SUBMIT_POST = 'https://1ieznu.deta.dev/post/make'
 const API_GET_ALL_REPLY = 'https://1ieznu.deta.dev/forum/reply'
-const API_GET_REPLY_BY_ID = 'https://1ieznu.deta.dev/forum/reply/'
+// const API_GET_REPLY_BY_ID = 'https://1ieznu.deta.dev/forum/reply/'
 const API_GET_REPLY_BY_POSTID = 'https://1ieznu.deta.dev/forum/reply/related/'
 const API_SUBMIT_REPLY = 'https://1ieznu.deta.dev/reply/make'
 const API_UPDATE_REPLY = 'https://1ieznu.deta.dev/reply/update/'
@@ -26,6 +26,7 @@ export type Post = {
   reply_count: number
   up_votes: number
   is_edited: boolean
+  related_question_id?: string
 }
 
 export type Reply = {
@@ -117,6 +118,9 @@ export function makePost(post: string[]): void {
     reply_count: 0,
     up_votes: 0,
     is_edited: false,
+  }
+  if (post['related_question_id']) {
+    requestBody.related_question_id = post['related_question_id']
   }
   mutate(API_GET_ALL_POST, (posts: Post[]) => [...posts, requestBody], false)
   fetch(API_SUBMIT_POST, {

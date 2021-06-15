@@ -54,7 +54,7 @@ const Question = ({
   const [post, setPost] = useState<Post>(undefined)
 
   useEffect(() => {
-    async function getPost() {
+    async function getPost(): Promise<void> {
       const post1 = await getPostById('zNibOlFniTxEu5p_2qv2C')
       setPost(post1)
     }

@@ -22,7 +22,7 @@ export const fetchQuizTitle = async (quizId: string): Promise<string> => {
   return quiz['title']
 }
 
-export const fetchQuestionById = async (questionId: string): Promise<Quiz> => {
+export const fetchQuestionById = async (questionId: string): Promise<Question> => {
   const question = await fetch(API_GET_QUESTION_BY_ID + questionId).then((response) =>
     response.json()
   )
@@ -198,8 +198,8 @@ export const fetchQuizTitle_MOCK = (quizId: string): string => {
 }
 
 export const classifyAnswers = (answers: { main: string; is_correct: boolean }[]): string[][] => {
-  var correct_answers = []
-  var incorrect_answers = []
+  const correct_answers = []
+  const incorrect_answers = []
 
   answers.forEach((value) =>
     value.is_correct ? correct_answers.push(value.main) : incorrect_answers.push(value.main)

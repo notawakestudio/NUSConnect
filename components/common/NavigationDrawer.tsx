@@ -1,5 +1,4 @@
 import {
-  Button,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -12,9 +11,8 @@ import React from 'react'
 import { BiBookReader } from 'react-icons/bi'
 import { MdForum } from 'react-icons/md'
 import { AiOutlineMenu } from 'react-icons/ai'
-import SideBar from './SideBar'
 
-export default function NavigationDrawer() {
+export default function NavigationDrawer(): JSX.Element {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (

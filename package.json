@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "test": "jest",
     "cyopen": "cypress open",
-    "cyrun": "cypress run"
+    "cyrun": "cypress run",
+    "lint": "eslint pages components"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.3",
@@ -44,6 +45,7 @@
     "@testing-library/cypress": "^7.0.6",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
+    "@types/markdown-it": "^12.0.2",
     "@types/react": "^17.0.4",
     "@types/react-select": "^4.0.15",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
@@ -53,6 +55,7 @@
     "cypress": "^7.4.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",

@@ -1,17 +1,27 @@
-import { nanoid } from 'nanoid'
-import { API_GET_ALL_POST, deletePost, Post, updatePostLikes, useAllPosts } from './ForumAPI'
+import { deletePost, Post, updatePostLikes } from './ForumAPI'
 import { FaEdit, FaRegComment, FaRegThumbsUp } from 'react-icons/fa'
-import { renderMdToHtml, timeSince } from '../common/Util'
+import { renderMdToHtml, shuffleStringArray, timeSince } from '../common/Util'
 import TextContainer from '../common/TextContainer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import NewPost from './NewPost'
 import { useSession } from 'next-auth/client'
 import { VscPreview } from 'react-icons/vsc'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { useRouter } from 'next/router'
-import { mutate } from 'swr'
-
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  useDisclosure,
+} from '@chakra-ui/react'
+import { Question } from '../quiz/types'
+import { fetchQuestionById } from '../quiz/QuizAPI'
 const PostMain = ({ post }: { post: Post }): JSX.Element => {
   const currentPost = post
   const tags = currentPost.tags
@@ -20,8 +30,14 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
   const [liked, setLiked] = useState(false)
   const [editing, setEditing] = useState(false)
   const [session] = useSession()
+  const [question, setQuestion] = useState<Question>(undefined)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  useEffect(() => {
+    if (post?.related_question_id) {
+      fetchQuestionById(post.related_question_id).then((question) => setQuestion(question))
+    }
+  }, [post?.related_question_id])
   const router = useRouter()
-  const { posts } = useAllPosts()
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 ">
@@ -59,13 +75,8 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
               <button
                 onClick={() => {
                   setEditing(!editing)
-                  toast.warn('Deleted! Redirecting to forum homepage!', {
-                    onClose: () => router.push('/forum'),
-                  })
-                  // update the local data immediately, but disable the revalidation
-                  const updatedPosts = posts.filter((post) => post.id !== currentPost.id)
-                  mutate(API_GET_ALL_POST, [...updatedPosts], false)
                   deletePost(currentPost.id)
+                  router.push('/forum', undefined, { shallow: true })
                 }}
                 className="text-gray-400 mr-2 inline-flex items-center text-sm">
                 {editing ? <RiDeleteBin5Line className="w-4 h-4" /> : ''}
@@ -76,21 +87,53 @@ const PostMain = ({ post }: { post: Post }): JSX.Element => {
           )}
           <div className="flex flex-wrap justify-start items-center">
             {tags.map((tag) => (
-              <div className="mr-2 mb-1">
-                <div
-                  key={tag}
-                  className="text-xs py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
+              <div key={tag} className="mr-2 mb-1">
+                <div className="text-xs py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
                   #{tag}
                 </div>
               </div>
             ))}
           </div>
+          {question !== undefined && (
+            <>
+              <Button onClick={onOpen}>See Question</Button>
+              <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>{`${question.type}: ${currentPost?.related_question_id}`}</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <p
+                      className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2 prose lg:prose-lg"
+                      dangerouslySetInnerHTML={{ __html: renderMdToHtml(question.question) }}></p>
+                    <div className="divide-y-4 divide-dashed">
+                      {shuffleStringArray([
+                        ...question.incorrect_answers,
+                        ...question.correct_answers,
+                      ]).map((answer) => (
+                        <p
+                          key={answer}
+                          className="text-left prose lg:prose-lg"
+                          dangerouslySetInnerHTML={{ __html: renderMdToHtml(answer) }}></p>
+                      ))}
+                    </div>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={onClose}>
+                      Close
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
+          )}
           <button
             disabled={liked}
             onClick={() => {
               toast.success('Liked!', {
                 autoClose: 3000,
               })
+              setUpVotes(upVotes + 1)
               updatePostLikes(upVotes + 1, currentPost.id)
               setLiked(true)
             }}

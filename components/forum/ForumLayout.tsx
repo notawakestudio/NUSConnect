@@ -17,23 +17,23 @@ export default function ForumLayout({
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
 
   useEffect(() => {
-    async function fn() {
+    async function fn(): Promise<void> {
       if (currTag === '' && query === '') {
         return setFilteredPosts(posts)
       }
       if (currTag !== '') {
-        const filteredPosts = posts.filter((post) => {
+        const filterByTag = posts.filter((post) => {
           return post.tags.includes(currTag)
         })
         setFilteredPosts(
-          filteredPosts.filter(
+          filterByTag.filter(
             (post) =>
               post.content.toLowerCase().includes(query.toLowerCase()) ||
               post.title.toLowerCase().includes(query.toLowerCase())
           )
         )
       } else {
-        setFilteredPosts(
+        setFilteredPosts((filteredPosts) =>
           filteredPosts.filter(
             (post) =>
               post.content.toLowerCase().includes(query.toLowerCase()) ||

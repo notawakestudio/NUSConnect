@@ -1,9 +1,5 @@
 import Head from 'next/head'
-import {
-  Reply,
-  useAllPosts,
-  useAllRelatedReplies,
-} from '../../components/forum/ForumAPI'
+import { Reply, useAllPosts, useAllRelatedReplies } from '../../components/forum/ForumAPI'
 import NewReply from '../../components/forum/NewReply'
 import PostMain from '../../components/forum/PostMain'
 import ReplyList from '../../components/forum/ReplyList'
