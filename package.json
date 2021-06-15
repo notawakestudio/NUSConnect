@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "test": "jest",
     "cyopen": "cypress open",
-    "cyrun": "cypress run"
+    "cyrun": "cypress run",
+    "lint": "eslint pages components"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.3",
@@ -53,6 +54,7 @@
     "cypress": "^7.4.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
