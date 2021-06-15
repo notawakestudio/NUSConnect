@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import React from 'react'
 import SidebarLayout from '../../components/common/SidebarLayout'
 import Badges from '../../components/profile/Badges'
 

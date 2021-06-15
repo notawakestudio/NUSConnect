@@ -1,4 +1,4 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
 import { useSession } from 'next-auth/client'
 import Image from 'next/image'
 import Link from 'next/link'

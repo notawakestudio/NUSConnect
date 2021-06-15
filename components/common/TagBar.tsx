@@ -1,5 +1,11 @@
 import { allAvailableTags } from '../forum/NewPost'
-function TagBar({ currTag, setCurrTag }: { currTag: string; setCurrTag: (state: string) => void }) {
+function TagBar({
+  currTag,
+  setCurrTag,
+}: {
+  currTag: string
+  setCurrTag: (state: string) => void
+}): JSX.Element {
   return (
     <div className="hidden lg:flex justify-center flex-wrap mb-4">
       {allAvailableTags.map((tag) => (

@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { AiFillCaretDown, AiOutlineArrowUp } from 'react-icons/ai'
 import { GrFormCalendar, GrNotification, GrSemantics } from 'react-icons/gr'
-import { FcMenu } from 'react-icons/fc'
 import Auth from '../components/common/Auth'
 import SidebarLayout from '../components/common/SidebarLayout'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
@@ -25,10 +24,9 @@ export default function DashBoard(): JSX.Element {
   const [session] = useSession()
   const [name, setName] = useState<string>(undefined)
   const [picture, setPicture] = useState('/white_profile-placeholder.png')
-  const [showTopBar, setShowTopBar] = useState(false)
   const [exp, setExp] = useState(0)
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       const res = await fetch('/api/userData')
       const json = await res.json()
       if (json.name) {

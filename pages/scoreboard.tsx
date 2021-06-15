@@ -1,6 +1,4 @@
-import React from 'react'
-
-function Scoreboard() {
+function Scoreboard(): JSX.Element {
   return (
     <div className="container flex flex-col mx-auto w-full items-center justify-center">
       <div className="px-4 py-5 sm:px-6 w-full border dark:bg-gray-800 bg-white shadow mb-2 rounded-md">

@@ -21,15 +21,15 @@ export default NextAuth({
 
   // A database is optional, but required to persist accounts in a database
   // database: process.env.DATABASE_URL,
-  
+
   callbacks: {
-      // Add userId to session
+    // Add userId to session
     async session(session, token) {
       if (userId === undefined) {
         userId = await getUserId(session.accessToken as string)
       }
       session.userId = userId
       return session
-    }
-  }
+    },
+  },
 })

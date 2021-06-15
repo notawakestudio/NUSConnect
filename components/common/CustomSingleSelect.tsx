@@ -3,7 +3,7 @@ import Select from 'react-select'
 
 export default function CustomSingleSelect(props) {
   const [field, state, { setValue, setTouched }] = useField(props.field.name)
-  const onChange = (value: { value: string; label: string }) => setValue(value.value)
+  const onChange = (value: { value: string; label: string }): void => setValue(value.value)
   return (
     <Select
       {...props}

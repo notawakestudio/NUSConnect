@@ -64,11 +64,11 @@ export const getCurrentWeek = (): string => {
   return 'week 1'
 }
 
-export const timeSince = (date: any): any => {
+export const timeSince = (date: number): string => {
   const currDate = getCurrentDateTime()
-  var seconds = Math.floor((currDate - date) / 1000)
+  const seconds = Math.floor((currDate - date) / 1000)
 
-  var interval = seconds / 63072000
+  let interval = seconds / 63072000
 
   if (interval > 1) {
     return Math.floor(interval + 1) + ' years'

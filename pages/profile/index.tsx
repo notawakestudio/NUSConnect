@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import React from 'react'
 import SidebarLayout from '../../components/common/SidebarLayout'
 import ModuleCards from '../../components/profile/ModuleCards'
 import ProfileHeader from '../../components/profile/ProfileHeader'
