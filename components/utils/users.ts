@@ -1,4 +1,4 @@
-import { firestore,  } from './firebase'
+import { firestore } from './firebase'
 
 const getAccounts = async () => {
   const snapshot = await firestore.collection('accounts').get()
@@ -7,12 +7,12 @@ const getAccounts = async () => {
 }
 const getUserId = async (sessionToken: string) => {
   const query = firestore.collection('sessions').where('accessToken', '==', sessionToken)
-  let result:any
+  let result: any
   await query.get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-        result = doc.data();
-    });
-})
+      result = doc.data()
+    })
+  })
   return result['userId']
 }
 const getUsers = async () => {

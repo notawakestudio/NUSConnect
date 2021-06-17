@@ -9,8 +9,10 @@ import { BsMoon, BsSun } from 'react-icons/bs'
 import { MdForum } from 'react-icons/md'
 import { RiDashboardLine } from 'react-icons/ri'
 import Skeleton from 'react-loading-skeleton'
+import { useUser } from '../profile/UserAPI'
 import { useModule } from '../utils/store'
 import QuickLink from './QuickLink'
+import { useUserIdInit } from '../store/user'
 
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
@@ -19,20 +21,14 @@ const NavBar = (): JSX.Element => {
   const [picture, setPicture] = useState('/white_profile-placeholder.png')
   const [profileCollapse, setProfileCollapse] = useState(true)
   const { state } = useModule()
+  const { user, isLoading } = useUser()
+  useUserIdInit()
   useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      const res = await fetch('/api/userData')
-      const json = await res.json()
-      if (json.name) {
-        setName(json.name)
-      }
-      if (json.image) {
-        setPicture(json.image)
-      }
+    if (!isLoading) {
+      setName(user.displayName)
+      setPicture(user.profilePicUrl)
     }
-    fetchData()
-  }, [session])
-
+  }, [user, isLoading])
   useEffect(() => {
     if (
       localStorage.theme === 'dark' ||
