@@ -14,24 +14,16 @@ import {
   FormErrorMessage,
   Spinner,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { useRef } from 'react'
 import { updateUser, useUser } from './UserAPI'
 import { Formik, Field, Form } from 'formik'
 import { toast } from 'react-toastify'
+import Skeleton from 'react-loading-skeleton'
+import Image from 'next/image'
 export default function ProfileHeader(): JSX.Element {
-  const [name, setName] = useState('user')
-  const [imageUrl, setImageUrl] = useState('/cat.jpg')
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  const initialRef = React.useRef()
-
+  const initialRef = useRef()
   const { user, isLoading } = useUser()
-  useEffect(() => {
-    if (!isLoading) {
-      setName(user.displayName)
-      setImageUrl(user.profilePicUrl)
-    }
-  }, [user, isLoading])
 
   function validateName(value): string {
     let error: string
@@ -44,12 +36,24 @@ export default function ProfileHeader(): JSX.Element {
   return (
     <>
       <div className="flex flex-row items-start gap-4 border-b border-gray p-4 w-full">
-        <img src={imageUrl} alt="profile-pic" className="h-28 rounded-lg" />
+        <Image
+          layout="fixed"
+          width={112}
+          height={112}
+          alt="profile-pic"
+          objectFit="cover"
+          src={isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl}></Image>
         <div className="h-28 w-full flex flex-col justify-between ">
           <div>
-            <p className="text-gray-800 dark:text-white text-xl font-medium">{name}</p>
-            <p className="text-gray-400 text-xs">{isLoading ? 'userName' : user.userName}</p>
-            <p className="text-gray-400 text-xs">Role: {isLoading ? 'nothing' : user.role}</p>
+            <p className="text-gray-800 dark:text-white text-xl font-medium">
+              {isLoading ? <Skeleton width={100} /> : user.displayName}
+            </p>
+            <p className="text-gray-400 text-xs">
+              {isLoading ? <Skeleton width={100} /> : user.userName}
+            </p>
+            <p className="text-gray-400 text-xs">
+              Role: {isLoading ? <Skeleton width={100} /> : user.role}
+            </p>
           </div>
           <div className="max-w-max rounded-lg bg-blue-100 dark:bg-white p-2">
             <div className="flex flex-row space-x-3 items-center text-xs text-gray-400 dark:text-black">

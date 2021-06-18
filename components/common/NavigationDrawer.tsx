@@ -11,6 +11,8 @@ import React from 'react'
 import { BiBookReader } from 'react-icons/bi'
 import { MdForum } from 'react-icons/md'
 import { AiOutlineMenu } from 'react-icons/ai'
+import { HiBadgeCheck } from 'react-icons/hi'
+import { BsClipboardData } from 'react-icons/bs'
 
 export default function NavigationDrawer(): JSX.Element {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -151,6 +153,26 @@ export default function NavigationDrawer(): JSX.Element {
                         </span>
                         <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
                           Profile
+                        </span>
+                      </div>
+                    </Link>
+                    <Link href="/profile/badges">
+                      <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <HiBadgeCheck />
+                        </span>
+                        <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                          Badges
+                        </span>
+                      </div>
+                    </Link>
+                    <Link href="/scoreboard">
+                      <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <BsClipboardData />
+                        </span>
+                        <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                          Scoreboard
                         </span>
                       </div>
                     </Link>

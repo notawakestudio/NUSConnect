@@ -17,18 +17,10 @@ import { useUserIdInit } from '../store/user'
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
-  const [name, setName] = useState<string>(undefined)
-  const [picture, setPicture] = useState('/white_profile-placeholder.png')
   const [profileCollapse, setProfileCollapse] = useState(true)
   const { state } = useModule()
   const { user, isLoading } = useUser()
   useUserIdInit()
-  useEffect(() => {
-    if (!isLoading) {
-      setName(user.displayName)
-      setPicture(user.profilePicUrl)
-    }
-  }, [user, isLoading])
   useEffect(() => {
     if (
       localStorage.theme === 'dark' ||
@@ -96,7 +88,7 @@ const NavBar = (): JSX.Element => {
           </div>
         </div>
 
-        {!session && (
+        {/* {!session && (
           <div className="hidden xs:flex py-4 px-2 items-center text-gray-800 dark:text-gray-200">
             <Link href="/login">
               <span className="flex px-2 font-light cursor-pointer border-r-2 border-gray-200 mr-2">
@@ -109,43 +101,48 @@ const NavBar = (): JSX.Element => {
               </span>
             </Link>
           </div>
-        )}
-        {session && picture && (
-          <div className="hidden xs:flex py-3 px-1 h-full w-auto text-gray-800 dark:text-gray-200">
-            <button className="hidden lg:block px-3 text-gray-600 dark:text-white h-10">
-              {state.module}
-            </button>
-            <div className="flex">
-              <Menu autoSelect={false}>
-                <MenuButton as="div" onMouseEnter={() => setProfileCollapse(false)}>
-                  <div className="flex flex-row items-center cursor-pointer space-x-2">
-                    <Image
-                      width={40}
-                      height={40}
-                      alt="profile"
-                      src={picture}
-                      className="object-cover rounded-full h-10 w-10"
-                    />
-                    <span className="hidden sm:flex font-light text-sm whitespace-nowrap">
-                      {name ? name : <Skeleton width={120} />}
-                    </span>
-                    <span className="hidden sm:flex">
-                      <BiCaretDown />
-                    </span>
-                  </div>
-                </MenuButton>
-                <MenuList as="div" className={`${profileCollapse ? 'hidden' : ''}`}>
-                  <Link href="/profile">
-                    <MenuItem>Profile</MenuItem>
-                  </Link>
-                  <Link href="/login">
-                    <MenuItem>Logout</MenuItem>
-                  </Link>
-                </MenuList>
-              </Menu>
-            </div>
+        )} */}
+        <div className="hidden xs:flex py-3 px-1 h-full w-auto text-gray-800 dark:text-gray-200">
+          <div className="hidden xs:flex py-4 px-2 items-center text-gray-800 dark:text-gray-200">
+            <Link href="/login">
+              <span className="flex px-2 font-light cursor-pointer border-gray-200 mr-2">
+                {session ? '' : 'Login'}
+              </span>
+            </Link>
           </div>
-        )}
+          <button className="hidden lg:block px-3 text-gray-600 dark:text-white h-10">
+            {state.module}
+          </button>
+          <div className="flex">
+            <Menu autoSelect={false}>
+              <MenuButton as="div" onMouseEnter={() => setProfileCollapse(false)}>
+                <div className="flex flex-row items-center cursor-pointer space-x-2">
+                  <Image
+                    width={40}
+                    height={40}
+                    alt="profile"
+                    src={isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl}
+                    className="object-cover rounded-full h-10 w-10"
+                  />
+                  <span className="hidden sm:flex font-light text-sm whitespace-nowrap">
+                    {isLoading ? <Skeleton width={120} /> : user.displayName}
+                  </span>
+                  <span className="hidden sm:flex">
+                    <BiCaretDown />
+                  </span>
+                </div>
+              </MenuButton>
+              <MenuList as="div" className={`${profileCollapse ? 'hidden' : ''}`}>
+                <Link href="/profile">
+                  <MenuItem>Profile</MenuItem>
+                </Link>
+                <Link href="/login">
+                  <MenuItem>Logout</MenuItem>
+                </Link>
+              </MenuList>
+            </Menu>
+          </div>
+        </div>
       </div>
     </div>
   )

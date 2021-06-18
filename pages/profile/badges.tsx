@@ -2,11 +2,11 @@ import Head from 'next/head'
 import SidebarLayout from '../../components/common/SidebarLayout'
 import Badges from '../../components/profile/Badges'
 
-export default function Profile(): JSX.Element {
+export default function Badge(): JSX.Element {
   return (
     <SidebarLayout>
       <Head>
-        <title>Profile | NUS Connect</title>
+        <title>Badges | NUS Connect</title>
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
