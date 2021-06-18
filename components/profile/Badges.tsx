@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Gi3DGlasses,
   Gi3DHammer,
@@ -11,7 +10,7 @@ import {
   GiAlarmClock,
 } from 'react-icons/gi'
 
-export default function Badges() {
+export default function Badges(): JSX.Element {
   return (
     <div className="p-10 flex space-x-2 flex-wrap">
       <div className="flex flex-col text-center space-y-2">
