@@ -6,6 +6,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import React from 'react'
 import { GrFormNextLink } from 'react-icons/gr'
+import { Id, toast } from 'react-toastify'
 import * as Yup from 'yup'
 import CustomMultiSelect from '../../components/common/CustomMultiSelect'
 import Layout from '../../components/common/Layout'
@@ -29,7 +30,7 @@ const initialValues = {
   week: '',
   modules: ['CS2030', 'CS2030S'],
   tags: [''],
-  questions: [''],
+  questions: [],
 }
 const QuizForm = ({
   selectObjects,
@@ -43,15 +44,18 @@ const QuizForm = ({
   }
   const errorToast = useToast()
 
-  function showToast(error) {
-    errorToast({
-      title: 'Error',
-      description: error,
-      status: 'error',
-      duration: 9000,
-      position: 'top-right',
-      isClosable: true,
-    })
+  function showToast(error: string, id: string): void {
+    if (!errorToast.isActive(id)) {
+      errorToast({
+        id: id,
+        title: 'Error',
+        description: error,
+        status: 'error',
+        duration: 5000,
+        position: 'top-right',
+        isClosable: true,
+      })
+    }
   }
   return (
     <>
@@ -68,7 +72,7 @@ const QuizForm = ({
               modules: Yup.array().required('Required'),
               title: Yup.string().required('Please name your quiz'),
               week: Yup.string().required('Please enter current week'),
-              questions: Yup.array().required('Please select at least one question'),
+              questions: Yup.array().min(1, 'Please select one question'),
             })}
             onSubmit={(values, { setSubmitting }) => {
               handleSubmit(values)
@@ -166,20 +170,19 @@ const QuizForm = ({
                         />
                       </div>
                     </div>
-                    <hr />
                     <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
                       <button
                         type="submit"
                         className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                         onClick={() => {
-                          if (formik.errors.title && formik.touched.title) {
-                            showToast(formik.errors.title)
+                          if (formik.touched.title) {
+                            showToast(formik.errors.title, 'title-error')
                           }
-                          if (formik.errors.week && formik.touched.week) {
-                            showToast(formik.errors.week)
+                          if (formik.touched.week) {
+                            showToast(formik.errors.week, 'week-error')
                           }
-                          if (formik.errors.questions && formik.touched.questions) {
-                            showToast(formik.errors.questions)
+                          if (formik.touched.questions) {
+                            showToast(formik.errors.questions, 'question-error')
                           }
                         }}>
                         Save

@@ -37,15 +37,18 @@ function validateAnswer(value) {
 const QuestionForm = (): JSX.Element => {
   const errorToast = useToast()
 
-  function showToast(error) {
-    errorToast({
-      title: 'Error',
-      description: error,
-      status: 'error',
-      duration: 9000,
-      position: 'top-right',
-      isClosable: true,
-    })
+  function showToast(error: string, id: string): void {
+    if (!errorToast.isActive(id)) {
+      errorToast({
+        id: id,
+        title: 'Error',
+        description: error,
+        status: 'error',
+        duration: 5000,
+        position: 'top-right',
+        isClosable: true,
+      })
+    }
   }
 
   const handleSubmit = (value): void => {
@@ -67,7 +70,7 @@ const QuestionForm = (): JSX.Element => {
               modules: Yup.array().required('Module is needed'),
               type: Yup.string().required('Please enter the type of question'),
               question: Yup.string().trim().required('Please fill out the question'),
-              answers: Yup.array().min(2, 'Please select at least 2 options'),
+              answers: Yup.array().min(2, 'Please make one question'),
             })}
             onSubmit={(values, { setSubmitting }) => {
               handleSubmit(values)
@@ -96,6 +99,7 @@ const QuestionForm = (): JSX.Element => {
                     <div className="items-center w-full p-4 space-y-4  md:inline-flex md:space-y-0">
                       <h2 className="max-w-sm mx-auto md:w-2/12">Meta data</h2>
                       <div className="max-w-md mx-auto md:w-10/12">
+                        <div className="">Type </div>
                         {formik.errors.type && formik.touched.type ? (
                           <div className="text-xs font-bold text-red-600">* required </div>
                         ) : null}
@@ -122,7 +126,7 @@ const QuestionForm = (): JSX.Element => {
                       <h2 className="max-w-sm mx-auto md:w-2/12">Answers</h2>
                       <div className="flex flex-col max-w-md mx-auto space-y-4 md:w-10/12">
                         <FieldArray name="answers">
-                          {({ insert, remove, push }) => (
+                          {({ remove, push }) => (
                             <>
                               {formik.values.answers.length > 0 &&
                                 formik.values.answers.map((answer, index) => (
@@ -185,13 +189,13 @@ const QuestionForm = (): JSX.Element => {
                         className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                         onClick={() => {
                           if (formik.errors.type && formik.touched.type) {
-                            showToast(formik.errors.type)
+                            showToast(formik.errors.type, 'type-error')
                           }
                           if (formik.errors.question && formik.touched.question) {
-                            showToast(formik.errors.question)
+                            showToast(formik.errors.question, 'question-error')
                           }
                           if (formik.errors.answers && formik.touched.answers) {
-                            showToast(formik.errors.answers)
+                            showToast(formik.errors.answers, 'answer-error')
                           }
                         }}>
                         Save
