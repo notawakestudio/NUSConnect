@@ -1,9 +1,7 @@
-import { Avatar } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { FaRegThumbsUp } from 'react-icons/fa'
 import Pagination from '../../components/common/Pagination'
 import { hasSameContent } from '../../components/common/Util'
 import AnswerObject from '../../components/quiz/AnswerObject'
@@ -51,6 +49,7 @@ export default function Quiz({
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [score, setScore] = useState(0)
   const [quizMode, setQuizMode] = useState(QuizMode.STARTING)
+
   const startQuiz = (): void => {
     setLoading(true)
     setQuizMode(QuizMode.TAKING)
@@ -109,24 +108,22 @@ export default function Quiz({
 
   const nextQuestion = (): void => {
     // move on to the next question if not the last question
-    const nextQuestion = currQnNumOneBased + 1
-    if (nextQuestion > questions.length) {
+    const nextQuestionIndex = currQnNumOneBased + 1
+    if (nextQuestionIndex > questions.length) {
       // setGameOver(true)
       console.log('Cant')
-      return
     } else {
-      setCurrQnNumOneBased(nextQuestion)
+      setCurrQnNumOneBased(nextQuestionIndex)
     }
   }
 
   const previousQuestion = (): void => {
     // move on to the previous question if not the last question
-    const previousQuestion = currQnNumOneBased - 1
-    if (previousQuestion === 0) {
+    const previousQuestionIndex = currQnNumOneBased - 1
+    if (previousQuestionIndex === 0) {
       console.log('Cant')
-      return
     } else {
-      setCurrQnNumOneBased(previousQuestion)
+      setCurrQnNumOneBased(previousQuestionIndex)
     }
   }
   const changeQuestion = (selectedQuestion: number): void => {
@@ -134,7 +131,7 @@ export default function Quiz({
   }
 
   return (
-    <div className="grid">
+    <div className="grid dark:bg-gray-800 dark:text-gray-100">
       <div className="container mx-auto pt-2 text-center">
         <Head>
           <title>Attempt Quiz | NUS Connect</title>

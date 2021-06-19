@@ -66,24 +66,22 @@ const Question = ({
       <p className="number">
         Question: {questionNumber} / {totalQuestions}
       </p>
-      <div className="flex flex-row space-x-4 w-full">
-        <div className="flex flex-col">
-          <p
-            className="text-left shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 dark:text-white mb-2 prose lg:prose-lg"
-            dangerouslySetInnerHTML={{ __html: renderMdToHtml(question) }}></p>
-          <div className="shadow-lg rounded-2xl bg-white dark:bg-gray-800 p-4 flex justify-center flex-wrap max-w-prose self-center">
-            {answers.map((answerText, index) => (
-              <Answer
-                key={index}
-                type={type}
-                answerText={answerText}
-                userAnswer={userAnswer}
-                updateAnswer={updateAnswer}
-                correct_answers={correct_answers}
-                quizMode={quizMode}
-              />
-            ))}
-          </div>
+      <div className="flex flex-col space-y-4 w-screen p-4 sm:px-12 lg:max-w-5xl">
+        <div
+          className="border border-indigo-300 dark:border-indigo-500 rounded-lg shadow-md text-left px-3 text-lg font-semibold dark:bg-gray-700 flex-auto w-full dark:text-gray-200"
+          dangerouslySetInnerHTML={{ __html: renderMdToHtml(question) }}></div>
+        <div className="border-b-2 border-t-2 border-indigo-300 dark:border-indigo-500 rounded-lg shadow-md text-left bg-gray-100 dark:bg-gray-700 px-3 flex-auto w-full">
+          {answers.map((answerText, index) => (
+            <Answer
+              key={index}
+              type={type}
+              answerText={answerText}
+              userAnswer={userAnswer}
+              updateAnswer={updateAnswer}
+              correct_answers={correct_answers}
+              quizMode={quizMode}
+            />
+          ))}
         </div>
         {post !== undefined && quizMode === QuizMode.REVIEWING && (
           <div className="border border-indigo-300 rounded-lg h-full flex-1 font-sans">
