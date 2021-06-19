@@ -55,7 +55,7 @@ const Question = ({
 
   useEffect(() => {
     async function getPost(): Promise<void> {
-      const post1 = await getPostById('zNibOlFniTxEu5p_2qv2C')
+      const post1 = await getPostById('8jFEjf6Jd-479Ot8N0MxK')
       setPost(post1)
     }
     getPost()
@@ -105,15 +105,15 @@ const Question = ({
       </button>
       {quizMode === QuizMode.REVIEWING && (
         <Link href="/forum">
-          <a className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Ask on the forum
-          </a>
+          </button>
         </Link>
       )}
       <Link href="/quiz">
-        <a className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Back to Quiz List
-        </a>
+        </button>
       </Link>
     </div>
   )

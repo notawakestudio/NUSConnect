@@ -142,13 +142,15 @@ export default function Quiz({
           <h1 className="py-2 text-base font-bold">{quizTitle}</h1>
           {quizMode === QuizMode.STARTING || quizMode === QuizMode.ENDING ? (
             <div className="shadow-lg rounded-xl bg-blue-500 md:w-64 p-6 dark:bg-gray-800">
-              <p className="text-white text-xl">Ready?</p>
+              <p className="text-white text-xl">
+                {quizMode === QuizMode.ENDING ? `Try again?` : `Ready?`}
+              </p>
               <div className="mt-4 flex flex-col">
                 <button
                   type="button"
                   className="py-2 px-4  bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
                   onClick={startQuiz}>
-                  Start
+                  {quizMode === QuizMode.ENDING ? `Retry` : `Start`}
                 </button>
                 {quizMode === QuizMode.ENDING && (
                   <button
