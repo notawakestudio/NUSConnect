@@ -52,10 +52,8 @@ export const useAllPosts = () => {
   }
 }
 
-export const useAllRelatedReplies = (initialData: Reply[], postId: string) => {
-  const { data, error } = useSWR(API_GET_REPLY_BY_POSTID + postId, fetcher, {
-    initialData: initialData,
-  })
+export const useAllRelatedReplies = (postId: string) => {
+  const { data, error } = useSWR(API_GET_REPLY_BY_POSTID + postId, fetcher)
   return {
     replies: data,
     isLoading: !error && !data,
@@ -63,10 +61,8 @@ export const useAllRelatedReplies = (initialData: Reply[], postId: string) => {
   }
 }
 
-export const usePost = (initialData: Post, postId: string) => {
-  const { data, error } = useSWR(API_GET_POST_BY_ID + postId, fetcher, {
-    initialData: initialData,
-  })
+export const usePost = (postId: string) => {
+  const { data, error } = useSWR(API_GET_POST_BY_ID + postId, fetcher)
   return {
     post: data,
     isLoading: !error && !data,

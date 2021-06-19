@@ -4,6 +4,7 @@ import QuizData from '../../public/data/QuizData.json'
 import { nanoid } from 'nanoid'
 import { GrayMatterFile } from 'gray-matter'
 import { Quiz, Question, QuestionWithAnswersMixed } from './types'
+import useSWR from 'swr'
 
 const API_GET_QUIZ_BY_ID = 'https://1ieznu.deta.dev/quiz/quiz/'
 const API_MAKE_QUESTION = 'https://1ieznu.deta.dev/quiz/make'
@@ -12,6 +13,16 @@ const API_SUBMIT_QUIZ = 'https://1ieznu.deta.dev/quiz/collate'
 const API_GET_ALL_QUIZ = 'https://1ieznu.deta.dev/quiz/quiz'
 const API_GET_QUESTION_BY_ID = 'https://1ieznu.deta.dev/quiz/question/'
 
+const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
+
+export const useQuestion = (questionId: string) => {
+  const { data, error } = useSWR(API_GET_QUESTION_BY_ID + questionId, fetcher)
+  return {
+    question: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
 export const fetchQuizById = async (quizId: string): Promise<Quiz> => {
   const quiz = await fetch(API_GET_QUIZ_BY_ID + quizId).then((response) => response.json())
   return quiz
