@@ -1,10 +1,10 @@
-import { getReadableDate, shuffleStringArray } from '../common/Util'
+import { GrayMatterFile } from 'gray-matter'
+import { nanoid } from 'nanoid'
+import useSWR from 'swr'
 import QuestionBank from '../../public/data/QuestionBank.json'
 import QuizData from '../../public/data/QuizData.json'
-import { nanoid } from 'nanoid'
-import { GrayMatterFile } from 'gray-matter'
-import { Quiz, Question, QuestionWithAnswersMixed } from './types'
-import useSWR from 'swr'
+import { getCurrentDateTime, shuffleStringArray } from '../common/Util'
+import { Question, QuestionWithAnswersMixed, Quiz } from './types'
 
 const API_GET_QUIZ_BY_ID = 'https://1ieznu.deta.dev/quiz/quiz/'
 const API_MAKE_QUESTION = 'https://1ieznu.deta.dev/quiz/make'
@@ -123,7 +123,7 @@ export function makeQuestion(question): void {
 export function makeQuiz(quiz): void {
   const requestBody: Quiz = {
     id: nanoid(),
-    date: getReadableDate(),
+    date: getCurrentDateTime(),
     title: quiz['title'],
     author: quiz['author'],
     modules: quiz['modules'],
@@ -154,7 +154,7 @@ export function createQuiz(json: GrayMatterFile<any>): void {
   const requestBody: Quiz = {
     id: nanoid(),
     author: 'Yongliang',
-    date: getReadableDate(),
+    date: getCurrentDateTime(),
     title: json['data']['title'],
     modules: json['data']['modules'],
     questions: json['data']['questions'],

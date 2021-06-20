@@ -1,13 +1,14 @@
+import { useToast } from '@chakra-ui/react'
 import { Field, Form, Formik, useField } from 'formik'
 import { nanoid } from 'nanoid'
 import { useSession } from 'next-auth/client'
 import React from 'react'
 import { default as Select } from 'react-select'
-import { toast } from 'react-toastify'
 import * as Yup from 'yup'
-import { makePost, Post, updatePost } from './ForumAPI'
-import TextContainer from '../common/TextContainer'
 import Auth from '../common/Auth'
+import CustomSingleSelect from '../common/CustomSingleSelect'
+import TextContainer from '../common/TextContainer'
+import { makePost, Post, updatePost } from './ForumAPI'
 
 export const allAvailableTags = [
   'Question',
@@ -29,6 +30,7 @@ export const allAvailableTags = [
   'week13',
   'wiki',
 ]
+
 const defaultPost = {
   id: nanoid(),
   author_id: 'string',
@@ -47,105 +49,138 @@ export default function NewPost({
   label = 'Make a post',
   currentPost = defaultPost,
   setEditing = function (bool) {},
+  related_question_id,
+  questionList,
 }: {
   label?: string
   currentPost?: Post
   setEditing?: (bool: boolean) => void
+  related_question_id?: string
+  questionList?: { label: string; value: string }
 }): JSX.Element {
   const tags = allAvailableTags.map((tag) => {
     return { value: tag, label: tag }
   })
+
   const initialValues = {
     title: currentPost.title,
     tags: currentPost.tags,
     content: currentPost.content,
+    related_question_id: related_question_id ?? [],
   }
+
   const [session] = useSession()
+
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makePost(value)
   }
+
   const handleSubmitUpdate = (value): void => {
     updatePost(value, currentPost)
   }
+
+  const toast = useToast()
+  function showToast(error: string, id: string): void {
+    if (!toast.isActive(id)) {
+      toast({
+        id: id,
+        title: 'Error',
+        description: error,
+        status: 'error',
+        duration: 5000,
+        position: 'top-right',
+        isClosable: true,
+      })
+    }
+  }
+
   return (
     <Auth>
-      <div className="mt-10 ml-4">
-        <TextContainer>
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <Formik
-              initialValues={initialValues}
-              validationSchema={Yup.object({
-                title: Yup.string().required('required*'),
-              })}
-              onSubmit={(values, { setSubmitting }) => {
-                if (label === 'Make a post') {
-                  handleSubmitNew(values)
-                } else {
-                  handleSubmitUpdate(values)
-                  setEditing(false)
-                }
-                setTimeout(() => {
-                  toast.success('Successful!')
-                  setSubmitting(false)
-                }, 400)
-              }}>
-              {(formik) => (
-                <section className="bg-gray-100 bg-opacity-20">
-                  <Form>
-                    <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
-                      <div className="max-w-sm mx-auto md:w-full md:mx-0">
-                        <div className="inline-flex items-center space-x-4">
-                          <h1 className="text-gray-600">{label}</h1>
-                        </div>
+      <TextContainer>
+        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={Yup.object({
+              tags: Yup.array().min(1, 'Please select one tag'),
+              title: Yup.string().required('Please enter a title'),
+            })}
+            onSubmit={(values, { setSubmitting }) => {
+              if (label === 'Make a post') {
+                handleSubmitNew(values)
+              } else {
+                handleSubmitUpdate(values)
+                setEditing(false)
+              }
+              setTimeout(() => {
+                toast({
+                  title: 'Success!',
+                  status: 'success',
+                  duration: 5000,
+                  isClosable: true,
+                  position: 'top-right',
+                })
+                setSubmitting(false)
+              }, 400)
+            }}>
+            {(formik) => (
+              <section className="bg-gray-100 bg-opacity-20">
+                <Form>
+                  <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
+                    <div className="max-w-sm mx-auto md:w-full md:mx-0">
+                      <div className="inline-flex items-center space-x-4">
+                        <h1 className="text-gray-600">{label}</h1>
                       </div>
                     </div>
-                    <div className="space-y-4 bg-white">
-                      <div className="items-center w-full p-4 space-y-2 text-gray-500 flex-shrink-0 flex-col">
-                        <div>Select Tags</div>
-                        <Field name={'tags'} component={TagMultiSelect} options={tags} />
-                        {/* <div id="checkbox-group"> Select Tags </div>
-                      <div role="group" aria-labelledby="checkbox-group">
-                        {tags.map((tag, index) => (
-                          <span key={index} className="flex-row">
-                            <label className="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-black uppercase transition bg-indigo-100 rounded shadow ripple hover:shadow-lg hover:bg-indigo-200 focus:outline-none">
-                              <Field className="mr-2" type="checkbox" name="tags" value={tag} />
-                              {tag}
-                            </label>
-                          </span>
-                        ))}
-                      </div> */}
-                        <br />
-                        <TitleTextInput
-                          label="Title"
-                          name="title"
-                          type="text"
-                          placeholder="Title"
-                        />
-                        <br />
-                        <ContentTextArea
-                          label="Content"
-                          name="content"
-                          rows={6}
-                          placeholder="Leave a comment"
-                        />
-                        <br />
-                      </div>
-                      <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
-                        <button
-                          type="submit"
-                          className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                          Post
-                        </button>
-                      </div>
+                  </div>
+                  <div className="space-y-4 bg-white">
+                    <div className="items-center w-full p-4 space-y-2 text-gray-500 flex-shrink-0 flex-col">
+                      <span>Select Tags</span>
+                      {formik.errors.tags && formik.touched.tags ? (
+                        <span className="text-xs font-bold text-red-600 ml-2">* required </span>
+                      ) : null}
+                      <Field name={'tags'} component={TagMultiSelect} options={tags} />
+                      <br />
+                      <div>Link Question</div>
+                      <Field
+                        component={CustomSingleSelect}
+                        name="related_question_id"
+                        options={questionList}
+                        className=""
+                      />
+                      <br />
+                      <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
+                      <br />
+                      <ContentTextArea
+                        label="Content"
+                        name="content"
+                        rows={6}
+                        placeholder="Leave a comment"
+                      />
+                      <br />
                     </div>
-                  </Form>
-                </section>
-              )}
-            </Formik>
-          </div>
-        </TextContainer>
-      </div>
+                    <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
+                      <button
+                        type="submit"
+                        className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                        onClick={() => {
+                          if (formik.touched.title && formik.errors.title) {
+                            showToast(formik.errors.title, 'title-error')
+                          }
+                          if (formik.touched.tags && formik.errors.tags) {
+                            showToast(formik.errors.tags as string, 'tags-error')
+                          }
+                        }}>
+                        Post
+                      </button>
+                    </div>
+                  </div>
+                </Form>
+              </section>
+            )}
+          </Formik>
+        </div>
+      </TextContainer>
     </Auth>
   )
 }
@@ -221,9 +256,11 @@ const TitleTextInput = ({
   const [field, meta] = useField(props)
   return (
     <>
-      <div className="flex">
+      <div className="flex items-center">
         <label htmlFor={props.name}>{label}</label>
-        {meta.touched && meta.error ? <div className="ml-2 text-red-500">{meta.error}</div> : null}
+        {meta.touched && meta.error ? (
+          <div className="ml-2 text-xs font-bold text-red-600">*required</div>
+        ) : null}
       </div>
       <input
         className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"

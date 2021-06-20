@@ -1,14 +1,18 @@
-import { Avatar } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { FaRegThumbsUp } from 'react-icons/fa'
 import Pagination from '../../components/common/Pagination'
-import { hasSameContent } from '../../components/common/Util'
+import { hasSameContent, renderMdToHtml } from '../../components/common/Util'
 import AnswerObject from '../../components/quiz/AnswerObject'
+import OptionsBar from '../../components/quiz/OptionsBar'
 import Question from '../../components/quiz/Question'
-import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
+import {
+  fetchAllQuestions,
+  fetchQuizQuestions,
+  fetchQuizTitle,
+  getAllQuizId,
+} from '../../components/quiz/QuizAPI'
 import ScoreCard from '../../components/quiz/ScoreCard'
 import { QuestionWithAnswersMixed, QuizMode } from '../../components/quiz/types'
 
@@ -29,10 +33,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const quizId = params.quizId as string
   const quizTitle = await fetchQuizTitle(quizId)
   const quizQuestions = await fetchQuizQuestions(quizId)
+  const questions = await fetchAllQuestions()
+  const questionList = questions.map((question) => {
+    return { label: renderMdToHtml(question['question']), value: question['id'] }
+  })
   return {
     props: {
       quizTitle,
       quizQuestions,
+      questionList,
     },
     revalidate: 30, // In seconds
   }
@@ -41,9 +50,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function Quiz({
   quizTitle,
   quizQuestions,
+  questionList,
 }: {
   quizTitle: string
   quizQuestions: QuestionWithAnswersMixed[]
+  questionList: { label: string; value: string }
 }): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionWithAnswersMixed[]>([])
@@ -51,6 +62,7 @@ export default function Quiz({
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [score, setScore] = useState(0)
   const [quizMode, setQuizMode] = useState(QuizMode.STARTING)
+
   const startQuiz = (): void => {
     setLoading(true)
     setQuizMode(QuizMode.TAKING)
@@ -109,24 +121,22 @@ export default function Quiz({
 
   const nextQuestion = (): void => {
     // move on to the next question if not the last question
-    const nextQuestion = currQnNumOneBased + 1
-    if (nextQuestion > questions.length) {
+    const nextQuestionIndex = currQnNumOneBased + 1
+    if (nextQuestionIndex > questions.length) {
       // setGameOver(true)
       console.log('Cant')
-      return
     } else {
-      setCurrQnNumOneBased(nextQuestion)
+      setCurrQnNumOneBased(nextQuestionIndex)
     }
   }
 
   const previousQuestion = (): void => {
     // move on to the previous question if not the last question
-    const previousQuestion = currQnNumOneBased - 1
-    if (previousQuestion === 0) {
+    const previousQuestionIndex = currQnNumOneBased - 1
+    if (previousQuestionIndex === 0) {
       console.log('Cant')
-      return
     } else {
-      setCurrQnNumOneBased(previousQuestion)
+      setCurrQnNumOneBased(previousQuestionIndex)
     }
   }
   const changeQuestion = (selectedQuestion: number): void => {
@@ -134,7 +144,7 @@ export default function Quiz({
   }
 
   return (
-    <div className="grid">
+    <div className="grid dark:bg-gray-800 dark:text-gray-100">
       <div className="container mx-auto pt-2 text-center">
         <Head>
           <title>Attempt Quiz | NUS Connect</title>
@@ -145,13 +155,15 @@ export default function Quiz({
           <h1 className="py-2 text-base font-bold">{quizTitle}</h1>
           {quizMode === QuizMode.STARTING || quizMode === QuizMode.ENDING ? (
             <div className="shadow-lg rounded-xl bg-blue-500 md:w-64 p-6 dark:bg-gray-800">
-              <p className="text-white text-xl">Ready?</p>
+              <p className="text-white text-xl">
+                {quizMode === QuizMode.ENDING ? `Try again?` : `Ready?`}
+              </p>
               <div className="mt-4 flex flex-col">
                 <button
                   type="button"
                   className="py-2 px-4  bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
                   onClick={startQuiz}>
-                  Start
+                  {quizMode === QuizMode.ENDING ? `Retry` : `Start`}
                 </button>
                 {quizMode === QuizMode.ENDING && (
                   <button
@@ -180,7 +192,7 @@ export default function Quiz({
             </ScoreCard>
           ) : null}
           {loading && <p>Loading Questions ...</p>}
-          {!loading && quizMode === QuizMode.TAKING && (
+          {((!loading && quizMode === QuizMode.TAKING) || quizMode === QuizMode.REVIEWING) && (
             <>
               <Question
                 questionNumber={currQnNumOneBased}
@@ -190,33 +202,14 @@ export default function Quiz({
                 type={questions[currQnNumOneBased - 1].type}
                 userAnswer={userAnswers[currQnNumOneBased - 1].answer}
                 correct_answers={questions[currQnNumOneBased - 1].correct_answers}
-                updateTotalScore={updateTotalScore}
                 saveProgress={saveProgress}
-                attemptedAllQuestions={attemptedAllQuestions}
                 quizMode={quizMode}
               />
-              <Pagination
-                numItem={questions.length}
-                onClickChange={changeQuestion}
-                onClickNext={nextQuestion}
-                onClickPrevious={previousQuestion}
-              />
-            </>
-          )}
-          {!loading && quizMode === QuizMode.REVIEWING && (
-            <>
-              <Question
-                questionNumber={currQnNumOneBased}
-                totalQuestions={questions.length}
-                question={questions[currQnNumOneBased - 1].question}
-                answers={questions[currQnNumOneBased - 1].answers}
-                type={questions[currQnNumOneBased - 1].type}
-                userAnswer={userAnswers[currQnNumOneBased - 1].answer}
-                correct_answers={questions[currQnNumOneBased - 1].correct_answers}
-                updateTotalScore={updateTotalScore}
-                saveProgress={saveProgress}
-                attemptedAllQuestions={attemptedAllQuestions}
+              <OptionsBar
                 quizMode={quizMode}
+                attemptedAllQuestions={attemptedAllQuestions}
+                updateTotalScore={updateTotalScore}
+                questionList={questionList}
               />
               <Pagination
                 numItem={questions.length}

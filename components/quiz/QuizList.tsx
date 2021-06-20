@@ -14,6 +14,7 @@ import Link from 'next/link'
 import React from 'react'
 import Search from '../common/Search'
 import QuizItem from './QuizItem'
+import QuizItemCard from './QuizItemCard'
 import { Quiz } from './types'
 
 const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
@@ -32,7 +33,7 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
           {/* <Search /> */}
         </div>
       </div>
-      <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
+      {/* <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
         <div className="block w-full overflow-x-auto">
           <table className="items-start w-full bg-transparent border-collapse">
             <thead>
@@ -62,27 +63,10 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-wrap justify-center">
         {quizzes.map((quiz) => {
-          return (
-            <div
-              className="rounded-lg shadow-lg p-8 m-2 border border-indigo-300 flex-none w-60"
-              onClick={onOpen}>
-              <div className="text-gray-600 font-bold text-xl">{quiz.title}</div>
-              <div className="text-gray-600 font-light text-sm">
-                {quiz.author} at {quiz.date}
-              </div>
-              <div className="">week {quiz.week}</div>
-              <div className="">
-                {quiz.tags.map((tag) => (
-                  <Tag size="sm" colorScheme="blue" borderRadius="full" className="m-1">
-                    #{tag}
-                  </Tag>
-                ))}
-              </div>
-            </div>
-          )
+          return <QuizItemCard key={quiz.id} quiz={quiz} />
         })}
       </div>
       <Modal isOpen={isOpen} onClose={onClose}>

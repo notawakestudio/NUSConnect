@@ -1,10 +1,10 @@
+import { useToast } from '@chakra-ui/react'
 import { Form, Formik, useField } from 'formik'
 import { useSession } from 'next-auth/client'
-import { toast } from 'react-toastify'
 import * as Yup from 'yup'
-import { makeReply, updateReply } from './ForumAPI'
-import TextContainer from '../common/TextContainer'
 import Auth from '../common/Auth'
+import TextContainer from '../common/TextContainer'
+import { makeReply, updateReply } from './ForumAPI'
 
 export default function NewReply({
   postId,
@@ -32,6 +32,9 @@ export default function NewReply({
     updateReply(value, postId, id)
     setEditing(false)
   }
+
+  const toast = useToast()
+
   return (
     <Auth>
       <TextContainer>
@@ -47,7 +50,13 @@ export default function NewReply({
               handleSubmitEdit(values)
             }
             setTimeout(() => {
-              toast.success('Successful!')
+              toast({
+                title: 'Success!',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+              })
               setSubmitting(false)
             }, 400)
           }}>

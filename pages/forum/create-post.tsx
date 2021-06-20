@@ -1,7 +1,14 @@
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import { renderMdToHtml } from '../../components/common/Util'
 import NewPost from '../../components/forum/NewPost'
+import { fetchAllQuestions } from '../../components/quiz/QuizAPI'
 
-export default function CreatePost(): JSX.Element {
+export default function CreatePost({
+  questionList,
+}: {
+  questionList: { label: string; value: string }
+}): JSX.Element {
   return (
     <>
       <Head>
@@ -10,8 +17,22 @@ export default function CreatePost(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex-grow flex-col">
-        <NewPost />
+        <div className="ml-4 mt-10">
+          <NewPost questionList={questionList} />
+        </div>
       </div>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const questions = await fetchAllQuestions()
+  const questionList = questions.map((question) => {
+    return { label: renderMdToHtml(question['question']), value: question['id'] }
+  })
+  return {
+    props: {
+      questionList,
+    },
+  }
 }

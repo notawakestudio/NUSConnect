@@ -1,9 +1,9 @@
-import Head from 'next/head'
-import Layout from '../../components/common/Layout'
-import * as Yup from 'yup'
+import { useToast } from '@chakra-ui/react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { nanoid } from 'nanoid'
-import { toast } from 'react-toastify'
+import Head from 'next/head'
+import * as Yup from 'yup'
+import Layout from '../../components/common/Layout'
 import { makeModule } from '../../components/module/ModuleAPI'
 export default function Home(): JSX.Element {
   const initialValues = {
@@ -30,6 +30,7 @@ export default function Home(): JSX.Element {
     console.log(value)
     makeModule(value)
   }
+  const toast = useToast()
   return (
     <>
       <Head>
@@ -46,8 +47,13 @@ export default function Home(): JSX.Element {
           onSubmit={(values, { setSubmitting, resetForm }) => {
             handleSubmit(values)
             setTimeout(() => {
-              // alert(JSON.stringify(values, null, 2))
-              toast.success('Done!')
+              toast({
+                title: 'Done!',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+              })
               setSubmitting(false)
               resetForm()
             }, 400)

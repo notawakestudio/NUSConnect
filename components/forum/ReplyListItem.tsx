@@ -1,13 +1,13 @@
+import { useToast } from '@chakra-ui/react'
+import { useSession } from 'next-auth/client'
+import { useState } from 'react'
+import { FaEdit, FaRegThumbsUp } from 'react-icons/fa'
+import { RiDeleteBin5Line } from 'react-icons/ri'
+import { VscPreview } from 'react-icons/vsc'
+import NewReply from '../../components/forum/NewReply'
+import TextContainer from '../common/TextContainer'
 import { renderMdToHtml, timeSince } from '../common/Util'
 import { deleteReply, Reply, updateReplyLikes } from './ForumAPI'
-import TextContainer from '../common/TextContainer'
-import { FaEdit, FaRegThumbsUp } from 'react-icons/fa'
-import NewReply from '../../components/forum/NewReply'
-import { useState } from 'react'
-import { VscPreview } from 'react-icons/vsc'
-import { useSession } from 'next-auth/client'
-import { toast } from 'react-toastify'
-import { RiDeleteBin5Line } from 'react-icons/ri'
 
 const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   const currentReply = reply
@@ -16,6 +16,8 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   const [session] = useSession()
   const [liked, setLiked] = useState(false)
   const [upVotes, setUpVotes] = useState(currentReply.up_votes)
+  const toast = useToast()
+
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 dark:bg-gray-800">
@@ -58,7 +60,13 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
               <button
                 onClick={() => {
                   setEditing(!editing)
-                  toast.warn('Deleted!')
+                  toast({
+                    title: 'Deleted',
+                    status: 'warning',
+                    duration: 5000,
+                    isClosable: true,
+                    position: 'top-right',
+                  })
                   deleteReply(currentReply.id, currentReply.post_id)
                 }}
                 className="text-gray-400 mr-2 inline-flex items-center text-sm">
@@ -71,8 +79,12 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
           <button
             disabled={liked}
             onClick={() => {
-              toast.success('Liked!', {
-                autoClose: 3000,
+              toast({
+                title: 'Success!',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
               })
               updateReplyLikes(upVotes + 1, currentReply.id)
               setUpVotes(upVotes + 1)

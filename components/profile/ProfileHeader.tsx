@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   Modal,
@@ -10,20 +11,20 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
-  FormErrorMessage,
   Spinner,
+  useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
-import { useRef } from 'react'
-import { updateUser, useUser } from './UserAPI'
-import { Formik, Field, Form } from 'formik'
-import { toast } from 'react-toastify'
-import Skeleton from 'react-loading-skeleton'
+import { Field, Form, Formik } from 'formik'
 import Image from 'next/image'
+import { useRef } from 'react'
+import Skeleton from 'react-loading-skeleton'
+import { updateUser, useUser } from './UserAPI'
 export default function ProfileHeader(): JSX.Element {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = useRef()
   const { user, isLoading } = useUser()
+  const toast = useToast()
 
   function validateName(value): string {
     let error: string
@@ -93,7 +94,13 @@ export default function ProfileHeader(): JSX.Element {
                 onSubmit={(values, actions) => {
                   updateUser(user.id, values.name)
                   setTimeout(() => {
-                    toast.success('Updated!')
+                    toast({
+                      title: 'Success!',
+                      status: 'success',
+                      duration: 5000,
+                      isClosable: true,
+                      position: 'top-right',
+                    })
                     actions.setSubmitting(false)
                   }, 1000)
                 }}>

@@ -2,7 +2,7 @@ export type Quiz = {
   id: string
   title: string
   author: string
-  date: string
+  date: number
   week: string
   tags: string[]
   questions: string[]
