@@ -149,7 +149,7 @@ export default function NewPost({
                       <br />
                       {!related_question_id ? (
                         <>
-                          <div>Link Question</div>
+                          <div>Link Question (optional)</div>
                           <Field
                             component={CustomSingleSelect}
                             name="related_question_id"
@@ -164,7 +164,7 @@ export default function NewPost({
                       <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
                       <br />
                       <ContentTextArea
-                        label="Content"
+                        label="Content (optional)"
                         name="content"
                         rows={6}
                         placeholder="Leave a comment"
