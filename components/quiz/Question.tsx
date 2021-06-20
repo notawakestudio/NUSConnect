@@ -1,18 +1,15 @@
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
 import { renderMdToHtml } from '../common/Util'
 import { getPostById, Post } from '../forum/ForumAPI'
 import PostListItem from '../forum/PostListItem'
 import Answer from './Answer'
+import RelatedPosts from './RelatedPosts'
 import { QuizMode } from './types'
 
 type QuestionProps = {
   question: string
   answers: string[]
-  updateTotalScore: () => void
   saveProgress: (answer: string[]) => void
-  attemptedAllQuestions: () => boolean
   type: string
   userAnswer: string[]
   questionNumber: number
@@ -24,9 +21,7 @@ type QuestionProps = {
 const Question = ({
   question,
   answers,
-  updateTotalScore,
   saveProgress,
-  attemptedAllQuestions,
   type,
   userAnswer,
   questionNumber,
@@ -83,38 +78,8 @@ const Question = ({
             />
           ))}
         </div>
-        {post !== undefined && quizMode === QuizMode.REVIEWING && (
-          <div className="border border-indigo-300 rounded-lg h-full flex-1 font-sans">
-            <div className="flex flex-col p-2">
-              <p className="text-xl mb-10">Related posts</p>
-              <PostListItem post={post} />
-            </div>
-          </div>
-        )}
+        <RelatedPosts post={post} quizMode={quizMode} />
       </div>
-      <button
-        className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => {
-          if (attemptedAllQuestions()) {
-            updateTotalScore()
-          } else {
-            toast.error('Please attempt all questions!')
-          }
-        }}>
-        {quizMode === QuizMode.TAKING ? 'Submit' : 'Done'}
-      </button>
-      {quizMode === QuizMode.REVIEWING && (
-        <Link href="/forum">
-          <button className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Ask on the forum
-          </button>
-        </Link>
-      )}
-      <Link href="/quiz">
-        <button className="self-center bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Back to Quiz List
-        </button>
-      </Link>
     </div>
   )
 }

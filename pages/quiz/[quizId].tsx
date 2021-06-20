@@ -3,10 +3,16 @@ import Head from 'next/head'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import Pagination from '../../components/common/Pagination'
-import { hasSameContent } from '../../components/common/Util'
+import { hasSameContent, renderMdToHtml } from '../../components/common/Util'
 import AnswerObject from '../../components/quiz/AnswerObject'
+import OptionsBar from '../../components/quiz/OptionsBar'
 import Question from '../../components/quiz/Question'
-import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
+import {
+  fetchAllQuestions,
+  fetchQuizQuestions,
+  fetchQuizTitle,
+  getAllQuizId,
+} from '../../components/quiz/QuizAPI'
 import ScoreCard from '../../components/quiz/ScoreCard'
 import { QuestionWithAnswersMixed, QuizMode } from '../../components/quiz/types'
 
@@ -27,10 +33,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const quizId = params.quizId as string
   const quizTitle = await fetchQuizTitle(quizId)
   const quizQuestions = await fetchQuizQuestions(quizId)
+  const questions = await fetchAllQuestions()
+  const questionList = questions.map((question) => {
+    return { label: renderMdToHtml(question['question']), value: question['id'] }
+  })
   return {
     props: {
       quizTitle,
       quizQuestions,
+      questionList,
     },
     revalidate: 30, // In seconds
   }
@@ -39,9 +50,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function Quiz({
   quizTitle,
   quizQuestions,
+  questionList,
 }: {
   quizTitle: string
   quizQuestions: QuestionWithAnswersMixed[]
+  questionList: { label: string; value: string }
 }): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionWithAnswersMixed[]>([])
@@ -179,7 +192,7 @@ export default function Quiz({
             </ScoreCard>
           ) : null}
           {loading && <p>Loading Questions ...</p>}
-          {!loading && quizMode === QuizMode.TAKING && (
+          {((!loading && quizMode === QuizMode.TAKING) || quizMode === QuizMode.REVIEWING) && (
             <>
               <Question
                 questionNumber={currQnNumOneBased}
@@ -189,33 +202,14 @@ export default function Quiz({
                 type={questions[currQnNumOneBased - 1].type}
                 userAnswer={userAnswers[currQnNumOneBased - 1].answer}
                 correct_answers={questions[currQnNumOneBased - 1].correct_answers}
-                updateTotalScore={updateTotalScore}
                 saveProgress={saveProgress}
-                attemptedAllQuestions={attemptedAllQuestions}
                 quizMode={quizMode}
               />
-              <Pagination
-                numItem={questions.length}
-                onClickChange={changeQuestion}
-                onClickNext={nextQuestion}
-                onClickPrevious={previousQuestion}
-              />
-            </>
-          )}
-          {!loading && quizMode === QuizMode.REVIEWING && (
-            <>
-              <Question
-                questionNumber={currQnNumOneBased}
-                totalQuestions={questions.length}
-                question={questions[currQnNumOneBased - 1].question}
-                answers={questions[currQnNumOneBased - 1].answers}
-                type={questions[currQnNumOneBased - 1].type}
-                userAnswer={userAnswers[currQnNumOneBased - 1].answer}
-                correct_answers={questions[currQnNumOneBased - 1].correct_answers}
-                updateTotalScore={updateTotalScore}
-                saveProgress={saveProgress}
-                attemptedAllQuestions={attemptedAllQuestions}
+              <OptionsBar
                 quizMode={quizMode}
+                attemptedAllQuestions={attemptedAllQuestions}
+                updateTotalScore={updateTotalScore}
+                questionList={questionList}
               />
               <Pagination
                 numItem={questions.length}

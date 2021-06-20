@@ -15,12 +15,12 @@ import { fetchAllQuestions, makeQuiz } from '../../components/quiz/QuizAPI'
 
 export const getStaticProps: GetStaticProps = async () => {
   const questions = await fetchAllQuestions()
-  const selectObjects = questions.map((question) => {
+  const questionList = questions.map((question) => {
     return { label: renderMdToHtml(question['question']), value: question['id'] }
   })
   return {
     props: {
-      selectObjects,
+      questionList,
     },
   }
 }
@@ -32,18 +32,21 @@ const initialValues = {
   tags: [''],
   questions: [],
 }
+
 const QuizForm = ({
-  selectObjects,
+  questionList,
 }: {
-  selectObjects: { label: string; value: string }
+  questionList: { label: string; value: string }
 }): JSX.Element => {
   const [session] = useSession()
+
   const handleSubmit = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makeQuiz(value)
   }
-  const errorToast = useToast()
 
+  //Toast when error occurs
+  const errorToast = useToast()
   function showToast(error: string, id: string): void {
     if (!errorToast.isActive(id)) {
       errorToast({
@@ -57,6 +60,7 @@ const QuizForm = ({
       })
     }
   }
+
   return (
     <>
       <Auth>
@@ -167,7 +171,7 @@ const QuizForm = ({
                           <Field
                             component={CustomMultiSelect}
                             name="questions"
-                            options={selectObjects}
+                            options={questionList}
                           />
                         </div>
                       </div>

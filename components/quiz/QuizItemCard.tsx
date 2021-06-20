@@ -19,7 +19,7 @@ import { timeSince } from '../common/Util'
 import { Quiz } from './types'
 
 const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
-  const date = timeSince(parseInt(quiz.date))
+  const date = timeSince(quiz.date)
   const [liked, setLiked] = useState(false)
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -87,13 +87,6 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
               </Button>
             </Link>
           </ModalBody>
-
-          {/* <ModalFooter>
-            <Button colorScheme="blue" onClick={onClose}>
-              Start Quiz
-            </Button>
-            <Button variant="red">Secondary Action</Button>
-          </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>

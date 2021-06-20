@@ -1,7 +1,5 @@
 import '../styles/globals.css'
-import 'react-toastify/dist/ReactToastify.min.css'
 import { Provider } from 'next-auth/client'
-import { ToastContainer } from 'react-toastify'
 import { ChakraProvider } from '@chakra-ui/react'
 import NavBar from '../components/common/NavBar'
 import Footer from '../components/common/Footer'
@@ -18,7 +16,6 @@ function MyApp({ Component, pageProps }) {
         <StoreProvider>
           <UserProvider>
             <ChakraProvider>
-              <ToastContainer />
               <NavBar />
               <ForumLayout>
                 <Component {...pageProps} />
@@ -36,7 +33,6 @@ function MyApp({ Component, pageProps }) {
       <StoreProvider>
         <UserProvider>
           <ChakraProvider>
-            <ToastContainer />
             <NavBar />
             <Component {...pageProps} />
             <Footer />

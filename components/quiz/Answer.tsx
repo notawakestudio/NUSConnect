@@ -27,7 +27,7 @@ const Answer = ({
             : 'bg-gray-50 dark:bg-gray-800'
         } ${
           quizMode === QuizMode.REVIEWING && correct_answers.includes(answerText)
-            ? 'border-dotted border-green-500 border-4'
+            ? 'border-dotted border-green-500 border-4 bg-green-100'
             : ''
         }`}
         onClick={(e) => {
