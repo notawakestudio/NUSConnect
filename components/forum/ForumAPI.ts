@@ -91,11 +91,13 @@ export async function getAllPostId(): Promise<{ postId: string }[]> {
   })
 }
 
+export async function getAllPostsByQuestionId(question_id: string): Promise<Post[]> {
+  const posts = await getAllPosts()
+  return posts.filter((post) => post.related_question_id === question_id)
+}
+
 export const getRelatedReplies = async (postId: string): Promise<Reply[]> => {
-  const replyList = await fetch(API_GET_REPLY_BY_POSTID + postId).then((response) =>
-    response.json()
-  )
-  return replyList
+  return fetch(API_GET_REPLY_BY_POSTID + postId).then((response) => response.json())
 }
 
 export function makePost(post: string[]): void {

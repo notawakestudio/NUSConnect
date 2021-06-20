@@ -204,12 +204,15 @@ export default function Quiz({
                 correct_answers={questions[currQnNumOneBased - 1].correct_answers}
                 saveProgress={saveProgress}
                 quizMode={quizMode}
+                questionId={questions[currQnNumOneBased - 1].id}
+                key={questions[currQnNumOneBased - 1].id}
               />
               <OptionsBar
                 quizMode={quizMode}
                 attemptedAllQuestions={attemptedAllQuestions}
                 updateTotalScore={updateTotalScore}
                 questionList={questionList}
+                questionId={questions[currQnNumOneBased - 1].id}
               />
               <Pagination
                 numItem={questions.length}

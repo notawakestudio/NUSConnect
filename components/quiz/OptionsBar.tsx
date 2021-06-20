@@ -1,7 +1,6 @@
-import { Modal, ModalOverlay, ModalContent, useDisclosure } from '@chakra-ui/react'
+import { Modal, ModalContent, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
-import { useToast } from '@chakra-ui/react'
 import NewPost from '../forum/NewPost'
 import { QuizMode } from './types'
 
@@ -10,11 +9,13 @@ export default function OptionsBar({
   attemptedAllQuestions,
   updateTotalScore,
   questionList,
+  questionId,
 }: {
   quizMode: QuizMode
   attemptedAllQuestions: () => boolean
   updateTotalScore: () => void
   questionList: { label: string; value: string }
+  questionId: string
 }): JSX.Element {
   //Toast
   const errorToast = useToast()
@@ -58,12 +59,14 @@ export default function OptionsBar({
           Back to Quiz List
         </button>
       </Link>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <NewPost questionList={questionList} />
-        </ModalContent>
-      </Modal>
+      {quizMode === QuizMode.REVIEWING && (
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <NewPost questionList={questionList} related_question_id={questionId} />
+          </ModalContent>
+        </Modal>
+      )}
     </div>
   )
 }

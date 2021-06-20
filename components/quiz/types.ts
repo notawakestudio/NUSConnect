@@ -10,11 +10,11 @@ export type Quiz = {
 }
 
 export type Question = {
+  id: string
   question: string
   correct_answers: string[]
   incorrect_answers: string[]
   modules: string[]
-  difficulty: string
   type: string
 }
 

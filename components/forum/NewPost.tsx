@@ -58,28 +58,30 @@ export default function NewPost({
   related_question_id?: string
   questionList?: { label: string; value: string }
 }): JSX.Element {
+  //Initalizing values
   const tags = allAvailableTags.map((tag) => {
     return { value: tag, label: tag }
   })
-
   const initialValues = {
     title: currentPost.title,
-    tags: currentPost.tags,
+    tags: related_question_id ? ['Quiz', 'Question'] : currentPost.tags,
     content: currentPost.content,
-    related_question_id: related_question_id ?? [],
+    related_question_id: related_question_id ?? '',
   }
 
+  //User Session
   const [session] = useSession()
 
+  //Handling post request
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makePost(value)
   }
-
   const handleSubmitUpdate = (value): void => {
     updatePost(value, currentPost)
   }
 
+  //Toast
   const toast = useToast()
   function showToast(error: string, id: string): void {
     if (!toast.isActive(id)) {
@@ -126,29 +128,39 @@ export default function NewPost({
             {(formik) => (
               <section className="bg-gray-100 bg-opacity-20">
                 <Form>
-                  <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
+                  <div className="p-4 bg-gray-100 border border-indigo-300 rounded-lg bg-opacity-5">
                     <div className="max-w-sm mx-auto md:w-full md:mx-0">
                       <div className="inline-flex items-center space-x-4">
-                        <h1 className="text-gray-600">{label}</h1>
+                        <h1 className="text-gray-600">
+                          {!related_question_id
+                            ? label
+                            : 'Auto generating post linked with this question'}
+                        </h1>
                       </div>
                     </div>
                   </div>
                   <div className="space-y-4 bg-white">
-                    <div className="items-center w-full p-4 space-y-2 text-gray-500 flex-shrink-0 flex-col">
+                    <div className="items-center w-full p-4 text-gray-500 flex-shrink-0 flex-col">
                       <span>Select Tags</span>
                       {formik.errors.tags && formik.touched.tags ? (
                         <span className="text-xs font-bold text-red-600 ml-2">* required </span>
                       ) : null}
                       <Field name={'tags'} component={TagMultiSelect} options={tags} />
                       <br />
-                      <div>Link Question</div>
-                      <Field
-                        component={CustomSingleSelect}
-                        name="related_question_id"
-                        options={questionList}
-                        className=""
-                      />
-                      <br />
+                      {!related_question_id ? (
+                        <>
+                          <div>Link Question</div>
+                          <Field
+                            component={CustomSingleSelect}
+                            name="related_question_id"
+                            options={questionList}
+                            className=""
+                          />
+                          <br />
+                        </>
+                      ) : (
+                        ''
+                      )}
                       <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
                       <br />
                       <ContentTextArea
