@@ -125,7 +125,6 @@ export function makePost(post: string[]): void {
   // }
 
   //to-do fix the Invalid attempt to spread non-iterable instance. error
-
   // mutate(API_GET_ALL_POST, (posts: Post[]) => [...posts, requestBody], false)
   fetch(API_SUBMIT_POST, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
