@@ -132,6 +132,8 @@ export default function NewPost({
                       <h1 className="text-gray-600">
                         {!related_question_id
                           ? label
+                          : label === 'Edit Post'
+                          ? label
                           : 'A post linked with this question will be created'}
                       </h1>
                     </div>

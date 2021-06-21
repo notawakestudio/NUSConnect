@@ -100,53 +100,57 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
               <div className="flex items-center">
                 {session && session.user.name === currentPost.author_id ? (
                   <>
-                    <button
-                      onClick={() => setEditing(!editing)}
-                      className="text-gray-400 mr-2 inline-flex items-center text-sm">
-                      {editing ? (
-                        <>
+                    {editing ? (
+                      <>
+                        <button
+                          onClick={() => setEditing(!editing)}
+                          className="text-gray-400 mr-2 inline-flex items-center text-sm">
                           <ImCancelCircle className="w-4 h-4 mr-1" />
                           <span>cancel</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>edit</span>
-                          <FaEdit className="w-4 h-4 ml-1" />
-                        </>
-                      )}
-                    </button>
-                    <button
-                      onClick={() => {
-                        setEditing(!editing)
-                        setIsOpen(true)
-                      }}
-                      className="text-gray-400 ml-2 inline-flex items-center text-sm">
-                      {editing ? (
-                        <>
-                          <RiDeleteBin5Line className="w-4 h-4 mr-1" />
-                          <span>delete post</span>
-                        </>
-                      ) : (
-                        ''
-                      )}
-                    </button>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditing(!editing)
+                            setIsOpen(true)
+                          }}
+                          className="text-gray-400 ml-2 inline-flex items-center text-sm">
+                          <>
+                            <RiDeleteBin5Line className="w-4 h-4 mr-1" />
+                            <span>delete post</span>
+                          </>
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => setEditing(!editing)}
+                        className="text-gray-400 mr-2 inline-flex items-center text-sm">
+                        <span>edit</span>
+                        <FaEdit className="w-4 h-4 ml-1" />
+                      </button>
+                    )}
                   </>
                 ) : (
-                  <></>
+                  ''
                 )}
 
-                <LikeButton
-                  key={postId}
-                  likeCount={currentPost.up_votes}
-                  handleUpdate={() => {
-                    updatePostLikes(currentPost.up_votes + 1, currentPost.id)
-                  }}
-                />
+                {editing ? (
+                  ''
+                ) : (
+                  <LikeButton
+                    key={postId}
+                    likeCount={currentPost.up_votes}
+                    handleUpdate={() => {
+                      updatePostLikes(currentPost.up_votes + 1, currentPost.id)
+                    }}
+                  />
+                )}
               </div>
             </div>
           </>
         )}
       </TextContainer>
+
+      {/* Alert dialog for delete confirmation*/}
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>
           <AlertDialogContent>
