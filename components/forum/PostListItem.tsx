@@ -29,7 +29,9 @@ const PostListItem = ({ post }: { post: Post }): JSX.Element => {
             </p>
             <div className="flex flex-wrap justify-starts items-center mt-2">
               {tags.map((tag) => (
-                <div key={tag} className="text-xs py-1 px-2 text-gray-600 bg-blue-100 rounded-2xl">
+                <div
+                  key={tag}
+                  className="text-xs m-1 py-1 px-2 text-gray-600 bg-blue-100 rounded-2xl">
                   #{tag}
                 </div>
               ))}

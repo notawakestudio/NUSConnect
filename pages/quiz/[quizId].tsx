@@ -207,13 +207,15 @@ export default function Quiz({
                 questionId={questions[currQnNumOneBased - 1].id}
                 key={questions[currQnNumOneBased - 1].id}
               />
-              <OptionsBar
-                quizMode={quizMode}
-                attemptedAllQuestions={attemptedAllQuestions}
-                updateTotalScore={updateTotalScore}
-                questionList={questionList}
-                questionId={questions[currQnNumOneBased - 1].id}
-              />
+              <div className="my-2">
+                <OptionsBar
+                  quizMode={quizMode}
+                  attemptedAllQuestions={attemptedAllQuestions}
+                  updateTotalScore={updateTotalScore}
+                  questionList={questionList}
+                  questionId={questions[currQnNumOneBased - 1].id}
+                />
+              </div>
               <Pagination
                 numItem={questions.length}
                 onClickChange={changeQuestion}

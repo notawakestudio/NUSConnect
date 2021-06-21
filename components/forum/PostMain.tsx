@@ -1,16 +1,16 @@
-import { deletePost, updatePostLikes, usePost } from './ForumAPI'
-import { FaEdit, FaRegComment } from 'react-icons/fa'
-import { renderMdToHtml, timeSince } from '../common/Util'
-import TextContainer from '../common/TextContainer'
-import { useState } from 'react'
-import NewPost from './NewPost'
-import { useSession } from 'next-auth/client'
-import { VscPreview } from 'react-icons/vsc'
-import { RiDeleteBin5Line } from 'react-icons/ri'
-import { useRouter } from 'next/router'
-import ModelQuestionCard from './ModelQuestionCard'
 import { Skeleton } from '@chakra-ui/skeleton'
+import { useSession } from 'next-auth/client'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { FaEdit } from 'react-icons/fa'
+import { RiDeleteBin5Line } from 'react-icons/ri'
+import { VscPreview } from 'react-icons/vsc'
 import LikeButton from '../common/LikeButton'
+import TextContainer from '../common/TextContainer'
+import { renderMdToHtml, timeSince } from '../common/Util'
+import { deletePost, updatePostLikes, usePost } from './ForumAPI'
+import ModelQuestionCard from './ModelQuestionCard'
+import NewPost from './NewPost'
 const PostMain = ({ postId }: { postId: string }): JSX.Element => {
   const { post: currentPost, isLoading } = usePost(postId)
   const [session] = useSession()
@@ -31,28 +31,69 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
             </div>
           </a>
           <div className="px-6 py-4">
-            <h2 className="text-xl font-medium text-indigo-500 dark:text-indigo-400 mb-2">
-              {currentPost.title}
-            </h2>
+            {/* <div className="flex items-center pb-2">
+              <span className="text-xl font-medium text-indigo-500 dark:text-indigo-400 mr-4">
+                {currentPost.title}
+              </span>
+              {currentPost.related_question_id ? (
+                <ModelQuestionCard questionId={currentPost.related_question_id as string} />
+              ) : null}
+            </div> */}
+
             {editing ? (
-              <NewPost label="Edit post" currentPost={currentPost} setEditing={setEditing} />
+              <NewPost
+                label="Edit Post"
+                currentPost={currentPost}
+                setEditing={setEditing}
+                related_question_id={currentPost.related_question_id}
+              />
             ) : (
-              <p className="leading-relaxed mb-6">
-                {
-                  <span
-                    className="prose-sm lg:prose dark:text-white font-normal"
-                    dangerouslySetInnerHTML={{ __html: renderMdToHtml(currentPost.content) }}
-                  />
-                }
-              </p>
+              <>
+                <div className="flex items-center pb-2">
+                  <span className="text-xl font-medium text-indigo-500 dark:text-indigo-400 mr-4">
+                    {currentPost.title}
+                  </span>
+                  {currentPost.related_question_id ? (
+                    <ModelQuestionCard questionId={currentPost.related_question_id as string} />
+                  ) : null}
+                </div>
+                {currentPost.content ? (
+                  <p className="leading-relaxed mb-4">
+                    {
+                      <span
+                        className="prose-sm lg:prose dark:text-white font-normal"
+                        dangerouslySetInnerHTML={{ __html: renderMdToHtml(currentPost.content) }}
+                      />
+                    }
+                  </p>
+                ) : (
+                  <p className="leading-relaxed mb-2"></p>
+                )}
+              </>
             )}
+            <div className="flex flex-wrap justify-start items-center my-2">
+              {currentPost.tags.map((tag) => (
+                <div key={tag} className="my-1 mr-2">
+                  <div className="text-xs py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
+                    #{tag}
+                  </div>
+                </div>
+              ))}
+            </div>
             <div className="flex items-center">
               {session && session.user.name === currentPost.author_id ? (
                 <>
                   <button
                     onClick={() => setEditing(!editing)}
                     className="text-gray-400 mr-2 inline-flex items-center text-sm">
-                    {editing ? <VscPreview className="w-4 h-4" /> : <FaEdit className="w-4 h-4" />}
+                    {editing ? (
+                      <VscPreview className="w-4 h-4" />
+                    ) : (
+                      <>
+                        <span>edit</span>
+                        <FaEdit className="w-4 h-4 ml-1" />
+                      </>
+                    )}
                   </button>
                   <button
                     onClick={() => {
@@ -67,18 +108,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
               ) : (
                 <></>
               )}
-              <div className="flex flex-wrap justify-start items-center">
-                {currentPost.tags.map((tag) => (
-                  <div key={tag} className="mr-2 mb-1">
-                    <div className="text-xs py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
-                      #{tag}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              {currentPost.related_question_id ? (
-                <ModelQuestionCard questionId={currentPost.related_question_id as string} />
-              ) : null}
+
               <LikeButton
                 key={postId}
                 likeCount={currentPost.up_votes}
@@ -86,9 +116,6 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                   updatePostLikes(currentPost.up_votes + 1, currentPost.id)
                 }}
               />
-              <span className="text-gray-400 inline-flex items-center text-sm">
-                <FaRegComment className="w-4 h-4 mr-2" />6
-              </span>
             </div>
           </div>
         </>

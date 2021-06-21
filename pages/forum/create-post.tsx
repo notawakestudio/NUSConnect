@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import TextContainer from '../../components/common/TextContainer'
 import { renderMdToHtml } from '../../components/common/Util'
 import NewPost from '../../components/forum/NewPost'
 import { fetchAllQuestions } from '../../components/quiz/QuizAPI'
@@ -18,7 +19,9 @@ export default function CreatePost({
       </Head>
       <div className="flex-grow flex-col">
         <div className="ml-4 mt-10">
-          <NewPost questionList={questionList} />
+          <TextContainer>
+            <NewPost questionList={questionList} />
+          </TextContainer>
         </div>
       </div>
     </>

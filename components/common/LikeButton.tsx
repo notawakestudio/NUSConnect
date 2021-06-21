@@ -9,6 +9,7 @@ function LikeButton({
   handleUpdate: () => void
 }): JSX.Element {
   const [liked, setLiked] = useState(false)
+  const [count, setCount] = useState(likeCount)
   const toast = useToast()
   return (
     <button
@@ -23,10 +24,11 @@ function LikeButton({
           position: 'top-right',
         })
         handleUpdate()
+        setCount(count + 1)
       }}
-      className="text-gray-400 mr-3 inline-flex items-center ml-auto text-sm pr-3 py-1 border-r-2 border-gray-200">
-      <FaRegThumbsUp color={`${liked ? 'black' : ''}`} className="w-4 h-4 mx-2" />
-      {likeCount}
+      className="text-gray-400 inline-flex items-center ml-auto text-sm">
+      <FaRegThumbsUp color={`${liked ? 'blue' : ''}`} className="w-4 h-4 mx-2" />
+      {count}
     </button>
   )
 }

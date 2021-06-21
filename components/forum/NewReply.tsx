@@ -34,6 +34,19 @@ export default function NewReply({
   }
 
   const toast = useToast()
+  function showToast(error: string, toastId: string): void {
+    if (!toast.isActive(toastId)) {
+      toast({
+        id: toastId,
+        title: 'Error',
+        description: error,
+        status: 'error',
+        duration: 5000,
+        position: 'top-right',
+        isClosable: true,
+      })
+    }
+  }
 
   return (
     <Auth>
@@ -74,7 +87,12 @@ export default function NewReply({
               <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
                 <button
                   type="submit"
-                  className="py-2 px-4 text-gray-200 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                  className="py-2 px-4 text-gray-200 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                  onClick={() => {
+                    if (formik.touched.content && formik.errors.content) {
+                      showToast(formik.errors.content, 'content-error')
+                    }
+                  }}>
                   Post
                 </button>
               </div>
@@ -98,13 +116,17 @@ const ContentTextArea = ({
   const [field, meta] = useField(props)
   return (
     <>
-      <label htmlFor={props.name}>{label}</label>
+      <label htmlFor={props.name}>{label} </label>
+      {meta.touched && meta.error ? (
+        <span className="text-xs font-bold text-red-500">{meta.error}</span>
+      ) : (
+        ''
+      )}
       <textarea
         className="flex rounded-lg border border-gray-300 w-full p-2 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent dark:bg-gray-800 dark:text-gray-100"
         {...field}
         {...props}
       />
-      {meta.touched && meta.error ? <div className="">{meta.error}</div> : null}
     </>
   )
 }

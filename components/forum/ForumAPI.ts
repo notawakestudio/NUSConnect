@@ -116,10 +116,13 @@ export function makePost(post: string[]): void {
     reply_count: 0,
     up_votes: 0,
     is_edited: false,
+    related_question_id: post['related_question_id'] ?? '',
   }
-  if (post['related_question_id']) {
-    requestBody.related_question_id = post['related_question_id']
-  }
+  console.log(post)
+
+  // if (post['related_question_id']) {
+  //   requestBody.related_question_id = post['related_question_id']
+  // }
   mutate(API_GET_ALL_POST, (posts: Post[]) => [...posts, requestBody], false)
   fetch(API_SUBMIT_POST, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
