@@ -123,7 +123,10 @@ export function makePost(post: string[]): void {
   // if (post['related_question_id']) {
   //   requestBody.related_question_id = post['related_question_id']
   // }
-  mutate(API_GET_ALL_POST, (posts: Post[]) => [...posts, requestBody], false)
+
+  //to-do fix the Invalid attempt to spread non-iterable instance. error
+
+  // mutate(API_GET_ALL_POST, (posts: Post[]) => [...posts, requestBody], false)
   fetch(API_SUBMIT_POST, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin

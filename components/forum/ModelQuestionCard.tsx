@@ -8,7 +8,9 @@ import {
   ModalCloseButton,
   Button as button,
   useDisclosure,
+  Button,
 } from '@chakra-ui/react'
+import React from 'react'
 import { renderMdToHtml, shuffleStringArray } from '../common/Util'
 import { useQuestion } from '../quiz/QuizAPI'
 function ModelQuestionCard({ questionId }: { questionId: string }): JSX.Element {
@@ -47,9 +49,9 @@ function ModelQuestionCard({ questionId }: { questionId: string }): JSX.Element 
             )}
           </ModalBody>
           <ModalFooter>
-            <button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
-            </button>
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

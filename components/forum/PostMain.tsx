@@ -57,29 +57,26 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                     <ModelQuestionCard questionId={currentPost.related_question_id as string} />
                   ) : null}
                 </div>
-                {currentPost.content ? (
-                  <p className="leading-relaxed mb-4">
-                    {
-                      <span
-                        className="prose-sm lg:prose dark:text-white font-normal"
-                        dangerouslySetInnerHTML={{ __html: renderMdToHtml(currentPost.content) }}
-                      />
-                    }
-                  </p>
-                ) : (
-                  <p className="leading-relaxed mb-2"></p>
-                )}
+                <p className={`leading-relaxed ${currentPost.content ? 'mb-4' : 'mb-2'}`}>
+                  {
+                    <span
+                      className="prose-sm lg:prose dark:text-white font-normal"
+                      dangerouslySetInnerHTML={{ __html: renderMdToHtml(currentPost.content) }}
+                    />
+                  }
+                </p>
+                <div className="flex flex-wrap justify-start items-center my-2">
+                  {currentPost.tags.map((tag) => (
+                    <div key={tag} className="my-1 mr-2">
+                      <div className="text-xs py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
+                        #{tag}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </>
             )}
-            <div className="flex flex-wrap justify-start items-center my-2">
-              {currentPost.tags.map((tag) => (
-                <div key={tag} className="my-1 mr-2">
-                  <div className="text-xs py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
-                    #{tag}
-                  </div>
-                </div>
-              ))}
-            </div>
+
             <div className="flex items-center">
               {session && session.user.name === currentPost.author_id ? (
                 <>
