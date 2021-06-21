@@ -154,7 +154,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
               Delete Post
             </AlertDialogHeader>
 
-            <AlertDialogBody>Are you sure? You can't undo this action afterwards.</AlertDialogBody>
+            <AlertDialogBody>Are you sure? You cannot undo this action afterwards.</AlertDialogBody>
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
