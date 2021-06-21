@@ -91,11 +91,13 @@ export async function getAllPostId(): Promise<{ postId: string }[]> {
   })
 }
 
+export async function getAllPostsByQuestionId(question_id: string): Promise<Post[]> {
+  const posts = await getAllPosts()
+  return posts.filter((post) => post.related_question_id === question_id)
+}
+
 export const getRelatedReplies = async (postId: string): Promise<Reply[]> => {
-  const replyList = await fetch(API_GET_REPLY_BY_POSTID + postId).then((response) =>
-    response.json()
-  )
-  return replyList
+  return fetch(API_GET_REPLY_BY_POSTID + postId).then((response) => response.json())
 }
 
 export function makePost(post: string[]): void {
@@ -114,11 +116,16 @@ export function makePost(post: string[]): void {
     reply_count: 0,
     up_votes: 0,
     is_edited: false,
+    related_question_id: post['related_question_id'] ?? '',
   }
-  if (post['related_question_id']) {
-    requestBody.related_question_id = post['related_question_id']
-  }
-  mutate(API_GET_ALL_POST, (posts: Post[]) => [...posts, requestBody], false)
+  console.log(post)
+
+  // if (post['related_question_id']) {
+  //   requestBody.related_question_id = post['related_question_id']
+  // }
+
+  //to-do fix the Invalid attempt to spread non-iterable instance. error
+  // mutate(API_GET_ALL_POST, (posts: Post[]) => [...posts, requestBody], false)
   fetch(API_SUBMIT_POST, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin

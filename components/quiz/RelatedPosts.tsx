@@ -4,19 +4,21 @@ import PostListItem from '../forum/PostListItem'
 import { QuizMode } from './types'
 
 export default function RelatedPosts({
-  post,
+  posts,
   quizMode,
 }: {
-  post: Post
+  posts: Post[]
   quizMode: QuizMode
 }): JSX.Element {
   return (
     <div>
-      {post !== undefined && quizMode === QuizMode.REVIEWING && (
+      {posts !== undefined && quizMode === QuizMode.REVIEWING && posts.length !== 0 && (
         <div className="border border-indigo-300 rounded-lg h-full flex-1 font-sans">
           <div className="flex flex-col p-2">
             <p className="text-xl mb-10">Related posts</p>
-            <PostListItem post={post} />
+            {posts.map((post) => (
+              <PostListItem post={post} key={post.id} />
+            ))}
           </div>
         </div>
       )}

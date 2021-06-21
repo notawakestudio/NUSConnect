@@ -6,9 +6,11 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
+  Button as button,
   useDisclosure,
+  Button,
 } from '@chakra-ui/react'
+import React from 'react'
 import { renderMdToHtml, shuffleStringArray } from '../common/Util'
 import { useQuestion } from '../quiz/QuizAPI'
 function ModelQuestionCard({ questionId }: { questionId: string }): JSX.Element {
@@ -16,7 +18,11 @@ function ModelQuestionCard({ questionId }: { questionId: string }): JSX.Element 
   const { question, isLoading } = useQuestion(questionId)
   return (
     <>
-      <Button onClick={onOpen}>See Question</Button>
+      <button
+        onClick={onOpen}
+        className="border border-indigo-500 items-center text-xs rounded-3xl px-2 py-1 bg-indigo-400 text-gray-50 font-bold shadow-sm">
+        View Question
+      </button>
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>

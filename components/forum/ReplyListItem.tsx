@@ -1,10 +1,11 @@
 import { useToast } from '@chakra-ui/react'
 import { useSession } from 'next-auth/client'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { FaEdit, FaRegThumbsUp } from 'react-icons/fa'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { VscPreview } from 'react-icons/vsc'
 import NewReply from '../../components/forum/NewReply'
+import LikeButton from '../common/LikeButton'
 import TextContainer from '../common/TextContainer'
 import { renderMdToHtml, timeSince } from '../common/Util'
 import { deleteReply, Reply, updateReplyLikes } from './ForumAPI'
@@ -76,24 +77,13 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
           ) : (
             <></>
           )}
-          <button
-            disabled={liked}
-            onClick={() => {
-              toast({
-                title: 'Success!',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-                position: 'top-right',
-              })
-              updateReplyLikes(upVotes + 1, currentReply.id)
-              setUpVotes(upVotes + 1)
-              setLiked(true)
+          <LikeButton
+            key={currentReply.id}
+            likeCount={currentReply.up_votes}
+            handleUpdate={() => {
+              updateReplyLikes(currentReply.up_votes + 1, currentReply.id)
             }}
-            className="text-gray-400 inline-flex items-center ml-auto text-sm py-1">
-            <FaRegThumbsUp color={`${liked ? 'black' : ''}`} className="w-4 h-4 mx-2" />
-            {upVotes}
-          </button>
+          />
         </div>
       </div>
     </TextContainer>

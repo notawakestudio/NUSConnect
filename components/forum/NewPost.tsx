@@ -7,7 +7,6 @@ import { default as Select } from 'react-select'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
 import CustomSingleSelect from '../common/CustomSingleSelect'
-import TextContainer from '../common/TextContainer'
 import { makePost, Post, updatePost } from './ForumAPI'
 
 export const allAvailableTags = [
@@ -58,28 +57,30 @@ export default function NewPost({
   related_question_id?: string
   questionList?: { label: string; value: string }
 }): JSX.Element {
+  //Initalizing values
   const tags = allAvailableTags.map((tag) => {
     return { value: tag, label: tag }
   })
-
   const initialValues = {
     title: currentPost.title,
-    tags: currentPost.tags,
+    tags: related_question_id ? ['Quiz', 'Question'] : currentPost.tags,
     content: currentPost.content,
-    related_question_id: related_question_id ?? [],
+    related_question_id: related_question_id ?? '',
   }
 
+  //User Session
   const [session] = useSession()
 
+  //Handling post request
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makePost(value)
   }
-
   const handleSubmitUpdate = (value): void => {
     updatePost(value, currentPost)
   }
 
+  //Toast
   const toast = useToast()
   function showToast(error: string, id: string): void {
     if (!toast.isActive(id)) {
@@ -97,90 +98,100 @@ export default function NewPost({
 
   return (
     <Auth>
-      <TextContainer>
-        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <Formik
-            initialValues={initialValues}
-            validationSchema={Yup.object({
-              tags: Yup.array().min(1, 'Please select one tag'),
-              title: Yup.string().required('Please enter a title'),
-            })}
-            onSubmit={(values, { setSubmitting }) => {
-              if (label === 'Make a post') {
-                handleSubmitNew(values)
-              } else {
-                handleSubmitUpdate(values)
-                setEditing(false)
-              }
-              setTimeout(() => {
-                toast({
-                  title: 'Success!',
-                  status: 'success',
-                  duration: 5000,
-                  isClosable: true,
-                  position: 'top-right',
-                })
-                setSubmitting(false)
-              }, 400)
-            }}>
-            {(formik) => (
-              <section className="bg-gray-100 bg-opacity-20">
-                <Form>
-                  <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
-                    <div className="max-w-sm mx-auto md:w-full md:mx-0">
-                      <div className="inline-flex items-center space-x-4">
-                        <h1 className="text-gray-600">{label}</h1>
-                      </div>
+      <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <Formik
+          initialValues={initialValues}
+          validationSchema={Yup.object({
+            tags: Yup.array().min(1, 'Please select one tag'),
+            title: Yup.string().required('Please enter a title'),
+          })}
+          onSubmit={(values, { setSubmitting }) => {
+            if (label === 'Make a post') {
+              handleSubmitNew(values)
+            } else {
+              handleSubmitUpdate(values)
+              setEditing(false)
+            }
+            setTimeout(() => {
+              toast({
+                title: 'Success!',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+              })
+              setSubmitting(false)
+            }, 400)
+          }}>
+          {(formik) => (
+            <section className="bg-gray-100 bg-opacity-20">
+              <Form>
+                <div className="p-4 bg-gray-100 border border-indigo-300 rounded-lg bg-opacity-5">
+                  <div className="max-w-sm mx-auto md:w-full md:mx-0">
+                    <div className="inline-flex items-center space-x-4">
+                      <h1 className="text-gray-600">
+                        {!related_question_id
+                          ? label
+                          : label === 'Edit Post'
+                          ? label
+                          : 'A post linked with this question will be created'}
+                      </h1>
                     </div>
                   </div>
-                  <div className="space-y-4 bg-white">
-                    <div className="items-center w-full p-4 space-y-2 text-gray-500 flex-shrink-0 flex-col">
-                      <span>Select Tags</span>
-                      {formik.errors.tags && formik.touched.tags ? (
-                        <span className="text-xs font-bold text-red-600 ml-2">* required </span>
-                      ) : null}
-                      <Field name={'tags'} component={TagMultiSelect} options={tags} />
-                      <br />
-                      <div>Link Question</div>
-                      <Field
-                        component={CustomSingleSelect}
-                        name="related_question_id"
-                        options={questionList}
-                        className=""
-                      />
-                      <br />
-                      <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
-                      <br />
-                      <ContentTextArea
-                        label="Content"
-                        name="content"
-                        rows={6}
-                        placeholder="Leave a comment"
-                      />
-                      <br />
-                    </div>
-                    <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
-                      <button
-                        type="submit"
-                        className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                        onClick={() => {
-                          if (formik.touched.title && formik.errors.title) {
-                            showToast(formik.errors.title, 'title-error')
-                          }
-                          if (formik.touched.tags && formik.errors.tags) {
-                            showToast(formik.errors.tags as string, 'tags-error')
-                          }
-                        }}>
-                        Post
-                      </button>
-                    </div>
+                </div>
+                <div className="space-y-4 bg-white">
+                  <div className="items-center w-full p-4 text-gray-500 flex-shrink-0 flex-col">
+                    <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
+                    <br />
+                    <span>Select Tags</span>
+                    {formik.errors.tags && formik.touched.tags ? (
+                      <span className="text-xs font-bold text-red-600 ml-2">* required </span>
+                    ) : null}
+                    <Field name={'tags'} component={TagMultiSelect} options={tags} />
+                    <br />
+                    {!related_question_id ? (
+                      <>
+                        <div>Link Question (optional)</div>
+                        <Field
+                          component={CustomSingleSelect}
+                          name="related_question_id"
+                          options={questionList}
+                          className=""
+                        />
+                        <br />
+                      </>
+                    ) : (
+                      ''
+                    )}
+                    <ContentTextArea
+                      label="Content (optional)"
+                      name="content"
+                      rows={6}
+                      placeholder="Leave a comment"
+                    />
+                    <br />
                   </div>
-                </Form>
-              </section>
-            )}
-          </Formik>
-        </div>
-      </TextContainer>
+                  <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
+                    <button
+                      type="submit"
+                      className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      onClick={() => {
+                        if (formik.touched.title && formik.errors.title) {
+                          showToast(formik.errors.title, 'title-error')
+                        }
+                        if (formik.touched.tags && formik.errors.tags) {
+                          showToast(formik.errors.tags as string, 'tags-error')
+                        }
+                      }}>
+                      {label === 'Edit Post' ? 'Save' : 'Post'}
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            </section>
+          )}
+        </Formik>
+      </div>
     </Auth>
   )
 }
