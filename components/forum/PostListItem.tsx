@@ -18,8 +18,8 @@ const PostListItem = ({ post }: { post: Post }): JSX.Element => {
         <TextContainer>
           <div className="hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-3 flex flex-col">
             <div className="flex flex-row justify-between text-grey-600 dark:text-gray-300 text-xs font-thin">
-              <span>{author}</span>
-              <span>{date}</span>
+              <span data-cy="author">{author}</span>
+              <span data-cy="date">{date}</span>
             </div>
             <span className="text-indigo-500 dark:text-indigo-400 text-base font-bold">
               {title}

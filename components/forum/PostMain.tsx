@@ -41,10 +41,10 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
         {isLoading ? (
           <Skeleton height="200px" isLoaded={!isLoading}></Skeleton>
         ) : (
-          <>
+          <div data-cy="postMain">
             <a className="flex items-center border-b border-grey-200 flex-grow py-2 ">
               <div className="flex justify-between px-2 flex-grow text-xs sm:text-sm font-medium text-gray-400 dark:text-gray-100">
-                <span>{currentPost.author_id}</span>
+                <span data-cy="author">{currentPost.author_id}</span>
                 <span>
                   {timeSince(currentPost.edited_date)} ago {currentPost.is_edited ? '(edited)' : ''}
                 </span>
@@ -146,7 +146,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                 )}
               </div>
             </div>
-          </>
+          </div>
         )}
       </TextContainer>
 
