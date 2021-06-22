@@ -30,7 +30,7 @@ export default function CurrentPost(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col space-y-4 lg:ml-4 lg:space-y-6 mt-4">
-        <PostMain postId={postId as string} />
+        <PostMain key={postId as string} postId={postId as string} />
         {replyIsLoading ? (
           <Skeleton height="200px" isLoaded={!replyIsLoading}></Skeleton>
         ) : (
