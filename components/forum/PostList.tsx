@@ -18,7 +18,9 @@ const PostList = ({
         <span className="flex text-lg leading-4 font-medium justify-center mb-2">All Posts</span>
         <div className="flex justify-center">
           <Link href="/forum/create-post">
-            <button className="whitespace-nowrap bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2 rounded-lg">
+            <button
+              className="whitespace-nowrap bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2 rounded-lg"
+              data-cy="newPost">
               New Post
             </button>
           </Link>
@@ -27,7 +29,7 @@ const PostList = ({
       </div>
       <div className="overflow-auto min-w-full h-screen">
         <h4 className="text-lg leading-6 font-medium my-2 text-center">Week 1</h4>
-        <div className="flex flex-col ">
+        <div className="flex flex-col " data-cy="postList">
           {postList
             .sort((postA, postB) => (postA.edited_date < postB.edited_date ? 1 : -1))
             .map((post) => {
