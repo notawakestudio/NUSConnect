@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="../support/index.d.ts" />
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
@@ -18,6 +20,5 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-
 
 import '@cypress/code-coverage/support'
