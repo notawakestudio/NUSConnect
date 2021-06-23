@@ -1,5 +1,5 @@
 describe('Forum page', function () {
-  beforeEach(() => {
+  before(() => {
     cy.log(`Visiting forum page`)
     cy.visit('/forum')
   })
@@ -29,5 +29,18 @@ describe('Forum page', function () {
           cy.get('[data-cy=author]').should('have.text', text)
         })
       })
+  })
+
+  it('visits by a logged in user', function () {
+    cy.login()
+    cy.visit('/forum/create-post')
+    cy.get('[data-cy=newPostForm]').within(() => {
+      cy.contains('Make a post')
+    })
+
+    cy.get('[data-cy=postList]').children().first().click()
+    cy.get('[data-cy=newReplyForm]').within(() => {
+      cy.contains('New comment')
+    })
   })
 })

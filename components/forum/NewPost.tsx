@@ -98,7 +98,7 @@ export default function NewPost({
 
   return (
     <Auth>
-      <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+      <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg" data-cy="newPostForm">
         <Formik
           initialValues={initialValues}
           validationSchema={Yup.object({

@@ -75,7 +75,9 @@ export default function NewReply({
           }}>
           {(formik) => (
             <Form>
-              <div className="items-center w-full px-4 pt-4 text-gray-500 flex-shrink-0 dark:text-gray-300">
+              <div
+                className="items-center w-full px-4 pt-4 text-gray-500 flex-shrink-0 dark:text-gray-300"
+                data-cy="newReplyForm">
                 <ContentTextArea
                   label={label}
                   name="content"
