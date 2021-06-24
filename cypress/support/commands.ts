@@ -47,7 +47,7 @@ Cypress.Commands.add('login', () => {
         'https://lh3.googleusercontent.com/a-/AOh14GjVIwJj4n_QSMVdkJFje9SQDntv8BnRQCdXyesI=s96-c',
     },
     accessToken: 'e646b5cda0ecdeba0f70e422490e8cd1a1f24518d7d40ce4b98d6c476f1b5ae2',
-    expires: '2021-07-22T14:12:54.188Z',
+    expires: '2021-12-22T14:12:54.188Z',
     userId: 'ddHg168Fwz9VIP1wxbzK',
   })
 })

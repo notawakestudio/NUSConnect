@@ -5,10 +5,10 @@ import Link from 'next/link'
 import React from 'react'
 import { GrFormNextLink } from 'react-icons/gr'
 import * as Yup from 'yup'
-import Auth from '../../components/common/Auth'
-import CustomSingleSelect from '../../components/common/CustomSingleSelect'
-import Layout from '../../components/common/Layout'
-import { makeQuestion } from '../../components/quiz/QuizAPI'
+import Auth from '../../../components/common/Auth'
+import CustomSingleSelect from '../../../components/common/CustomSingleSelect'
+import Layout from '../../../components/common/Layout'
+import { makeQuestion } from '../../../components/quiz/QuizAPI'
 
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],

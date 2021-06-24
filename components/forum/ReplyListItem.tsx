@@ -1,7 +1,7 @@
 import { useToast } from '@chakra-ui/react'
 import { useSession } from 'next-auth/client'
 import React, { useState } from 'react'
-import { FaEdit, FaRegThumbsUp } from 'react-icons/fa'
+import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { VscPreview } from 'react-icons/vsc'
 import NewReply from '../../components/forum/NewReply'
@@ -15,8 +15,6 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   const lastEdited = timeSince(currentReply.edited_date)
   const [editing, setEditing] = useState(false)
   const [session] = useSession()
-  const [liked, setLiked] = useState(false)
-  const [upVotes, setUpVotes] = useState(currentReply.up_votes)
   const toast = useToast()
 
   return (

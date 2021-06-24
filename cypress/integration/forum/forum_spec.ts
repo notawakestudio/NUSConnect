@@ -4,7 +4,7 @@ describe('Forum page', function () {
     cy.visit('/forum')
   })
   it('verifies homepage UI', function () {
-    cy.contains('All Posts', { timeout: 10000 })
+    cy.contains('All Posts', { timeout: 20000 })
     cy.contains('New Post', { timeout: 10000 })
   })
 
@@ -37,10 +37,21 @@ describe('Forum page', function () {
     cy.get('[data-cy=newPostForm]').within(() => {
       cy.contains('Make a post')
     })
+  })
 
+  it('can fill in new post', function () {
+    cy.get('input[name=title]').type('New Post')
+    cy.contains('Select Tags').next().click()
+    cy.get('#react-select-2-option-0').click()
+    cy.get('textarea[name=content]').type('New Post content')
+  })
+
+  it('can fill in comment', function () {
+    cy.login()
     cy.get('[data-cy=postList]').children().first().click()
     cy.get('[data-cy=newReplyForm]').within(() => {
       cy.contains('New comment')
     })
+    cy.get('textarea[name=content]').type('New comment')
   })
 })
