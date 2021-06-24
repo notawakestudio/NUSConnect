@@ -1,10 +1,12 @@
 import { IconButton } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/spinner'
 import { Stat, StatArrow, StatGroup, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/stat'
-import React from 'react'
-import TextContainer from '../common/TextContainer'
 import { FaExclamation } from 'react-icons/fa'
+import { useAllPosts } from '../../components/forum/ForumAPI'
+import TextContainer from '../common/TextContainer'
 
-const ForumHome = ({ postCount }: { postCount: number }): JSX.Element => {
+const ForumHome = (): JSX.Element => {
+  const { posts, isLoading } = useAllPosts()
   return (
     <div className="hidden lg:flex p-8 min-h-screen w-full">
       <TextContainer>
@@ -39,7 +41,7 @@ const ForumHome = ({ postCount }: { postCount: number }): JSX.Element => {
             <StatGroup>
               <Stat className="text-left p-2">
                 <StatLabel>Number of Posts</StatLabel>
-                <StatNumber>{postCount}</StatNumber>
+                {isLoading ? <Spinner size="xl" /> : <StatNumber>{posts.length}</StatNumber>}
                 <StatHelpText>
                   <StatArrow type="increase" />
                   100%

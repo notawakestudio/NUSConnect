@@ -1,4 +1,16 @@
-import { Button, Checkbox, FormLabel, Skeleton, useToast } from '@chakra-ui/react'
+import {
+  Button,
+  Checkbox,
+  FormLabel,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
+  Portal,
+  useToast,
+} from '@chakra-ui/react'
 import { Field, FieldArray, Form, Formik } from 'formik'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -9,19 +21,9 @@ import * as Yup from 'yup'
 import Auth from '../../../components/common/Auth'
 import CustomSingleSelect from '../../../components/common/CustomSingleSelect'
 import Layout from '../../../components/common/Layout'
-import { makeQuestion } from '../../../components/quiz/QuizAPI'
 import PostMain from '../../../components/forum/PostMain'
-import {
-  Portal,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
-} from '@chakra-ui/react'
 import ReplyList from '../../../components/forum/ReplyList'
-import { useAllRelatedReplies } from '../../../components/forum/ForumAPI'
+import { makeQuestion } from '../../../components/quiz/QuizAPI'
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],
   type: '',
@@ -70,9 +72,8 @@ const QuestionForm = (): JSX.Element => {
     makeQuestion(value)
   }
   const [isOpen, setIsOpen] = useState(false)
-  const open = () => setIsOpen(!isOpen)
-  const close = () => setIsOpen(false)
-  const { replies, isLoading: replyIsLoading } = useAllRelatedReplies(postId as string)
+  const open = (): void => setIsOpen(!isOpen)
+  const close = (): void => setIsOpen(false)
   return (
     <>
       <Auth>
@@ -121,13 +122,7 @@ const QuestionForm = (): JSX.Element => {
                                   <PopoverCloseButton />
                                   <PopoverBody>
                                     <PostMain postId={postId as string} />
-                                    {replyIsLoading ? (
-                                      <Skeleton
-                                        height="200px"
-                                        isLoaded={!replyIsLoading}></Skeleton>
-                                    ) : (
-                                      <ReplyList replies={replies} />
-                                    )}
+                                    <ReplyList postId={postId as string} />
                                   </PopoverBody>
                                 </PopoverContent>
                               </Portal>
