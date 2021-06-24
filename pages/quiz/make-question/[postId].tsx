@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormLabel, useToast } from '@chakra-ui/react'
+import { Button, Checkbox, FormLabel, Skeleton, useToast } from '@chakra-ui/react'
 import { Field, FieldArray, Form, Formik } from 'formik'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -16,11 +16,12 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
   PopoverBody,
   PopoverArrow,
   PopoverCloseButton,
 } from '@chakra-ui/react'
+import ReplyList from '../../../components/forum/ReplyList'
+import { useAllRelatedReplies } from '../../../components/forum/ForumAPI'
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],
   type: '',
@@ -71,6 +72,7 @@ const QuestionForm = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false)
   const open = () => setIsOpen(!isOpen)
   const close = () => setIsOpen(false)
+  const { replies, isLoading: replyIsLoading } = useAllRelatedReplies(postId as string)
   return (
     <>
       <Auth>
@@ -119,6 +121,13 @@ const QuestionForm = (): JSX.Element => {
                                   <PopoverCloseButton />
                                   <PopoverBody>
                                     <PostMain postId={postId as string} />
+                                    {replyIsLoading ? (
+                                      <Skeleton
+                                        height="200px"
+                                        isLoaded={!replyIsLoading}></Skeleton>
+                                    ) : (
+                                      <ReplyList replies={replies} />
+                                    )}
                                   </PopoverBody>
                                 </PopoverContent>
                               </Portal>

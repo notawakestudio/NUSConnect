@@ -138,7 +138,12 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                     )}
                   </>
                 ) : (
-                  ''
+                  <button
+                    onClick={() => router.push(`/quiz/make-question/${postId}`)}
+                    className="text-gray-400 mr-2 inline-flex items-center text-sm">
+                    <span>make quiz</span>
+                    <FaDirections className="w-4 h-4 ml-1" />
+                  </button>
                 )}
 
                 {editing ? (
