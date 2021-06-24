@@ -1,18 +1,13 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Pagination from '../../components/common/Pagination'
-import { hasSameContent, renderMdToHtml } from '../../components/common/Util'
+import { hasSameContent } from '../../components/common/Util'
 import AnswerObject from '../../components/quiz/AnswerObject'
 import OptionsBar from '../../components/quiz/OptionsBar'
 import Question from '../../components/quiz/Question'
-import {
-  fetchAllQuestions,
-  fetchQuizQuestions,
-  fetchQuizTitle,
-  getAllQuizId,
-} from '../../components/quiz/QuizAPI'
+import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
 import ScoreCard from '../../components/quiz/ScoreCard'
 import { QuestionWithAnswersMixed, QuizMode } from '../../components/quiz/types'
 
@@ -33,15 +28,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const quizId = params.quizId as string
   const quizTitle = await fetchQuizTitle(quizId)
   const quizQuestions = await fetchQuizQuestions(quizId)
-  const questions = await fetchAllQuestions()
-  const questionList = questions.map((question) => {
-    return { label: renderMdToHtml(question['question']), value: question['id'] }
-  })
   return {
     props: {
       quizTitle,
       quizQuestions,
-      questionList,
     },
     revalidate: 30, // In seconds
   }
@@ -50,11 +40,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function Quiz({
   quizTitle,
   quizQuestions,
-  questionList,
 }: {
   quizTitle: string
   quizQuestions: QuestionWithAnswersMixed[]
-  questionList: { label: string; value: string }
 }): JSX.Element {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionWithAnswersMixed[]>([])
@@ -212,7 +200,6 @@ export default function Quiz({
                   quizMode={quizMode}
                   attemptedAllQuestions={attemptedAllQuestions}
                   updateTotalScore={updateTotalScore}
-                  questionList={questionList}
                   questionId={questions[currQnNumOneBased - 1].id}
                 />
               </div>

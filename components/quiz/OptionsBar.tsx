@@ -8,13 +8,11 @@ export default function OptionsBar({
   quizMode,
   attemptedAllQuestions,
   updateTotalScore,
-  questionList,
   questionId,
 }: {
   quizMode: QuizMode
   attemptedAllQuestions: () => boolean
   updateTotalScore: () => void
-  questionList: { label: string; value: string }
   questionId: string
 }): JSX.Element {
   //Toast
@@ -63,7 +61,7 @@ export default function OptionsBar({
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <NewPost questionList={questionList} related_question_id={questionId} />
+            <NewPost related_question_id={questionId} />
           </ModalContent>
         </Modal>
       )}
