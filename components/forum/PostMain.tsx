@@ -28,8 +28,8 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
   const router = useRouter()
 
   //Alert Dialog
-  const [isOpen, setIsOpen] = React.useState(false)
-  const onClose = () => setIsOpen(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const onClose = (): void => setIsOpen(false)
   const cancelRef = React.useRef()
 
   //Toast
@@ -74,7 +74,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                       {currentPost.title}
                     </span>
                     {currentPost.related_question_id ? (
-                      <ModelQuestionCard questionId={currentPost.related_question_id as string} />
+                      <ModelQuestionCard questionId={currentPost.related_question_id} />
                     ) : null}
                   </div>
                   <p className={`leading-relaxed ${currentPost.content ? 'mb-4' : 'mb-2'}`}>
@@ -146,9 +146,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                   </button>
                 )}
 
-                {editing ? (
-                  ''
-                ) : (
+                {editing ? null : (
                   <LikeButton
                     key={postId}
                     likeCount={currentPost.up_votes}

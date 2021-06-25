@@ -9,28 +9,7 @@ import Auth from '../common/Auth'
 import CustomSingleSelect from '../common/CustomSingleSelect'
 import { renderMdToHtml } from '../common/Util'
 import { useAllQuestions } from '../quiz/QuizAPI'
-import { makePost, Post, updatePost } from './ForumAPI'
-
-export const allAvailableTags = [
-  'Question',
-  'Lecture',
-  'Quiz',
-  'Admin',
-  'week1',
-  'week2',
-  'week3',
-  'week4',
-  'week5',
-  'week6',
-  'week7',
-  'week8',
-  'week9',
-  'week10',
-  'week11',
-  'week12',
-  'week13',
-  'wiki',
-]
+import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
 
 const defaultPost = {
   id: nanoid(),
@@ -243,7 +222,7 @@ const ContentTextArea = ({
   label,
   ...props
 }: {
-  label: any
+  label: string
   name: string
   rows: number
   placeholder: string
@@ -266,7 +245,7 @@ const TitleTextInput = ({
   label,
   ...props
 }: {
-  label: any
+  label: string
   name: string
   type: string
   placeholder: string

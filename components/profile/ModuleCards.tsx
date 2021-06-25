@@ -1,7 +1,7 @@
 import React from 'react'
 import data from '../../public/data/IndividualModuleData.json'
 
-export default function ModuleCards() {
+export default function ModuleCards(): JSX.Element {
   return (
     <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
       <div className="rounded-t mb-0 px-0 border-0">

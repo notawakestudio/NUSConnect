@@ -1,4 +1,4 @@
-import { allAvailableTags } from '../forum/NewPost'
+import { allAvailableTags } from '../forum/ForumAPI'
 function TagBar({
   currTag,
   setCurrTag,

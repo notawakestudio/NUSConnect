@@ -14,6 +14,27 @@ const API_UPDATE_REPLY_LIKES = 'https://1ieznu.deta.dev/reply/update/likes/'
 const API_UPDATE_POST_LIKES = 'https://1ieznu.deta.dev/post/update/likes/'
 const API_UPDATE_POST = 'https://1ieznu.deta.dev/post/update/'
 
+export const allAvailableTags = [
+  'Question',
+  'Lecture',
+  'Quiz',
+  'Admin',
+  'week1',
+  'week2',
+  'week3',
+  'week4',
+  'week5',
+  'week6',
+  'week7',
+  'week8',
+  'week9',
+  'week10',
+  'week11',
+  'week12',
+  'week13',
+  'wiki',
+]
+
 export type Post = {
   id: string
   author_id: string
@@ -52,7 +73,9 @@ export const useAllPosts = () => {
   }
 }
 
-export const useAllRelatedReplies = (postId: string) => {
+export const useAllRelatedReplies = (
+  postId: string
+): { replies: Reply[]; isLoading: boolean; isError: any } => {
   const { data, error } = useSWR(API_GET_REPLY_BY_POSTID + postId, fetcher)
   return {
     replies: data,
@@ -61,7 +84,7 @@ export const useAllRelatedReplies = (postId: string) => {
   }
 }
 
-export const usePost = (postId: string) => {
+export const usePost = (postId: string): { post: Post; isLoading: boolean; isError: any } => {
   const { data, error } = useSWR(API_GET_POST_BY_ID + postId, fetcher)
   return {
     post: data,

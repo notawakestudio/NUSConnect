@@ -8,7 +8,7 @@ import { StoreProvider } from '../components/utils/store'
 import { useRouter } from 'next/router'
 import ForumLayout from '../components/forum/ForumLayout'
 import { UserProvider } from '../components/store/user'
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }): JSX.Element {
   const router = useRouter()
   if (router.pathname.startsWith('/forum')) {
     return (
