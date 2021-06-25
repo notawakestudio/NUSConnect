@@ -55,7 +55,7 @@ const QuestionForm = (): JSX.Element => {
   const handleSubmit = (value): void => {
     makeQuestion(value)
   }
-
+  const toast = useToast()
   return (
     <>
       <Auth>
@@ -78,8 +78,15 @@ const QuestionForm = (): JSX.Element => {
                 handleSubmit(values)
                 console.log(values)
                 setTimeout(() => {
-                  alert('DONE')
-                  alert(JSON.stringify(values, null, 2))
+                  // alert('DONE')
+                  // alert(JSON.stringify(values, null, 2))
+                  toast({
+                    title: 'Success!',
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                    position: 'top-right',
+                  })
                   setSubmitting(false)
                 }, 400)
               }}>

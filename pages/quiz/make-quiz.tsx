@@ -4,6 +4,7 @@ import { GetStaticProps } from 'next'
 import { useSession } from 'next-auth/client'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { GrFormNextLink } from 'react-icons/gr'
 import * as Yup from 'yup'
@@ -22,6 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       questionList,
     },
+    revalidate: 10,
   }
 }
 
@@ -60,7 +62,8 @@ const QuizForm = ({
       })
     }
   }
-
+  const toast = useToast()
+  const router = useRouter()
   return (
     <>
       <Auth>
@@ -83,7 +86,16 @@ const QuizForm = ({
                 handleSubmit(values)
                 setTimeout(() => {
                   // alert(JSON.stringify(values, null, 2))
-                  alert('DONE')
+                  toast({
+                    title: 'Success! Redirecting back to the quiz list...',
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                    position: 'top-right',
+                    onCloseComplete: () => {
+                      router.push('/quiz')
+                    },
+                  })
                   setSubmitting(false)
                 }, 400)
               }}>
