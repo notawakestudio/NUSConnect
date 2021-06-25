@@ -10,7 +10,7 @@ export default function Forum(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container items-center justify-center">
-        <ForumHome postCount={777} />
+        <ForumHome />
       </div>
     </>
   )

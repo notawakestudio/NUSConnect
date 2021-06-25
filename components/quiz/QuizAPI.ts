@@ -15,7 +15,9 @@ const API_GET_QUESTION_BY_ID = 'https://1ieznu.deta.dev/quiz/question/'
 
 const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
 
-export const useQuestion = (questionId: string) => {
+export const useQuestion = (
+  questionId: string
+): { question: Question; isLoading: boolean; isError: any } => {
   const { data, error } = useSWR(API_GET_QUESTION_BY_ID + questionId, fetcher)
   return {
     question: data,
@@ -23,6 +25,16 @@ export const useQuestion = (questionId: string) => {
     isError: error,
   }
 }
+
+export const useAllQuestions = (): { questions: Question[]; isLoading: boolean; isError: any } => {
+  const { data, error } = useSWR(API_GET_ALL_QUESTION, fetcher)
+  return {
+    questions: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const fetchQuizById = async (quizId: string): Promise<Quiz> => {
   return fetch(API_GET_QUIZ_BY_ID + quizId).then((response) => response.json())
 }

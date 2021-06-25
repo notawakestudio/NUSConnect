@@ -1,12 +1,17 @@
-import { Reply } from './ForumAPI'
+import { Reply, useAllRelatedReplies } from './ForumAPI'
 import ReplyListItem from './ReplyListItem'
+import { Skeleton } from '@chakra-ui/skeleton'
+const ReplyList = ({ postId }: { postId: string }): JSX.Element => {
+  const { replies, isLoading }: { replies: Reply[]; isLoading: boolean } =
+    useAllRelatedReplies(postId)
 
-const ReplyList = ({ replies }: { replies: Reply[] }): JSX.Element => {
   return (
     <div className="flex-col space-y-4 lg:space-y-8">
-      {replies.map((reply) => (
-        <ReplyListItem key={reply.id} reply={reply}></ReplyListItem>
-      ))}
+      {isLoading ? (
+        <Skeleton height="200px" isLoaded={!isLoading}></Skeleton>
+      ) : (
+        replies.map((reply) => <ReplyListItem key={reply.id} reply={reply}></ReplyListItem>)
+      )}
     </div>
   )
 }

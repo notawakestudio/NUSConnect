@@ -2,7 +2,7 @@ import { Skeleton } from '@chakra-ui/skeleton'
 import { useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { FaEdit } from 'react-icons/fa'
+import { FaEdit, FaDirections } from 'react-icons/fa'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { ImCancelCircle } from 'react-icons/im'
 import LikeButton from '../common/LikeButton'
@@ -28,8 +28,8 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
   const router = useRouter()
 
   //Alert Dialog
-  const [isOpen, setIsOpen] = React.useState(false)
-  const onClose = () => setIsOpen(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const onClose = (): void => setIsOpen(false)
   const cancelRef = React.useRef()
 
   //Toast
@@ -74,7 +74,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                       {currentPost.title}
                     </span>
                     {currentPost.related_question_id ? (
-                      <ModelQuestionCard questionId={currentPost.related_question_id as string} />
+                      <ModelQuestionCard questionId={currentPost.related_question_id} />
                     ) : null}
                   </div>
                   <p className={`leading-relaxed ${currentPost.content ? 'mb-4' : 'mb-2'}`}>
@@ -121,21 +121,32 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                         </button>
                       </>
                     ) : (
-                      <button
-                        onClick={() => setEditing(!editing)}
-                        className="text-gray-400 mr-2 inline-flex items-center text-sm">
-                        <span>edit</span>
-                        <FaEdit className="w-4 h-4 ml-1" />
-                      </button>
+                      <>
+                        <button
+                          onClick={() => setEditing(!editing)}
+                          className="text-gray-400 mr-2 inline-flex items-center text-sm">
+                          <span>edit</span>
+                          <FaEdit className="w-4 h-4 ml-1" />
+                        </button>
+                        <button
+                          onClick={() => router.push(`/quiz/make-question/${postId}`)}
+                          className="text-gray-400 mr-2 inline-flex items-center text-sm">
+                          <span>make quiz</span>
+                          <FaDirections className="w-4 h-4 ml-1" />
+                        </button>
+                      </>
                     )}
                   </>
                 ) : (
-                  ''
+                  <button
+                    onClick={() => router.push(`/quiz/make-question/${postId}`)}
+                    className="text-gray-400 mr-2 inline-flex items-center text-sm">
+                    <span>make quiz</span>
+                    <FaDirections className="w-4 h-4 ml-1" />
+                  </button>
                 )}
 
-                {editing ? (
-                  ''
-                ) : (
+                {editing ? null : (
                   <LikeButton
                     key={postId}
                     likeCount={currentPost.up_votes}

@@ -1,5 +1,5 @@
 const API_MAKE_MODULE = 'https://1ieznu.deta.dev/module/make'
-const API_GET_ALL_MODULE = 'https://1ieznu.deta.dev/module/'
+// const API_GET_ALL_MODULE = 'https://1ieznu.deta.dev/module/'
 
 export function makeModule(module): void {
   const requestBody = {

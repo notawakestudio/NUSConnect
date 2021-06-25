@@ -1,4 +1,4 @@
-import { useToast } from '@chakra-ui/react'
+import { Skeleton, useToast } from '@chakra-ui/react'
 import { Field, Form, Formik, useField } from 'formik'
 import { nanoid } from 'nanoid'
 import { useSession } from 'next-auth/client'
@@ -7,28 +7,9 @@ import { default as Select } from 'react-select'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
 import CustomSingleSelect from '../common/CustomSingleSelect'
-import { makePost, Post, updatePost } from './ForumAPI'
-
-export const allAvailableTags = [
-  'Question',
-  'Lecture',
-  'Quiz',
-  'Admin',
-  'week1',
-  'week2',
-  'week3',
-  'week4',
-  'week5',
-  'week6',
-  'week7',
-  'week8',
-  'week9',
-  'week10',
-  'week11',
-  'week12',
-  'week13',
-  'wiki',
-]
+import { renderMdToHtml } from '../common/Util'
+import { useAllQuestions } from '../quiz/QuizAPI'
+import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
 
 const defaultPost = {
   id: nanoid(),
@@ -49,13 +30,11 @@ export default function NewPost({
   currentPost = defaultPost,
   setEditing = function (bool) {},
   related_question_id,
-  questionList,
 }: {
   label?: string
   currentPost?: Post
   setEditing?: (bool: boolean) => void
   related_question_id?: string
-  questionList?: { label: string; value: string }
 }): JSX.Element {
   //Initalizing values
   const tags = allAvailableTags.map((tag) => {
@@ -96,6 +75,7 @@ export default function NewPost({
     }
   }
 
+  const { questions, isLoading } = useAllQuestions()
   return (
     <Auth>
       <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg" data-cy="newPostForm">
@@ -150,19 +130,25 @@ export default function NewPost({
                     <Field name={'tags'} component={TagMultiSelect} options={tags} />
                     <br />
                     {!related_question_id ? (
-                      <>
-                        <div>Link Question (optional)</div>
-                        <Field
-                          component={CustomSingleSelect}
-                          name="related_question_id"
-                          options={questionList}
-                          className=""
-                        />
-                        <br />
-                      </>
-                    ) : (
-                      ''
-                    )}
+                      isLoading ? (
+                        <Skeleton height="20px" />
+                      ) : (
+                        <>
+                          <div>Link Question (optional)</div>
+                          <Field
+                            component={CustomSingleSelect}
+                            name="related_question_id"
+                            options={questions.map((question) => {
+                              return {
+                                label: renderMdToHtml(question['question']),
+                                value: question['id'],
+                              }
+                            })}
+                          />
+                          <br />
+                        </>
+                      )
+                    ) : null}
                     <ContentTextArea
                       label="Content (optional)"
                       name="content"
@@ -236,7 +222,7 @@ const ContentTextArea = ({
   label,
   ...props
 }: {
-  label: any
+  label: string
   name: string
   rows: number
   placeholder: string
@@ -259,7 +245,7 @@ const TitleTextInput = ({
   label,
   ...props
 }: {
-  label: any
+  label: string
   name: string
   type: string
   placeholder: string
