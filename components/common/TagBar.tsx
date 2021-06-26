@@ -19,8 +19,8 @@ function TagBar({
             }
           }}
           className={`${
-            currTag === tag ? 'bg-blue-200' : ''
-          } border-blue-500 hover:bg-blue-200 rounded-full py-1 px-2 m-1 shadow-sm`}>
+            currTag === tag ? 'bg-blue-200 dark:bg-purple-400 ' : ''
+          } border-blue-500 hover:bg-blue-200 rounded-full py-1 px-2 m-1 shadow-sm dark:bg-purple-300 dark:text-white`}>
           {tag}
         </button>
       ))}
