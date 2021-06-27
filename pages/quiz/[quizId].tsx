@@ -150,7 +150,8 @@ export default function Quiz({
                 <button
                   type="button"
                   className="py-2 px-4  bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
-                  onClick={startQuiz}>
+                  onClick={startQuiz}
+                  data-cy="seeQuizQuestions">
                   {quizMode === QuizMode.ENDING ? `Retry` : `Start`}
                 </button>
                 {quizMode === QuizMode.ENDING && (

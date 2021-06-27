@@ -32,7 +32,7 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
         <button
           onClick={onOpen}
           className="p-2 w-full hover:bg-gray-200 space-y-2 text-left flex flex-col justify-between flex-grow">
-          <div className="text-gray-600 font-bold text-xl items-center">
+          <div className="text-gray-600 font-bold text-xl items-center" data-cy="quizTitle">
             {quiz.title}
             <Badge colorScheme="green" className="text-xs ml-1">
               week {quiz.week}
@@ -78,11 +78,11 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{quiz.title}</ModalHeader>
+          <ModalHeader data-cy="quizPromptTitle">{quiz.title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody className="text-center">
             <Link href={`/quiz/${quiz.id}`}>
-              <Button colorScheme="blue" onClick={onClose}>
+              <Button colorScheme="blue" onClick={onClose} data-cy="startQuizButton">
                 Start Quiz
               </Button>
             </Link>

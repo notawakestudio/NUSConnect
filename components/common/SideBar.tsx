@@ -3,7 +3,11 @@ import { BiBookReader } from 'react-icons/bi'
 import { MdForum } from 'react-icons/md'
 import { BsClipboard } from 'react-icons/bs'
 import { HiBadgeCheck } from 'react-icons/hi'
+import { useUserId } from '../store/user'
+import { useUserInbox } from '../profile/UserAPI'
 const SideBar = (): JSX.Element => {
+  const userId = useUserId()
+  const { inbox, isLoading } = useUserInbox(userId)
   return (
     <div className="min-h-screen hidden relative w-48 lg:w-56 md:flex flex-col flex-auto flex-shrink-0 ">
       <div className="absolute flex flex-col to8p-18 left-0 w-48 lg:w-56 dark:bg-gray-900 h-full border-r-2 border-gray-200">
@@ -76,7 +80,7 @@ const SideBar = (): JSX.Element => {
               </Link>
             </li>
             <li>
-              <Link href="#">
+              <Link href="/profile/inbox">
                 <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                   <span className="inline-flex justify-center items-center ml-4">
                     <svg
@@ -95,9 +99,12 @@ const SideBar = (): JSX.Element => {
                   <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
                     Inbox
                   </span>
-                  <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-blue-100 rounded-full">
-                    New
-                  </span>
+                  {isLoading ? null : inbox.filter((message) => message.read === false).length >
+                    0 ? (
+                    <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-blue-100 rounded-full">
+                      New
+                    </span>
+                  ) : null}
                 </div>
               </Link>
             </li>

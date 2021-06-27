@@ -1,6 +1,8 @@
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import matter from 'gray-matter'
+import { submitToUserInbox } from '../profile/UserAPI'
+import { nanoid } from 'nanoid'
 
 export const shuffleStringArray = (array: string[]): string[] => {
   return [...array].sort(() => Math.random() - 0.5)
@@ -111,4 +113,26 @@ export const timeSince = (date: number): string => {
   }
 
   return Math.floor(seconds) + ' seconds'
+}
+
+export const notifyReply = (userId: string): void => {
+  const message = {
+    id: nanoid(),
+    content:
+      '<h2>You Replied!</h2><p>Thank you for being active in the forum and help others learn!</p>',
+    created_date: getCurrentDateTime(),
+    read: false,
+  }
+  submitToUserInbox(userId, message)
+}
+
+export const notifyNewPost = (userId: string): void => {
+  const message = {
+    id: nanoid(),
+    content:
+      '<h2>You Posted!</h2><p>Thank you for being active in the forum and help others learn!</p>',
+    created_date: getCurrentDateTime(),
+    read: false,
+  }
+  submitToUserInbox(userId, message)
 }
