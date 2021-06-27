@@ -13,10 +13,13 @@ import { MdForum } from 'react-icons/md'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { HiBadgeCheck } from 'react-icons/hi'
 import { BsClipboardData } from 'react-icons/bs'
+import { useUserInbox } from '../profile/UserAPI'
+import { useUserId } from '../store/user'
 
 export default function NavigationDrawer(): JSX.Element {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
+  const userId = useUserId()
+  const { inbox, isLoading } = useUserInbox(userId)
   return (
     <>
       <div className="flex md:hidden z-50">
@@ -102,7 +105,7 @@ export default function NavigationDrawer(): JSX.Element {
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
+                    <Link href="/profile/inbox">
                       <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                         <span className="inline-flex justify-center items-center ml-4">
                           <svg
@@ -121,9 +124,12 @@ export default function NavigationDrawer(): JSX.Element {
                         <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
                           Inbox
                         </span>
-                        <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-blue-100 rounded-full">
-                          New
-                        </span>
+                        {isLoading ? null : inbox.filter((message) => message.read === false)
+                            .length > 0 ? (
+                          <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-blue-100 rounded-full">
+                            New
+                          </span>
+                        ) : null}
                       </div>
                     </Link>
                   </li>

@@ -7,7 +7,7 @@ import { default as Select } from 'react-select'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
 import CustomSingleSelect from '../common/CustomSingleSelect'
-import { renderMdToHtml } from '../common/Util'
+import { notifyNewPost, renderMdToHtml } from '../common/Util'
 import { useAllQuestions } from '../quiz/QuizAPI'
 import { useUserId } from '../store/user'
 import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
@@ -55,6 +55,7 @@ export default function NewPost({
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
     makePost(value)
+    notifyNewPost(userId)
   }
   const handleSubmitUpdate = (value): void => {
     updatePost(value, currentPost)

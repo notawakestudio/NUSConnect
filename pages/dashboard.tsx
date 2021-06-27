@@ -2,12 +2,15 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import { AiFillCaretDown, AiOutlineArrowUp } from 'react-icons/ai'
-import { GrFormCalendar, GrNotification, GrSemantics } from 'react-icons/gr'
+import { GrFormCalendar, GrSemantics } from 'react-icons/gr'
+import { MdNotificationsActive, MdNotifications } from 'react-icons/md'
 import SidebarLayout from '../components/common/SidebarLayout'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
 import Skeleton from 'react-loading-skeleton'
-import { useUser } from '../components/profile/UserAPI'
+import { useUser, useUserInbox } from '../components/profile/UserAPI'
 import Image from 'next/image'
+import { useUserId } from '../components/store/user'
+import { useRouter } from 'next/router'
 
 // const userData = [
 //   {
@@ -23,6 +26,9 @@ export default function DashBoard(): JSX.Element {
   const schedule = fetchModuleData('xft5nj9NXr_RXl3LEyt2g')
   const [exp] = useState(30)
   const { user, isLoading } = useUser()
+  const userId = useUserId()
+  const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
+  const router = useRouter()
   return (
     <>
       <Head>
@@ -37,8 +43,18 @@ export default function DashBoard(): JSX.Element {
               <header className="w-full h-16 z-40 flex justify-end">
                 <div className="relative z-20 flex flex-col justify-end h-full px-3 md:w-full">
                   <div className="relative p-1 flex items-center w-full space-x-4 justify-end">
-                    <button className="flex p-2 mb-2 items-center rounded-full bg-white shadow text-gray-400 hover:text-gray-700 text-md">
-                      <GrNotification />
+                    <button
+                      className="flex p-2 mb-2 items-center rounded-full bg-white shadow text-gray-400 hover:text-gray-700 text-md"
+                      onClick={() => {
+                        router.push('/profile/inbox')
+                      }}>
+                      {inboxLoading ? (
+                        <MdNotifications />
+                      ) : inbox.filter((message) => message.read === false).length > 0 ? (
+                        <MdNotificationsActive />
+                      ) : (
+                        <MdNotifications />
+                      )}
                     </button>
                   </div>
                 </div>
