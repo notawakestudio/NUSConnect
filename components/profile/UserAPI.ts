@@ -27,6 +27,15 @@ export function useUser() {
   }
 }
 
+export function useUserById(userId: string) {
+  const { data, error } = useSWR(API_GET_USER + userId)
+  return {
+    user: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export function updateUser(userId: string, newName: string): void {
   const requestBody = {
     displayName: newName,

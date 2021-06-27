@@ -9,6 +9,7 @@ import Auth from '../common/Auth'
 import CustomSingleSelect from '../common/CustomSingleSelect'
 import { renderMdToHtml } from '../common/Util'
 import { useAllQuestions } from '../quiz/QuizAPI'
+import { useUserId } from '../store/user'
 import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
 
 const defaultPost = {
@@ -49,14 +50,19 @@ export default function NewPost({
 
   //User Session
   const [session] = useSession()
-
+  const userId = useUserId()
   //Handling post request
   const handleSubmitNew = (value): void => {
-    value.author = session.user?.name ? session.user.name : 'Anonymous'
+    value.author = session.user?.name ? userId : 'Anonymous'
     makePost(value)
   }
   const handleSubmitUpdate = (value): void => {
     updatePost(value, currentPost)
+  }
+
+  const handleSubmitWiki = (value): void => {
+    value.author = session.user?.name ? userId : 'Anonymous'
+    makePost(value)
   }
 
   //Toast
@@ -88,6 +94,8 @@ export default function NewPost({
           onSubmit={(values, { setSubmitting }) => {
             if (label === 'Make a post') {
               handleSubmitNew(values)
+            } else if (label === 'Make into wiki') {
+              handleSubmitWiki(values)
             } else {
               handleSubmitUpdate(values)
               setEditing(false)
