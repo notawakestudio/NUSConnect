@@ -140,7 +140,7 @@ export default function NewPost({
                     ) : null}
                     <Field name={'tags'} component={TagMultiSelect} options={tags} />
                     <br />
-                    {!related_question_id ? (
+                    {related_question_id ? (
                       isLoading ? (
                         <Skeleton height="20px" />
                       ) : (

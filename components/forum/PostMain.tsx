@@ -98,7 +98,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                 </>
               )}
 
-              <div className="flex items-center">
+              <div className="flex items-center mt-2">
                 {session && userId === currentPost.author_id ? (
                   <>
                     {editing ? (

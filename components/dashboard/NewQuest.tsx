@@ -116,12 +116,17 @@ export default function NewQuest({
                       className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="description"></Field>
                     <br />
-                    <label htmlFor="type">type</label>
-                    <Field
-                      name="type"
-                      rows={6}
-                      className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                      placeholder="type"></Field>
+                    <label htmlFor="type">Type</label>
+                    <div className="flex flex-row space-x-2 text-lg">
+                      <label htmlFor="type">
+                        <Field type="radio" name="type" value="quiz" className="mr-1" />
+                        Quiz
+                      </label>
+                      <label htmlFor="type">
+                        <Field type="radio" name="type" value="post" className="mr-1" />
+                        Post
+                      </label>
+                    </div>
                   </div>
                   <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
                     <button
@@ -142,55 +147,5 @@ export default function NewQuest({
         </Formik>
       </div>
     </Auth>
-  )
-}
-
-const ContentTextArea = ({
-  label,
-  ...props
-}: {
-  label: string
-  name: string
-  rows: number
-  placeholder: string
-}): JSX.Element => {
-  const [field, meta] = useField(props)
-  return (
-    <>
-      <label htmlFor={props.name}>{label}</label>
-      <textarea
-        className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? <div className="">{meta.error}</div> : null}
-    </>
-  )
-}
-
-const TitleTextInput = ({
-  label,
-  ...props
-}: {
-  label: string
-  name: string
-  type: string
-  placeholder: string
-}): JSX.Element => {
-  const [field, meta] = useField(props)
-  return (
-    <>
-      <div className="flex items-center">
-        <label htmlFor={props.name}>{label}</label>
-        {meta.touched && meta.error ? (
-          <div className="ml-2 text-xs font-bold text-red-600">*required</div>
-        ) : null}
-      </div>
-      <input
-        className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-        {...field}
-        {...props}
-      />
-    </>
   )
 }
