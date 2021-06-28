@@ -1,21 +1,27 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { AiFillCaretDown, AiOutlineArrowUp } from 'react-icons/ai'
-import { GrFormCalendar, GrNotification, GrSemantics } from 'react-icons/gr'
+import { AiFillCaretDown } from 'react-icons/ai'
+import { GrFormCalendar, GrSemantics } from 'react-icons/gr'
 import { IoMdAddCircleOutline } from 'react-icons/io'
+import { MdNotifications, MdNotificationsActive } from 'react-icons/md'
 import Skeleton from 'react-loading-skeleton'
 import SidebarLayout from '../../components/common/SidebarLayout'
 import AnnouncementItem from '../../components/dashboard/AnnouncementItem'
 import { fetchDashboardData } from '../../components/dashboard/DashboardAPI'
 import QuestItem from '../../components/dashboard/QuestItem'
-import { useUser } from '../../components/profile/UserAPI'
+import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
+import { useUserId } from '../../components/store/user'
 
 export default function DashBoard(): JSX.Element {
   const schedule = fetchDashboardData('xft5nj9NXr_RXl3LEyt2g')
   const [exp] = useState(30)
   const { user, isLoading } = useUser()
+  const userId = useUserId()
+  const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
+  const router = useRouter()
 
   return (
     <>
@@ -30,8 +36,18 @@ export default function DashBoard(): JSX.Element {
             <header className="w-full h-16 z-40 flex justify-end">
               <div className="relative z-20 flex flex-col justify-end h-full px-3 md:w-full">
                 <div className="relative p-1 flex items-center w-full space-x-4 justify-end">
-                  <button className="flex p-2 mb-2 items-center rounded-full bg-white shadow text-gray-400 hover:text-gray-700 text-md">
-                    <GrNotification />
+                  <button
+                    className="flex p-2 mb-2 items-center rounded-full bg-white shadow text-gray-400 hover:text-gray-700 text-md"
+                    onClick={() => {
+                      router.push('/profile/inbox')
+                    }}>
+                    {inboxLoading ? (
+                      <MdNotifications />
+                    ) : inbox.filter((message) => message.read === false).length > 0 ? (
+                      <MdNotificationsActive />
+                    ) : (
+                      <MdNotifications />
+                    )}
                   </button>
                 </div>
               </div>
@@ -56,7 +72,7 @@ export default function DashBoard(): JSX.Element {
                               isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl
                             }></Image>
                           <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
-                            Level 2
+                            Level {isLoading ? <Skeleton width={20} /> : levelize(30)}
                           </p>
                         </div>
                         <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
@@ -106,7 +122,7 @@ export default function DashBoard(): JSX.Element {
                             Announcements
                           </span>
                           <span>
-                            <Link href={'/dashboard/new-announcement'}>
+                            <Link href={'/module/new-announcement'}>
                               <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
                                 <span className="items-center pt-1 pr-1">
                                   <IoMdAddCircleOutline />
@@ -128,7 +144,7 @@ export default function DashBoard(): JSX.Element {
                             Quests
                           </span>
                           <span>
-                            <Link href={'/dashboard/new-quest'}>
+                            <Link href={'/module/new-quest'}>
                               <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
                                 <span className="items-center pt-1 pr-1">
                                   <IoMdAddCircleOutline />
