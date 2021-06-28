@@ -4,10 +4,12 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { AiFillCaretDown, AiOutlineArrowUp } from 'react-icons/ai'
 import { GrFormCalendar, GrNotification, GrSemantics } from 'react-icons/gr'
+import { IoMdAddCircleOutline } from 'react-icons/io'
 import Skeleton from 'react-loading-skeleton'
 import SidebarLayout from '../../components/common/SidebarLayout'
 import AnnouncementItem from '../../components/dashboard/AnnouncementItem'
 import { fetchDashboardData } from '../../components/dashboard/DashboardAPI'
+import QuestItem from '../../components/dashboard/QuestItem'
 import { useUser } from '../../components/profile/UserAPI'
 
 export default function DashBoard(): JSX.Element {
@@ -93,19 +95,26 @@ export default function DashBoard(): JSX.Element {
                   <AiFillCaretDown />
                 </button>
                 <span className="text-sm text-gray-400">Jump to a different week</span>
-                <Link href={'/dashboard/new-announcement'}>
-                  <span className="shadow-lg p-2 cursor-pointer bg-gray-100">
-                    Create announcement
-                  </span>
-                </Link>
               </div>
               <div className="flex flex-col pt-4">
                 {schedule.map((weekly) => {
                   return (
                     <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4" key={weekly.id}>
                       <div className="flex flex-col md:col-span-2">
-                        <div className="text-2xl font-semibold text-gray-800 dark:text-white">
-                          Announcements
+                        <div className="flex flex-row justify-between items-center pb-2">
+                          <span className="text-2xl font-semibold text-gray-800 dark:text-white">
+                            Announcements
+                          </span>
+                          <span>
+                            <Link href={'/dashboard/new-announcement'}>
+                              <span className="shadow-md p-2 cursor-pointer bg-gray-100 hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
+                                <span className="items-center pt-1 pr-1">
+                                  <IoMdAddCircleOutline />
+                                </span>
+                                <span>new announcement</span>
+                              </span>
+                            </Link>
+                          </span>
                         </div>
                         <div className="dark:text-gray-300">
                           {weekly.announcements.map((announcement) => (
@@ -114,24 +123,24 @@ export default function DashBoard(): JSX.Element {
                         </div>
                       </div>
                       <div className="flex flex-col">
-                        <div className="text-xl font-semibold text-gray-800 dark:text-white">
-                          Quests
+                        <div className="flex flex-row justify-between items-center pb-2">
+                          <span className="text-2xl font-semibold text-gray-800 dark:text-white">
+                            Quests
+                          </span>
+                          <span>
+                            <Link href={'/dashboard/new-quest'}>
+                              <span className="shadow-md p-2 cursor-pointer bg-gray-100 hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
+                                <span className="items-center pt-1 pr-1">
+                                  <IoMdAddCircleOutline />
+                                </span>
+                                <span>new quest</span>
+                              </span>
+                            </Link>
+                          </span>
                         </div>
                         <div className="dark:text-gray-300">
                           {weekly.quests.map((quest) => (
-                            <Link href={quest.link} key={quest.id}>
-                              <div className="shadow-md w-full bg-gray-100 dark:bg-gray-700 relative overflow-hidden p-2 my-2 cursor-pointer">
-                                <div className="flex flex-row justify-between">
-                                  <div className="text-base">{quest.description}</div>
-                                  <div className="text-sm  flex items-center">
-                                    <span className="text-sm text-green-400 p-1 mt-1">
-                                      <AiOutlineArrowUp />
-                                    </span>
-                                    <span>{quest.reward.exp} exp</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </Link>
+                            <QuestItem quest={quest} key={quest.id} />
                           ))}
                         </div>
                       </div>
