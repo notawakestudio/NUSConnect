@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
+import { number } from 'yup'
 import { getCurrentDateTime } from '../common/Util'
 import { useUserId } from '../store/user'
 
@@ -14,10 +15,33 @@ const API_MARK_MESSAGE_READ = 'https://1ieznu.deta.dev/user/inbox/read/'
 
 export type Message = {
   id: string
+  type: string
   content: string
   created_date: number
   read: boolean
 }
+type QuizInfo = {
+  id: string
+  score: number
+  ans: string[]
+}
+
+type ModuleInfo = {
+  id: string
+  quiz: QuizInfo[]
+  quest: string[]
+  exp: number
+  badges: string[]
+}
+const defaultModuleInfo: ModuleInfo[] = [
+  {
+    id: 'CS2030/S',
+    exp: 0,
+    badges: [],
+    quiz: [],
+    quest: [],
+  },
+]
 type User = {
   id: string
   modules: string[]
@@ -28,6 +52,22 @@ type User = {
   email: string
   created_date: number
   inbox: Message[]
+}
+
+export function levelize(exp: number): number {
+  // if u have exp === 8 => level = 7 (position in the sequence)
+  const fiboSeq = [
+    0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946,
+    17711, 28657, 46368, 75025, 121393, 196418, 317811,
+  ]
+  for (let i = 0; i < fiboSeq.length; i++) {
+    if (exp >= fiboSeq[i]) {
+      continue
+    } else {
+      return i
+    }
+  }
+  return 0
 }
 
 export function useUser() {
@@ -107,6 +147,28 @@ export function updateUser(userId: string, newName: string): void {
   fetch(API_UPDATE_USER + userId, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_USER + userId)
+  })
+}
+
+export function updateModuleData(userId: string, modifiedModuleData: ModuleInfo[]): void {
+  const requestBody = {
+    modules: modifiedModuleData,
+  }
+  fetch(API_UPDATE_USER + userId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
