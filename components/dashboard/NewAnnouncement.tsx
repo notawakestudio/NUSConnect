@@ -1,62 +1,45 @@
-import { Skeleton, useToast } from '@chakra-ui/react'
-import { Field, Form, Formik, useField } from 'formik'
+import { useToast } from '@chakra-ui/react'
+import { Form, Formik, useField } from 'formik'
 import { nanoid } from 'nanoid'
 import { useSession } from 'next-auth/client'
 import React from 'react'
-import { default as Select } from 'react-select'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
-import CustomSingleSelect from '../common/CustomSingleSelect'
-import { renderMdToHtml } from '../common/Util'
-import { useAllQuestions } from '../quiz/QuizAPI'
-import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
+import { Announcement, makeAnnouncement, updateAnnouncement } from './DashboardAPI'
 
-const defaultPost = {
+const defaultAnnouncement = {
   id: nanoid(),
   author_id: 'string',
   title: '',
   content: '',
   created_date: 0,
-  edited_date: 0,
-  tags: [],
-  week: '1',
-  reply_count: 0,
-  up_votes: 0,
-  is_edited: false,
 }
 
-export default function NewPost({
-  label = 'Make a post',
-  currentPost = defaultPost,
+export default function NewAnnouncement({
+  label = 'Make an Announcement',
+  currentAnnouncement = defaultAnnouncement,
   setEditing = function (bool) {},
-  related_question_id,
 }: {
   label?: string
-  currentPost?: Post
+  currentAnnouncement?: Announcement
   setEditing?: (bool: boolean) => void
-  related_question_id?: string
 }): JSX.Element {
   //Initalizing values
-  const tags = allAvailableTags.map((tag) => {
-    return { value: tag, label: tag }
-  })
   const initialValues = {
-    title: currentPost.title,
-    tags: related_question_id ? ['Quiz', 'Question'] : currentPost.tags,
-    content: currentPost.content,
-    related_question_id: related_question_id ?? '',
+    title: currentAnnouncement.title,
+    content: currentAnnouncement.content,
   }
 
   //User Session
   const [session] = useSession()
 
-  //Handling post request
+  //Handling Announcement request
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
-    makePost(value)
+    makeAnnouncement(value)
   }
   const handleSubmitUpdate = (value): void => {
-    updatePost(value, currentPost)
+    updateAnnouncement(value, currentAnnouncement)
   }
 
   //Toast
@@ -75,12 +58,11 @@ export default function NewPost({
     }
   }
 
-  const { questions, isLoading } = useAllQuestions()
   return (
     <Auth>
       <div
         className="bg-white overflow-hidden shadow-md rounded-lg dark:bg-gray-800 dark:text-gray-200"
-        data-cy="newPostForm">
+        data-cy="newAnnouncementForm">
         <Formik
           initialValues={initialValues}
           validationSchema={Yup.object({
@@ -88,7 +70,7 @@ export default function NewPost({
             title: Yup.string().required('Please enter a title'),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            if (label === 'Make a post') {
+            if (label === 'Make an Announcement') {
               handleSubmitNew(values)
             } else {
               handleSubmitUpdate(values)
@@ -112,11 +94,7 @@ export default function NewPost({
                   <div className="max-w-sm mx-auto md:w-full md:mx-0">
                     <div className="inline-flex items-center space-x-4">
                       <h1 className="dark:text-gray-200 text-lg font-semibold">
-                        {!related_question_id
-                          ? label
-                          : label === 'Edit Post'
-                          ? label
-                          : 'A post linked with this question will be created'}
+                        {label === 'Make an Announcement' ? label : 'Edit an Announcement'}
                       </h1>
                     </div>
                   </div>
@@ -125,32 +103,6 @@ export default function NewPost({
                   <div className="items-center w-full p-4 text-gray-500 dark:text-gray-300 flex-shrink-0 flex-col">
                     <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
                     <br />
-                    <span>Select Tags</span>
-                    {formik.errors.tags && formik.touched.tags ? (
-                      <span className="text-xs font-bold text-red-600 ml-2">* required </span>
-                    ) : null}
-                    <Field name={'tags'} component={TagMultiSelect} options={tags} />
-                    <br />
-                    {!related_question_id ? (
-                      isLoading ? (
-                        <Skeleton height="20px" />
-                      ) : (
-                        <>
-                          <div>Link Question (optional)</div>
-                          <Field
-                            component={CustomSingleSelect}
-                            name="related_question_id"
-                            options={questions.map((question) => {
-                              return {
-                                label: renderMdToHtml(question['question']),
-                                value: question['id'],
-                              }
-                            })}
-                          />
-                          <br />
-                        </>
-                      )
-                    ) : null}
                     <ContentTextArea
                       label="Content (optional)"
                       name="content"
@@ -167,11 +119,8 @@ export default function NewPost({
                         if (formik.touched.title && formik.errors.title) {
                           showToast(formik.errors.title, 'title-error')
                         }
-                        if (formik.touched.tags && formik.errors.tags) {
-                          showToast(formik.errors.tags as string, 'tags-error')
-                        }
                       }}>
-                      {label === 'Edit Post' ? 'Save' : 'Post'}
+                      {label === 'Edit Announcement' ? 'Save' : 'Post Announcement'}
                     </button>
                   </div>
                 </div>
@@ -181,42 +130,6 @@ export default function NewPost({
         </Formik>
       </div>
     </Auth>
-  )
-}
-
-export const TagMultiSelect = ({
-  field,
-  form,
-  options,
-  isMulti = true,
-}: {
-  field: any
-  form: any
-  options: any
-  isMulti: boolean
-}): JSX.Element => {
-  const onChange = (option) => {
-    form.setFieldValue(field.name, isMulti ? option.map((item) => item.value) : option.value)
-  }
-
-  const getValue = () => {
-    if (options) {
-      return isMulti
-        ? options.filter((option) => field.value.indexOf(option.value) >= 0)
-        : options.find((option) => option.value === field.value)
-    } else {
-      return isMulti ? [] : ('' as any)
-    }
-  }
-
-  return (
-    <Select
-      name={field.name}
-      value={getValue()}
-      onChange={onChange}
-      options={options}
-      isMulti={isMulti}
-    />
   )
 }
 

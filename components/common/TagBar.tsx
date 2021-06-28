@@ -7,7 +7,7 @@ function TagBar({
   setCurrTag: (state: string) => void
 }): JSX.Element {
   return (
-    <div className="hidden lg:flex justify-center flex-wrap mb-4">
+    <div className="hidden lg:flex justify-center flex-wrap mb-2">
       {allAvailableTags.map((tag) => (
         <button
           key={tag}
@@ -20,7 +20,7 @@ function TagBar({
           }}
           className={`${
             currTag === tag ? 'bg-blue-200' : ''
-          } border-blue-500 hover:bg-blue-200 rounded-full py-1 px-2 m-1 shadow-sm`}>
+          } border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-full py-1 px-2 m-1 shadow-md dark:text-gray-300 text-sm`}>
           {tag}
         </button>
       ))}

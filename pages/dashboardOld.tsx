@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { AiFillCaretDown, AiOutlineArrowUp } from 'react-icons/ai'
 import { GrFormCalendar, GrNotification, GrSemantics } from 'react-icons/gr'
 import SidebarLayout from '../components/common/SidebarLayout'
-import { fetchModuleData } from '../components/dashboard/ModuleAPI'
+import { fetchDashboardData } from '../components/dashboard/DashboardAPI'
 import Skeleton from 'react-loading-skeleton'
 import { useUser } from '../components/profile/UserAPI'
 import Image from 'next/image'
@@ -20,7 +20,7 @@ import Image from 'next/image'
 //   },
 // ]
 export default function DashBoard(): JSX.Element {
-  const schedule = fetchModuleData('xft5nj9NXr_RXl3LEyt2g')
+  const schedule = fetchDashboardData('xft5nj9NXr_RXl3LEyt2g')
   const [exp] = useState(30)
   const { user, isLoading } = useUser()
   return (
@@ -117,11 +117,14 @@ export default function DashBoard(): JSX.Element {
                               <br />
                             </p>
                             <span className="text-green-500 text-xl font-bold flex items-center">
-                              {weekly['announcement']}
+                              {weekly['announcements'].map((announcement) => {
+                                return
+                                ;<div>announcement.title</div>
+                              })}
                             </span>
                           </div>
                           <div className="dark:text-white">
-                            {weekly['tasks'].map((task) => {
+                            {weekly['quests'].map((task) => {
                               return (
                                 <Link href={task['link']} key={task['id']}>
                                   <div className="flex items-center pb-2 mb-2 text-sm sm:space-x-12 cursor-pointer justify-between border-b border-gray-200">
