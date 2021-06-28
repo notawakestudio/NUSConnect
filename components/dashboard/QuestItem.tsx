@@ -6,7 +6,7 @@ import { Quest } from './DashboardAPI'
 export default function QuestItem({ quest }: { quest: Quest }): JSX.Element {
   return (
     <Link href={quest.link} key={quest.id}>
-      <div className="shadow-md w-full bg-gray-100 dark:bg-gray-700 relative overflow-hidden p-2 my-2 cursor-pointer">
+      <div className="shadow-md w-full bg-white dark:bg-gray-700 relative overflow-hidden p-2 my-2 cursor-pointer">
         <div className="flex flex-row justify-between">
           <div className="text-base">{quest.description}</div>
           <div className="text-sm  flex items-center">

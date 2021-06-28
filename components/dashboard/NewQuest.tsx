@@ -78,7 +78,7 @@ export default function NewQuest({
             description: Yup.string().required('Please enter a description'),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            if (label === 'Make an Quest') {
+            if (label === 'Make a Quest') {
               handleSubmitNew(values)
             } else {
               handleSubmitUpdate(values)
@@ -102,7 +102,7 @@ export default function NewQuest({
                   <div className="max-w-sm mx-auto md:w-full md:mx-0">
                     <div className="inline-flex items-center space-x-4">
                       <h1 className="dark:text-gray-200 text-lg font-semibold">
-                        {label === 'Make an Quest' ? label : 'Edit an Quest'}
+                        {label === 'Make a Quest' ? label : 'Edit a Quest'}
                       </h1>
                     </div>
                   </div>

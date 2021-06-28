@@ -42,7 +42,7 @@ export default function DashBoard(): JSX.Element {
               </h1>
               <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
                 <div className="w-full md:w-6/12">
-                  <div className="shadow-lg w-full bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
+                  <div className="shadow-lg w-full bg-white dark:bg-gray-700 relative overflow-hidden">
                     <a href="#" className="w-full h-full block">
                       <div className="flex items-center justify-between px-4 py-6 space-x-4">
                         <div className="flex items-center">
@@ -64,7 +64,7 @@ export default function DashBoard(): JSX.Element {
                           <span className="text-xs text-gray-400"> EXP</span>
                         </div>
                       </div>
-                      <div className="w-full h-3 bg-gray-100">
+                      <div className="w-full h-3 bg-white">
                         <div className="w-2/5 h-full text-center text-xs text-white bg-green-400"></div>
                       </div>
                     </a>
@@ -72,13 +72,13 @@ export default function DashBoard(): JSX.Element {
                 </div>
                 <div className="flex items-center w-full md:w-1/2 space-x-4">
                   <div className="w-1/2 ">
-                    <div className="shadow-lg px-4 py-6 w-full bg-gray-100 dark:bg-gray-700 relative">
+                    <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                       <p className="text-2xl text-black dark:text-white font-bold">12</p>
                       <p className="text-gray-400 text-sm">Badges</p>
                     </div>
                   </div>
                   <div className="w-1/2">
-                    <div className="shadow-lg px-4 py-6 w-full bg-gray-100 dark:bg-gray-700 relative">
+                    <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                       <p className="text-2xl text-black dark:text-white font-bold">1st</p>
                       <p className="text-gray-400 text-sm">Rank</p>
                       <span className="rounded-full absolute p-4 bg-purple-500 top-2 right-4">
@@ -107,7 +107,7 @@ export default function DashBoard(): JSX.Element {
                           </span>
                           <span>
                             <Link href={'/dashboard/new-announcement'}>
-                              <span className="shadow-md p-2 cursor-pointer bg-gray-100 hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
+                              <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
                                 <span className="items-center pt-1 pr-1">
                                   <IoMdAddCircleOutline />
                                 </span>
@@ -129,7 +129,7 @@ export default function DashBoard(): JSX.Element {
                           </span>
                           <span>
                             <Link href={'/dashboard/new-quest'}>
-                              <span className="shadow-md p-2 cursor-pointer bg-gray-100 hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
+                              <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
                                 <span className="items-center pt-1 pr-1">
                                   <IoMdAddCircleOutline />
                                 </span>

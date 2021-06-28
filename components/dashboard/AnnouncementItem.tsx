@@ -39,7 +39,7 @@ export default function AnnouncementItem({
 
   return (
     <>
-      <div className="shadow-lg w-full bg-gray-100 dark:bg-gray-700 relative overflow-hidden p-2 my-2">
+      <div className="shadow-md w-full border border-gray-100 bg-white dark:bg-gray-700 relative overflow-hidden p-2 md:p-6 my-4">
         <>
           {editing ? (
             <div className="my-2">
