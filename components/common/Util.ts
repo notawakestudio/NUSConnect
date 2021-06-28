@@ -122,6 +122,7 @@ export const notifyReply = (userId: string): void => {
       '<h2>You Replied!</h2><p>Thank you for being active in the forum and help others learn!</p>',
     created_date: getCurrentDateTime(),
     read: false,
+    type: 'CS2030/S',
   }
   submitToUserInbox(userId, message)
 }
@@ -133,6 +134,7 @@ export const notifyNewPost = (userId: string): void => {
       '<h2>You Posted!</h2><p>Thank you for being active in the forum and help others learn!</p>',
     created_date: getCurrentDateTime(),
     read: false,
+    type: 'CS2030/S',
   }
   submitToUserInbox(userId, message)
 }

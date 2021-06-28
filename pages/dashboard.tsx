@@ -7,7 +7,7 @@ import { MdNotificationsActive, MdNotifications } from 'react-icons/md'
 import SidebarLayout from '../components/common/SidebarLayout'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
 import Skeleton from 'react-loading-skeleton'
-import { useUser, useUserInbox } from '../components/profile/UserAPI'
+import { levelize, useUser, useUserInbox } from '../components/profile/UserAPI'
 import Image from 'next/image'
 import { useUserId } from '../components/store/user'
 import { useRouter } from 'next/router'
@@ -79,7 +79,7 @@ export default function DashBoard(): JSX.Element {
                                 isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl
                               }></Image>
                             <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
-                              Level 2
+                              Level {isLoading ? <Skeleton width={20} /> : levelize(30)}
                             </p>
                           </div>
                           <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">

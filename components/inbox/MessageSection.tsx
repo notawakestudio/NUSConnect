@@ -9,14 +9,17 @@ export default function MessageSection({ message }: { message: Message }): JSX.E
   return (
     <div className="py-4 flex flex-wrap md:flex-nowrap">
       <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-        <span className="font-semibold title-font text-gray-700">
-          {message.read ? 'Read' : 'Unread'}
-        </span>
+        <span className="font-semibold title-font text-gray-700">{message.type}</span>
+
         <span className="mt-1 text-gray-500 text-sm">{timeSince(message.created_date)}</span>
       </div>
       <div className="md:flex-grow -mt-8 prose-sm">
         <span dangerouslySetInnerHTML={{ __html: message.content }} />
-        {message.read ? null : (
+        {message.read ? (
+          <span className="font-semibold title-font text-gray-700">
+            {message.read ? 'Read' : 'Unread'}
+          </span>
+        ) : (
           <Button
             onClick={() => {
               markMessageAsRead(userId, message.id)
