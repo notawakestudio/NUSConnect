@@ -46,7 +46,7 @@ export default function Badges(): JSX.Element {
         </div>
         <div className="flex flex-col text-center">
           <GiAirplaneDeparture className="self-center border rounded-full border-black w-10 h-10 p-1" />
-          Takeoff Badge: reply 1,10,100 times
+          Takeoff Badge: reply a post 1,10,100 times
         </div>
         <div className="flex flex-col text-center">
           <GiAlarmClock className="self-center border rounded-full border-black w-10 h-10 p-1" />

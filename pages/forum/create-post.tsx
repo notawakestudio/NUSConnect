@@ -12,9 +12,9 @@ export default function CreatePost(): JSX.Element {
       </Head>
       <div className="flex-grow flex-col">
         <div className="ml-4 mt-10">
-          <TextContainer>
+          <div className="rounded-lg">
             <NewPost />
-          </TextContainer>
+          </div>
         </div>
       </div>
     </>
