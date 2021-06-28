@@ -2,10 +2,11 @@ import Link from 'next/link'
 import { showCurrentDate } from '../common/Util'
 import TextContainer from '../common/TextContainer'
 import { Post } from './ForumAPI'
+import React from 'react'
+import DisplayName from '../profile/DisplayName'
 
 const PostListItem = ({ post }: { post: Post }): JSX.Element => {
   const tags = post.tags
-  const author = post.author_id
   const date = showCurrentDate(post.edited_date)
   const title = post.title
   const maxLength = 175
@@ -18,7 +19,7 @@ const PostListItem = ({ post }: { post: Post }): JSX.Element => {
         <TextContainer>
           <div className="hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-3 flex flex-col">
             <div className="flex flex-row justify-between text-grey-600 dark:text-gray-300 text-xs font-thin">
-              <span data-cy="author">{author}</span>
+              <DisplayName author_id={post.author_id} />
               <span data-cy="date">{date}</span>
             </div>
             <span className="text-indigo-500 dark:text-indigo-400 text-base font-bold">

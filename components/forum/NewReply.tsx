@@ -4,6 +4,8 @@ import { useSession } from 'next-auth/client'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
 import TextContainer from '../common/TextContainer'
+import { notifyReply } from '../common/Util'
+import { useUserId } from '../store/user'
 import { makeReply, updateReply } from './ForumAPI'
 
 export default function NewReply({
@@ -23,9 +25,11 @@ export default function NewReply({
   const initialValues = {
     content: content,
   }
+  const userId = useUserId()
   const handleSubmitNew = (value): void => {
-    value.author = session.user?.name ? session.user.name : 'Anonymous'
+    value.author = session.user?.name ? userId : 'Anonymous'
     makeReply(value, postId)
+    notifyReply(userId)
   }
 
   const handleSubmitEdit = (value): void => {

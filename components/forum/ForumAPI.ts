@@ -32,7 +32,7 @@ export const allAvailableTags = [
   'week11',
   'week12',
   'week13',
-  'wiki',
+  'Wiki',
 ]
 
 export type Post = {

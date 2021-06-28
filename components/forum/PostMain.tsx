@@ -1,26 +1,28 @@
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Button,
+  useToast,
+} from '@chakra-ui/react'
 import { Skeleton } from '@chakra-ui/skeleton'
 import { useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { FaEdit, FaDirections } from 'react-icons/fa'
-import { RiDeleteBin5Line } from 'react-icons/ri'
+import { FaDirections, FaEdit } from 'react-icons/fa'
 import { ImCancelCircle } from 'react-icons/im'
+import { RiDeleteBin5Line } from 'react-icons/ri'
 import LikeButton from '../common/LikeButton'
 import TextContainer from '../common/TextContainer'
 import { renderMdToHtml, timeSince } from '../common/Util'
+import DisplayName from '../profile/DisplayName'
+import { useUserId } from '../store/user'
 import { deletePost, updatePostLikes, usePost } from './ForumAPI'
 import ModelQuestionCard from './ModelQuestionCard'
 import NewPost from './NewPost'
-import {
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogBody,
-  AlertDialogFooter,
-  Button,
-  useToast,
-} from '@chakra-ui/react'
 const PostMain = ({ postId }: { postId: string }): JSX.Element => {
   const { post: currentPost, isLoading } = usePost(postId)
   const [session] = useSession()
@@ -31,10 +33,9 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false)
   const onClose = (): void => setIsOpen(false)
   const cancelRef = React.useRef()
-
   //Toast
   const toast = useToast()
-
+  const userId = useUserId()
   return (
     <>
       <TextContainer>
@@ -44,7 +45,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
           <div data-cy="postMain">
             <a className="flex items-center border-b border-grey-200 flex-grow py-2 ">
               <div className="flex justify-between px-2 flex-grow text-xs sm:text-sm font-medium text-gray-400 dark:text-gray-100">
-                <span data-cy="author">{currentPost.author_id}</span>
+                <DisplayName author_id={currentPost.author_id} />
                 <span>
                   {timeSince(currentPost.edited_date)} ago {currentPost.is_edited ? '(edited)' : ''}
                 </span>
@@ -98,7 +99,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
               )}
 
               <div className="flex items-center">
-                {session && session.user.name === currentPost.author_id ? (
+                {session && userId === currentPost.author_id ? (
                   <>
                     {editing ? (
                       <>

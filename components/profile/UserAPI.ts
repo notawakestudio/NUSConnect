@@ -1,4 +1,6 @@
+import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
+import { number } from 'yup'
 import { getCurrentDateTime } from '../common/Util'
 import { useUserId } from '../store/user'
 
@@ -6,22 +8,133 @@ const API_MAKE_USER = 'https://1ieznu.deta.dev/user/make'
 const API_GET_USER = 'https://1ieznu.deta.dev/user/'
 const API_CHECK_USER = 'https://1ieznu.deta.dev/user/check/'
 const API_UPDATE_USER = 'https://1ieznu.deta.dev/user/update/'
-// type User = {
-//   id: string
-//   modules: string[]
-//   profilePicUrl: string
-//   role: string
-//   userName: string
-//   displayName: string
-//   email: string
-//   created_date: number
-// }
+
+const API_GET_MESSAGES_BY_AUTHORID = 'https://1ieznu.deta.dev/user/inbox/'
+const API_SUBMIT_MESSAGE = 'https://1ieznu.deta.dev/user/inbox/make/'
+const API_MARK_MESSAGE_READ = 'https://1ieznu.deta.dev/user/inbox/read/'
+
+export type Message = {
+  id: string
+  type: string
+  content: string
+  created_date: number
+  read: boolean
+}
+type QuizInfo = {
+  id: string
+  score: number
+  ans: string[]
+}
+
+type ModuleInfo = {
+  id: string
+  quiz: QuizInfo[]
+  quest: string[]
+  exp: number
+  badges: string[]
+}
+const defaultModuleInfo: ModuleInfo[] = [
+  {
+    id: 'CS2030/S',
+    exp: 0,
+    badges: [],
+    quiz: [],
+    quest: [],
+  },
+]
+type User = {
+  id: string
+  modules: string[]
+  profilePicUrl: string
+  role: string
+  userName: string
+  displayName: string
+  email: string
+  created_date: number
+  inbox: Message[]
+}
+
+export function levelize(exp: number): number {
+  // if u have exp === 8 => level = 7 (position in the sequence)
+  const fiboSeq = [
+    0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946,
+    17711, 28657, 46368, 75025, 121393, 196418, 317811,
+  ]
+  for (let i = 0; i < fiboSeq.length; i++) {
+    if (exp >= fiboSeq[i]) {
+      continue
+    } else {
+      return i
+    }
+  }
+  return 0
+}
 
 export function useUser() {
   const userId = useUserId()
   const { data, error } = useSWR(API_GET_USER + userId)
   return {
     user: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export function useUserById(userId: string) {
+  const { data, error } = useSWR(API_GET_USER + userId)
+  return {
+    user: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export function submitToUserInbox(userId: string, message: Message): void {
+  const requestBody = message
+  fetch(API_SUBMIT_MESSAGE + userId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_MESSAGES_BY_AUTHORID + userId)
+  })
+}
+
+export function markMessageAsRead(userId: string, messageId: string): void {
+  const requestBody = {
+    id: messageId,
+  }
+  fetch(API_MARK_MESSAGE_READ + userId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_MESSAGES_BY_AUTHORID + userId)
+  })
+}
+
+export function useUserInbox(userId: string) {
+  const { data, error } = useSWR(API_GET_MESSAGES_BY_AUTHORID + userId)
+  return {
+    inbox: data as Message[],
     isLoading: !error && !data,
     isError: error,
   }
@@ -34,6 +147,28 @@ export function updateUser(userId: string, newName: string): void {
   fetch(API_UPDATE_USER + userId, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_USER + userId)
+  })
+}
+
+export function updateModuleData(userId: string, modifiedModuleData: ModuleInfo[]): void {
+  const requestBody = {
+    modules: modifiedModuleData,
+  }
+  fetch(API_UPDATE_USER + userId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
@@ -93,6 +228,12 @@ export async function makeUser(user): Promise<void> {
     displayName: user['displayName'],
     email: user['email'],
     created_date: getCurrentDateTime(),
+    inbox: {
+      id: nanoid(),
+      content: '<h2>Welcome!</h2><p>Wishing you a great learning journey ahead.</p>',
+      created_date: getCurrentDateTime(),
+      read: false,
+    },
   }
   const exist = await checkUserExists(user['id'])
   if (exist) {
