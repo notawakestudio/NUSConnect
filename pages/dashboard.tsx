@@ -7,11 +7,10 @@ import { MdNotificationsActive, MdNotifications } from 'react-icons/md'
 import SidebarLayout from '../components/common/SidebarLayout'
 import { fetchModuleData } from '../components/dashboard/ModuleAPI'
 import Skeleton from 'react-loading-skeleton'
-import { levelize, useUser, useUserInbox } from '../components/profile/UserAPI'
+import { levelize, updateModuleData, useUser, useUserInbox } from '../components/profile/UserAPI'
 import Image from 'next/image'
 import { useUserId } from '../components/store/user'
 import { useRouter } from 'next/router'
-
 // const userData = [
 //   {
 //     userId: 'ddHg168Fwz9VIP1wxbzK',
@@ -29,6 +28,15 @@ export default function DashBoard(): JSX.Element {
   const userId = useUserId()
   const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
   const router = useRouter()
+  // updateModuleData(userId, [
+  //   {
+  //     id: 'CS2030/S',
+  //     exp: 0,
+  //     badges: [],
+  //     quiz: [],
+  //     quest: [],
+  //   },
+  // ])
   return (
     <>
       <Head>
@@ -79,11 +87,12 @@ export default function DashBoard(): JSX.Element {
                                 isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl
                               }></Image>
                             <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
-                              Level {isLoading ? <Skeleton width={20} /> : levelize(30)}
+                              Level{' '}
+                              {isLoading ? <Skeleton width={20} /> : levelize(user.modules[0].exp)}
                             </p>
                           </div>
                           <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
-                            {exp}
+                            {isLoading ? <Skeleton width={20} /> : user.modules[0].exp}
                             <span className="text-xs text-gray-400"> EXP</span>
                           </div>
                         </div>

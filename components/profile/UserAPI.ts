@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
-import { number } from 'yup'
 import { getCurrentDateTime } from '../common/Util'
 import { useUserId } from '../store/user'
 
