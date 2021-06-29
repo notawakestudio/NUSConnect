@@ -2,8 +2,6 @@ import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 import { FirebaseAdapter } from '@next-auth/firebase-adapter'
 import { firestore } from '../../../components/utils/firebase'
-import { getUserId } from '../../../components/utils/users'
-let userId
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
@@ -25,10 +23,7 @@ export default NextAuth({
   callbacks: {
     // Add userId to session
     async session(session, token) {
-      if (userId === undefined) {
-        userId = await getUserId(session.accessToken as string)
-      }
-      session.userId = userId
+      session.userId = token.id
       return session
     },
   },
