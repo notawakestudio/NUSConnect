@@ -89,7 +89,7 @@ const QuizForm = ({
                   toast({
                     title: 'Success! Redirecting back to the quiz list...',
                     status: 'success',
-                    duration: 5000,
+                    duration: 2000,
                     isClosable: true,
                     position: 'top-right',
                     onCloseComplete: () => {

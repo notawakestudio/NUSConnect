@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import Layout from '../../components/common/Layout'
+import SidebarLayout from '../../components/common/SidebarLayout'
 import { fetchAllQuizzes } from '../../components/quiz/QuizAPI'
 import QuizList from '../../components/quiz/QuizList'
 import { Quiz } from '../../components/quiz/types'
@@ -25,11 +26,11 @@ export default function QuizPage({ quizzes }: { quizzes: Quiz[] }): JSX.Element 
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="dark:bg-gray-800 w-full">
-        <Layout>
+        <SidebarLayout>
           <div className="flex w-full text-center bg-white dark:bg-gray-800">
             <QuizList quizzes={quizzes} />
           </div>
-        </Layout>
+        </SidebarLayout>
       </div>
     </>
   )
