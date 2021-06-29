@@ -60,22 +60,21 @@ export default function NewReply({
           validationSchema={Yup.object({
             content: Yup.string().required('*required'),
           })}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting, resetForm }) => {
             if (label === 'New comment') {
               handleSubmitNew(values)
             } else {
               handleSubmitEdit(values)
             }
-            setTimeout(() => {
-              toast({
-                title: 'Success!',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-                position: 'top-right',
-              })
-              setSubmitting(false)
-            }, 400)
+            toast({
+              title: 'Success!',
+              status: 'success',
+              duration: 5000,
+              isClosable: true,
+              position: 'top-right',
+            })
+            setSubmitting(false)
+            resetForm()
           }}>
           {(formik) => (
             <Form>

@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import TextContainer from '../../components/common/TextContainer'
 import NewPost from '../../components/forum/NewPost'
 
 export default function CreatePost(): JSX.Element {
