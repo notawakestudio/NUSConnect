@@ -94,7 +94,7 @@ export default function NewPost({
             tags: Yup.array().min(1, 'Please select one tag'),
             title: Yup.string().required('Please enter a title'),
           })}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting, resetForm }) => {
             if (label === 'Make a post') {
               handleSubmitNew(values)
             } else if (label === 'Make into wiki') {
@@ -103,16 +103,15 @@ export default function NewPost({
               handleSubmitUpdate(values)
               setEditing(false)
             }
-            setTimeout(() => {
-              toast({
-                title: 'Success!',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-                position: 'top-right',
-              })
-              setSubmitting(false)
-            }, 400)
+            toast({
+              title: 'Success!',
+              status: 'success',
+              duration: 5000,
+              isClosable: true,
+              position: 'top-right',
+            })
+            setSubmitting(false)
+            resetForm()
           }}>
           {(formik) => (
             <section className="bg-indigo-200 dark:bg-gray-800 dark:text-gray-200 ">
