@@ -21,7 +21,7 @@ const defaultPost = {
   created_date: 0,
   edited_date: 0,
   tags: [],
-  week: '1',
+  week: '1',5
   reply_count: 0,
   up_votes: 0,
   is_edited: false,
@@ -31,12 +31,12 @@ export default function NewPost({
   label = 'Make a post',
   currentPost = defaultPost,
   setEditing = function (bool) {},
-  related_question_id,
+  related_question_id = '',
 }: {
   label?: string
   currentPost?: Post
   setEditing?: (bool: boolean) => void
-  related_question_id: string
+  related_question_id?: string
 }): JSX.Element {
   //Initalizing values
   const tags = allAvailableTags.map((tag) => {
