@@ -227,12 +227,14 @@ export async function makeUser(user): Promise<void> {
     displayName: user['displayName'],
     email: user['email'],
     created_date: getCurrentDateTime(),
-    inbox: {
-      id: nanoid(),
-      content: '<h2>Welcome!</h2><p>Wishing you a great learning journey ahead.</p>',
-      created_date: getCurrentDateTime(),
-      read: false,
-    },
+    inbox: [
+      {
+        id: nanoid(),
+        content: '<h2>Welcome!</h2><p>Wishing you a great learning journey ahead.</p>',
+        created_date: getCurrentDateTime(),
+        read: false,
+      },
+    ],
   }
   const exist = await checkUserExists(user['id'])
   if (exist) {
