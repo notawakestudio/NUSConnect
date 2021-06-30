@@ -4,7 +4,7 @@ describe('Quiz page', function () {
     cy.visit('/quiz')
   })
   it('takes a quiz', function () {
-    cy.contains('All Quizzes')
+    cy.contains('Quiz')
 
     cy.get('[data-cy=quizTitle]').contains('Sample Quiz').click()
     cy.get('[data-cy=startQuizButton]').click()
