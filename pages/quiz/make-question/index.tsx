@@ -1,13 +1,15 @@
-import { Button, Checkbox, FormLabel, useToast } from '@chakra-ui/react'
+import { Checkbox, FormLabel, useToast } from '@chakra-ui/react'
 import { Field, FieldArray, Form, Formik } from 'formik'
 import Head from 'next/head'
 import Link from 'next/link'
 import React from 'react'
 import { GrFormNextLink } from 'react-icons/gr'
+import { MdRemoveCircle } from 'react-icons/md'
 import * as Yup from 'yup'
 import Auth from '../../../components/common/Auth'
-import CustomSingleSelect from '../../../components/common/CustomSingleSelect'
-import Layout from '../../../components/common/Layout'
+import SidebarLayout from '../../../components/common/SidebarLayout'
+import CustomSingleSelect from '../../../components/forms/CustomSingleSelect'
+import Required from '../../../components/forms/Required'
 import { makeQuestion } from '../../../components/quiz/QuizAPI'
 
 const initialValues = {
@@ -65,7 +67,7 @@ const QuestionForm = (): JSX.Element => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="dark:bg-gray-800 dark:text-gray-200 ">
-          <Layout>
+          <SidebarLayout>
             <Formik
               initialValues={initialValues}
               validationSchema={Yup.object({
@@ -91,37 +93,41 @@ const QuestionForm = (): JSX.Element => {
                 }, 400)
               }}>
               {(formik) => (
-                <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200">
-                  <Form className="container max-w-3xl mx-auto shadow-md md:w-3/4">
-                    <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
-                      <div className="flex justify-between text-gray-600 dark:text-gray-200">
-                        <h1 className="text-lg font-semibold">Make a question</h1>
-                        <h1 className="text-lg font-semibold flex items-center">
-                          <Button className="dark:bg-blue-500 dark:hover:bg-blue-700">
-                            <Link href="/quiz/make-quiz">Done? Go make a quiz!</Link>
-                            <GrFormNextLink className="ml-1" />
-                          </Button>
-                        </h1>
-                      </div>
+                <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200 w-full">
+                  <Form className="px-4 md:px-6 pt-20">
+                    <div className="flex justify-between text-gray-600 dark:text-gray-200">
+                      <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
+                        Make a question
+                      </h1>
+                      <Link href={'/quiz/make-quiz'}>
+                        <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center w-auto">
+                          <span className="items-center pr-1">
+                            <GrFormNextLink />
+                          </span>
+                          <span>Done? Go make a quiz!</span>
+                        </span>
+                      </Link>
                     </div>
-                    <div className="space-y-6 bg-white dark:bg-gray-800">
-                      <div className="items-center w-full p-4 space-y-4  md:inline-flex md:space-y-0">
-                        <h2 className="max-w-sm mx-auto md:w-2/12">Meta data</h2>
-                        <div className="max-w-md mx-auto md:w-10/12">
-                          <div className="">Type </div>
-                          {formik.errors.type && formik.touched.type ? (
-                            <div className="text-xs font-bold text-red-600">* required </div>
-                          ) : null}
-                          <Field component={CustomSingleSelect} name="type" options={quizType} />
+                    <div className="flex flex-col space-y-6 bg-white dark:bg-gray-800 mt-4">
+                      <div className="flex flex-col w-full space-y-2">
+                        <div className="flex space-x-2 items-end">
+                          <div className="">Type of question</div>
+                          {formik.errors.type && formik.touched.type ? <Required /> : null}
                         </div>
+                        <Field
+                          component={CustomSingleSelect}
+                          name="type"
+                          options={quizType}
+                          className="max-w-md md:w-10/12 w-full"
+                        />
                       </div>
                       <hr />
-                      <div className="items-center w-full p-4 space-y-4 md:inline-flex md:space-y-0">
-                        <h2 className="max-w-sm mx-auto md:w-2/12">Question</h2>
-                        <div className="w-full mx-auto max-w-md md:w-10/12">
-                          {formik.errors.question && formik.touched.question ? (
-                            <div className="text-xs font-bold text-red-600">* required </div>
-                          ) : null}
+                      <div className="flex flex-col w-full space-y-2">
+                        <div className="flex space-x-2 items-end">
+                          <h2 className="">Question content</h2>
+                          {formik.errors.question && formik.touched.question ? <Required /> : null}
+                        </div>
+                        <div className="w-full md:w-10/12">
                           <Field
                             as="textarea"
                             name="question"
@@ -131,46 +137,47 @@ const QuestionForm = (): JSX.Element => {
                         </div>
                       </div>
                       <hr />
-                      <div className="items-center w-full p-4 space-y-4 md:inline-flex md:space-y-0">
-                        <h2 className="max-w-sm mx-auto md:w-2/12">Answers</h2>
-                        <div className="flex flex-col max-w-md mx-auto space-y-4 md:w-10/12">
+                      <div className="flex flex-col w-full space-y-2">
+                        <div className="flex space-x-2 items-end">
+                          <h2 className="">Options (fill in at least 2)</h2>
+                          {formik.errors.answers && formik.touched.answers ? <Required /> : null}
+                        </div>
+                        <div className="flex flex-col space-y-4 md:w-10/12">
                           <FieldArray name="answers">
                             {({ remove, push }) => (
                               <>
                                 {formik.values.answers.length > 0 &&
                                   formik.values.answers.map((answer, index) => (
-                                    <div className="mb-4 flex flex-col items-center" key={index}>
-                                      {formik.errors.answers && formik.touched.answers ? (
-                                        <div className="self-start text-xs font-bold text-red-600">
-                                          * required{' '}
-                                        </div>
-                                      ) : null}
+                                    <div className="my-2 flex flex-col items-center" key={index}>
                                       <div className="flex w-full items-center">
                                         <Field
                                           as="textarea"
                                           rows={4}
                                           className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                           name={`answers.${index}.main`}
-                                          placeholder="This is a placeholder"
+                                          placeholder="Answer"
                                           validate={validateAnswer}
                                         />
-                                        <div className="ml-2">
+                                      </div>
+
+                                      <div className="flex w-full justify-between">
+                                        <div className="mt-1">
                                           <button
                                             type="button"
                                             className="secondary"
                                             onClick={() => remove(index)}>
-                                            X
+                                            <div className="flex flex-row items-center text-gray-800 hover:text-red-700">
+                                              <MdRemoveCircle className="mr-1" />
+                                              Remove
+                                            </div>
                                           </button>
                                         </div>
-                                      </div>
-
-                                      <div className="flex w-full justify-end px-4">
                                         <Field name={`answers.${index}.is_correct`}>
                                           {({ field }) => (
                                             <div className="flex-row flex items-center">
                                               <FormLabel
                                                 htmlFor={`answer.${index}.is_correct`}
-                                                className="whitespace-nowrap content-center pt-1 pl-1">
+                                                className="whitespace-nowrap content-center mt-1 ml-1">
                                                 Correct Answer
                                               </FormLabel>
                                               <Checkbox {...field} />
@@ -215,7 +222,7 @@ const QuestionForm = (): JSX.Element => {
                 </section>
               )}
             </Formik>
-          </Layout>
+          </SidebarLayout>
         </div>
       </Auth>
     </>

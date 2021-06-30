@@ -6,11 +6,13 @@ import React from 'react'
 import { default as Select } from 'react-select'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
-import CustomSingleSelect from '../common/CustomSingleSelect'
+import CustomSingleSelect from '../forms/CustomSingleSelect'
 import { notifyNewPost, renderMdToHtml } from '../common/Util'
 import { useAllQuestions } from '../quiz/QuizAPI'
 import { useUserId } from '../store/user'
 import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
+import Required from '../forms/Required'
+import { TagMultiSelect } from '../forms/TagMultiSelect'
 
 const defaultPost = {
   id: nanoid(),
@@ -134,9 +136,7 @@ export default function NewPost({
                     <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
                     <br />
                     <span>Select Tags</span>
-                    {formik.errors.tags && formik.touched.tags ? (
-                      <span className="text-xs font-bold text-red-600 ml-2">* required </span>
-                    ) : null}
+                    {formik.errors.tags && formik.touched.tags ? <Required /> : null}
                     <Field name={'tags'} component={TagMultiSelect} options={tags} />
                     <br />
                     {!related_question_id ? (
@@ -192,42 +192,6 @@ export default function NewPost({
   )
 }
 
-export const TagMultiSelect = ({
-  field,
-  form,
-  options,
-  isMulti = true,
-}: {
-  field: any
-  form: any
-  options: any
-  isMulti: boolean
-}): JSX.Element => {
-  const onChange = (option) => {
-    form.setFieldValue(field.name, isMulti ? option.map((item) => item.value) : option.value)
-  }
-
-  const getValue = () => {
-    if (options) {
-      return isMulti
-        ? options.filter((option) => field.value.indexOf(option.value) >= 0)
-        : options.find((option) => option.value === field.value)
-    } else {
-      return isMulti ? [] : ('' as any)
-    }
-  }
-
-  return (
-    <Select
-      name={field.name}
-      value={getValue()}
-      onChange={onChange}
-      options={options}
-      isMulti={isMulti}
-    />
-  )
-}
-
 const ContentTextArea = ({
   label,
   ...props
@@ -265,9 +229,7 @@ const TitleTextInput = ({
     <>
       <div className="flex items-center">
         <label htmlFor={props.name}>{label}</label>
-        {meta.touched && meta.error ? (
-          <div className="ml-2 text-xs font-bold text-red-600">*required</div>
-        ) : null}
+        {meta.touched && meta.error ? <Required /> : null}
       </div>
       <input
         className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"

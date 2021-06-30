@@ -1,10 +1,12 @@
 import { useToast } from '@chakra-ui/react'
 import { Form, Formik, useField } from 'formik'
 import { useSession } from 'next-auth/client'
+import React from 'react'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
 import TextContainer from '../common/TextContainer'
 import { notifyReply } from '../common/Util'
+import Required from '../forms/Required'
 import { useUserId } from '../store/user'
 import { makeReply, updateReply } from './ForumAPI'
 
@@ -122,11 +124,7 @@ const ContentTextArea = ({
   return (
     <>
       <label htmlFor={props.name}>{label} </label>
-      {meta.touched && meta.error ? (
-        <span className="text-xs font-bold text-red-500">{meta.error}</span>
-      ) : (
-        ''
-      )}
+      {meta.touched && meta.error ? <Required /> : ''}
       <textarea
         className="flex rounded-lg border border-gray-300 w-full p-2 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent dark:bg-gray-800 dark:text-gray-100"
         {...field}

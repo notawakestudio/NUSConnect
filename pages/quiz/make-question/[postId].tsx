@@ -19,11 +19,12 @@ import React, { useState } from 'react'
 import { GrFormNextLink } from 'react-icons/gr'
 import * as Yup from 'yup'
 import Auth from '../../../components/common/Auth'
-import CustomSingleSelect from '../../../components/common/CustomSingleSelect'
+import CustomSingleSelect from '../../../components/forms/CustomSingleSelect'
 import Layout from '../../../components/common/Layout'
 import PostMain from '../../../components/forum/PostMain'
 import ReplyList from '../../../components/forum/ReplyList'
 import { makeQuestion } from '../../../components/quiz/QuizAPI'
+import Required from '../../../components/forms/Required'
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],
   type: '',
@@ -157,9 +158,7 @@ const QuestionForm = (): JSX.Element => {
                         <h2 className="max-w-sm mx-auto md:w-2/12">Meta data</h2>
                         <div className="max-w-md mx-auto md:w-10/12">
                           <div className="">Type </div>
-                          {formik.errors.type && formik.touched.type ? (
-                            <div className="text-xs font-bold text-red-600">* required </div>
-                          ) : null}
+                          {formik.errors.type && formik.touched.type ? <Required /> : null}
                           <Field component={CustomSingleSelect} name="type" options={quizType} />
                         </div>
                       </div>
@@ -167,9 +166,7 @@ const QuestionForm = (): JSX.Element => {
                       <div className="items-center w-full p-4 space-y-4 md:inline-flex md:space-y-0">
                         <h2 className="max-w-sm mx-auto md:w-2/12">Question</h2>
                         <div className="w-full mx-auto max-w-md md:w-10/12">
-                          {formik.errors.question && formik.touched.question ? (
-                            <div className="text-xs font-bold text-red-600">* required </div>
-                          ) : null}
+                          {formik.errors.question && formik.touched.question ? <Required /> : null}
                           <Field
                             as="textarea"
                             name="question"
@@ -189,9 +186,7 @@ const QuestionForm = (): JSX.Element => {
                                   formik.values.answers.map((answer, index) => (
                                     <div className="mb-4 flex flex-col items-center" key={index}>
                                       {formik.errors.answers && formik.touched.answers ? (
-                                        <div className="self-start text-xs font-bold text-red-600">
-                                          * required{' '}
-                                        </div>
+                                        <Required />
                                       ) : null}
                                       <div className="flex w-full items-center">
                                         <Field
