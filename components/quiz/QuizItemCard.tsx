@@ -10,8 +10,8 @@ import {
   ModalOverlay,
   Tag,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
-import { useToast } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { FaRegThumbsUp } from 'react-icons/fa'
@@ -28,10 +28,10 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
 
   return (
     <>
-      <div className="rounded-lg shadow-lg border m-2 border-indigo-300 w-72 h-auto flex flex-col relative justify-between">
+      <div className="shadow-lg border-t-2 m-2 border-indigo-300 w-auto h-auto flex flex-col relative justify-between">
         <button
           onClick={onOpen}
-          className="p-2 w-full hover:bg-gray-200 space-y-2 text-left flex flex-col justify-between flex-grow">
+          className="p-4 w-full hover:bg-gray-200 space-y-2 text-left flex flex-col justify-between flex-grow">
           <div className="text-gray-600 font-bold text-xl items-center" data-cy="quizTitle">
             {quiz.title}
             <Badge colorScheme="green" className="text-xs ml-1">
