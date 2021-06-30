@@ -1,74 +1,78 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Button,
+  CloseButton,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Tag,
   useDisclosure,
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { IoMdAddCircleOutline } from 'react-icons/io'
 import Search from '../common/Search'
-import QuizItem from './QuizItem'
 import QuizItemCard from './QuizItemCard'
 import { Quiz } from './types'
 
 const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [query, setQuery] = useState('')
+  const [hidden, setHidden] = useState(false)
 
   return (
-    <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-full">
-      <div className="px-2 py-4 border-b">
-        <span className="flex text-lg leading-4 font-medium justify-center mb-2">All Quizzes</span>
-        <div className="xs:flex justify-center space-y-2 xs:space-y-0">
-          <Link href="/quiz/make-question">
-            <button className="whitespace-nowrap bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2 rounded-lg content-center justify-center">
-              Contribute A Quiz
-            </button>
-          </Link>
-          {/* <Search /> */}
+    <>
+      <div className="flex flex-col w-full">
+        <div className="px-4 md:px-6 pt-20">
+          <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">Quiz</h1>
+          <div className={hidden ? `hidden` : `py-2`}>
+            <Alert status="warning">
+              <AlertIcon />
+              <AlertTitle mr={2}>
+                Quizzes/Questions added may take 10-20 seconds to show up
+              </AlertTitle>
+              <CloseButton
+                position="absolute"
+                right="8px"
+                top="8px"
+                as="button"
+                onClick={() => setHidden(true)}
+              />
+            </Alert>
+          </div>
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-1 mt-4 space-y-2">
+            <div className="sm:flex items-center w-auto">
+              <AiOutlineSearch size={25} className="mr-1 hidden md:flex" />
+              <Search design={2} query={query} setQuery={setQuery} />
+            </div>
+            <Link href={'/quiz/make-question'}>
+              <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center w-52">
+                <span className="items-center pr-1">
+                  <IoMdAddCircleOutline />
+                </span>
+                <span>Contribute A Quiz</span>
+              </span>
+            </Link>
+          </div>
         </div>
-      </div>
-      {/* <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
-        <div className="block w-full overflow-x-auto">
-          <table className="items-start w-full bg-transparent border-collapse">
-            <thead>
-              <tr>
-                <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Quiz Name
-                </th>
-                <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                  Date
-                </th>
-                <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                  Week
-                </th>
-                <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                  Author
-                </th>
-                <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Tags
-                </th>
-                <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
+
+        <div className="flex w-full bg-white dark:bg-gray-800 p-4">
+          <div className="flex flex-col items-center lg:items-start justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-full">
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 justify-start">
               {quizzes.map((quiz) => {
-                return <QuizItem key={quiz.id} quiz={quiz} />
+                return <QuizItemCard key={quiz.id} quiz={quiz} />
               })}
-            </tbody>
-          </table>
+            </div>
+          </div>
         </div>
-      </div> */}
-      <div className="flex flex-wrap justify-center">
-        {quizzes.map((quiz) => {
-          return <QuizItemCard key={quiz.id} quiz={quiz} />
-        })}
       </div>
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -88,7 +92,7 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
           </ModalFooter> */}
         </ModalContent>
       </Modal>
-    </div>
+    </>
   )
 }
 
