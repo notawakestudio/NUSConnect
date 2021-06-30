@@ -1,6 +1,11 @@
 
 ![poster](https://github.com/notawakestudio/NUSConnect/blob/main/public/NotAwake.png?raw=true)
 # NUS Connect (Orbital project for AY20/21)
+
+### Level of acheivement
+
+Officially: Artemis
+
 ### Tech Stack
 
 - Nextjs
