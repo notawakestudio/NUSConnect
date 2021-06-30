@@ -2,7 +2,7 @@ import { Checkbox, FormLabel, useToast } from '@chakra-ui/react'
 import { Field, FieldArray, Form, Formik } from 'formik'
 import Head from 'next/head'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { GrFormNextLink } from 'react-icons/gr'
 import { MdRemoveCircle } from 'react-icons/md'
 import * as Yup from 'yup'
@@ -29,14 +29,6 @@ const quizType = [
   { label: 'MRQ', value: 'MRQ' },
 ]
 
-function validateAnswer(value) {
-  let error
-  if (value === '') {
-    error = 'Please enter a value'
-  }
-  return error
-}
-
 const QuestionForm = (): JSX.Element => {
   const errorToast = useToast()
 
@@ -53,11 +45,37 @@ const QuestionForm = (): JSX.Element => {
       })
     }
   }
+  const toast = useToast()
+
+  // Handle toast for answer (main field)
+  const [answerError, setAnswerError] = useState('')
+  function validateAnswer(answers): string {
+    if (answers.filter((answer) => answer.main === '')[0]) {
+      setAnswerError('Please fill in all the options')
+    } else if (new Set(answers.map((answer) => answer.main)).size !== answers.length) {
+      setAnswerError('Each option must be unique')
+    } else {
+      setAnswerError('')
+    }
+    return answerError
+  }
+
+  // Handle toast for answer (is_correct field)
+  const [isCorrectError, setIsCorrectError] = useState('')
+  function validateIsCorrect(answers): string {
+    if (!answers.filter((answer) => answer.is_correct === true)[0]) {
+      setIsCorrectError('Please select a correct option')
+      console.log(isCorrectError)
+    } else {
+      setIsCorrectError('')
+    }
+    return isCorrectError
+  }
 
   const handleSubmit = (value): void => {
-    makeQuestion(value)
+    // makeQuestion(value)
   }
-  const toast = useToast()
+
   return (
     <>
       <Auth>
@@ -66,7 +84,7 @@ const QuestionForm = (): JSX.Element => {
           <meta name="description" content="NUS Connect" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="dark:bg-gray-800 dark:text-gray-200 ">
+        <div className="dark:bg-gray-800 dark:text-gray-200">
           <SidebarLayout>
             <Formik
               initialValues={initialValues}
@@ -74,23 +92,27 @@ const QuestionForm = (): JSX.Element => {
                 modules: Yup.array().required('Module is needed'),
                 type: Yup.string().required('Please enter the type of question'),
                 question: Yup.string().trim().required('Please fill out the question'),
-                answers: Yup.array().min(2, 'Please make one question'),
+                answers: Yup.array().min(2, 'Please make at least 2 answers'),
               })}
               onSubmit={(values, { setSubmitting }) => {
-                handleSubmit(values)
-                console.log(values)
-                setTimeout(() => {
-                  // alert('DONE')
-                  // alert(JSON.stringify(values, null, 2))
-                  toast({
-                    title: 'Success!',
-                    status: 'success',
-                    duration: 5000,
-                    isClosable: true,
-                    position: 'top-right',
-                  })
-                  setSubmitting(false)
-                }, 400)
+                if (answerError) {
+                  showToast(answerError, 'mainAnswer-error')
+                } else if (isCorrectError) {
+                  showToast(isCorrectError, 'iscorrect-error')
+                } else {
+                  handleSubmit(values)
+                  console.log(values)
+                  setTimeout(() => {
+                    toast({
+                      title: 'Success!',
+                      status: 'success',
+                      duration: 5000,
+                      isClosable: true,
+                      position: 'top-right',
+                    })
+                    setSubmitting(false)
+                  }, 400)
+                }
               }}>
               {(formik) => (
                 <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200 w-full">
@@ -156,7 +178,7 @@ const QuestionForm = (): JSX.Element => {
                                           className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                           name={`answers.${index}.main`}
                                           placeholder="Answer"
-                                          validate={validateAnswer}
+                                          validate={validateAnswer(formik.values.answers)}
                                         />
                                       </div>
 
@@ -172,7 +194,9 @@ const QuestionForm = (): JSX.Element => {
                                             </div>
                                           </button>
                                         </div>
-                                        <Field name={`answers.${index}.is_correct`}>
+                                        <Field
+                                          name={`answers.${index}.is_correct`}
+                                          validate={validateIsCorrect(formik.values.answers)}>
                                           {({ field }) => (
                                             <div className="flex-row flex items-center">
                                               <FormLabel
@@ -190,7 +214,7 @@ const QuestionForm = (): JSX.Element => {
                                 <button
                                   type="button"
                                   className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                                  onClick={() => push('')}>
+                                  onClick={() => push({ main: '', is_correct: false })}>
                                   Add More
                                 </button>
                               </>
@@ -211,7 +235,7 @@ const QuestionForm = (): JSX.Element => {
                               showToast(formik.errors.question, 'question-error')
                             }
                             if (formik.errors.answers && formik.touched.answers) {
-                              showToast(formik.errors.answers as string, 'answer-error')
+                              showToast('Please make at least 2 answers', 'answer-error')
                             }
                           }}>
                           Save

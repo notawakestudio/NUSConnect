@@ -3,16 +3,15 @@ import { Field, Form, Formik, useField } from 'formik'
 import { nanoid } from 'nanoid'
 import { useSession } from 'next-auth/client'
 import React from 'react'
-import { default as Select } from 'react-select'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
-import CustomSingleSelect from '../forms/CustomSingleSelect'
 import { notifyNewPost, renderMdToHtml } from '../common/Util'
+import CustomSingleSelect from '../forms/CustomSingleSelect'
+import Required from '../forms/Required'
+import { TagMultiSelect } from '../forms/TagMultiSelect'
 import { useAllQuestions } from '../quiz/QuizAPI'
 import { useUserId } from '../store/user'
 import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
-import Required from '../forms/Required'
-import { TagMultiSelect } from '../forms/TagMultiSelect'
 
 const defaultPost = {
   id: nanoid(),
@@ -37,7 +36,7 @@ export default function NewPost({
   label?: string
   currentPost?: Post
   setEditing?: (bool: boolean) => void
-  related_question_id?: string
+  related_question_id: string
 }): JSX.Element {
   //Initalizing values
   const tags = allAvailableTags.map((tag) => {
@@ -45,7 +44,7 @@ export default function NewPost({
   })
   const initialValues = {
     title: currentPost.title,
-    tags: related_question_id ? ['Quiz', 'Question'] : currentPost.tags,
+    tags: label === 'link-from-quiz' ? ['Quiz', 'Question'] : currentPost.tags,
     content: currentPost.content,
     related_question_id: related_question_id ?? '',
   }
@@ -53,6 +52,7 @@ export default function NewPost({
   //User Session
   const [session] = useSession()
   const userId = useUserId()
+
   //Handling post request
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
@@ -62,7 +62,6 @@ export default function NewPost({
   const handleSubmitUpdate = (value): void => {
     updatePost(value, currentPost)
   }
-
   const handleSubmitWiki = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
     makePost(value)
@@ -85,6 +84,7 @@ export default function NewPost({
   }
 
   const { questions, isLoading } = useAllQuestions()
+
   return (
     <Auth>
       <div
@@ -97,13 +97,22 @@ export default function NewPost({
             title: Yup.string().required('Please enter a title'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            if (label === 'Make a post') {
+            console.log(values)
+            if (label === 'Make a post' || label === 'link-from-quiz') {
               handleSubmitNew(values)
             } else if (label === 'Make into wiki') {
               handleSubmitWiki(values)
-            } else {
+            } else if (label === 'Edit Post') {
               handleSubmitUpdate(values)
               setEditing(false)
+            } else {
+              toast({
+                title: 'Something went wrong',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+              })
             }
             toast({
               title: 'Success!',
@@ -122,11 +131,9 @@ export default function NewPost({
                   <div className="max-w-sm mx-auto md:w-full md:mx-0">
                     <div className="inline-flex items-center space-x-4">
                       <h1 className="dark:text-gray-200 text-lg font-semibold">
-                        {!related_question_id
-                          ? label
-                          : label === 'Edit Post'
-                          ? label
-                          : 'A post linked with this question will be created'}
+                        {label === 'link-from-quiz'
+                          ? 'A post linked with this question will be created'
+                          : label}
                       </h1>
                     </div>
                   </div>
@@ -139,26 +146,24 @@ export default function NewPost({
                     {formik.errors.tags && formik.touched.tags ? <Required /> : null}
                     <Field name={'tags'} component={TagMultiSelect} options={tags} />
                     <br />
-                    {!related_question_id ? (
-                      isLoading ? (
-                        <Skeleton height="20px" />
-                      ) : (
-                        <>
-                          <div>Link Question (optional)</div>
-                          <Field
-                            component={CustomSingleSelect}
-                            name="related_question_id"
-                            options={questions.map((question) => {
-                              return {
-                                label: renderMdToHtml(question['question']),
-                                value: question['id'],
-                              }
-                            })}
-                          />
-                          <br />
-                        </>
-                      )
-                    ) : null}
+                    {isLoading ? (
+                      <Skeleton height="20px" />
+                    ) : (
+                      <>
+                        <div>Link Question (optional)</div>
+                        <Field
+                          component={CustomSingleSelect}
+                          name="related_question_id"
+                          options={questions.map((question) => {
+                            return {
+                              label: renderMdToHtml(question['question']),
+                              value: question['id'],
+                            }
+                          })}
+                        />
+                        <br />
+                      </>
+                    )}
                     <ContentTextArea
                       label="Content (optional)"
                       name="content"
