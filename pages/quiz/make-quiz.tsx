@@ -13,6 +13,7 @@ import CustomMultiSelect from '../../components/common/CustomMultiSelect'
 import Layout from '../../components/common/Layout'
 import { renderMdToHtml } from '../../components/common/Util'
 import { fetchAllQuestions, makeQuiz } from '../../components/quiz/QuizAPI'
+import { useUserId } from '../../components/store/user'
 
 export const getStaticProps: GetStaticProps = async () => {
   const questions = await fetchAllQuestions()
@@ -41,9 +42,9 @@ const QuizForm = ({
   questionList: { label: string; value: string }
 }): JSX.Element => {
   const [session] = useSession()
-
+  const userId = useUserId()
   const handleSubmit = (value): void => {
-    value.author = session.user?.name ? session.user.name : 'Anonymous'
+    value.author = session.user?.name ? userId : 'Anonymous'
     makeQuiz(value)
   }
 

@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Badge,
   Button,
   Modal,
@@ -17,7 +16,8 @@ import React, { useState } from 'react'
 import { FaRegThumbsUp } from 'react-icons/fa'
 import { timeSince } from '../common/Util'
 import { Quiz } from './types'
-
+import DisplayName from '../profile/DisplayName'
+import Avatar from '../profile/Avatar'
 const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
   const date = timeSince(quiz.date)
   const [liked, setLiked] = useState(false)
@@ -48,9 +48,11 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
         </button>
         <div className="flex flex-col">
           <div className="flex flex-row items-center space-x-2 border-t border-gray-200 p-2">
-            <Avatar size="sm" name="user" src="https://bit.ly/dan-abramov" />
+            <Avatar author_id={quiz.author} />
             <div className="flex-col">
-              <div className="text-gray-600 font-semibold text-xs text-left">{quiz.author}</div>
+              <div className="text-gray-600 font-semibold text-xs text-left">
+                <DisplayName author_id={quiz.author} />
+              </div>
               <div className="text-gray-600 font-light text-xs text-left">{date} ago</div>
             </div>
             <div className="absolute right-2">
@@ -75,14 +77,14 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
           </div>
         </div>
       </div>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader data-cy="quizPromptTitle">{quiz.title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody className="text-center">
             <Link href={`/quiz/${quiz.id}`}>
-              <Button colorScheme="blue" onClick={onClose} data-cy="startQuizButton">
+              <Button colorScheme="green" onClick={onClose} data-cy="startQuizButton">
                 Start Quiz
               </Button>
             </Link>
