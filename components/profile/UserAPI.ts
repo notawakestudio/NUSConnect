@@ -5,6 +5,7 @@ import { useUserId } from '../store/user'
 
 const API_MAKE_USER = 'https://1ieznu.deta.dev/user/make'
 const API_GET_USER = 'https://1ieznu.deta.dev/user/'
+const API_GET_ALL_USER = 'https://1ieznu.deta.dev/user/all'
 const API_CHECK_USER = 'https://1ieznu.deta.dev/user/check/'
 const API_UPDATE_USER = 'https://1ieznu.deta.dev/user/update/'
 
@@ -32,7 +33,7 @@ type ModuleInfo = {
   exp: number
   badges: string[]
 }
-const defaultModuleInfo: ModuleInfo[] = [
+export const defaultModuleInfo: ModuleInfo[] = [
   {
     id: 'CS2030/S',
     exp: 0,
@@ -43,7 +44,7 @@ const defaultModuleInfo: ModuleInfo[] = [
 ]
 type User = {
   id: string
-  modules: string[]
+  modules: ModuleInfo[]
   profilePicUrl: string
   role: string
   userName: string
@@ -74,6 +75,19 @@ export function useUser() {
   const { data, error } = useSWR(API_GET_USER + userId)
   return {
     user: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export function useAllUser(): {
+  users: User[]
+  isLoading: boolean
+  isError: any
+} {
+  const { data, error } = useSWR(API_GET_ALL_USER)
+  return {
+    users: data,
     isLoading: !error && !data,
     isError: error,
   }
@@ -227,12 +241,14 @@ export async function makeUser(user): Promise<void> {
     displayName: user['displayName'],
     email: user['email'],
     created_date: getCurrentDateTime(),
-    inbox: {
-      id: nanoid(),
-      content: '<h2>Welcome!</h2><p>Wishing you a great learning journey ahead.</p>',
-      created_date: getCurrentDateTime(),
-      read: false,
-    },
+    inbox: [
+      {
+        id: nanoid(),
+        content: '<h2>Welcome!</h2><p>Wishing you a great learning journey ahead.</p>',
+        created_date: getCurrentDateTime(),
+        read: false,
+      },
+    ],
   }
   const exist = await checkUserExists(user['id'])
   if (exist) {

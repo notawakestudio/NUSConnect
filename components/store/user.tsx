@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/client'
 import { createContext, useContext, useEffect, useReducer } from 'react'
 import { getCurrentDateTime } from '../common/Util'
-import { makeUser } from '../profile/UserAPI'
+import { defaultModuleInfo, makeUser } from '../profile/UserAPI'
 
 type Action =
   | { type: 'init'; payload: string }
@@ -66,7 +66,7 @@ function useUserIdInit(): void {
       dispatch({ type: 'init', payload: session.userId as string })
       makeUser({
         id: session.userId,
-        modules: ['cs2030'],
+        modules: defaultModuleInfo,
         profilePicUrl: session.user.image,
         role: 'dreamer',
         displayName: session.user.name,
