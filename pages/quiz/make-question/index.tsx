@@ -73,7 +73,7 @@ const QuestionForm = (): JSX.Element => {
   }
 
   const handleSubmit = (value): void => {
-    // makeQuestion(value)
+    makeQuestion(value)
   }
 
   return (
