@@ -1,7 +1,7 @@
 import SidebarLayout from '../components/common/SidebarLayout'
 import Head from 'next/head'
 import { useAllUser } from '../components/profile/UserAPI'
-import { Skeleton } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/react'
 function Scoreboard(): JSX.Element {
   const { users, isLoading } = useAllUser()
   return (
@@ -22,7 +22,13 @@ function Scoreboard(): JSX.Element {
         </div>
         <ul className="flex flex-col self-center">
           {isLoading ? (
-            <Skeleton height="600" />
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
           ) : (
             users
               .sort((a, b) => b.modules[0].exp - a.modules[0].exp)

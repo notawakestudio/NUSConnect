@@ -70,7 +70,11 @@ export function levelize(exp: number): number {
   return 0
 }
 
-export function useUser() {
+export function useUser(): {
+  user: User
+  isLoading: boolean
+  isError: any
+} {
   const userId = useUserId()
   const { data, error } = useSWR(API_GET_USER + userId)
   return {
