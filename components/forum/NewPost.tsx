@@ -147,12 +147,12 @@ export default function NewPost({
                     {formik.errors.tags && formik.touched.tags ? <Required /> : null}
                     <Field name={'tags'} component={TagMultiSelect} options={tags} />
                     <br />
+                    <div>Link Question (optional)</div>
                     {label !== 'link-from-quiz' ? (
                       isLoading || questionIsLoading ? (
-                        <Skeleton height="20px" />
-                      ) : (
+                        <Skeleton height="30px" />
+                      ) : related_question_id ? (
                         <>
-                          <div>Link Question (optional)</div>
                           <Field
                             component={CustomSingleSelect}
                             name="related_question_id"
@@ -162,15 +162,28 @@ export default function NewPost({
                                 value: question['id'],
                               }
                             })}
-                            value={related_question_id ?? ''}
-                            label={related_question_id ? renderMdToHtml(question.question) : ''}
+                            setValue={{
+                              value: related_question_id,
+                              label: renderMdToHtml(question.question),
+                            }}
                           />
-                          <br />
                         </>
+                      ) : (
+                        <Field
+                          component={CustomSingleSelect}
+                          name="related_question_id"
+                          options={questions.map((question) => {
+                            return {
+                              label: renderMdToHtml(question['question']),
+                              value: question['id'],
+                            }
+                          })}
+                        />
                       )
                     ) : (
                       ''
                     )}
+                    <br />
                     <ContentTextArea
                       label="Content (optional)"
                       name="content"

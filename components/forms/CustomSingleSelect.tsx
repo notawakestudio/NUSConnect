@@ -3,10 +3,12 @@ import Select from 'react-select'
 
 export default function CustomSingleSelect(props): JSX.Element {
   const [field, state, { setValue, setTouched }] = useField(props.field.name)
+  console.log(props)
   const onChange = (value: { value: string; label: string }): void => setValue(value.value)
   return (
     <Select
       {...props}
+      defaultValue={props.setValue}
       onChange={onChange}
       onBlur={setTouched}
       formatOptionLabel={function (data) {
