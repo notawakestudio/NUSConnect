@@ -32,7 +32,9 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
         <button
           onClick={onOpen}
           className="p-4 w-full hover:bg-gray-200 space-y-2 text-left flex flex-col justify-between flex-grow">
-          <div className="text-gray-600 font-bold text-xl items-center" data-cy="quizTitle">
+          <div
+            className="text-gray-600 font-bold text-xl items-center dark:text-gray-100"
+            data-cy="quizTitle">
             {quiz.title}
             <Badge colorScheme="green" className="text-xs ml-1">
               week {quiz.week}
@@ -46,14 +48,14 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
             ))}
           </div>
         </button>
-        <div className="flex flex-col">
+        <div className="flex flex-col text-gray-600 dark:text-gray-100">
           <div className="flex flex-row items-center space-x-2 border-t border-gray-200 p-2">
             <Avatar author_id={quiz.author} />
             <div className="flex-col">
-              <div className="text-gray-600 font-semibold text-xs text-left">
+              <div className=" font-semibold text-xs text-left">
                 <DisplayName author_id={quiz.author} />
               </div>
-              <div className="text-gray-600 font-light text-xs text-left">{date} ago</div>
+              <div className="font-light text-xs text-left">{date} ago</div>
             </div>
             <div className="absolute right-2">
               <button
@@ -69,8 +71,8 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
                   // updatePostLikes(upVotes + 1, currentPost.id)
                   setLiked(true)
                 }}
-                className="text-gray-400 flex text-xs border-l border-gray-200 items-center">
-                <FaRegThumbsUp color={`${liked ? 'black' : ''}`} className="w-4 h-4 mx-2" />
+                className="flex text-xs border-l border-gray-200 items-center">
+                <FaRegThumbsUp color={`${liked ? 'green' : ''}`} className="w-4 h-4 mx-2" />
                 10
               </button>
             </div>

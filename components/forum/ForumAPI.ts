@@ -280,6 +280,7 @@ export function updatePost(update: string[], currPost: Post): void {
     tags: update['tags'],
     is_edited: true,
     edited_date: getCurrentDateTime(),
+    related_question_id: update['related_question_id'],
   }
   if (update['title'] === currPost.title) {
     delete requestBody['title']
@@ -289,6 +290,9 @@ export function updatePost(update: string[], currPost: Post): void {
   }
   if (update['tags'] === currPost.tags) {
     delete requestBody['tags']
+  }
+  if (update['related_question_id'] === currPost.related_question_id) {
+    delete requestBody['related_question_id']
   }
   fetch(API_UPDATE_POST + currPost.id, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
