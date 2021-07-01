@@ -84,7 +84,7 @@ export default function NewPost({
   }
 
   const { questions, isLoading } = useAllQuestions()
-  const { question } = useQuestion(related_question_id)
+  const { question, isLoading: questionIsLoading } = useQuestion(related_question_id)
 
   return (
     <Auth>
@@ -147,12 +147,12 @@ export default function NewPost({
                     {formik.errors.tags && formik.touched.tags ? <Required /> : null}
                     <Field name={'tags'} component={TagMultiSelect} options={tags} />
                     <br />
+                    <div>Link Question (optional)</div>
                     {label !== 'link-from-quiz' ? (
-                      isLoading ? (
-                        <Skeleton height="20px" />
+                      isLoading || questionIsLoading ? (
+                        <Skeleton height="30px" />
                       ) : (
                         <>
-                          <div>Link Question (optional)</div>
                           <Field
                             component={CustomSingleSelect}
                             name="related_question_id"
@@ -162,15 +162,21 @@ export default function NewPost({
                                 value: question['id'],
                               }
                             })}
-                            value={related_question_id ?? ''}
-                            label={renderMdToHtml(question.question) ?? ''}
+                            setValue={
+                              related_question_id
+                                ? {
+                                    value: related_question_id,
+                                    label: renderMdToHtml(question.question),
+                                  }
+                                : ''
+                            }
                           />
-                          <br />
                         </>
                       )
                     ) : (
                       ''
                     )}
+                    <br />
                     <ContentTextArea
                       label="Content (optional)"
                       name="content"
