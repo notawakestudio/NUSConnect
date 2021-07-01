@@ -2,7 +2,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { GrFormCalendar, GrSemantics } from 'react-icons/gr'
 import { IoMdAddCircleOutline } from 'react-icons/io'
@@ -17,7 +16,6 @@ import { useUserId } from '../../components/store/user'
 
 export default function DashBoard(): JSX.Element {
   const schedule = fetchDashboardData('xft5nj9NXr_RXl3LEyt2g')
-  const [exp] = useState(30)
   const { user, isLoading } = useUser()
   const userId = useUserId()
   const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
@@ -72,11 +70,12 @@ export default function DashBoard(): JSX.Element {
                               isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl
                             }></Image>
                           <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
-                            Level {isLoading ? <Skeleton width={20} /> : levelize(30)}
+                            Level{' '}
+                            {isLoading ? <Skeleton width={20} /> : levelize(user.modules[0].exp)}
                           </p>
                         </div>
                         <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
-                          {exp}
+                          {user.modules[0].exp}
                           <span className="text-xs text-gray-400"> EXP</span>
                         </div>
                       </div>
