@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import SidebarLayout from '../../components/common/SidebarLayout'
+import SidebarLayout from '../../components/layouts/SidebarLayout'
 import MessageSection from '../../components/inbox/MessageSection'
 import { useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'

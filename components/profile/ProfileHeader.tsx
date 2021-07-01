@@ -56,25 +56,29 @@ export default function ProfileHeader(): JSX.Element {
               Role: {isLoading ? <Skeleton width={100} /> : user.role}
             </p>
           </div>
-          <div className="max-w-max rounded-lg bg-blue-100 dark:bg-white p-2">
-            <div className="flex flex-row space-x-3 items-center text-xs text-gray-400 dark:text-black">
+          <div className="max-w-max rounded-lg bg-blue-100 dark:bg-gray-700 p-2">
+            <div className="flex flex-row space-x-3 items-center text-xs text-gray-500 dark:text-gray-200">
               <p className="flex flex-col ">
                 Total Posts
-                <span className="text-black dark:text-indigo-500 font-bold">2</span>
+                <span className=" dark:text-indigo-300 font-bold">2</span>
               </p>
               <p className="flex flex-col">
                 Total Replies
-                <span className="text-black dark:text-indigo-500 font-bold">5</span>
+                <span className=" dark:text-indigo-300 font-bold">5</span>
               </p>
               <p className="flex flex-col">
                 Total Quizzes
-                <span className="text-black dark:text-indigo-500 font-bold">9</span>
+                <span className=" dark:text-indigo-300 font-bold">9</span>
               </p>
             </div>
           </div>
         </div>
         <div className="h-28 flex flex-col justify-between">
-          <Button colorScheme="teal" variant="outline" onClick={onOpen}>
+          <Button
+            colorScheme="teal"
+            variant="outline"
+            onClick={onOpen}
+            className="dark:text-gray-300">
             Edit profile
           </Button>
         </div>

@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { nanoid } from 'nanoid'
 import Head from 'next/head'
 import * as Yup from 'yup'
-import Layout from '../../components/common/Layout'
+import Layout from '../../components/layouts/Layout'
 import { makeModule } from '../../components/module/ModuleAPI'
 export default function Home(): JSX.Element {
   const initialValues = {

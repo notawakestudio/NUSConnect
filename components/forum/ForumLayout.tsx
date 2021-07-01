@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import Layout from '../../components/common/Layout'
+import Layout from '../layouts/Layout'
 import TagBar from '../common/TagBar'
 import { Post, useAllPosts } from './ForumAPI'
 import PostList from './PostList'

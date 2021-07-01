@@ -84,7 +84,7 @@ export default function NewPost({
   }
 
   const { questions, isLoading } = useAllQuestions()
-  const { question, isQuestionLoading } = useQuestion(related_question_id)
+  const { question } = useQuestion(related_question_id)
 
   return (
     <Auth>
