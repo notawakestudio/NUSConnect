@@ -84,7 +84,7 @@ export default function NewPost({
   }
 
   const { questions, isLoading } = useAllQuestions()
-  const { question } = useQuestion(related_question_id)
+  const { question, isLoading: questionIsLoading } = useQuestion(related_question_id)
 
   return (
     <Auth>
@@ -148,7 +148,7 @@ export default function NewPost({
                     <Field name={'tags'} component={TagMultiSelect} options={tags} />
                     <br />
                     {label !== 'link-from-quiz' ? (
-                      isLoading ? (
+                      isLoading || questionIsLoading ? (
                         <Skeleton height="20px" />
                       ) : (
                         <>
@@ -163,7 +163,7 @@ export default function NewPost({
                               }
                             })}
                             value={related_question_id ?? ''}
-                            label={renderMdToHtml(question.question) ?? ''}
+                            label={related_question_id ? renderMdToHtml(question.question) : ''}
                           />
                           <br />
                         </>
