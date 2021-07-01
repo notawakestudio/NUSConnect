@@ -1,5 +1,5 @@
 import MDEditor from '../components/common/MDEditor'
-import Layout from '../components/common/Layout'
+import Layout from '../components/layouts/Layout'
 import Head from 'next/head'
 export default function Maker(): JSX.Element {
   return (

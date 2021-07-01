@@ -39,19 +39,20 @@ describe('Forum page', function () {
     })
   })
 
-  it('can fill in new post', function () {
-    cy.get('input[name=title]').type('New Post')
-    cy.contains('Select Tags').next().click()
-    cy.get('#react-select-2-option-0').click()
-    cy.get('textarea[name=content]').type('New Post content')
-  })
+  // it('can fill in new post', function () {
+  //   cy.login()
+  //   cy.get('input[name=title]').type('New Post')
+  //   cy.contains('Select Tags').next().click()
+  //   cy.get('#react-select-2-option-0').click()
+  //   cy.get('textarea[name=content]').type('New Post content')
+  // })
 
-  it('can fill in comment', function () {
-    cy.login()
-    cy.get('[data-cy=postList]').children().first().click()
-    cy.get('[data-cy=newReplyForm]').within(() => {
-      cy.contains('New comment')
-    })
-    cy.get('textarea[name=content]').type('New comment')
-  })
+  // it('can fill in comment', function () {
+  //   cy.login()
+  //   cy.get('[data-cy=postList]').children().first().click()
+  //   cy.get('[data-cy=newReplyForm]').within(() => {
+  //     cy.contains('New comment')
+  //   })
+  //   cy.get('textarea[name=content]').type('New comment')
+  // })
 })

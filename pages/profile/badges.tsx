@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import SidebarLayout from '../../components/common/SidebarLayout'
+import SidebarLayout from '../../components/layouts/SidebarLayout'
 import Badges from '../../components/profile/Badges'
 
 export default function Badge(): JSX.Element {

@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import SidebarLayout from '../../components/common/SidebarLayout'
+import SidebarLayout from '../../components/layouts/SidebarLayout'
 import { fetchAllQuizzes } from '../../components/quiz/QuizAPI'
 import QuizList from '../../components/quiz/QuizList'
 import { Quiz } from '../../components/quiz/types'

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
-import SidebarLayout from '../../components/common/SidebarLayout'
+import SidebarLayout from '../../components/layouts/SidebarLayout'
 import NewQuest from '../../components/dashboard/NewQuest'
 
 export default function CreateAnnouncement(): JSX.Element {

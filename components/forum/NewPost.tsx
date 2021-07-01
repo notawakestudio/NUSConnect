@@ -9,7 +9,7 @@ import { notifyNewPost, renderMdToHtml } from '../common/Util'
 import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
 import { TagMultiSelect } from '../forms/TagMultiSelect'
-import { useAllQuestions } from '../quiz/QuizAPI'
+import { useAllQuestions, useQuestion } from '../quiz/QuizAPI'
 import { useUserId } from '../store/user'
 import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
 
@@ -84,6 +84,7 @@ export default function NewPost({
   }
 
   const { questions, isLoading } = useAllQuestions()
+  const { question } = useQuestion(related_question_id)
 
   return (
     <Auth>
@@ -146,23 +147,29 @@ export default function NewPost({
                     {formik.errors.tags && formik.touched.tags ? <Required /> : null}
                     <Field name={'tags'} component={TagMultiSelect} options={tags} />
                     <br />
-                    {isLoading ? (
-                      <Skeleton height="20px" />
+                    {label !== 'link-from-quiz' ? (
+                      isLoading ? (
+                        <Skeleton height="20px" />
+                      ) : (
+                        <>
+                          <div>Link Question (optional)</div>
+                          <Field
+                            component={CustomSingleSelect}
+                            name="related_question_id"
+                            options={questions.map((question) => {
+                              return {
+                                label: renderMdToHtml(question['question']),
+                                value: question['id'],
+                              }
+                            })}
+                            value={related_question_id ?? ''}
+                            label={renderMdToHtml(question.question) ?? ''}
+                          />
+                          <br />
+                        </>
+                      )
                     ) : (
-                      <>
-                        <div>Link Question (optional)</div>
-                        <Field
-                          component={CustomSingleSelect}
-                          name="related_question_id"
-                          options={questions.map((question) => {
-                            return {
-                              label: renderMdToHtml(question['question']),
-                              value: question['id'],
-                            }
-                          })}
-                        />
-                        <br />
-                      </>
+                      ''
                     )}
                     <ContentTextArea
                       label="Content (optional)"

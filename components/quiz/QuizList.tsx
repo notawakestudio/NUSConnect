@@ -31,7 +31,7 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
           </Alert>
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-1 mt-2">
-          <div className="sm:flex items-center w-auto p-1">
+          <div className="sm:flex items-center w-auto p-1 dark:text-gray-200">
             <AiOutlineSearch size={25} className="mr-1 hidden md:flex" />
             <Search design={Design.square} query={query} setQuery={setQuery} />
           </div>

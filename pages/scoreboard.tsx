@@ -1,4 +1,4 @@
-import SidebarLayout from '../components/common/SidebarLayout'
+import SidebarLayout from '../components/layouts/SidebarLayout'
 import Head from 'next/head'
 import { useAllUser } from '../components/profile/UserAPI'
 import { Spinner } from '@chakra-ui/react'
