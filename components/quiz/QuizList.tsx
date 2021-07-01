@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { IoMdAddCircleOutline } from 'react-icons/io'
-import Search from '../common/Search'
+import Search, { Design } from '../common/Search'
 import QuizItemCard from './QuizItemCard'
 import { Quiz } from './types'
 
@@ -30,13 +30,13 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
             />
           </Alert>
         </div>
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-1 mt-4 space-y-2">
-          <div className="sm:flex items-center w-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-1 mt-2">
+          <div className="sm:flex items-center w-auto p-1">
             <AiOutlineSearch size={25} className="mr-1 hidden md:flex" />
-            <Search design={2} query={query} setQuery={setQuery} />
+            <Search design={Design.square} query={query} setQuery={setQuery} />
           </div>
           <Link href={'/quiz/make-question'}>
-            <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center w-52">
+            <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center w-auto h-auto">
               <span className="items-center pr-1">
                 <IoMdAddCircleOutline />
               </span>

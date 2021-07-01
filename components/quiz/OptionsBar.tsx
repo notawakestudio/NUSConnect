@@ -61,7 +61,7 @@ export default function OptionsBar({
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <NewPost related_question_id={questionId} />
+            <NewPost label="link-from-quiz" related_question_id={questionId} />
           </ModalContent>
         </Modal>
       )}

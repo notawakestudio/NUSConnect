@@ -217,7 +217,7 @@ export const fetchQuizTitle_MOCK = (quizId: string): string => {
   return QuizData.filter((quiz) => quiz['id'] === quizId)[0]['title']
 }
 
-export const classifyAnswers = (answers: { main: string; is_correct: boolean }[]): string[][] => {
+export const classifyAnswers = (answers: { main: string; is_correct?: boolean }[]): string[][] => {
   const correct_answers = []
   const incorrect_answers = []
 

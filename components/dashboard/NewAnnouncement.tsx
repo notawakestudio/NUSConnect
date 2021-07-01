@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/client'
 import React from 'react'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
+import Required from '../forms/Required'
 import { Announcement, makeAnnouncement, updateAnnouncement } from './DashboardAPI'
 
 const defaultAnnouncement = {
@@ -169,9 +170,7 @@ const TitleTextInput = ({
     <>
       <div className="flex items-center">
         <label htmlFor={props.name}>{label}</label>
-        {meta.touched && meta.error ? (
-          <div className="ml-2 text-xs font-bold text-red-600">*required</div>
-        ) : null}
+        {meta.touched && meta.error ? <Required /> : null}
       </div>
       <input
         className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
