@@ -75,7 +75,7 @@ export default function DashBoard(): JSX.Element {
                           </p>
                         </div>
                         <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
-                          {user.modules[0].exp}
+                          {isLoading ? <Skeleton width={20} /> : user.modules[0].exp}
                           <span className="text-xs text-gray-400"> EXP</span>
                         </div>
                       </div>
