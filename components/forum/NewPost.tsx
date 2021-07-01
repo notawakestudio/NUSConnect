@@ -151,7 +151,7 @@ export default function NewPost({
                     {label !== 'link-from-quiz' ? (
                       isLoading || questionIsLoading ? (
                         <Skeleton height="30px" />
-                      ) : related_question_id ? (
+                      ) : (
                         <>
                           <Field
                             component={CustomSingleSelect}
@@ -162,23 +162,16 @@ export default function NewPost({
                                 value: question['id'],
                               }
                             })}
-                            setValue={{
-                              value: related_question_id,
-                              label: renderMdToHtml(question.question),
-                            }}
+                            setValue={
+                              related_question_id
+                                ? {
+                                    value: related_question_id,
+                                    label: renderMdToHtml(question.question),
+                                  }
+                                : ''
+                            }
                           />
                         </>
-                      ) : (
-                        <Field
-                          component={CustomSingleSelect}
-                          name="related_question_id"
-                          options={questions.map((question) => {
-                            return {
-                              label: renderMdToHtml(question['question']),
-                              value: question['id'],
-                            }
-                          })}
-                        />
                       )
                     ) : (
                       ''

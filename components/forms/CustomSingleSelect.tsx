@@ -8,7 +8,7 @@ export default function CustomSingleSelect(props): JSX.Element {
   return (
     <Select
       {...props}
-      defaultValue={props.setValue}
+      defaultValue={props.setValue ?? ''}
       onChange={onChange}
       onBlur={setTouched}
       formatOptionLabel={function (data) {
