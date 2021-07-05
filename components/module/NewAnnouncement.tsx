@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react'
-import { Form, Formik, useField } from 'formik'
+import { Field, Form, Formik, useField } from 'formik'
 import { nanoid } from 'nanoid'
 import { useSession } from 'next-auth/client'
 import React from 'react'
@@ -12,6 +12,7 @@ import { Announcement, makeAnnouncement, updateAnnouncement } from './ModuleAPI'
 const defaultAnnouncement = {
   id: nanoid(),
   author_id: 'string',
+  week: 1,
   title: '',
   content: '',
   created_date: 0,
@@ -30,6 +31,7 @@ export default function NewAnnouncement({
   const initialValues = {
     title: currentAnnouncement.title,
     content: currentAnnouncement.content,
+    week: currentAnnouncement.week,
   }
 
   //User Session
@@ -38,10 +40,10 @@ export default function NewAnnouncement({
   //Handling Announcement request
   const handleSubmitNew = (value): void => {
     value.author_id = session.user?.name ? userId : 'Anonymous'
-    makeAnnouncement('BIeJv0fR3IzmDP43Snh0U', value)
+    makeAnnouncement('kMvp8b48SmTiXXCl7EAkc', value)
   }
   const handleSubmitUpdate = (value): void => {
-    updateAnnouncement(value, currentAnnouncement)
+    updateAnnouncement(value, 'kMvp8b48SmTiXXCl7EAkc', currentAnnouncement)
   }
 
   //Toast
@@ -69,6 +71,7 @@ export default function NewAnnouncement({
           initialValues={initialValues}
           validationSchema={Yup.object({
             title: Yup.string().required('Please enter a title'),
+            week: Yup.number().required('Please enter current week'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             if (label === 'Make an Announcement') {
@@ -105,6 +108,18 @@ export default function NewAnnouncement({
                   <div className="items-center w-full p-4 text-gray-500 dark:text-gray-300 flex-shrink-0 flex-col">
                     <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
                     <br />
+                    <div className="flex space-x-2 items-end">
+                      <div>Week</div>
+                      {formik.errors.week && formik.touched.week ? <Required /> : null}
+                    </div>
+                    <Field
+                      name="week"
+                      type="number"
+                      min={0}
+                      max={13}
+                      className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      place
+                      holder="week"></Field>
                     <ContentTextArea
                       label="Content (optional)"
                       name="content"

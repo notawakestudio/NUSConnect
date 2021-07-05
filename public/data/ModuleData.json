@@ -11,21 +11,24 @@
     "id": "rOS6Pt4tnuaSYrbZ2hpQF",
     "week": "1",
     "announcements": [{
-        "id": "id1",
+        "id": "hg1x0pHhPrxk6Adr0EHVR",
+        "week": 1,
         "author_id": "WnqaRimjGDDY9KxM49XQ",
         "title": "Welcome to your first week of CS2030!",
         "content": "Some things to note for this week ...",
         "created_date": 1622557680592
       },
       {
-        "id": "id2",
+        "id": "ilSSiCx7VS64T73ADmC87",
+        "week": 1,
         "author_id": "WnqaRimjGDDY9KxM49XQ",
         "title": "Welcome to your second week of CS2030!",
         "content": "Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...",
         "created_date": 1622557680592
       },
       {
-        "id": "id3",
+        "id": "8k-yJLLr2Ec7zjiVpY1zF",
+        "week": 1,
         "author_id": "ddHg168Fwz9VIP1wxbzK",
         "title": "Welcome to your third week of CS2030!",
         "content": "Start of something new..",
@@ -35,6 +38,7 @@
     "quests": [{
         "id": "MpGV4bzRpbNj683Pt-ful",
         "description": "Do a quiz",
+        "week": 1,
         "type": "quiz",
         "count": 1,
         "link": "",
@@ -46,8 +50,9 @@
         }
       },
       {
-        "id": "test2",
+        "id": "AImRUMlFnX7JwU-eInSoK",
         "description": "Post a forum post",
+        "week": 1,
         "type": "forum",
         "count": 1,
         "link": "",

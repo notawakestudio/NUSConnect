@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import ModuleData from '../../public/data/ModuleData.json'
 import { getCurrentDateTime } from '../common/Util'
 import { Post, Reply } from '../forum/ForumAPI'
@@ -8,6 +8,8 @@ const API_MAKE_MODULE = 'https://1ieznu.deta.dev/module/make'
 const API_GET_ALL_MODULE = 'https://1ieznu.deta.dev/module'
 const API_GET_MODULE = 'https://1ieznu.deta.dev/module/'
 const API_SUBMIT_ANNOUNCEMENT = 'https://1ieznu.deta.dev/module/announcement/make/'
+const API_DELETE_ANNOUNCEMENT = 'https://1ieznu.deta.dev/module/announcement/delete/'
+const API_UPDATE_ANNOUNCEMENT = 'https://1ieznu.deta.dev/module/announcement/update/'
 export type Reward = {
   exp: number
   badge: string
@@ -15,6 +17,7 @@ export type Reward = {
 
 export type Quest = {
   id: string
+  week: number
   description: string
   type: string
   count: number
@@ -26,17 +29,11 @@ export type Quest = {
 
 export type Announcement = {
   id: string
+  week: number
   author_id: string
   title: string
   content: string
   created_date: number
-}
-
-export type WeeklySchedule = {
-  id: string
-  week: string
-  announcements: Announcement[]
-  quests: Quest[]
 }
 
 export type Module = {
@@ -47,7 +44,8 @@ export type Module = {
   quizzes: Quiz[]
   posts: Post[]
   replies: Reply[]
-  schedules: WeeklySchedule[]
+  announcements: Announcement[]
+  quests: Quest[]
 }
 
 const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
@@ -77,7 +75,7 @@ export const useModule = (
 }
 
 export function makeModule(module: Module): void {
-  const requestBody = {
+  const requestBody: Module = {
     id: module['id'],
     title: module['title'],
     users: module['users'],
@@ -85,7 +83,8 @@ export function makeModule(module: Module): void {
     questions: module['questions'],
     posts: module['posts'],
     replies: module['replies'],
-    schedules: module['schedules'],
+    announcements: module['announcements'],
+    quests: module['quests'],
   }
   fetch(API_MAKE_MODULE, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -110,6 +109,7 @@ export const fetchModuleTitle = (moduleId: string): string => {
 export function makeAnnouncement(moduleId: string, announcement: Announcement): void {
   const requestBody: Announcement = {
     id: nanoid(),
+    week: announcement['week'],
     author_id: announcement['author_id'],
     title: announcement['title'],
     content: announcement['content'],
@@ -132,58 +132,53 @@ export function makeAnnouncement(moduleId: string, announcement: Announcement): 
   })
 }
 
-export function updateAnnouncement(update: string[], currAnnouncement: Announcement): void {
-  const requestBody = {
-    title: update['title'],
-    content: update['content'],
-  }
+export function updateAnnouncement(
+  update: string[],
+  moduleId: string,
+  currAnnouncement: Announcement
+): void {
+  currAnnouncement.title = update['title']
+  currAnnouncement.week = update['week']
+  currAnnouncement.content = update['content']
+  const requestBody = currAnnouncement
 
-  if (update['title'] === currAnnouncement.title) {
-    delete requestBody['title']
-  }
-  if (update['content'] === currAnnouncement.content) {
-    delete requestBody['content']
-  }
-
-  console.log('updated announcement')
-  // fetch(API_UPDATE_ANNOUNCEMENTS + currAnnouncement.id, {
-  //   method: 'Announcement', // *GET, Announcement, PUT, DELETE, etc.
-  //   mode: 'no-cors', // no-cors, *cors, same-origin
-  //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  //   credentials: 'same-origin', // include, *same-origin, omit
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     // 'Content-Type': 'application/x-www-form-urlencoded',
-  //   },
-  //   redirect: 'follow', // manual, *follow, error
-  //   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  //   body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  // }).then((response) => {
-  //   console.log(response)
-  //   mutate(API_GET_ANNOUNCEMENT_BY_ID + currAnnouncement.id)
-  // })
+  fetch(API_UPDATE_ANNOUNCEMENT + moduleId + '/' + currAnnouncement.id, {
+    method: 'POST',
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_MODULE + moduleId)
+  })
 }
 
-export function deleteAnnouncement(announcementId: string): void {
-  console.log('delete announcement')
-  // const requestBody = {}
-  // fetch(API_UPDATE_ANNOUNCEMENTS + announcementId, {
-  //   method: 'DELETE', // *GET, Announcement, PUT, DELETE, etc.
-  //   mode: 'cors', // no-cors, *cors, same-origin
-  //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  //   credentials: 'same-origin', // include, *same-origin, omit
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     // 'Content-Type': 'application/x-www-form-urlencoded',
-  //   },
-  //   redirect: 'follow', // manual, *follow, error
-  //   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  //   body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  // }).then((response) => {
-  //   console.log(response)
-  //   // trigger a revalidation (refetch) to make sure our local data is correct
-  //   mutate(API_GET_ALL_ANNOUNCEMENTS)
-  // })
+export function deleteAnnouncement(moduleId: string, announcementId: string): void {
+  const requestBody = {}
+  fetch(API_DELETE_ANNOUNCEMENT + moduleId + '/' + announcementId, {
+    method: 'DELETE', // *GET, Announcement, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    // trigger a revalidation (refetch) to make sure our local data is correct
+    mutate(API_GET_MODULE + moduleId)
+  })
 }
 
 export function makeQuest(quest: string[]): void {
@@ -191,6 +186,7 @@ export function makeQuest(quest: string[]): void {
 
   const requestBody: Quest = {
     id: nanoid(),
+    week: 1,
     description: quest['description'],
     type: quest['type'],
     count: quest['content'],
