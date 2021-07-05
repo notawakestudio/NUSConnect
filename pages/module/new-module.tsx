@@ -4,34 +4,23 @@ import { nanoid } from 'nanoid'
 import Head from 'next/head'
 import * as Yup from 'yup'
 import Layout from '../../components/layouts/Layout'
-import { makeModule } from '../../components/module/ModuleAPI'
+import { makeModule, Module } from '../../components/module/ModuleAPI'
 
-export default function CreateModule(): JSX.Element {
+export default function NewModule(): JSX.Element {
+  const toast = useToast()
   const initialValues = {
+    id: nanoid(),
     title: 'CS2030',
-    users: [
-      {
-        id: 'ddHg168Fwz9VIP1wxbzK',
-        name: 'Dreamer',
-        exp: 0,
-        role: 'admin',
-        badges: ['a', 'b'],
-        completedTasks: [],
-      },
-    ],
+    users: ['NSFDrUvhCdF11DOpWx5Sq'],
     questions: [],
-    quiz: [],
-    forum: [],
-    reply: [],
-    tasks: [],
-    schedule: [],
+    quizzes: [],
+    posts: [],
+    replies: [],
+    schedules: [],
   }
-  const handleSubmit = (value): void => {
-    value.id = nanoid()
-    console.log(value)
+  const handleSubmit = (value: Module): void => {
     makeModule(value)
   }
-  const toast = useToast()
   return (
     <>
       <Head>
@@ -59,7 +48,7 @@ export default function CreateModule(): JSX.Element {
               resetForm()
             }, 400)
           }}>
-          {(formik) => (
+          {() => (
             <section className="bg-gray-100 bg-opacity-20">
               <Form className="container max-w-3xl mx-auto shadow-md md:w-3/4">
                 <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">

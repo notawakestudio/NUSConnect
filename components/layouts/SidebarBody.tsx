@@ -3,7 +3,7 @@ import React from 'react'
 import { BiBookReader } from 'react-icons/bi'
 import { BsClipboardData } from 'react-icons/bs'
 import { HiBadgeCheck } from 'react-icons/hi'
-import { MdForum } from 'react-icons/md'
+import { MdForum, MdViewModule } from 'react-icons/md'
 import { useUserInbox } from '../profile/UserAPI'
 import { useUserId } from '../store/user'
 
@@ -17,7 +17,7 @@ export default function SidebarBody(): JSX.Element {
         <li className="px-5">
           <div className="flex flex-row items-center h-8">
             <div className="flex font-semibold text-sm dark:text-gray-300 text-gray-400 my-4 font-sans uppercase">
-              Dashboard
+              Community
             </div>
           </div>
         </li>
@@ -39,7 +39,7 @@ export default function SidebarBody(): JSX.Element {
                 </svg>
               </span>
               <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
-                Home
+                Dashboard
               </span>
             </div>
           </Link>
@@ -69,6 +69,46 @@ export default function SidebarBody(): JSX.Element {
           </Link>
         </li>
         <li>
+          <Link href="/module">
+            <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+              <span className="inline-flex justify-center items-center ml-4">
+                <MdViewModule size={20} />
+              </span>
+              <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                Module
+              </span>
+            </div>
+          </Link>
+        </li>
+        <li className="px-5">
+          <div className="flex flex-row items-center h-8">
+            <div className="flex font-semibold text-sm dark:text-gray-300 text-gray-400 my-4 font-sans uppercase">
+              personal
+            </div>
+          </div>
+        </li>
+        <li>
+          <Link href="/profile">
+            <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+              <span className="inline-flex justify-center items-center ml-4">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </span>
+              <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
+                Profile
+              </span>
+            </div>
+          </Link>
           <Link href="/profile/inbox">
             <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
               <span className="inline-flex justify-center items-center ml-4">
@@ -93,36 +133,6 @@ export default function SidebarBody(): JSX.Element {
                   New
                 </span>
               ) : null}
-            </div>
-          </Link>
-        </li>
-        <li className="px-5">
-          <div className="flex flex-row items-center h-8">
-            <div className="flex font-semibold text-sm dark:text-gray-300 text-gray-400 my-4 font-sans uppercase">
-              Settings
-            </div>
-          </div>
-        </li>
-        <li>
-          <Link href="/profile">
-            <div className="cursor-pointer relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
-              <span className="inline-flex justify-center items-center ml-4">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-              </span>
-              <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">
-                Profile
-              </span>
             </div>
           </Link>
           <Link href="/profile/badges">

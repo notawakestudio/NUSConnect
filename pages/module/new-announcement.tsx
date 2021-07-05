@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
-import NewAnnouncement from '../../components/dashboard/NewAnnouncement'
+import NewAnnouncement from '../../components/module/NewAnnouncement'
 
 export default function CreateAnnouncement(): JSX.Element {
   return (

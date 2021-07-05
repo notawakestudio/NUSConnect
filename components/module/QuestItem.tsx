@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { AiOutlineArrowUp } from 'react-icons/ai'
-import { Quest } from './DashboardAPI'
+import { Quest } from './ModuleAPI'
 
 export default function QuestItem({ quest }: { quest: Quest }): JSX.Element {
   return (
