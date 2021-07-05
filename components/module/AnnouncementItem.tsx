@@ -111,13 +111,14 @@ export default function AnnouncementItem({
               <Button
                 colorScheme="red"
                 onClick={() => {
-                  deleteAnnouncement(announcement.id)
+                  deleteAnnouncement('kMvp8b48SmTiXXCl7EAkc', announcement.id)
                   toast({
                     title: 'Announcement deleted',
                     status: 'warning',
                     duration: 3000,
                     isClosable: true,
                   })
+                  setIsOpen(false)
                 }}
                 ml={3}>
                 Delete

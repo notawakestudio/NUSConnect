@@ -12,6 +12,7 @@ const defaultQuest = {
   description: '',
   type: '',
   count: 0,
+  week: 1,
   link: '',
   created_date: 0,
   end_date: 0,

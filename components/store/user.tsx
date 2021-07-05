@@ -68,7 +68,7 @@ function useUserIdInit(): void {
         id: session.userId,
         modules: defaultModuleInfo,
         profilePicUrl: session.user.image,
-        role: 'dreamer',
+        role: 'student',
         displayName: session.user.name,
         userName: session.user.name,
         email: session.user.email,

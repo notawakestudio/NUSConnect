@@ -10,13 +10,14 @@ export default function NewModule(): JSX.Element {
   const toast = useToast()
   const initialValues = {
     id: nanoid(),
-    title: 'CS2030',
+    title: '',
     users: ['NSFDrUvhCdF11DOpWx5Sq'],
     questions: [],
     quizzes: [],
     posts: [],
     replies: [],
-    schedules: [],
+    announcements: [],
+    quests: [],
   }
   const handleSubmit = (value: Module): void => {
     makeModule(value)
