@@ -6,21 +6,19 @@ import { AiFillCaretDown } from 'react-icons/ai'
 import { GrFormCalendar, GrSemantics } from 'react-icons/gr'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import { MdNotifications, MdNotificationsActive } from 'react-icons/md'
-import Skeleton from 'react-loading-skeleton'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
-import AnnouncementItem from '../../components/dashboard/AnnouncementItem'
-import { fetchDashboardData } from '../../components/dashboard/DashboardAPI'
-import QuestItem from '../../components/dashboard/QuestItem'
+import AnnouncementItem from '../../components/module/AnnouncementItem'
+import { useModule } from '../../components/module/ModuleAPI'
+import QuestItem from '../../components/module/QuestItem'
 import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
-
+import { Skeleton } from '@chakra-ui/react'
 export default function DashBoard(): JSX.Element {
-  const schedule = fetchDashboardData('xft5nj9NXr_RXl3LEyt2g')
   const { user, isLoading } = useUser()
   const userId = useUserId()
   const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
   const router = useRouter()
-
+  const { module, isLoading: moduleLoading } = useModule('BIeJv0fR3IzmDP43Snh0U')
   return (
     <>
       <Head>
@@ -112,56 +110,60 @@ export default function DashBoard(): JSX.Element {
                 <span className="text-sm text-gray-400">Jump to a different week</span>
               </div>
               <div className="flex flex-col pt-4">
-                {schedule.map((weekly) => {
-                  return (
-                    <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4" key={weekly.id}>
-                      <div className="flex flex-col md:col-span-2">
-                        <div className="flex flex-row justify-between items-center pb-2">
-                          <span className="text-2xl font-semibold text-gray-800 dark:text-white">
-                            Announcements
-                          </span>
-                          <span>
-                            <Link href={'/module/new-announcement'}>
-                              <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
-                                <span className="items-center pt-1 pr-1">
-                                  <IoMdAddCircleOutline />
+                {moduleLoading ? (
+                  <Skeleton isLoaded={!isLoading} height={40} />
+                ) : (
+                  module.schedules.map((weekly) => {
+                    return (
+                      <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4" key={weekly.id}>
+                        <div className="flex flex-col md:col-span-2">
+                          <div className="flex flex-row justify-between items-center pb-2">
+                            <span className="text-2xl font-semibold text-gray-800 dark:text-white">
+                              Announcements
+                            </span>
+                            <span>
+                              <Link href={'/module/new-announcement'}>
+                                <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
+                                  <span className="items-center pt-1 pr-1">
+                                    <IoMdAddCircleOutline />
+                                  </span>
+                                  <span>new announcement</span>
                                 </span>
-                                <span>new announcement</span>
-                              </span>
-                            </Link>
-                          </span>
+                              </Link>
+                            </span>
+                          </div>
+                          <div className="dark:text-gray-300">
+                            {weekly.announcements.map((announcement) => (
+                              <AnnouncementItem announcement={announcement} key={announcement.id} />
+                            ))}
+                          </div>
                         </div>
-                        <div className="dark:text-gray-300">
-                          {weekly.announcements.map((announcement) => (
-                            <AnnouncementItem announcement={announcement} key={announcement.id} />
-                          ))}
+                        <div className="flex flex-col">
+                          <div className="flex flex-row justify-between items-center pb-2">
+                            <span className="text-2xl font-semibold text-gray-800 dark:text-white">
+                              Quests
+                            </span>
+                            <span>
+                              <Link href={'/module/new-quest'}>
+                                <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
+                                  <span className="items-center pt-1 pr-1">
+                                    <IoMdAddCircleOutline />
+                                  </span>
+                                  <span>new quest</span>
+                                </span>
+                              </Link>
+                            </span>
+                          </div>
+                          <div className="dark:text-gray-300">
+                            {weekly.quests.map((quest) => (
+                              <QuestItem quest={quest} key={quest.id} />
+                            ))}
+                          </div>
                         </div>
                       </div>
-                      <div className="flex flex-col">
-                        <div className="flex flex-row justify-between items-center pb-2">
-                          <span className="text-2xl font-semibold text-gray-800 dark:text-white">
-                            Quests
-                          </span>
-                          <span>
-                            <Link href={'/module/new-quest'}>
-                              <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
-                                <span className="items-center pt-1 pr-1">
-                                  <IoMdAddCircleOutline />
-                                </span>
-                                <span>new quest</span>
-                              </span>
-                            </Link>
-                          </span>
-                        </div>
-                        <div className="dark:text-gray-300">
-                          {weekly.quests.map((quest) => (
-                            <QuestItem quest={quest} key={quest.id} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
+                    )
+                  })
+                )}
               </div>
             </div>
           </div>

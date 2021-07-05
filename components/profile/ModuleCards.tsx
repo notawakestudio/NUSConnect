@@ -1,5 +1,5 @@
 import React from 'react'
-import data from '../../public/data/IndividualModuleData.json'
+import data from '../../public/data/ModuleData.json'
 
 export default function ModuleCards(): JSX.Element {
   return (
@@ -42,14 +42,14 @@ export default function ModuleCards(): JSX.Element {
                     {module.title}
                   </th>
                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {module.semester}
+                    2021/2022 Sem 1
                   </td>
                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {module.professor}
+                    Prof X
                   </td>
                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     <div className="flex items-center">
-                      <span className="mr-2">{module.user}</span>
+                      <span className="mr-2">{module.users.length}</span>
                       <div className="relative w-full">
                         <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
                           <div className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"></div>

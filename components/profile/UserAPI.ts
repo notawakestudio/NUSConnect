@@ -28,8 +28,8 @@ type QuizInfo = {
 
 type ModuleInfo = {
   id: string
-  quiz: QuizInfo[]
-  quest: string[]
+  quizzes: QuizInfo[]
+  quests: string[]
   exp: number
   badges: string[]
 }
@@ -38,8 +38,8 @@ export const defaultModuleInfo: ModuleInfo[] = [
     id: 'CS2030/S',
     exp: 0,
     badges: [],
-    quiz: [],
-    quest: [],
+    quizzes: [],
+    quests: [],
   },
 ]
 type User = {
