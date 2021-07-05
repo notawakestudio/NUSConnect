@@ -14,6 +14,7 @@ const defaultQuest = {
   description: 'test',
   type: 'quiz',
   count: 0,
+  week: 1,
   link: '',
   created_date: 0,
   end_date: getCurrentDateTime(),
