@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import useSWR from 'swr'
 import ModuleData from '../../public/data/ModuleData.json'
-import { getCurrentDateTime } from '../common/Util'
+import { getCurrentDateTime, showCurrentDate } from '../common/Util'
 import { Post, Reply } from '../forum/ForumAPI'
 import { Question, Quiz } from '../quiz/types'
 const API_MAKE_MODULE = 'https://1ieznu.deta.dev/module/make'
@@ -189,18 +189,24 @@ export function deleteAnnouncement(announcementId: string): void {
 export function makeQuest(quest: string[]): void {
   const currDate = getCurrentDateTime()
 
+  const reward: Reward = {
+    exp: quest['exp'],
+    badge: '',
+  }
+
   const requestBody: Quest = {
     id: nanoid(),
     description: quest['description'],
     type: quest['type'],
-    count: quest['content'],
+    count: quest['count'],
     link: quest['link'],
     created_date: currDate,
-    end_date: quest['endDate'],
-    reward: quest['reward'],
+    end_date: quest['end_date'],
+    reward: reward,
   }
 
-  console.log('created Quest')
+  console.log(requestBody)
+
   // fetch(API_SUBMIT_QUEST, {
   //   method: 'Quest', // *GET, Quest, PUT, DELETE, etc.
   //   mode: 'no-cors', // no-cors, *cors, same-origin

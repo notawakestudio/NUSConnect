@@ -19,6 +19,7 @@ export default function DashBoard(): JSX.Element {
   const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
   const router = useRouter()
   const { module, isLoading: moduleLoading } = useModule('BIeJv0fR3IzmDP43Snh0U')
+
   return (
     <>
       <Head>
