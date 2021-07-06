@@ -1,13 +1,20 @@
-import { Button } from '@chakra-ui/react'
+import { Button, useToast } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
-import { useAllModules } from '../../components/module/ModuleAPI'
+import {
+  addUserToModule,
+  removeUserFromModule,
+  useAllModules,
+} from '../../components/module/ModuleAPI'
+import { useUserId } from '../../components/store/user'
 
 export default function Home(): JSX.Element {
   const router = useRouter()
   const { modules, isLoading } = useAllModules()
+  const userId = useUserId()
+  const toast = useToast()
   return (
     <>
       <Head>
@@ -50,7 +57,7 @@ export default function Home(): JSX.Element {
                       Number of Students
                     </th>
                     <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
-                      Status
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -73,7 +80,37 @@ export default function Home(): JSX.Element {
                           </div>
                         </td>
                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <Button className="dark:text-black">Join</Button>
+                          {module.users.includes(userId) ? (
+                            <Button
+                              className="dark:text-black"
+                              onClick={() => {
+                                removeUserFromModule(module.id, userId)
+                                toast({
+                                  title: 'Removed module from account.',
+                                  position: 'top-right',
+                                  status: 'success',
+                                  duration: 3000,
+                                  isClosable: true,
+                                })
+                              }}>
+                              Quit
+                            </Button>
+                          ) : (
+                            <Button
+                              className="dark:text-black"
+                              onClick={() => {
+                                addUserToModule(module.id, userId)
+                                toast({
+                                  title: 'Added module to account.',
+                                  position: 'top-right',
+                                  status: 'success',
+                                  duration: 3000,
+                                  isClosable: true,
+                                })
+                              }}>
+                              Join
+                            </Button>
+                          )}
                         </td>
                       </tr>
                     ))}

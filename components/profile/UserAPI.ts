@@ -35,7 +35,7 @@ type ModuleInfo = {
 }
 export const defaultModuleInfo: ModuleInfo[] = [
   {
-    id: 'CS2030/S',
+    id: 'kMvp8b48SmTiXXCl7EAkc',
     exp: 0,
     badges: [],
     quizzes: [],
