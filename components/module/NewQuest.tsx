@@ -35,13 +35,17 @@ export default function NewQuest({
   setEditing?: (bool: boolean) => void
 }): JSX.Element {
   //Initalizing values
+  const exp = currentQuest.reward.exp
+  const start_date = currentQuest.start_date
+  const end_date = currentQuest.end_date
+
   const initialValues = {
     description: currentQuest.description,
     type: currentQuest.type,
-    exp: currentQuest.reward.exp,
+    exp: exp.toString(),
     count: currentQuest.count,
-    start_date: currentQuest.start_date,
-    end_date: currentQuest.end_date,
+    start_date: new Date(start_date),
+    end_date: new Date(end_date),
   }
 
   //User Session
@@ -86,11 +90,12 @@ export default function NewQuest({
           validationSchema={Yup.object({
             description: Yup.string().required('Please enter a description'),
             type: Yup.string().required('A type option is required'),
-            EXP: Yup.string().required('A EXP option is required'),
-            start_date: Yup.number().required('Please select a start date'),
-            end_date: Yup.number().required('Please select a end date'),
+            exp: Yup.string().required('A EXP option is required'),
+            start_date: Yup.date().required('Please select a start date'),
+            end_date: Yup.date().required('Please select a end date'),
           })}
           onSubmit={(values, { setSubmitting }) => {
+            console.log('submitting')
             if (label === 'Create Quest') {
               handleSubmitNew(values)
             } else {
@@ -152,19 +157,19 @@ export default function NewQuest({
                     <label htmlFor="exp">EXP Amount</label>
                     <div className="flex flex-row space-x-4 text-lg">
                       <label htmlFor="exp">
-                        <Field type="radio" name="exp" value={10} className="mr-1" />
+                        <Field type="radio" name="exp" value="10" className="mr-1" />
                         Small (10 EXP)
                       </label>
                       <label htmlFor="exp">
-                        <Field type="radio" name="exp" value={20} className="mr-1" />
+                        <Field type="radio" name="exp" value="20" className="mr-1" />
                         Medium (20 EXP)
                       </label>
                       <label htmlFor="exp">
-                        <Field type="radio" name="exp" value={30} className="mr-1" />
+                        <Field type="radio" name="exp" value="30" className="mr-1" />
                         Large (30 EXP)
                       </label>
                       <label htmlFor="exp">
-                        <Field type="radio" name="exp" value={100} className="mr-1" />
+                        <Field type="radio" name="exp" value="100" className="mr-1" />
                         Huge (100 EXP)
                       </label>
                     </div>
@@ -187,7 +192,7 @@ export default function NewQuest({
                       {formik.errors.start_date && formik.touched.start_date ? <Required /> : null}
                     </span>
                     <div className="">
-                      <DatePickerField name="start_date" />
+                      <DatePickerField name="start_date" key="start_date" />
                     </div>
                   </div>
                   <hr />
@@ -198,7 +203,7 @@ export default function NewQuest({
                       {formik.errors.end_date && formik.touched.end_date ? <Required /> : null}
                     </span>
                     <div className="">
-                      <DatePickerField name="end_date" />
+                      <DatePickerField name="end_date" key="end_date" />
                     </div>
                   </div>
                   <hr />
@@ -223,10 +228,10 @@ export default function NewQuest({
                           showToast(formik.errors.exp, 'exp-error')
                         }
                         if (formik.touched.start_date && formik.errors.start_date) {
-                          showToast('Please select a starting date', 'date-error')
+                          showToast('Please select a starting date', 'startDate-error')
                         }
                         if (formik.touched.end_date && formik.errors.end_date) {
-                          showToast('Please select a ending date', 'date-error')
+                          showToast('Please select a ending date', 'endDate-error')
                         }
                       }}>
                       {label === 'Create Quest' ? 'Create Quest' : 'Save changes'}

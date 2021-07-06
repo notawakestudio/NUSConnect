@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
+import { date } from 'yup'
 import ModuleData from '../../public/data/ModuleData.json'
 import { getCurrentDateTime } from '../common/Util'
 import { Post, Reply } from '../forum/ForumAPI'
@@ -240,11 +241,14 @@ export function deleteAnnouncement(moduleId: string, announcementId: string): vo
   })
 }
 
-export function makeQuest(moduleId: string, quest: string[]): void {
+export function makeQuest(moduleId: string, quest: any): void {
   const reward: Reward = {
-    exp: quest['exp'],
+    exp: parseInt(quest['exp']),
     badge: '',
   }
+
+  const start_date = new Date(quest['start_date']).getTime()
+  const end_date = new Date(quest['end_date']).getTime()
 
   const requestBody: Quest = {
     id: nanoid(),
@@ -253,8 +257,8 @@ export function makeQuest(moduleId: string, quest: string[]): void {
     type: quest['type'],
     count: quest['count'],
     link: quest['link'],
-    start_date: quest['start_date'],
-    end_date: quest['end_date'],
+    start_date: start_date,
+    end_date: end_date,
     reward: reward,
   }
   fetch(API_SUBMIT_QUEST + moduleId, {
