@@ -17,7 +17,7 @@ const defaultQuest = {
   count: undefined,
   week: 1,
   link: '',
-  created_date: getCurrentDateTime(),
+  start_date: getCurrentDateTime(),
   end_date: getCurrentDateTime(),
   reward: {
     exp: 10,
@@ -28,7 +28,7 @@ const defaultQuest = {
 export default function NewQuest({
   label = 'Create Quest',
   currentQuest = defaultQuest,
-  setEditing = function (bool) {},
+  setEditing,
 }: {
   label?: string
   currentQuest?: Quest
@@ -40,7 +40,7 @@ export default function NewQuest({
     type: currentQuest.type,
     exp: currentQuest.reward.exp,
     count: currentQuest.count,
-    created_date: currentQuest.created_date,
+    start_date: currentQuest.start_date,
     end_date: currentQuest.end_date,
   }
 
@@ -50,11 +50,11 @@ export default function NewQuest({
   //Handling Quest request
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
-    makeQuest(value)
+    makeQuest('kMvp8b48SmTiXXCl7EAkc', value)
   }
 
   const handleSubmitUpdate = (value): void => {
-    updateQuest(value, currentQuest)
+    updateQuest('kMvp8b48SmTiXXCl7EAkc', value, currentQuest)
   }
 
   //Initialize toast for error message
@@ -87,8 +87,8 @@ export default function NewQuest({
             description: Yup.string().required('Please enter a description'),
             type: Yup.string().required('A type option is required'),
             EXP: Yup.string().required('A EXP option is required'),
-            created_date: Yup.number().required('Please select a date'),
-            end_date: Yup.number().required('Please select a date'),
+            start_date: Yup.number().required('Please select a start date'),
+            end_date: Yup.number().required('Please select a end date'),
           })}
           onSubmit={(values, { setSubmitting }) => {
             if (label === 'Create Quest') {
@@ -183,13 +183,11 @@ export default function NewQuest({
 
                   <div className="py-2">
                     <span className="flex space-x-2 items-end">
-                      <label htmlFor="created_date">Starting date</label>
-                      {formik.errors.created_date && formik.touched.created_date ? (
-                        <Required />
-                      ) : null}
+                      <label htmlFor="start_date">Starting date</label>
+                      {formik.errors.start_date && formik.touched.start_date ? <Required /> : null}
                     </span>
                     <div className="">
-                      <DatePickerField name="created_date" />
+                      <DatePickerField name="start_date" />
                     </div>
                   </div>
                   <hr />
@@ -224,7 +222,7 @@ export default function NewQuest({
                         if (formik.touched.exp && formik.errors.exp) {
                           showToast(formik.errors.exp, 'exp-error')
                         }
-                        if (formik.touched.created_date && formik.errors.created_date) {
+                        if (formik.touched.start_date && formik.errors.start_date) {
                           showToast('Please select a starting date', 'date-error')
                         }
                         if (formik.touched.end_date && formik.errors.end_date) {

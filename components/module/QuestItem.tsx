@@ -26,7 +26,7 @@ export default function QuestItem({
   const [editing, setEditing] = useState(false)
 
   const handleDelete = (): void => {
-    deleteQuest(quest.id)
+    deleteQuest('kMvp8b48SmTiXXCl7EAkc', quest.id)
   }
 
   //Alert Dialog
