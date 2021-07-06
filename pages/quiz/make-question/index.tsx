@@ -11,6 +11,7 @@ import SidebarLayout from '../../../components/layouts/SidebarLayout'
 import CustomSingleSelect from '../../../components/forms/CustomSingleSelect'
 import Required from '../../../components/forms/Required'
 import { makeQuestion } from '../../../components/quiz/QuizAPI'
+import NewQuestion from '../../../components/quiz/NewQuestion'
 
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],
@@ -86,7 +87,7 @@ const QuestionForm = (): JSX.Element => {
         </Head>
         <div className="dark:bg-gray-800 dark:text-gray-200">
           <SidebarLayout>
-            <Formik
+            {/* <Formik
               initialValues={initialValues}
               validationSchema={Yup.object({
                 modules: Yup.array().required('Module is needed'),
@@ -245,7 +246,8 @@ const QuestionForm = (): JSX.Element => {
                   </Form>
                 </section>
               )}
-            </Formik>
+            </Formik> */}
+            <NewQuestion />
           </SidebarLayout>
         </div>
       </Auth>

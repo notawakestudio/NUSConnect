@@ -51,15 +51,16 @@ export default function NewQuest({
     value.author = session.user?.name ? session.user.name : 'Anonymous'
     makeQuest(value)
   }
+
   const handleSubmitUpdate = (value): void => {
     updateQuest(value, currentQuest)
   }
 
-  //Toast
-  const toast = useToast()
+  //Initialize toast for error message
+  const errorToast = useToast()
   function showToast(error: string, id: string): void {
-    if (!toast.isActive(id)) {
-      toast({
+    if (!errorToast.isActive(id)) {
+      errorToast({
         id: id,
         title: 'Error',
         description: error,
@@ -70,6 +71,9 @@ export default function NewQuest({
       })
     }
   }
+
+  //Toast for success message
+  const toast = useToast()
 
   return (
     <Auth>
@@ -204,7 +208,7 @@ export default function NewQuest({
                           showToast('Please select a date', 'date-error')
                         }
                       }}>
-                      {label === 'Edit Quest' ? 'Save' : 'Post Quest'}
+                      {label === 'Edit Quest' ? 'Save' : 'Create Quest'}
                     </button>
                   </div>
                 </div>
