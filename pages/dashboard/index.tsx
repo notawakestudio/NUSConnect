@@ -1,10 +1,12 @@
+import { Button, Menu, MenuButton, MenuItem, MenuList, Skeleton } from '@chakra-ui/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { AiFillCaretDown } from 'react-icons/ai'
-import { GrFormCalendar, GrSemantics } from 'react-icons/gr'
-import { IoMdAddCircleOutline } from 'react-icons/io'
+import React, { useState } from 'react'
+import { AiFillCaretDown, AiOutlineCalendar } from 'react-icons/ai'
+import { GrSemantics } from 'react-icons/gr'
+import { IoIosRemoveCircleOutline, IoMdAddCircleOutline } from 'react-icons/io'
 import { MdNotifications, MdNotificationsActive } from 'react-icons/md'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
 import AnnouncementItem from '../../components/module/AnnouncementItem'
@@ -12,13 +14,20 @@ import { useModule } from '../../components/module/ModuleAPI'
 import QuestItem from '../../components/module/QuestItem'
 import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
-import { Skeleton } from '@chakra-ui/react'
 export default function DashBoard(): JSX.Element {
   const { user, isLoading } = useUser()
   const userId = useUserId()
   const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
   const router = useRouter()
   const { module, isLoading: moduleLoading } = useModule('kMvp8b48SmTiXXCl7EAkc')
+  const [editing, setEditing] = useState(false)
+  const [currentWeek, setCurrentWeek] = useState(null)
+
+  const role = isLoading ? '' : user.role
+  const weeks = moduleLoading
+    ? [1]
+    : Array.from(new Set(module.announcements.map((announcement) => announcement.week)))
+
   return (
     <>
       <Head>
@@ -101,17 +110,29 @@ export default function DashBoard(): JSX.Element {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <button className="flex items-center text-gray-400 text-md border-gray-300 border px-4 py-2 rounded-tl-sm rounded-bl-full rounded-r-full">
-                  <GrFormCalendar size="30" className="mr-2 text-gray-400" />
-                  Current Week
-                  <AiFillCaretDown />
-                </button>
+              <div className="flex items-center space-x-4 ">
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<AiFillCaretDown />}
+                    leftIcon={<AiOutlineCalendar size="25" />}
+                    colorScheme={'purple'}>
+                    {currentWeek ? `Week ${currentWeek}` : 'All Announcements'}
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem onClick={() => setCurrentWeek(null)}>Show all</MenuItem>
+                    {weeks.map((week) => (
+                      <MenuItem key={week} onClick={() => setCurrentWeek(week)}>
+                        Week {week}
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
                 <span className="text-sm text-gray-400">Jump to a different week</span>
               </div>
               <div className="flex flex-col pt-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4">
-                  <div className="flex flex-col md:col-span-2">
+                <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-4">
+                  <div className="flex flex-col lg:col-span-2">
                     <div className="flex flex-row justify-between items-center pb-2">
                       <span className="text-2xl font-semibold text-gray-800 dark:text-white">
                         Announcements
@@ -131,9 +152,15 @@ export default function DashBoard(): JSX.Element {
                       {moduleLoading ? (
                         <Skeleton isLoaded={!isLoading} height={40} />
                       ) : (
-                        module.announcements.map((announcement) => (
-                          <AnnouncementItem announcement={announcement} key={announcement.id} />
-                        ))
+                        module.announcements.map((announcement) =>
+                          currentWeek === null ? (
+                            <AnnouncementItem announcement={announcement} key={announcement.id} />
+                          ) : announcement.week === currentWeek ? (
+                            <AnnouncementItem announcement={announcement} key={announcement.id} />
+                          ) : (
+                            ''
+                          )
+                        )
                       )}
                     </div>
                   </div>
@@ -142,7 +169,21 @@ export default function DashBoard(): JSX.Element {
                       <span className="text-2xl font-semibold text-gray-800 dark:text-white">
                         Quests
                       </span>
-                      <span>
+                      <span className="flex flex-row space-x-1">
+                        {role === 'admin' ? (
+                          <button
+                            onClick={() => setEditing(!editing)}
+                            className="shadow-md p-2 cursor-pointer bg-white hover:bg-red-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            <span className="flex flex-row items-center">
+                              <span className="items-center pt-1 pr-1">
+                                <IoIosRemoveCircleOutline />
+                              </span>
+                              <span>edit</span>
+                            </span>
+                          </button>
+                        ) : (
+                          ''
+                        )}
                         <Link href={'/module/new-quest'}>
                           <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
                             <span className="items-center pt-1 pr-1">
@@ -157,7 +198,9 @@ export default function DashBoard(): JSX.Element {
                       {moduleLoading ? (
                         <Skeleton isLoaded={!isLoading} height={40} />
                       ) : (
-                        module.quests.map((quest) => <QuestItem quest={quest} key={quest.id} />)
+                        module.quests.map((quest) => (
+                          <QuestItem quest={quest} key={quest.id} editing={editing} />
+                        ))
                       )}
                     </div>
                   </div>

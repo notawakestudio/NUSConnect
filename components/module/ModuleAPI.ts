@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
 import ModuleData from '../../public/data/ModuleData.json'
-import { getCurrentDateTime } from '../common/Util'
+import { getCurrentDateTime, showCurrentDate } from '../common/Util'
 import { Post, Reply } from '../forum/ForumAPI'
 import { Question, Quiz } from '../quiz/types'
 const API_MAKE_MODULE = 'https://1ieznu.deta.dev/module/make'
@@ -240,19 +240,25 @@ export function deleteAnnouncement(moduleId: string, announcementId: string): vo
 export function makeQuest(quest: string[]): void {
   const currDate = getCurrentDateTime()
 
+  const reward: Reward = {
+    exp: quest['exp'],
+    badge: '',
+  }
+
   const requestBody: Quest = {
     id: nanoid(),
     week: 1,
     description: quest['description'],
     type: quest['type'],
-    count: quest['content'],
+    count: quest['count'],
     link: quest['link'],
     created_date: currDate,
-    end_date: quest['endDate'],
-    reward: quest['reward'],
+    end_date: quest['end_date'],
+    reward: reward,
   }
 
-  console.log('created Quest')
+  console.log(requestBody)
+
   // fetch(API_SUBMIT_QUEST, {
   //   method: 'Quest', // *GET, Quest, PUT, DELETE, etc.
   //   mode: 'no-cors', // no-cors, *cors, same-origin
@@ -278,6 +284,7 @@ export function updateQuest(update: string[], currQuest: Quest): void {
     type: update['type'],
     count: update['count'],
     reward: update['reward'],
+    end_date: update['end_date'],
   }
 
   if (update['description'] === currQuest.description) {
@@ -292,7 +299,9 @@ export function updateQuest(update: string[], currQuest: Quest): void {
   if (update['reward'] === currQuest.reward) {
     delete requestBody['reward']
   }
-
+  if (update['end_date'] === currQuest.end_date) {
+    delete requestBody['end_date']
+  }
   // console.log('updated Quest')
   // fetch(API_UPDATE_QUEST + currQuest.id, {
   //   method: 'Quest', // *GET, Quest, PUT, DELETE, etc.
@@ -313,7 +322,7 @@ export function updateQuest(update: string[], currQuest: Quest): void {
 }
 
 export function deleteQuest(questId: string): void {
-  console.log('delete Quest')
+  console.log('delete Quest' + questId)
   const requestBody = {}
   // fetch(API_UPDATE_QUEST + questId, {
   //   method: 'DELETE', // *GET, Quest, PUT, DELETE, etc.
