@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { GrFormCalendar, GrSemantics } from 'react-icons/gr'
-import { IoMdAddCircleOutline } from 'react-icons/io'
+import { IoMdAddCircleOutline, IoIosRemoveCircleOutline } from 'react-icons/io'
 import { MdNotifications, MdNotificationsActive } from 'react-icons/md'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
 import AnnouncementItem from '../../components/module/AnnouncementItem'
@@ -13,12 +13,17 @@ import QuestItem from '../../components/module/QuestItem'
 import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
 import { Skeleton } from '@chakra-ui/react'
+import { useState } from 'react'
 export default function DashBoard(): JSX.Element {
   const { user, isLoading } = useUser()
   const userId = useUserId()
   const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
   const router = useRouter()
   const { module, isLoading: moduleLoading } = useModule('kMvp8b48SmTiXXCl7EAkc')
+  const [editing, setEditing] = useState(false)
+
+  const role = isLoading ? '' : user.role
+
   return (
     <>
       <Head>
@@ -142,7 +147,21 @@ export default function DashBoard(): JSX.Element {
                       <span className="text-2xl font-semibold text-gray-800 dark:text-white">
                         Quests
                       </span>
-                      <span>
+                      <span className="flex flex-row space-x-1">
+                        {role === 'admin' ? (
+                          <button
+                            onClick={() => setEditing(!editing)}
+                            className="shadow-md p-2 cursor-pointer bg-white hover:bg-red-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            <span className="flex flex-row items-center">
+                              <span className="items-center pt-1 pr-1">
+                                <IoIosRemoveCircleOutline />
+                              </span>
+                              <span>edit quests</span>
+                            </span>
+                          </button>
+                        ) : (
+                          ''
+                        )}
                         <Link href={'/module/new-quest'}>
                           <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
                             <span className="items-center pt-1 pr-1">
@@ -157,7 +176,9 @@ export default function DashBoard(): JSX.Element {
                       {moduleLoading ? (
                         <Skeleton isLoaded={!isLoading} height={40} />
                       ) : (
-                        module.quests.map((quest) => <QuestItem quest={quest} key={quest.id} />)
+                        module.quests.map((quest) => (
+                          <QuestItem quest={quest} key={quest.id} editing={editing} />
+                        ))
                       )}
                     </div>
                   </div>

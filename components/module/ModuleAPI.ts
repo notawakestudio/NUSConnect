@@ -263,7 +263,7 @@ export function updateQuest(update: string[], currQuest: Quest): void {
 }
 
 export function deleteQuest(questId: string): void {
-  console.log('delete Quest')
+  console.log('delete Quest' + questId)
   const requestBody = {}
   // fetch(API_UPDATE_QUEST + questId, {
   //   method: 'DELETE', // *GET, Quest, PUT, DELETE, etc.
