@@ -35,6 +35,8 @@ export default function QuestItem({
   const cancelRef = useRef()
   const toast = useToast()
 
+  const link = quest.link ?? '/dashboard'
+
   return (
     <>
       <div className="flex flex-row items-center">
@@ -63,7 +65,7 @@ export default function QuestItem({
         {editing && editMode ? (
           <NewQuest label="edit" currentQuest={quest}></NewQuest>
         ) : (
-          <Link href={quest.link} key={quest.id}>
+          <Link href={link} key={quest.id}>
             <div className="shadow-md w-full bg-white dark:bg-gray-700 relative overflow-hidden p-2 my-2 cursor-pointer">
               <div className="flex flex-row justify-between">
                 <div className="text-base">{quest.description}</div>
