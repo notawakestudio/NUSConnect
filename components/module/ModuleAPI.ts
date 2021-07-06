@@ -241,7 +241,7 @@ export function deleteAnnouncement(moduleId: string, announcementId: string): vo
   })
 }
 
-export function makeQuest(moduleId: string, quest: any): void {
+export function makeQuest(moduleId: string, quest: string[]): void {
   const reward: Reward = {
     exp: parseInt(quest['exp']),
     badge: '',
