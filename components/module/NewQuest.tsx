@@ -183,7 +183,7 @@ export default function NewQuest({
 
                   <div className="py-2">
                     <span className="flex space-x-2 items-end">
-                      <label htmlFor="created_date">Created date</label>
+                      <label htmlFor="created_date">Starting date</label>
                       {formik.errors.created_date && formik.touched.created_date ? (
                         <Required />
                       ) : null}
