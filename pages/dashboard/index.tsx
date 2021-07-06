@@ -14,6 +14,7 @@ import { useModule } from '../../components/module/ModuleAPI'
 import QuestItem from '../../components/module/QuestItem'
 import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
+
 export default function DashBoard(): JSX.Element {
   const { user, isLoading } = useUser()
   const userId = useUserId()

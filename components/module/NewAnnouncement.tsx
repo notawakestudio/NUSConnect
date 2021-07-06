@@ -65,7 +65,7 @@ export default function NewAnnouncement({
   return (
     <Auth>
       <div
-        className="bg-white overflow-hidden shadow-md rounded-lg dark:bg-gray-800 dark:text-gray-200"
+        className="bg-white overflow-hidden dark:bg-gray-800 dark:text-gray-200 w-full"
         data-cy="newAnnouncementForm">
         <Formik
           initialValues={initialValues}
@@ -93,21 +93,29 @@ export default function NewAnnouncement({
             resetForm()
           }}>
           {(formik) => (
-            <section className="bg-indigo-200 dark:bg-gray-800 dark:text-gray-200 ">
-              <Form>
-                <div className="p-4 bg-indigo-100 shadow-lg dark:bg-gray-600">
-                  <div className="max-w-sm mx-auto md:w-full md:mx-0">
-                    <div className="inline-flex items-center space-x-4">
-                      <h1 className="dark:text-gray-200 text-lg font-semibold">
-                        {label === 'Make an Announcement' ? label : 'Edit an Announcement'}
-                      </h1>
-                    </div>
-                  </div>
+            <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200 w-full">
+              <Form className={label === 'Make an Announcement' ? 'px-4 md:px-6 pt-20' : ''}>
+                <div className="flex justify-between text-gray-600 dark:text-gray-200">
+                  <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
+                    {label === 'Make an Announcement' ? label : 'Edit an Announcement'}
+                  </h1>
                 </div>
-                <div className="space-y-4 bg-white dark:bg-gray-700 dark:text-gray-200">
-                  <div className="items-center w-full p-4 text-gray-500 dark:text-gray-300 flex-shrink-0 flex-col">
-                    <TitleTextInput label="Title" name="title" type="text" placeholder="Title" />
-                    <br />
+
+                <div className="flex flex-col space-y-2 bg-white dark:bg-gray-800 mt-4">
+                  <div className="py-1">
+                    <span className="flex space-x-2 items-end">
+                      <label htmlFor="title">Title</label>
+                      {formik.errors.title && formik.touched.title ? <Required /> : null}
+                    </span>
+                    <Field
+                      name="description"
+                      rows={5}
+                      className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      placeholder="Please enter a title"></Field>
+                  </div>
+                  <hr />
+
+                  <div className="py-1">
                     <div className="flex space-x-2 items-end">
                       <div>Week</div>
                       {formik.errors.week && formik.touched.week ? <Required /> : null}
@@ -117,17 +125,20 @@ export default function NewAnnouncement({
                       type="number"
                       min={0}
                       max={13}
-                      className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                      place
+                      className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      placeholder="week"
                       holder="week"></Field>
-                    <ContentTextArea
-                      label="Content (optional)"
-                      name="content"
-                      rows={6}
-                      placeholder="Leave a comment"
-                    />
-                    <br />
                   </div>
+                  <hr />
+
+                  <ContentTextArea
+                    label="Content (optional)"
+                    name="content"
+                    rows={6}
+                    placeholder="Leave a comment"
+                  />
+                  <hr />
+
                   <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
                     <button
                       type="submit"
@@ -162,38 +173,15 @@ const ContentTextArea = ({
   const [field, meta] = useField(props)
   return (
     <>
-      <label htmlFor={props.name}>{label}</label>
-      <textarea
-        className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? <div className="">{meta.error}</div> : null}
-    </>
-  )
-}
-
-const TitleTextInput = ({
-  label,
-  ...props
-}: {
-  label: string
-  name: string
-  type: string
-  placeholder: string
-}): JSX.Element => {
-  const [field, meta] = useField(props)
-  return (
-    <>
-      <div className="flex items-center">
+      <div className="py-1">
         <label htmlFor={props.name}>{label}</label>
-        {meta.touched && meta.error ? <Required /> : null}
+        <textarea
+          className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+          {...field}
+          {...props}
+        />
+        {meta.touched && meta.error ? <div className="">{meta.error}</div> : null}
       </div>
-      <input
-        className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-        {...field}
-        {...props}
-      />
     </>
   )
 }
