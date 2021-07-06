@@ -7,13 +7,14 @@ import * as Yup from 'yup'
 import Auth from '../common/Auth'
 import { getCurrentDateTime } from '../common/Util'
 import { DatePickerField } from '../forms/DatePickerField'
+import Required from '../forms/Required'
 import { makeQuest, Quest, updateQuest } from './ModuleAPI'
 
 const defaultQuest = {
   id: nanoid(),
-  description: 'test',
+  description: '',
   type: 'quiz',
-  count: 0,
+  count: '',
   week: 1,
   link: '',
   created_date: 0,
@@ -79,6 +80,9 @@ export default function NewQuest({
           initialValues={initialValues}
           validationSchema={Yup.object({
             description: Yup.string().required('Please enter a description'),
+            type: Yup.string().required('A type option is required'),
+            EXP: Yup.string().required('A EXP option is required'),
+            end_date: Yup.number().required('Please select a date'),
           })}
           onSubmit={(values, { setSubmitting }) => {
             if (label === 'Create Quest') {
@@ -106,14 +110,20 @@ export default function NewQuest({
                     {label === 'Create Quest' ? label : 'Edit a Quest'}
                   </h1>
                 </div>
+
                 <div className="flex flex-col space-y-2 bg-white dark:bg-gray-800 mt-4">
                   <div className="py-1">
-                    <label htmlFor="description">Description</label>
+                    <span className="flex space-x-2 items-end">
+                      <label htmlFor="description">Description</label>
+                      {formik.errors.description && formik.touched.description ? (
+                        <Required />
+                      ) : null}
+                    </span>
                     <Field
                       name="description"
                       rows={5}
                       className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                      placeholder="description"></Field>
+                      placeholder="Please enter a quest"></Field>
                   </div>
                   <hr />
 
@@ -133,40 +143,43 @@ export default function NewQuest({
                   <hr />
 
                   <div className="py-1">
-                    <label htmlFor="exp">EXP</label>
+                    <label htmlFor="exp">EXP Amount</label>
                     <div className="flex flex-row space-x-4 text-lg">
                       <label htmlFor="exp">
                         <Field type="radio" name="exp" value={10} className="mr-1" />
-                        Small exp (10)
+                        Small (10 EXP)
                       </label>
                       <label htmlFor="exp">
                         <Field type="radio" name="exp" value={20} className="mr-1" />
-                        Medium exp (20)
+                        Medium (20 EXP)
                       </label>
                       <label htmlFor="exp">
                         <Field type="radio" name="exp" value={30} className="mr-1" />
-                        Large exp (30)
+                        Large (30 EXP)
                       </label>
                       <label htmlFor="exp">
                         <Field type="radio" name="exp" value={100} className="mr-1" />
-                        Huge exp (100)
+                        Huge (100 EXP)
                       </label>
                     </div>
                   </div>
                   <hr />
 
                   <div className="py-1">
-                    <label htmlFor="count">Count (optional)</label>
+                    <label htmlFor="count">Count</label>
                     <Field
                       name="count"
                       rows={5}
                       className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                      placeholder="count"></Field>
+                      placeholder="(optional)"></Field>
                   </div>
                   <hr />
 
                   <div className="py-2">
-                    <label htmlFor="end_date">End date</label>
+                    <span className="flex space-x-2 items-end">
+                      <label htmlFor="end_date">End date</label>
+                      {formik.errors.end_date && formik.touched.end_date ? <Required /> : null}
+                    </span>
                     <div className="">
                       <DatePickerField name="end_date" />
                     </div>
@@ -180,6 +193,15 @@ export default function NewQuest({
                       onClick={() => {
                         if (formik.touched.description && formik.errors.description) {
                           showToast(formik.errors.description, 'title-error')
+                        }
+                        if (formik.touched.type && formik.errors.type) {
+                          showToast(formik.errors.type, 'type-error')
+                        }
+                        if (formik.touched.exp && formik.errors.exp) {
+                          showToast(formik.errors.exp, 'exp-error')
+                        }
+                        if (formik.touched.end_date && formik.errors.end_date) {
+                          showToast('Please select a date', 'date-error')
                         }
                       }}>
                       {label === 'Edit Quest' ? 'Save' : 'Post Quest'}

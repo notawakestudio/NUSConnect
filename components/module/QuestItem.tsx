@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 import { AiOutlineArrowUp } from 'react-icons/ai'
-import { GiCancel } from 'react-icons/gi'
-
+import { IoIosRemoveCircleOutline } from 'react-icons/io'
 import { deleteQuest, Quest } from './ModuleAPI'
 
 export default function QuestItem({
@@ -16,9 +15,9 @@ export default function QuestItem({
     <>
       <div className="flex flex-row items-center">
         {editing ? (
-          <button onClick={() => deleteQuest(quest.id)}>
-            <span className="text-sm text-red-400 mx-1">
-              <GiCancel size={20} />
+          <button onClick={() => deleteQuest(quest.id)} className="pr-1 pt-1">
+            <span className="text-sm text-red-400">
+              <IoIosRemoveCircleOutline size="25" />
             </span>
           </button>
         ) : (
