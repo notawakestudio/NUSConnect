@@ -228,6 +228,7 @@ export function updateQuest(update: string[], currQuest: Quest): void {
     type: update['type'],
     count: update['count'],
     reward: update['reward'],
+    end_date: update['end_date'],
   }
 
   if (update['description'] === currQuest.description) {
@@ -242,7 +243,9 @@ export function updateQuest(update: string[], currQuest: Quest): void {
   if (update['reward'] === currQuest.reward) {
     delete requestBody['reward']
   }
-
+  if (update['end_date'] === currQuest.end_date) {
+    delete requestBody['end_date']
+  }
   // console.log('updated Quest')
   // fetch(API_UPDATE_QUEST + currQuest.id, {
   //   method: 'Quest', // *GET, Quest, PUT, DELETE, etc.

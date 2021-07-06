@@ -115,8 +115,8 @@ export default function DashBoard(): JSX.Element {
                 <span className="text-sm text-gray-400">Jump to a different week</span>
               </div>
               <div className="flex flex-col pt-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4">
-                  <div className="flex flex-col md:col-span-2">
+                <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-4">
+                  <div className="flex flex-col lg:col-span-2">
                     <div className="flex flex-row justify-between items-center pb-2">
                       <span className="text-2xl font-semibold text-gray-800 dark:text-white">
                         Announcements
@@ -156,7 +156,7 @@ export default function DashBoard(): JSX.Element {
                               <span className="items-center pt-1 pr-1">
                                 <IoIosRemoveCircleOutline />
                               </span>
-                              <span>edit quests</span>
+                              <span>edit</span>
                             </span>
                           </button>
                         ) : (

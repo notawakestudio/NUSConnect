@@ -14,7 +14,7 @@ const defaultQuest = {
   id: nanoid(),
   description: '',
   type: 'quiz',
-  count: '',
+  count: undefined,
   week: 1,
   link: '',
   created_date: 0,
@@ -108,10 +108,10 @@ export default function NewQuest({
           }}>
           {(formik) => (
             <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200 w-full">
-              <Form className="px-4 md:px-6 pt-20">
+              <Form className={label === 'Create Quest' ? 'px-4 md:px-6 pt-20' : ''}>
                 <div className="flex justify-between text-gray-600 dark:text-gray-200">
                   <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
-                    {label === 'Create Quest' ? label : 'Edit a Quest'}
+                    {label === 'Create Quest' ? label : 'Edit quest'}
                   </h1>
                 </div>
 
@@ -190,10 +190,15 @@ export default function NewQuest({
                   </div>
                   <hr />
 
-                  <div className="w-full px-4 py-4 ml-auto text-gray-500 md:w-1/3">
+                  <div
+                    className={
+                      label === 'Create Quest'
+                        ? 'w-full px-4 py-4 ml-auto text-gray-500 md:w-1/3'
+                        : 'w-full'
+                    }>
                     <button
                       type="submit"
-                      className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
                       onClick={() => {
                         if (formik.touched.description && formik.errors.description) {
                           showToast(formik.errors.description, 'title-error')
@@ -208,7 +213,7 @@ export default function NewQuest({
                           showToast('Please select a date', 'date-error')
                         }
                       }}>
-                      {label === 'Edit Quest' ? 'Save' : 'Create Quest'}
+                      {label === 'Create Quest' ? 'Create Quest' : 'Save changes'}
                     </button>
                   </div>
                 </div>
