@@ -62,8 +62,8 @@ export const showCurrentDate = (date: number): string => {
   return new Date(date).toLocaleString('en-US', { dateStyle: 'short' })
 }
 
-export const getCurrentWeek = (): string => {
-  return 'week 1'
+export const getCurrentWeek = (): number => {
+  return 1
 }
 
 export const timeSince = (date: number): string => {

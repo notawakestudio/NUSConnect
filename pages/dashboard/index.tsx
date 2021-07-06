@@ -1,10 +1,12 @@
+import { Button, Menu, MenuButton, MenuItem, MenuList, Skeleton } from '@chakra-ui/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { AiFillCaretDown } from 'react-icons/ai'
-import { GrFormCalendar, GrSemantics } from 'react-icons/gr'
-import { IoMdAddCircleOutline, IoIosRemoveCircleOutline } from 'react-icons/io'
+import React, { useState } from 'react'
+import { AiFillCaretDown, AiOutlineCalendar } from 'react-icons/ai'
+import { GrSemantics } from 'react-icons/gr'
+import { IoIosRemoveCircleOutline, IoMdAddCircleOutline } from 'react-icons/io'
 import { MdNotifications, MdNotificationsActive } from 'react-icons/md'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
 import AnnouncementItem from '../../components/module/AnnouncementItem'
@@ -12,8 +14,6 @@ import { useModule } from '../../components/module/ModuleAPI'
 import QuestItem from '../../components/module/QuestItem'
 import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
-import { Skeleton } from '@chakra-ui/react'
-import { useState } from 'react'
 export default function DashBoard(): JSX.Element {
   const { user, isLoading } = useUser()
   const userId = useUserId()
@@ -21,8 +21,12 @@ export default function DashBoard(): JSX.Element {
   const router = useRouter()
   const { module, isLoading: moduleLoading } = useModule('kMvp8b48SmTiXXCl7EAkc')
   const [editing, setEditing] = useState(false)
+  const [currentWeek, setCurrentWeek] = useState(null)
 
   const role = isLoading ? '' : user.role
+  const weeks = moduleLoading
+    ? [1]
+    : Array.from(new Set(module.announcements.map((announcement) => announcement.week)))
 
   return (
     <>
@@ -106,12 +110,24 @@ export default function DashBoard(): JSX.Element {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <button className="flex items-center text-gray-400 text-md border-gray-300 border px-4 py-2 rounded-tl-sm rounded-bl-full rounded-r-full">
-                  <GrFormCalendar size="30" className="mr-2 text-gray-400" />
-                  Current Week
-                  <AiFillCaretDown />
-                </button>
+              <div className="flex items-center space-x-4 ">
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<AiFillCaretDown />}
+                    leftIcon={<AiOutlineCalendar size="25" />}
+                    colorScheme={'purple'}>
+                    {currentWeek ? `Week ${currentWeek}` : 'All Announcements'}
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem onClick={() => setCurrentWeek(null)}>Show all</MenuItem>
+                    {weeks.map((week) => (
+                      <MenuItem key={week} onClick={() => setCurrentWeek(week)}>
+                        Week {week}
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
                 <span className="text-sm text-gray-400">Jump to a different week</span>
               </div>
               <div className="flex flex-col pt-4">
@@ -136,9 +152,15 @@ export default function DashBoard(): JSX.Element {
                       {moduleLoading ? (
                         <Skeleton isLoaded={!isLoading} height={40} />
                       ) : (
-                        module.announcements.map((announcement) => (
-                          <AnnouncementItem announcement={announcement} key={announcement.id} />
-                        ))
+                        module.announcements.map((announcement) =>
+                          currentWeek === null ? (
+                            <AnnouncementItem announcement={announcement} key={announcement.id} />
+                          ) : announcement.week === currentWeek ? (
+                            <AnnouncementItem announcement={announcement} key={announcement.id} />
+                          ) : (
+                            ''
+                          )
+                        )
                       )}
                     </div>
                   </div>

@@ -56,7 +56,7 @@ export const getRelatedReplies = (postId: string): Reply[] => {
 
 export function makePost(post: string[]): void {
   const currDate = getCurrentDateTime()
-  const currWeek = getCurrentWeek()
+  const currWeek = getCurrentWeek().toString()
 
   const requestBody: Post = {
     id: nanoid(),

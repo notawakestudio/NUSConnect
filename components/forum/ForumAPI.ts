@@ -125,7 +125,7 @@ export const getRelatedReplies = async (postId: string): Promise<Reply[]> => {
 
 export function makePost(post: string[]): void {
   const currDate = getCurrentDateTime()
-  const currWeek = getCurrentWeek()
+  const currWeek = getCurrentWeek().toString()
 
   const requestBody: Post = {
     id: nanoid(),
