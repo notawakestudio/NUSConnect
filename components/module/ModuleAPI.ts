@@ -182,8 +182,6 @@ export function deleteAnnouncement(moduleId: string, announcementId: string): vo
 }
 
 export function makeQuest(quest: string[]): void {
-  const currDate = getCurrentDateTime()
-
   const reward: Reward = {
     exp: quest['exp'],
     badge: '',
@@ -196,7 +194,7 @@ export function makeQuest(quest: string[]): void {
     type: quest['type'],
     count: quest['count'],
     link: quest['link'],
-    created_date: currDate,
+    created_date: quest['created_date'],
     end_date: quest['end_date'],
     reward: reward,
   }
@@ -228,6 +226,7 @@ export function updateQuest(update: string[], currQuest: Quest): void {
     type: update['type'],
     count: update['count'],
     reward: update['reward'],
+    created_date: update['created_date'],
     end_date: update['end_date'],
   }
 
@@ -242,6 +241,9 @@ export function updateQuest(update: string[], currQuest: Quest): void {
   }
   if (update['reward'] === currQuest.reward) {
     delete requestBody['reward']
+  }
+  if (update['created_date'] === currQuest.created_date) {
+    delete requestBody['created_date']
   }
   if (update['end_date'] === currQuest.end_date) {
     delete requestBody['end_date']

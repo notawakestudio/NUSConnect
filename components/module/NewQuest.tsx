@@ -17,7 +17,7 @@ const defaultQuest = {
   count: undefined,
   week: 1,
   link: '',
-  created_date: 0,
+  created_date: getCurrentDateTime(),
   end_date: getCurrentDateTime(),
   reward: {
     exp: 10,
@@ -40,6 +40,7 @@ export default function NewQuest({
     type: currentQuest.type,
     exp: currentQuest.reward.exp,
     count: currentQuest.count,
+    created_date: currentQuest.created_date,
     end_date: currentQuest.end_date,
   }
 
@@ -86,6 +87,7 @@ export default function NewQuest({
             description: Yup.string().required('Please enter a description'),
             type: Yup.string().required('A type option is required'),
             EXP: Yup.string().required('A EXP option is required'),
+            created_date: Yup.number().required('Please select a date'),
             end_date: Yup.number().required('Please select a date'),
           })}
           onSubmit={(values, { setSubmitting }) => {
@@ -181,6 +183,19 @@ export default function NewQuest({
 
                   <div className="py-2">
                     <span className="flex space-x-2 items-end">
+                      <label htmlFor="created_date">End date</label>
+                      {formik.errors.created_date && formik.touched.created_date ? (
+                        <Required />
+                      ) : null}
+                    </span>
+                    <div className="">
+                      <DatePickerField name="created_date" />
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div className="py-2">
+                    <span className="flex space-x-2 items-end">
                       <label htmlFor="end_date">End date</label>
                       {formik.errors.end_date && formik.touched.end_date ? <Required /> : null}
                     </span>
@@ -209,8 +224,11 @@ export default function NewQuest({
                         if (formik.touched.exp && formik.errors.exp) {
                           showToast(formik.errors.exp, 'exp-error')
                         }
+                        if (formik.touched.created_date && formik.errors.created_date) {
+                          showToast('Please select a starting date', 'date-error')
+                        }
                         if (formik.touched.end_date && formik.errors.end_date) {
-                          showToast('Please select a date', 'date-error')
+                          showToast('Please select a ending date', 'date-error')
                         }
                       }}>
                       {label === 'Create Quest' ? 'Create Quest' : 'Save changes'}
