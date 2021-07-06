@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
 import ModuleData from '../../public/data/ModuleData.json'
-import { getCurrentDateTime, showCurrentDate } from '../common/Util'
+import { getCurrentDateTime } from '../common/Util'
 import { Post, Reply } from '../forum/ForumAPI'
 import { Question, Quiz } from '../quiz/types'
 const API_MAKE_MODULE = 'https://1ieznu.deta.dev/module/make'
@@ -12,7 +12,9 @@ const API_DELETE_ANNOUNCEMENT = 'https://1ieznu.deta.dev/module/announcement/del
 const API_UPDATE_ANNOUNCEMENT = 'https://1ieznu.deta.dev/module/announcement/update/'
 const API_ADD_USER_TO_MODULE = 'https://1ieznu.deta.dev/module/addUser'
 const API_REMOVE_USER_FROM_MODULE = 'https://1ieznu.deta.dev/module/removeUser'
-
+const API_SUBMIT_QUEST = 'https://1ieznu.deta.dev/module/quest/make/'
+const API_UPDATE_QUEST = 'https://1ieznu.deta.dev/module/quest/update/'
+const API_DELETE_QUEST = 'https://1ieznu.deta.dev/module/quest/delete/'
 export type Reward = {
   exp: number
   badge: string
@@ -25,7 +27,7 @@ export type Quest = {
   type: string
   count: number
   link: string
-  created_date: number
+  start_date: number
   end_date: number
   reward: Reward
 }
@@ -185,6 +187,7 @@ export function makeAnnouncement(moduleId: string, announcement: Announcement): 
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
     console.log(response)
+    mutate(API_GET_MODULE + moduleId)
   })
 }
 
@@ -237,7 +240,7 @@ export function deleteAnnouncement(moduleId: string, announcementId: string): vo
   })
 }
 
-export function makeQuest(quest: string[]): void {
+export function makeQuest(moduleId: string, quest: string[]): void {
   const reward: Reward = {
     exp: quest['exp'],
     badge: '',
@@ -250,97 +253,77 @@ export function makeQuest(quest: string[]): void {
     type: quest['type'],
     count: quest['count'],
     link: quest['link'],
-    created_date: quest['created_date'],
+    start_date: quest['start_date'],
     end_date: quest['end_date'],
     reward: reward,
   }
-
-  console.log(requestBody)
-
-  // fetch(API_SUBMIT_QUEST, {
-  //   method: 'Quest', // *GET, Quest, PUT, DELETE, etc.
-  //   mode: 'no-cors', // no-cors, *cors, same-origin
-  //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  //   credentials: 'same-origin', // include, *same-origin, omit
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     // 'Content-Type': 'application/x-www-form-urlencoded',
-  //   },
-  //   redirect: 'follow', // manual, *follow, error
-  //   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  //   body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  // }).then((response) => {
-  //   console.log(response)
-  //   // trigger a revalidation (refetch) to make sure our local data is correct
-  //   mutate(API_GET_ALL_QUESTS)
-  // })
+  fetch(API_SUBMIT_QUEST + moduleId, {
+    method: 'POST',
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    // trigger a revalidation (refetch) to make sure our local data is correct
+    mutate(API_GET_MODULE + moduleId)
+  })
 }
 
-export function updateQuest(update: string[], currQuest: Quest): void {
-  const requestBody = {
+export function updateQuest(moduleId: string, update: string[], currQuest: Quest): void {
+  const requestBody: Quest = {
+    id: currQuest.id,
+    week: currQuest.week,
+    link: currQuest.link,
     description: update['description'],
     type: update['type'],
     count: update['count'],
     reward: update['reward'],
-    created_date: update['created_date'],
+    start_date: update['start_date'],
     end_date: update['end_date'],
   }
 
-  if (update['description'] === currQuest.description) {
-    delete requestBody['description']
-  }
-  if (update['type'] === currQuest.type) {
-    delete requestBody['type']
-  }
-  if (update['count'] === currQuest.count) {
-    delete requestBody['count']
-  }
-  if (update['reward'] === currQuest.reward) {
-    delete requestBody['reward']
-  }
-  if (update['created_date'] === currQuest.created_date) {
-    delete requestBody['created_date']
-  }
-  if (update['end_date'] === currQuest.end_date) {
-    delete requestBody['end_date']
-  }
-  // console.log('updated Quest')
-  // fetch(API_UPDATE_QUEST + currQuest.id, {
-  //   method: 'Quest', // *GET, Quest, PUT, DELETE, etc.
-  //   mode: 'no-cors', // no-cors, *cors, same-origin
-  //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  //   credentials: 'same-origin', // include, *same-origin, omit
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     // 'Content-Type': 'application/x-www-form-urlencoded',
-  //   },
-  //   redirect: 'follow', // manual, *follow, error
-  //   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  //   body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  // }).then((response) => {
-  //   console.log(response)
-  //   mutate(API_GET_QUEST_BY_ID + currQuest.id)
-  // })
+  fetch(API_UPDATE_QUEST + moduleId + '/' + currQuest.id, {
+    method: 'POST',
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_MODULE + moduleId)
+  })
 }
 
-export function deleteQuest(questId: string): void {
+export function deleteQuest(moduleId: string, questId: string): void {
   console.log('delete Quest' + questId)
   const requestBody = {}
-  // fetch(API_UPDATE_QUEST + questId, {
-  //   method: 'DELETE', // *GET, Quest, PUT, DELETE, etc.
-  //   mode: 'cors', // no-cors, *cors, same-origin
-  //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  //   credentials: 'same-origin', // include, *same-origin, omit
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     // 'Content-Type': 'application/x-www-form-urlencoded',
-  //   },
-  //   redirect: 'follow', // manual, *follow, error
-  //   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  //   body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  // }).then((response) => {
-  //   console.log(response)
-  //   // trigger a revalidation (refetch) to make sure our local data is correct
-  //   mutate(API_GET_ALL_QUESTS)
-  // })
+  fetch(API_DELETE_QUEST + moduleId + '/' + questId, {
+    method: 'DELETE', // *GET, Quest, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    // trigger a revalidation (refetch) to make sure our local data is correct
+    mutate(API_GET_MODULE + moduleId)
+  })
 }
