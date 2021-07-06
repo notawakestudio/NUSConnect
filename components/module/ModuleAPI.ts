@@ -10,6 +10,9 @@ const API_GET_MODULE = 'https://1ieznu.deta.dev/module/'
 const API_SUBMIT_ANNOUNCEMENT = 'https://1ieznu.deta.dev/module/announcement/make/'
 const API_DELETE_ANNOUNCEMENT = 'https://1ieznu.deta.dev/module/announcement/delete/'
 const API_UPDATE_ANNOUNCEMENT = 'https://1ieznu.deta.dev/module/announcement/update/'
+const API_ADD_USER_TO_MODULE = 'https://1ieznu.deta.dev/module/addUser'
+const API_REMOVE_USER_FROM_MODULE = 'https://1ieznu.deta.dev/module/removeUser'
+
 export type Reward = {
   exp: number
   badge: string
@@ -104,6 +107,59 @@ export function makeModule(module: Module): void {
 
 export const fetchModuleTitle = (moduleId: string): string => {
   return ModuleData.filter((module) => module['id'] === moduleId)[0]['title']
+}
+
+export function addUserToModule(moduleId: string, userId: string): void {
+  const requestBody = {
+    userId: userId,
+    moduleId: moduleId,
+    moduleUserInfo: {
+      id: moduleId,
+      exp: 0,
+      badges: [],
+      quizzes: [],
+      quests: [],
+    },
+  }
+  fetch(API_ADD_USER_TO_MODULE, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_MODULE + moduleId)
+    mutate(API_GET_ALL_MODULE)
+  })
+}
+
+export function removeUserFromModule(moduleId: string, userId: string): void {
+  const requestBody = {
+    userId: userId,
+    moduleId: moduleId,
+  }
+  fetch(API_REMOVE_USER_FROM_MODULE, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_MODULE + moduleId)
+    mutate(API_GET_ALL_MODULE)
+  })
 }
 
 export function makeAnnouncement(moduleId: string, announcement: Announcement): void {
