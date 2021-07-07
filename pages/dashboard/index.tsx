@@ -14,6 +14,7 @@ import { useModule } from '../../components/module/ModuleAPI'
 import QuestItem from '../../components/module/QuestItem'
 import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
+
 export default function DashBoard(): JSX.Element {
   const { user, isLoading } = useUser()
   const userId = useUserId()
@@ -76,10 +77,10 @@ export default function DashBoard(): JSX.Element {
                             src={
                               isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl
                             }></Image>
-                          <p className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
-                            Level{' '}
+                          <div className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
+                            Level
                             {isLoading ? <Skeleton width={20} /> : levelize(user.modules[0].exp)}
-                          </p>
+                          </div>
                         </div>
                         <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
                           {isLoading ? <Skeleton width={20} /> : user.modules[0].exp}

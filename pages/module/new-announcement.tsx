@@ -13,11 +13,7 @@ export default function CreateAnnouncement(): JSX.Element {
       </Head>
       <div className="flex-grow flex-col dark:bg-gray-800 dark:text-gray-200">
         <SidebarLayout>
-          <div className="p-4 pt-10 dark:bg-gray-800 dark:text-gray-200 w-full">
-            <div className="shadow-lg">
-              <NewAnnouncement />
-            </div>
-          </div>
+          <NewAnnouncement />
         </SidebarLayout>
       </div>
     </>
