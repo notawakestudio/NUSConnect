@@ -35,6 +35,14 @@ export const useAllQuestions = (): { questions: Question[]; isLoading: boolean; 
   }
 }
 
+export const useAllQuizzes = (): { quizzes: Quiz[]; isLoading: boolean } => {
+  const { data } = useSWR(API_GET_ALL_QUIZ, fetcher)
+  return {
+    quizzes: data,
+    isLoading: !data,
+  }
+}
+
 export const fetchQuizById = async (quizId: string): Promise<Quiz> => {
   return fetch(API_GET_QUIZ_BY_ID + quizId).then((response) => response.json())
 }

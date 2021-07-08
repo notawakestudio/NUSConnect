@@ -278,7 +278,7 @@ export default function Badges(): JSX.Element {
       <h1 className="text-center text-lg font-semibold mt-2">Your badges</h1>
       <div className="p-10 flex space-4 flex-wrap justify-center">
         {isLoading ? (
-          <Skeleton height="300" />
+          <Skeleton height="300px" />
         ) : (
           user.modules[0].badges.map((badgeId, index) => {
             const currBadge = allBadges.filter((curr) => curr.id === badgeId)[0]

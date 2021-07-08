@@ -1,4 +1,3 @@
-import { Alert, AlertIcon, AlertTitle, CloseButton } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
@@ -9,27 +8,10 @@ import { Quiz } from './types'
 
 const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
   const [query, setQuery] = useState('')
-  const [hidden, setHidden] = useState(false)
-
   return (
     <div className="flex flex-col w-full">
       <div className="px-4 md:px-6 pt-20">
         <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">Quiz</h1>
-        <div className={hidden ? `hidden` : `py-2`}>
-          <Alert status="warning">
-            <AlertIcon />
-            <AlertTitle mr={2}>
-              Quizzes/Questions added may take 10-20 seconds to show up
-            </AlertTitle>
-            <CloseButton
-              position="absolute"
-              right="8px"
-              top="8px"
-              as="button"
-              onClick={() => setHidden(true)}
-            />
-          </Alert>
-        </div>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-1 mt-2">
           <div className="sm:flex items-center w-auto p-1 dark:text-gray-200">
             <AiOutlineSearch size={25} className="mr-1 hidden md:flex" />

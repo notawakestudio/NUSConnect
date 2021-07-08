@@ -1,22 +1,22 @@
-import { GetStaticProps } from 'next'
+import { Skeleton } from '@chakra-ui/react'
 import Head from 'next/head'
 import React from 'react'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
-import { fetchAllQuizzes } from '../../components/quiz/QuizAPI'
+import { useAllQuizzes } from '../../components/quiz/QuizAPI'
 import QuizList from '../../components/quiz/QuizList'
-import { Quiz } from '../../components/quiz/types'
 
-export const getStaticProps: GetStaticProps = async () => {
-  const quizzes = await fetchAllQuizzes()
-  return {
-    props: {
-      quizzes,
-    },
-    revalidate: 10, // In seconds
-  }
-}
+// export const getStaticProps: GetStaticProps = async () => {
+//   const quizzes = await fetchAllQuizzes()
+//   return {
+//     props: {
+//       quizzes,
+//     },
+//     revalidate: 10, // In seconds
+//   }
+// }
 
-export default function QuizPage({ quizzes }: { quizzes: Quiz[] }): JSX.Element {
+export default function QuizPage(): JSX.Element {
+  const { quizzes, isLoading } = useAllQuizzes()
   return (
     <>
       <Head>
@@ -27,7 +27,7 @@ export default function QuizPage({ quizzes }: { quizzes: Quiz[] }): JSX.Element 
       <div className="dark:bg-gray-800 w-full">
         <SidebarLayout>
           <div className="w-full bg-white dark:bg-gray-800">
-            <QuizList quizzes={quizzes} />
+            {isLoading ? <Skeleton height="500px" /> : <QuizList quizzes={quizzes} />}
           </div>
         </SidebarLayout>
       </div>
