@@ -37,7 +37,7 @@ export const defaultModuleInfo: ModuleInfo[] = [
   {
     id: 'kMvp8b48SmTiXXCl7EAkc',
     exp: 0,
-    badges: [],
+    badges: ['ngtbhPgKtHLClT4WdXT9N'],
     quizzes: [],
     quests: [],
   },
