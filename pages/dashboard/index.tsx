@@ -96,8 +96,18 @@ export default function DashBoard(): JSX.Element {
                 <div className="flex items-center w-full md:w-1/2 space-x-4">
                   <div className="w-1/2 ">
                     <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
-                      <p className="text-2xl text-black dark:text-white font-bold">12</p>
-                      <p className="text-gray-400 text-sm">Badges</p>
+                      <p className="text-2xl text-black dark:text-white font-bold">
+                        {isLoading ? <Skeleton width={20} /> : user.modules[0].badges.length}
+                      </p>
+                      <p className="text-gray-400 text-sm">
+                        {isLoading ? (
+                          <Skeleton width={20} />
+                        ) : user.modules[0].badges.length > 1 ? (
+                          'Badges'
+                        ) : (
+                          'Badge'
+                        )}
+                      </p>
                     </div>
                   </div>
                   <div className="w-1/2">
