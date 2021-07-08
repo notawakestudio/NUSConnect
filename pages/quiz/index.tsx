@@ -1,6 +1,5 @@
 import { Skeleton } from '@chakra-ui/react'
 import Head from 'next/head'
-import React from 'react'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
 import { useAllQuizzes } from '../../components/quiz/QuizAPI'
 import QuizList from '../../components/quiz/QuizList'

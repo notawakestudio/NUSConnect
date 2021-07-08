@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import Search, { Design } from '../common/Search'
@@ -8,6 +8,19 @@ import { Quiz } from './types'
 
 const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
   const [query, setQuery] = useState('')
+  const [filteredQuizzes, setFilteredQuizzes] = useState<Quiz[]>([])
+  useEffect(() => {
+    function fn(): void {
+      if (query.trim() === '') {
+        return setFilteredQuizzes(quizzes)
+      } else {
+        setFilteredQuizzes(
+          quizzes.filter((quiz) => quiz.title.toLowerCase().includes(query.toLowerCase()))
+        )
+      }
+    }
+    fn()
+  }, [query, quizzes])
   return (
     <div className="flex flex-col w-full">
       <div className="px-4 md:px-6 pt-20">
@@ -30,7 +43,7 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
       <div className="flex w-full bg-white dark:bg-gray-800 p-4">
         <div className="flex flex-col items-center lg:items-start justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-full">
           <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 justify-start">
-            {quizzes.map((quiz) => {
+            {filteredQuizzes.map((quiz) => {
               return <QuizItemCard key={quiz.id} quiz={quiz} />
             })}
           </div>
