@@ -12,7 +12,7 @@ import SidebarLayout from '../../components/layouts/SidebarLayout'
 import AnnouncementItem from '../../components/module/AnnouncementItem'
 import { useModule } from '../../components/module/ModuleAPI'
 import QuestItem from '../../components/module/QuestItem'
-import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
+import { expForNextLevel, levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
 
 export default function DashBoard(): JSX.Element {
@@ -88,7 +88,15 @@ export default function DashBoard(): JSX.Element {
                         </div>
                       </div>
                       <div className="w-full h-3 bg-white">
-                        <div className="w-2/5 h-full text-center text-xs text-white bg-green-400"></div>
+                        <div
+                          className="h-full text-center text-xs text-white bg-green-400"
+                          style={{
+                            width: isLoading
+                              ? ''
+                              : `${
+                                  (user.modules[0].exp / expForNextLevel(user.modules[0].exp)) * 100
+                                }%`,
+                          }}></div>
                       </div>
                     </a>
                   </div>
