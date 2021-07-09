@@ -3,6 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { nanoid } from 'nanoid'
 import Head from 'next/head'
 import * as Yup from 'yup'
+import Auth from '../../components/common/Auth'
 import Layout from '../../components/layouts/Layout'
 import { makeModule, Module } from '../../components/module/ModuleAPI'
 
@@ -23,7 +24,7 @@ export default function NewModule(): JSX.Element {
     makeModule(value)
   }
   return (
-    <>
+    <Auth>
       <Head>
         <title>Create Module | NUS Connect</title>
         <meta name="description" content="NUS Connect" />
@@ -86,6 +87,6 @@ export default function NewModule(): JSX.Element {
           )}
         </Formik>
       </Layout>
-    </>
+    </Auth>
   )
 }
