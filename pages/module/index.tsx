@@ -8,6 +8,7 @@ import {
   removeUserFromModule,
   useAllModules,
 } from '../../components/module/ModuleAPI'
+import { useUser } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
 
 export default function Home(): JSX.Element {
@@ -15,6 +16,9 @@ export default function Home(): JSX.Element {
   const { modules, isLoading } = useAllModules()
   const userId = useUserId()
   const toast = useToast()
+
+  const { user, isLoading: userLoading } = useUser()
+  const role = userLoading ? 'student' : user.role
   return (
     <>
       <Head>
@@ -31,14 +35,18 @@ export default function Home(): JSX.Element {
                   Existing Modules
                 </h3>
               </div>
-              <div className="relative w-full max-w-full flex-grow flex-1 text-right">
-                <button
-                  className="bg-blue-500 dark:bg-gray-100 text-white active:bg-blue-600 dark:text-gray-800 dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  onClick={() => router.push('module/new-module')}
-                  type="button">
-                  Want to create a module ?
-                </button>
-              </div>
+              {role === 'admin' ? (
+                <div className="relative w-full max-w-full flex-grow flex-1 text-right">
+                  <button
+                    className="bg-blue-500 dark:bg-gray-100 text-white active:bg-blue-600 dark:text-gray-800 dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    onClick={() => router.push('module/new-module')}
+                    type="button">
+                    Create new module
+                  </button>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
             <div className="block w-full overflow-x-auto">
               <table className="items-center w-full bg-transparent border-collapse">

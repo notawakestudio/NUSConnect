@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import React from 'react'
+import Auth from '../../components/common/Auth'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
 import NewAnnouncement from '../../components/module/NewAnnouncement'
 
 export default function CreateAnnouncement(): JSX.Element {
   return (
-    <>
+    <Auth>
       <Head>
         <title>New Announcement | NUS Connect</title>
         <meta name="description" content="Announcement" />
@@ -16,6 +17,6 @@ export default function CreateAnnouncement(): JSX.Element {
           <NewAnnouncement />
         </SidebarLayout>
       </div>
-    </>
+    </Auth>
   )
 }

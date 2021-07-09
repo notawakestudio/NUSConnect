@@ -3,10 +3,11 @@ import React from 'react'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
 import NewQuest from '../../components/module/NewQuest'
 import 'react-datepicker/dist/react-datepicker.css'
+import Auth from '../../components/common/Auth'
 
 export default function CreateAnnouncement(): JSX.Element {
   return (
-    <>
+    <Auth>
       <Head>
         <title>New Quest | NUS Connect</title>
         <meta name="description" content="Announcement" />
@@ -17,6 +18,6 @@ export default function CreateAnnouncement(): JSX.Element {
           <NewQuest />
         </SidebarLayout>
       </div>
-    </>
+    </Auth>
   )
 }

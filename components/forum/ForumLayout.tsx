@@ -33,8 +33,8 @@ export default function ForumLayout({
           )
         )
       } else {
-        setFilteredPosts((filteredPosts) =>
-          filteredPosts.filter(
+        setFilteredPosts(
+          posts.filter(
             (post) =>
               post.content.toLowerCase().includes(query.toLowerCase()) ||
               post.title.toLowerCase().includes(query.toLowerCase())
