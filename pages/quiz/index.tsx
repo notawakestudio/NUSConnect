@@ -26,7 +26,11 @@ export default function QuizPage(): JSX.Element {
       <div className="dark:bg-gray-800 w-full">
         <SidebarLayout>
           <div className="w-full bg-white dark:bg-gray-800">
-            {isLoading ? <Skeleton height="500px" /> : <QuizList quizzes={quizzes} />}
+            {isLoading ? (
+              <Skeleton height="500px" />
+            ) : (
+              <QuizList quizzes={quizzes.sort((a, b) => parseInt(a.week) - parseInt(b.week))} />
+            )}
           </div>
         </SidebarLayout>
       </div>

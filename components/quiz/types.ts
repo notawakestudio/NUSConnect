@@ -7,6 +7,7 @@ export type Quiz = {
   tags: string[]
   questions: string[]
   modules: string[]
+  up_votes: number
 }
 
 export type Question = {

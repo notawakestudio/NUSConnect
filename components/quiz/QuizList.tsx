@@ -5,29 +5,18 @@ import { IoMdAddCircleOutline } from 'react-icons/io'
 import Search, { Design } from '../common/Search'
 import QuizItemCard from './QuizItemCard'
 import { Quiz } from './types'
-import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
 const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
   const [query, setQuery] = useState('')
-  const [sortBy, setSortBy] = useState('title')
   const [filteredQuizzes, setFilteredQuizzes] = useState<Quiz[]>([])
   useEffect(() => {
-    function fn(): void {
-      const result = quizzes
-      if (sortBy === 'title') {
-        result.sort((a, b) => a.title.localeCompare(b.title))
-      } else {
-        result.sort((a, b) => parseInt(a.week) - parseInt(b.week))
-      }
-      if (query.trim() === '') {
-        setFilteredQuizzes(result)
-      } else {
-        setFilteredQuizzes(
-          result.filter((quiz) => quiz.title.toLowerCase().includes(query.toLowerCase()))
-        )
-      }
+    if (query.trim() === '') {
+      setFilteredQuizzes(quizzes)
+    } else {
+      setFilteredQuizzes(
+        quizzes.filter((quiz) => quiz.title.toLowerCase().includes(query.toLowerCase()))
+      )
     }
-    fn()
-  }, [query, quizzes, sortBy])
+  }, [query, quizzes])
   return (
     <div className="flex flex-col w-full">
       <div className="px-4 md:px-6 pt-20">
@@ -36,13 +25,6 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
           <div className="sm:flex items-center w-auto p-1 dark:text-gray-200">
             <AiOutlineSearch size={25} className="mr-1 hidden md:flex" />
             <Search design={Design.square} query={query} setQuery={setQuery} />
-            <RadioGroup onChange={setSortBy} value={sortBy}>
-              <Stack direction="row">
-                <span className="m-2">Sort by:</span>
-                <Radio value="title">Title</Radio>
-                <Radio value="week">Week</Radio>
-              </Stack>
-            </RadioGroup>
           </div>
           <Link href={'/quiz/make-question'}>
             <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center w-auto h-auto">

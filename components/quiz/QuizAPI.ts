@@ -1,6 +1,6 @@
 import { GrayMatterFile } from 'gray-matter'
 import { nanoid } from 'nanoid'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import QuestionBank from '../../public/data/QuestionBank.json'
 import QuizData from '../../public/data/QuizData.json'
 import { getCurrentDateTime, shuffleStringArray } from '../common/Util'
@@ -8,6 +8,7 @@ import { Question, QuestionWithAnswersMixed, Quiz } from './types'
 
 const API_GET_QUIZ_BY_ID = 'https://1ieznu.deta.dev/quiz/quiz/'
 const API_MAKE_QUESTION = 'https://1ieznu.deta.dev/quiz/make'
+const API_UPDATE_QUIZ = 'https://1ieznu.deta.dev/quiz/update'
 const API_GET_ALL_QUESTION = 'https://1ieznu.deta.dev/quiz/question'
 const API_SUBMIT_QUIZ = 'https://1ieznu.deta.dev/quiz/collate'
 const API_GET_ALL_QUIZ = 'https://1ieznu.deta.dev/quiz/quiz'
@@ -147,6 +148,7 @@ export function makeQuiz(quiz): void {
     questions: quiz['questions'],
     tags: quiz['tags'],
     week: quiz['week'],
+    up_votes: 0,
   }
   fetch(API_SUBMIT_QUIZ, {
     method: 'POST',
@@ -177,6 +179,7 @@ export function createQuiz(json: GrayMatterFile<any>): void {
     questions: json['data']['questions'],
     tags: json['data']['tags'],
     week: json['data']['week'],
+    up_votes: json['data']['up_votes'],
   }
   fetch(API_SUBMIT_QUIZ, {
     method: 'POST',
@@ -233,4 +236,33 @@ export const classifyAnswers = (answers: { main: string; is_correct?: boolean }[
     value.is_correct ? correct_answers.push(value.main) : incorrect_answers.push(value.main)
   )
   return [correct_answers, incorrect_answers]
+}
+
+export function updateQuiz(quiz: Quiz): void {
+  const requestBody: Quiz = {
+    id: quiz['id'],
+    date: quiz['date'],
+    title: quiz['title'],
+    author: quiz['author'],
+    modules: quiz['modules'],
+    questions: quiz['questions'],
+    tags: quiz['tags'],
+    week: quiz['week'],
+    up_votes: quiz['up_votes'],
+  }
+  fetch(API_UPDATE_QUIZ, {
+    method: 'POST',
+    mode: 'no-cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(requestBody),
+  }).then((response) => {
+    console.log(response)
+    mutate(API_GET_ALL_QUIZ)
+  })
 }
