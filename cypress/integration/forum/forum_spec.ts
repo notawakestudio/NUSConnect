@@ -4,7 +4,7 @@ describe('Forum page', function () {
     cy.visit('/forum')
   })
   it('verifies homepage UI', function () {
-    cy.contains('All Posts', { timeout: 20000 })
+    // cy.contains('All Posts', { timeout: 20000 })
     cy.contains('New Post', { timeout: 10000 })
   })
 
