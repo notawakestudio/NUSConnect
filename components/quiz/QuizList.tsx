@@ -14,9 +14,7 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
     if (sortBy === 'title') {
       setFilteredQuizzes(() => [...quizzes].sort((a, b) => a.title.localeCompare(b.title)))
     } else {
-      setFilteredQuizzes(() =>
-        [...quizzes].filter((quiz) => quiz.title.toLowerCase().includes(query.toLowerCase()))
-      )
+      setFilteredQuizzes(() => [...quizzes].sort((a, b) => a.week - b.week))
     }
     if (query.trim() === '') {
       setFilteredQuizzes((filteredQuizzes) => filteredQuizzes)
