@@ -5,9 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { AiFillCaretDown, AiOutlineCalendar } from 'react-icons/ai'
-import { GrSemantics } from 'react-icons/gr'
 import { IoIosRemoveCircleOutline, IoMdAddCircleOutline } from 'react-icons/io'
-import { MdNotifications, MdNotificationsActive } from 'react-icons/md'
+import { MdDoneAll, MdNotifications, MdNotificationsActive } from 'react-icons/md'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
 import AnnouncementItem from '../../components/module/AnnouncementItem'
 import { useModule } from '../../components/module/ModuleAPI'
@@ -78,7 +77,7 @@ export default function DashBoard(): JSX.Element {
                               isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl
                             }></Image>
                           <div className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
-                            Level
+                            Level{' '}
                             {isLoading ? <Skeleton width={20} /> : levelize(user.modules[0].exp)}
                           </div>
                         </div>
@@ -107,23 +106,22 @@ export default function DashBoard(): JSX.Element {
                       <p className="text-2xl text-black dark:text-white font-bold">
                         {isLoading ? <Skeleton width={20} /> : user.modules[0].badges.length}
                       </p>
-                      <p className="text-gray-400 text-sm">
-                        {isLoading ? (
-                          <Skeleton width={20} />
-                        ) : user.modules[0].badges.length > 1 ? (
-                          'Badges'
-                        ) : (
-                          'Badge'
-                        )}
-                      </p>
+
+                      {isLoading ? (
+                        <Skeleton width={20} />
+                      ) : (
+                        <p className="text-gray-400 text-sm">
+                          {user.modules[0].badges.length > 1 ? 'Badges' : 'Badge'}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="w-1/2">
                     <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
-                      <p className="text-2xl text-black dark:text-white font-bold">1st</p>
-                      <p className="text-gray-400 text-sm">Rank</p>
+                      <p className="text-2xl text-black dark:text-white font-bold">0</p>
+                      <p className="text-gray-400 text-sm">Completed Quests</p>
                       <span className="rounded-full absolute p-4 bg-purple-500 top-2 right-4">
-                        <GrSemantics />
+                        <MdDoneAll />
                       </span>
                     </div>
                   </div>

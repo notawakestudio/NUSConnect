@@ -4,29 +4,25 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import Search, { Design } from '../common/Search'
 import QuizItemCard from './QuizItemCard'
-import { Quiz } from './types'
 import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
+import { Quiz } from './types'
 const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
   const [query, setQuery] = useState('')
-  const [sortBy, setSortBy] = useState('title')
   const [filteredQuizzes, setFilteredQuizzes] = useState<Quiz[]>([])
+  const [sortBy, setSortBy] = useState('title')
   useEffect(() => {
-    function fn(): void {
-      const result = quizzes
-      if (sortBy === 'title') {
-        result.sort((a, b) => a.title.localeCompare(b.title))
-      } else {
-        result.sort((a, b) => parseInt(a.week) - parseInt(b.week))
-      }
-      if (query.trim() === '') {
-        setFilteredQuizzes(result)
-      } else {
-        setFilteredQuizzes(
-          result.filter((quiz) => quiz.title.toLowerCase().includes(query.toLowerCase()))
-        )
-      }
+    if (sortBy === 'title') {
+      setFilteredQuizzes(() => [...quizzes].sort((a, b) => a.title.localeCompare(b.title)))
+    } else {
+      setFilteredQuizzes(() => [...quizzes].sort((a, b) => a.week - b.week))
     }
-    fn()
+    if (query.trim() === '') {
+      setFilteredQuizzes((filteredQuizzes) => filteredQuizzes)
+    } else {
+      setFilteredQuizzes((filteredQuizzes) =>
+        filteredQuizzes.filter((quiz) => quiz.title.toLowerCase().includes(query.toLowerCase()))
+      )
+    }
   }, [query, quizzes, sortBy])
   return (
     <div className="flex flex-col w-full">
