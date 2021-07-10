@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { showCurrentDate } from '../common/Util'
-import div from '../common/TextContainer'
 import { Post } from './ForumAPI'
 import React from 'react'
 import DisplayName from '../profile/DisplayName'
