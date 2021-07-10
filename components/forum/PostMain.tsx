@@ -20,6 +20,7 @@ import LikeButton from '../common/LikeButton'
 import div from '../common/TextContainer'
 import { renderMdToHtml, timeSince } from '../common/Util'
 import DisplayName from '../profile/DisplayName'
+import { useUser } from '../profile/UserAPI'
 import { useUserId } from '../store/user'
 import { deletePost, updatePostLikes, usePost } from './ForumAPI'
 import ModelQuestionCard from './ModelQuestionCard'
@@ -34,9 +35,12 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false)
   const onClose = (): void => setIsOpen(false)
   const cancelRef = React.useRef()
-  //Toast
+
   const toast = useToast()
   const userId = useUserId()
+  const { user, isLoading: userLoading } = useUser()
+  const role = userLoading ? 'student' : user.role
+
   return (
     <>
       <div className="shadow-md border w-full">
@@ -93,7 +97,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
               )}
 
               <div className="flex items-center mt-2">
-                {session && userId === currentPost.author_id ? (
+                {(session && userId === currentPost.author_id) || role === 'admin' ? (
                   <>
                     {editing ? (
                       <>

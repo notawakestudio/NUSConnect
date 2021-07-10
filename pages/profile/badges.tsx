@@ -10,7 +10,7 @@ export default function Badge(): JSX.Element {
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col w-full h-full items-center">
+      <div className="w-full h-full">
         <Badges />
       </div>
     </SidebarLayout>

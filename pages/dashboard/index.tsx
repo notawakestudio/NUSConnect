@@ -5,14 +5,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { AiFillCaretDown, AiOutlineCalendar } from 'react-icons/ai'
-import { GrSemantics } from 'react-icons/gr'
 import { IoIosRemoveCircleOutline, IoMdAddCircleOutline } from 'react-icons/io'
-import { MdNotifications, MdNotificationsActive } from 'react-icons/md'
+import { MdDoneAll, MdNotifications, MdNotificationsActive } from 'react-icons/md'
 import SidebarLayout from '../../components/layouts/SidebarLayout'
 import AnnouncementItem from '../../components/module/AnnouncementItem'
 import { useModule } from '../../components/module/ModuleAPI'
 import QuestItem from '../../components/module/QuestItem'
-import { levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
+import { expForNextLevel, levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
 
 export default function DashBoard(): JSX.Element {
@@ -24,7 +23,7 @@ export default function DashBoard(): JSX.Element {
   const [editing, setEditing] = useState(false)
   const [currentWeek, setCurrentWeek] = useState(null)
 
-  const role = isLoading ? '' : user.role
+  const role = isLoading ? 'student' : user.role
   const weeks = moduleLoading
     ? [1]
     : Array.from(new Set(module.announcements.map((announcement) => announcement.week)))
@@ -78,7 +77,7 @@ export default function DashBoard(): JSX.Element {
                               isLoading ? '/white_profile-placeholder.png' : user.profilePicUrl
                             }></Image>
                           <div className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
-                            Level
+                            Level{' '}
                             {isLoading ? <Skeleton width={20} /> : levelize(user.modules[0].exp)}
                           </div>
                         </div>
@@ -88,7 +87,15 @@ export default function DashBoard(): JSX.Element {
                         </div>
                       </div>
                       <div className="w-full h-3 bg-white">
-                        <div className="w-2/5 h-full text-center text-xs text-white bg-green-400"></div>
+                        <div
+                          className="h-full text-center text-xs text-white bg-green-400"
+                          style={{
+                            width: isLoading
+                              ? ''
+                              : `${
+                                  (user.modules[0].exp / expForNextLevel(user.modules[0].exp)) * 100
+                                }%`,
+                          }}></div>
                       </div>
                     </a>
                   </div>
@@ -96,16 +103,25 @@ export default function DashBoard(): JSX.Element {
                 <div className="flex items-center w-full md:w-1/2 space-x-4">
                   <div className="w-1/2 ">
                     <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
-                      <p className="text-2xl text-black dark:text-white font-bold">12</p>
-                      <p className="text-gray-400 text-sm">Badges</p>
+                      <p className="text-2xl text-black dark:text-white font-bold">
+                        {isLoading ? <Skeleton width={20} /> : user.modules[0].badges.length}
+                      </p>
+
+                      {isLoading ? (
+                        <Skeleton width={20} />
+                      ) : (
+                        <p className="text-gray-400 text-sm">
+                          {user.modules[0].badges.length > 1 ? 'Badges' : 'Badge'}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="w-1/2">
                     <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
-                      <p className="text-2xl text-black dark:text-white font-bold">1st</p>
-                      <p className="text-gray-400 text-sm">Rank</p>
+                      <p className="text-2xl text-black dark:text-white font-bold">0</p>
+                      <p className="text-gray-400 text-sm">Completed Quests</p>
                       <span className="rounded-full absolute p-4 bg-purple-500 top-2 right-4">
-                        <GrSemantics />
+                        <MdDoneAll />
                       </span>
                     </div>
                   </div>
@@ -138,16 +154,20 @@ export default function DashBoard(): JSX.Element {
                       <span className="text-2xl font-semibold text-gray-800 dark:text-white">
                         Announcements
                       </span>
-                      <span>
-                        <Link href={'/module/new-announcement'}>
-                          <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
-                            <span className="items-center pt-1 pr-1">
-                              <IoMdAddCircleOutline />
+                      {role === 'admin' ? (
+                        <span>
+                          <Link href={'/module/new-announcement'}>
+                            <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
+                              <span className="items-center pt-1 pr-1">
+                                <IoMdAddCircleOutline />
+                              </span>
+                              <span>new announcement</span>
                             </span>
-                            <span>new announcement</span>
-                          </span>
-                        </Link>
-                      </span>
+                          </Link>
+                        </span>
+                      ) : (
+                        ''
+                      )}
                     </div>
                     <div className="dark:text-gray-300">
                       {moduleLoading ? (
@@ -170,8 +190,8 @@ export default function DashBoard(): JSX.Element {
                       <span className="text-2xl font-semibold text-gray-800 dark:text-white">
                         Quests
                       </span>
-                      <span className="flex flex-row space-x-1">
-                        {role === 'admin' ? (
+                      {role === 'admin' ? (
+                        <span className="flex flex-row space-x-1">
                           <button
                             onClick={() => setEditing(!editing)}
                             className="shadow-md p-2 cursor-pointer bg-white hover:bg-red-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
@@ -182,18 +202,18 @@ export default function DashBoard(): JSX.Element {
                               <span>edit</span>
                             </span>
                           </button>
-                        ) : (
-                          ''
-                        )}
-                        <Link href={'/module/new-quest'}>
-                          <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
-                            <span className="items-center pt-1 pr-1">
-                              <IoMdAddCircleOutline />
+                          <Link href={'/module/new-quest'}>
+                            <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
+                              <span className="items-center pt-1 pr-1">
+                                <IoMdAddCircleOutline />
+                              </span>
+                              <span>new quest</span>
                             </span>
-                            <span>new quest</span>
-                          </span>
-                        </Link>
-                      </span>
+                          </Link>
+                        </span>
+                      ) : (
+                        ''
+                      )}
                     </div>
                     <div className="dark:text-gray-300">
                       {moduleLoading ? (

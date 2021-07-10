@@ -25,6 +25,7 @@ import NewPost from './NewPost'
 import { nanoid } from 'nanoid'
 import DisplayName from '../profile/DisplayName'
 import { useUserId } from '../store/user'
+import { useUser } from '../profile/UserAPI'
 
 const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   const currentReply = reply
@@ -34,6 +35,8 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const userId = useUserId()
+  const { user, isLoading: userLoading } = useUser()
+  const role = userLoading ? 'student' : user.role
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 dark:bg-gray-800">
@@ -66,7 +69,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
           </p>
         )}
         <div className="flex justify-items-end">
-          {session && userId === currentReply.author_id ? (
+          {(session && userId === currentReply.author_id) || role === 'admin' ? (
             <>
               <button
                 onClick={() => setEditing(!editing)}
