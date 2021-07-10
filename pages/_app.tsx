@@ -8,6 +8,7 @@ import { StoreProvider } from '../components/utils/store'
 import { useRouter } from 'next/router'
 import ForumLayout from '../components/forum/ForumLayout'
 import { UserProvider } from '../components/store/user'
+import SidebarLayout from '../components/layouts/SidebarLayout'
 function MyApp({ Component, pageProps }): JSX.Element {
   const router = useRouter()
   if (router.pathname.startsWith('/forum')) {
@@ -17,9 +18,11 @@ function MyApp({ Component, pageProps }): JSX.Element {
           <UserProvider>
             <ChakraProvider>
               <NavBar />
-              <ForumLayout>
-                <Component {...pageProps} />
-              </ForumLayout>
+              <SidebarLayout>
+                <ForumLayout>
+                  <Component {...pageProps} />
+                </ForumLayout>
+              </SidebarLayout>
               <Footer />
             </ChakraProvider>
           </UserProvider>

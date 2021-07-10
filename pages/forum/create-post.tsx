@@ -19,15 +19,3 @@ export default function CreatePost(): JSX.Element {
     </>
   )
 }
-
-// export const getStaticProps: GetStaticProps = async () => {
-//   const questions = await fetchAllQuestions()
-//   const questionList = questions.map((question) => {
-//     return { label: renderMdToHtml(question['question']), value: question['id'] }
-//   })
-//   return {
-//     props: {
-//       questionList,
-//     },
-//   }
-// }

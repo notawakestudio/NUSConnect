@@ -1,106 +1,101 @@
 [{
-  "id": "xft5nj9NXr_RXl3LEyt2g",
-  "title": "CS2030",
-  "posts": [],
-  "replies":[],
-  "quizzes": [],
-  "questions": [],
-  "users": ["NSFDrUvhCdF11DOpWx5Sq"],
-  "schedules": [
-    {
-    "id": "rOS6Pt4tnuaSYrbZ2hpQF",
-    "week": "1",
-    "announcements": [{
-        "id": "hg1x0pHhPrxk6Adr0EHVR",
-        "week": 1,
-        "author_id": "WnqaRimjGDDY9KxM49XQ",
-        "title": "Welcome to your first week of CS2030!",
-        "content": "Some things to note for this week ...",
-        "created_date": 1622557680592
-      },
-      {
-        "id": "ilSSiCx7VS64T73ADmC87",
-        "week": 1,
-        "author_id": "WnqaRimjGDDY9KxM49XQ",
-        "title": "Welcome to your second week of CS2030!",
-        "content": "Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...",
-        "created_date": 1622557680592
-      },
-      {
-        "id": "8k-yJLLr2Ec7zjiVpY1zF",
-        "week": 1,
-        "author_id": "ddHg168Fwz9VIP1wxbzK",
-        "title": "Welcome to your third week of CS2030!",
-        "content": "Start of something new..",
-        "created_date": 1622557680592
-      }
-    ],
-    "quests": [{
-        "id": "MpGV4bzRpbNj683Pt-ful",
-        "description": "Do a quiz",
-        "week": 1,
-        "type": "quiz",
-        "count": 1,
-        "link": "",
-        "created_date": 1622557680592,
-        "end_date": 1622557680592,
-        "reward": {
-          "exp": 30,
-          "badge": "new badge"
+    "id": "xft5nj9NXr_RXl3LEyt2g",
+    "title": "CS2030",
+    "posts": [],
+    "replies": [],
+    "quizzes": [],
+    "questions": [],
+    "users": ["NSFDrUvhCdF11DOpWx5Sq"],
+    "schedules": [{
+      "id": "rOS6Pt4tnuaSYrbZ2hpQF",
+      "week": "1",
+      "announcements": [{
+          "id": "hg1x0pHhPrxk6Adr0EHVR",
+          "week": 1,
+          "author_id": "WnqaRimjGDDY9KxM49XQ",
+          "title": "Welcome to your first week of CS2030!",
+          "content": "Some things to note for this week ...",
+          "created_date": 1622557680592
+        },
+        {
+          "id": "ilSSiCx7VS64T73ADmC87",
+          "week": 1,
+          "author_id": "WnqaRimjGDDY9KxM49XQ",
+          "title": "Welcome to your second week of CS2030!",
+          "content": "Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...Some things to note for this week ...",
+          "created_date": 1622557680592
+        },
+        {
+          "id": "8k-yJLLr2Ec7zjiVpY1zF",
+          "week": 1,
+          "author_id": "ddHg168Fwz9VIP1wxbzK",
+          "title": "Welcome to your third week of CS2030!",
+          "content": "Start of something new..",
+          "created_date": 1622557680592
         }
-      },
-      {
-        "id": "AImRUMlFnX7JwU-eInSoK",
-        "description": "Post a forum post",
-        "week": 1,
-        "type": "forum",
-        "count": 1,
-        "link": "",
-        "created_date": 1622557680592,
-        "end_date": 1622557680592,
-        "reward": {
-          "exp": 20,
-          "badge": "new badge"
+      ],
+      "quests": [{
+          "id": "MpGV4bzRpbNj683Pt-ful",
+          "description": "Do a quiz",
+          "week": 1,
+          "type": "quiz",
+          "count": 1,
+          "link": "",
+          "start_date": 1622557680592,
+          "end_date": 1622557680592,
+          "reward": {
+            "exp": 30,
+            "badge": "new badge"
+          }
+        },
+        {
+          "id": "AImRUMlFnX7JwU-eInSoK",
+          "description": "Post a forum post",
+          "week": 1,
+          "type": "forum",
+          "count": 1,
+          "link": "",
+          "start_date": 1622557680592,
+          "end_date": 1622557680592,
+          "reward": {
+            "exp": 20,
+            "badge": "new badge"
+          }
         }
-      }
-    ]
-  }
-]
-},
-{
-  "id": "daq3in4m2gNoqpcAKyXtV",
-  "title": "CS2103T",
-  "posts": [],
-  "replies":[],
-  "quizzes": [],
-  "questions": [],
-  "users": ["NSFDrUvhCdF11DOpWx5Sq"],
-  "schedules": [
-    {
-    "id": "rOS6Pt4tnuaSYrbZ2hpQF",
-    "week": "1",
-    "announcements": [{
+      ]
+    }]
+  },
+  {
+    "id": "daq3in4m2gNoqpcAKyXtV",
+    "title": "CS2103T",
+    "posts": [],
+    "replies": [],
+    "quizzes": [],
+    "questions": [],
+    "users": ["NSFDrUvhCdF11DOpWx5Sq"],
+    "schedules": [{
+      "id": "rOS6Pt4tnuaSYrbZ2hpQF",
+      "week": "1",
+      "announcements": [{
         "id": "id1",
         "author_id": "WnqaRimjGDDY9KxM49XQ",
         "title": "Welcome to your first week of CS2030!",
         "content": "Some things to note for this week ...",
         "created_date": 1622557680592
-      }
-    ],
-    "quests": [{
+      }],
+      "quests": [{
         "id": "MpGV4bzRpbNj683Pt-ful",
         "description": "Do a quiz",
         "type": "quiz",
         "count": 1,
         "link": "",
-        "created_date": 1622557680592,
+        "start_date": 1622557680592,
         "end_date": 1622557680592,
         "reward": {
           "exp": 30,
           "badge": "new badge"
         }
-      }
-    ]
+      }]
+    }]
   }
 ]
-}]

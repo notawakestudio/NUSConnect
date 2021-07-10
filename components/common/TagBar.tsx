@@ -1,4 +1,5 @@
 import { allAvailableTags } from '../forum/ForumAPI'
+
 function TagBar({
   currTag,
   setCurrTag,
@@ -6,9 +7,15 @@ function TagBar({
   currTag: string
   setCurrTag: (state: string) => void
 }): JSX.Element {
+  const tags = allAvailableTags
+  const tagState = {
+    visible: [],
+    invisible: [],
+  }
+
   return (
-    <div className="hidden lg:flex justify-center flex-wrap mb-2">
-      {allAvailableTags.map((tag) => (
+    <div className="hidden lg:flex flex-row flex-wrap overflow-x-auto justify-left pb-1 w-full">
+      {tags.map((tag) => (
         <button
           key={tag}
           onClick={() => {
@@ -20,7 +27,7 @@ function TagBar({
           }}
           className={`${
             currTag === tag ? 'bg-blue-200' : ''
-          } border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-full py-1 px-2 m-1 shadow-md dark:text-gray-300 text-sm`}>
+          } border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-600 px-2 m-1 dark:text-gray-300 text-sm`}>
           {tag}
         </button>
       ))}

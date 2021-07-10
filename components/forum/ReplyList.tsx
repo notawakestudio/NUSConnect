@@ -6,7 +6,7 @@ const ReplyList = ({ postId }: { postId: string }): JSX.Element => {
     useAllRelatedReplies(postId)
 
   return (
-    <div className="flex-col space-y-4 lg:space-y-8">
+    <div className="flex-col space-y-4">
       {isLoading ? (
         <Skeleton height="200px" isLoaded={!isLoading}></Skeleton>
       ) : (
