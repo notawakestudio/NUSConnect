@@ -15,10 +15,12 @@ export default function CurrentPost(): JSX.Element {
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col space-y-4 lg:ml-4 lg:space-y-6 mt-4">
-        <PostMain key={postId as string} postId={postId as string} />
-        <ReplyList postId={postId as string} />
-        <NewReply key={nanoid()} postId={postId as string} />
+      <div className="flex flex-col max-h-screen overflow-y-auto">
+        <div className="mt-4 space-y-4">
+          <PostMain key={postId as string} postId={postId as string} />
+          <ReplyList postId={postId as string} />
+          <NewReply key={nanoid()} postId={postId as string} />
+        </div>
       </div>
     </>
   )

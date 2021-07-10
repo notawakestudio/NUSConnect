@@ -24,7 +24,7 @@ const Search = ({
       <div className="shadow-md border flex">
         <input
           type="text"
-          className="flex w-52 xs:block text-base py-1.5 px-4 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 ring-opacity-90 dark:bg-gray-700 text-gray-400"
+          className="flex w-28 lg:w-36 xl:w-48 xs:block text-base py-1.5 px-4 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 ring-opacity-90 dark:bg-gray-700 text-gray-400"
           placeholder="Search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}

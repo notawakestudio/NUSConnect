@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/client'
 import React from 'react'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
-import TextContainer from '../common/TextContainer'
+import div from '../common/TextContainer'
 import { notifyReply } from '../common/Util'
 import Required from '../forms/Required'
 import { useUserId } from '../store/user'
@@ -56,7 +56,7 @@ export default function NewReply({
 
   return (
     <Auth>
-      <TextContainer>
+      <div className="">
         <Formik
           initialValues={initialValues}
           validationSchema={Yup.object({
@@ -81,7 +81,11 @@ export default function NewReply({
           {(formik) => (
             <Form>
               <div
-                className="items-center w-full px-4 pt-4 text-gray-500 flex-shrink-0 dark:text-gray-300"
+                className={
+                  label === 'New comment'
+                    ? 'items-center w-full px-1 text-gray-500 flex-shrink-0 dark:text-gray-300'
+                    : 'text-gray-500 flex-shrink-0 dark:text-gray-300'
+                }
                 data-cy="newReplyForm">
                 <ContentTextArea
                   label={label}
@@ -106,7 +110,7 @@ export default function NewReply({
             </Form>
           )}
         </Formik>
-      </TextContainer>
+      </div>
     </Auth>
   )
 }

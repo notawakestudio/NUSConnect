@@ -1,10 +1,11 @@
+import { Spinner } from '@chakra-ui/spinner'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Layout from '../layouts/Layout'
+import React, { useEffect, useState } from 'react'
+import Search, { Design } from '../common/Search'
 import TagBar from '../common/TagBar'
 import { Post, useAllPosts } from './ForumAPI'
 import PostList from './PostList'
-import { Spinner } from '@chakra-ui/spinner'
-import { useEffect, useState } from 'react'
 export default function ForumLayout({
   children,
 }: {
@@ -49,22 +50,48 @@ export default function ForumLayout({
   return (
     <>
       <div className="dark:bg-gray-800 w-full">
-        <Layout>
-          <TagBar currTag={currTag} setCurrTag={setCurrTag} />
-          <div className="inline lg:flex">
+        <div className="flex flex-col w-full overflow-hidden">
+          <div className="flex flex-row bg-gray-100 dark:bg-gray-700 border-b border-gray-200 p-1 py-2">
+            <div className="flex flex-row justify-center space-x-2">
+              <Link href="/forum/create-post">
+                <button
+                  className="whitespace-nowrap bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2 rounded-sm shadow-md"
+                  data-cy="newPost">
+                  New Post
+                </button>
+              </Link>
+              <Search query={query} setQuery={setQuery} design={Design.square} />
+            </div>
+            <TagBar currTag={currTag} setCurrTag={setCurrTag} />
+          </div>
+          <div className="grid grid-cols-8">
             <div
               className={`${
-                router.pathname === '/forum' ? '' : 'hidden lg:flex flex-shrink-0'
-              } lg:w-96 xl:max-w-md mx-2`}>
+                router.pathname === '/forum' ? '' : 'hidden lg:inline'
+              } col-span-8 lg:col-span-3 xl:col-span-2`}>
               {isLoading ? (
-                <Spinner size="xl" />
+                <Spinner size="xl" m={20} p={10} />
               ) : (
-                <PostList postList={filteredPosts} query={query} setQuery={setQuery} />
+                <div className="border-r border-gray-200">
+                  {/* <div className="p-2 border-b border-gray-200 w-full">
+                    <div className="flex justify-center">
+                      <Link href="/forum/create-post">
+                        <button
+                          className="whitespace-nowrap bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2"
+                          data-cy="newPost">
+                          New Post
+                        </button>
+                      </Link>
+                      <Search query={query} setQuery={setQuery} design={Design.square} />
+                    </div>
+                  </div> */}
+                  <PostList postList={filteredPosts} />
+                </div>
               )}
             </div>
-            <div className="mx-2 flex-grow">{children}</div>
+            <div className="mx-2 col-span-8 lg:col-span-5 xl:col-span-6">{children}</div>
           </div>
-        </Layout>
+        </div>
       </div>
     </>
   )

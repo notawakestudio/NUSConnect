@@ -15,7 +15,7 @@ export default function NavigationDrawer(): JSX.Element {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <div className="flex md:hidden z-50">
+      <div className="flex lg:hidden z-50">
         <div className="fixed top-20 left-4">
           <button
             className="rounded-full bg-blue-400 p-2 h-8 w-8 content-center justify-center text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-blue-200"
@@ -26,10 +26,10 @@ export default function NavigationDrawer(): JSX.Element {
         <Drawer placement={'left'} onClose={onClose} isOpen={isOpen} size={'xs'}>
           <DrawerOverlay />
           <DrawerContent className="dark:bg-gray-800">
-            <DrawerHeader borderBottomWidth="1px">
+            <DrawerHeader borderBottomWidth="1px" px={0}>
               <SidebarHeader />
             </DrawerHeader>
-            <DrawerBody>
+            <DrawerBody p={0}>
               <SidebarBody />
             </DrawerBody>
           </DrawerContent>

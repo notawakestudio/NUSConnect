@@ -12,11 +12,12 @@ import { Skeleton } from '@chakra-ui/skeleton'
 import { useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import { BsFillQuestionSquareFill } from 'react-icons/bs'
 import { FaDirections, FaEdit } from 'react-icons/fa'
 import { ImCancelCircle } from 'react-icons/im'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import LikeButton from '../common/LikeButton'
-import TextContainer from '../common/TextContainer'
+import div from '../common/TextContainer'
 import { renderMdToHtml, timeSince } from '../common/Util'
 import DisplayName from '../profile/DisplayName'
 import { useUserId } from '../store/user'
@@ -38,29 +39,22 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
   const userId = useUserId()
   return (
     <>
-      <TextContainer>
+      <div className="shadow-md border w-full">
         {isLoading ? (
           <Skeleton height="200px" isLoaded={!isLoading}></Skeleton>
         ) : (
-          <div data-cy="postMain">
-            <a className="flex items-center border-b border-grey-200 flex-grow py-2 ">
-              <div className="flex justify-between px-2 flex-grow text-xs sm:text-sm font-medium text-gray-400 dark:text-gray-100">
-                <DisplayName author_id={currentPost.author_id} />
-                <span>
-                  {timeSince(currentPost.edited_date)} ago {currentPost.is_edited ? '(edited)' : ''}
+          <div data-cy="postMain" className="w-full">
+            <a className="flex items-center border-b border-grey-200">
+              <div className="flex flex-row justify-between p-2 px-6 text-xs sm:text-sm font-medium text-gray-400 dark:text-gray-100 w-full">
+                <span className="flex flex-row items-center space-x-1">
+                  <BsFillQuestionSquareFill size={20} className="mr-2" />
+                  Question by:
+                  <DisplayName author_id={currentPost.author_id} />
                 </span>
+                {timeSince(currentPost.edited_date)} ago {currentPost.is_edited ? '(edited)' : ''}
               </div>
             </a>
             <div className="px-6 py-4">
-              {/* <div className="flex items-center pb-2">
-              <span className="text-xl font-medium text-indigo-500 dark:text-indigo-400 mr-4">
-                {currentPost.title}
-              </span>
-              {currentPost.related_question_id ? (
-                <ModelQuestionCard questionId={currentPost.related_question_id as string} />
-              ) : null}
-            </div> */}
-
               {editing ? (
                 <NewPost
                   label="Edit Post"
@@ -160,7 +154,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
             </div>
           </div>
         )}
-      </TextContainer>
+      </div>
 
       {/* Alert dialog for delete confirmation*/}
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>

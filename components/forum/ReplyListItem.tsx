@@ -37,7 +37,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 dark:bg-gray-800">
-        <div className="flex justify-between px-2 flex-grow">
+        <div className="flex justify-between px-6 flex-grow">
           <div className="text-sm title-font font-medium text-gray-400 dark:text-gray-100">
             <DisplayName author_id={currentReply.author_id} />
           </div>
