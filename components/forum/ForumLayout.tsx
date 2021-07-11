@@ -73,18 +73,6 @@ export default function ForumLayout({
                 <Spinner size="xl" m={20} p={10} />
               ) : (
                 <div className="border-r border-gray-200">
-                  {/* <div className="p-2 border-b border-gray-200 w-full">
-                    <div className="flex justify-center">
-                      <Link href="/forum/create-post">
-                        <button
-                          className="whitespace-nowrap bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2"
-                          data-cy="newPost">
-                          New Post
-                        </button>
-                      </Link>
-                      <Search query={query} setQuery={setQuery} design={Design.square} />
-                    </div>
-                  </div> */}
                   <PostList postList={filteredPosts} />
                 </div>
               )}
