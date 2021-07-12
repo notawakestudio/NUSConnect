@@ -8,10 +8,6 @@ function TagBar({
   setCurrTag: (state: string) => void
 }): JSX.Element {
   const tags = allAvailableTags
-  const tagState = {
-    visible: [],
-    invisible: [],
-  }
 
   return (
     <div className="hidden lg:flex flex-row flex-wrap overflow-x-auto justify-left pb-1 w-full">
