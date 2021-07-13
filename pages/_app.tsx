@@ -40,12 +40,12 @@ function MyApp({ Component, pageProps }): JSX.Element {
         <UserProvider>
           <ChakraProvider>
             <NavBar />
-            <div className="min-h-screen">
+            <div className="min-h-screen h-screen">
               <SidebarLayout>
                 <Component {...pageProps} />
               </SidebarLayout>
+              <Footer />
             </div>
-            <Footer />
           </ChakraProvider>
         </UserProvider>
       </StoreProvider>

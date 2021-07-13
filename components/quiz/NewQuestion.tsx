@@ -63,11 +63,7 @@ export default function NewQuestion() {
   }
 
   function validateWrittenAnswer(answers): string {
-    if (answers.filter((answer) => answer.main === '')[0]) {
-      setAnswerError('Please fill in all the options')
-    } else {
-      setAnswerError('')
-    }
+    setAnswerError('')
     return answerError
   }
 
