@@ -25,7 +25,7 @@ export default function Home(): JSX.Element {
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="pt-12 md:pt-2 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full rounded">
+      <div className="pt-12 md:pt-2 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full rounded min-h-screen">
         <div className="rounded-t mb-0 px-0 border-0">
           <div className="flex flex-wrap items-center px-4 py-2">
             <div className="relative w-full max-w-full flex-grow flex-1">

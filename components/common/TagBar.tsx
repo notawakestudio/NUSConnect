@@ -23,7 +23,7 @@ function TagBar({
           }}
           className={`${
             currTag === tag ? 'bg-blue-200' : ''
-          } border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-600 px-2 m-1 dark:text-gray-300 text-sm`}>
+          } border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-600 px-2 m-1 dark:text-gray-300 text-sm h-full`}>
           {tag}
         </button>
       ))}

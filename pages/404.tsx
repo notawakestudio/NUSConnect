@@ -9,7 +9,7 @@ export default function Custom404(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-black text-white">
-        <div className="flex h-screen">
+        <div className=" h-screen w-full">
           <div className="m-auto text-center">
             <div>
               <svg

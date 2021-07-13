@@ -4,13 +4,13 @@ import ProfileHeader from '../../components/profile/ProfileHeader'
 
 export default function Profile(): JSX.Element {
   return (
-    <div className="dark:bg-gray-800">
+    <div className="dark:bg-gray-800 w-full min-h-screen">
       <Head>
         <title>Profile | NUS Connect</title>
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col w-full h-full ">
+      <div className="flex flex-col">
         <ProfileHeader />
         <ModuleCards />
       </div>

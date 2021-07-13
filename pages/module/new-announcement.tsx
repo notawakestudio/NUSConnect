@@ -11,7 +11,7 @@ export default function CreateAnnouncement(): JSX.Element {
         <meta name="description" content="Announcement" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex-grow flex-col dark:bg-gray-800 dark:text-gray-200">
+      <div className="flex-grow flex-col dark:bg-gray-800 dark:text-gray-200 h-screen">
         <NewAnnouncement />
       </div>
     </Auth>
