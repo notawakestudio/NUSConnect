@@ -3,3 +3,11 @@
 @tailwind utilities;
 @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@5.2/distr/fira_code.css);
 @import url(https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/an-old-hope.min.css);
+
+.forum-page-layout {
+  height: calc(100% - 64px);
+}
+
+.forum-container-content {
+  height: calc(100% - 56px);
+}

@@ -32,6 +32,7 @@ export enum QuestionDifficulty {
 export enum QuestionType {
   MCQ = 'MCQ',
   MRQ = 'MRQ',
+  WRITTEN = 'WRITTEN',
 }
 
 export enum QuizMode {

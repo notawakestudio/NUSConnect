@@ -17,13 +17,16 @@ function MyApp({ Component, pageProps }): JSX.Element {
         <StoreProvider>
           <UserProvider>
             <ChakraProvider>
-              <NavBar />
-              <SidebarLayout>
-                <ForumLayout>
-                  <Component {...pageProps} />
-                </ForumLayout>
-              </SidebarLayout>
-              <Footer />
+              <div className="h-screen">
+                <NavBar />
+                <div className="forum-page-layout">
+                  <SidebarLayout>
+                    <ForumLayout>
+                      <Component {...pageProps} />
+                    </ForumLayout>
+                  </SidebarLayout>
+                </div>
+              </div>
             </ChakraProvider>
           </UserProvider>
         </StoreProvider>
@@ -37,7 +40,11 @@ function MyApp({ Component, pageProps }): JSX.Element {
         <UserProvider>
           <ChakraProvider>
             <NavBar />
-            <Component {...pageProps} />
+            <div className="min-h-screen">
+              <SidebarLayout>
+                <Component {...pageProps} />
+              </SidebarLayout>
+            </div>
             <Footer />
           </ChakraProvider>
         </UserProvider>

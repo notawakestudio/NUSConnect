@@ -56,7 +56,7 @@ export default function NewReply({
 
   return (
     <Auth>
-      <div className="">
+      <div className="pb-8">
         <Formik
           initialValues={initialValues}
           validationSchema={Yup.object({

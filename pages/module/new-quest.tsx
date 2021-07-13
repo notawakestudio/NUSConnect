@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import React from 'react'
-import SidebarLayout from '../../components/layouts/SidebarLayout'
 import NewQuest from '../../components/module/NewQuest'
 import 'react-datepicker/dist/react-datepicker.css'
 import Auth from '../../components/common/Auth'
@@ -14,9 +13,7 @@ export default function CreateAnnouncement(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex-grow flex-col dark:bg-gray-800 dark:text-gray-200">
-        <SidebarLayout>
-          <NewQuest />
-        </SidebarLayout>
+        <NewQuest />
       </div>
     </Auth>
   )

@@ -6,8 +6,8 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
   const [open, setOpen] = useState(true)
 
   return (
-    <div className="flex flex-row">
-      <div className="flex flex-auto relative">
+    <div className="flex flex-row relative h-full">
+      <div className="flex relative min-h-screen">
         <SideBar />
         <NavigationDrawer />
       </div>

@@ -111,16 +111,28 @@ export function createQuestion(json: GrayMatterFile<any>): void {
 }
 
 export function makeQuestion(question): void {
-  const answers = classifyAnswers(question['answers'])
-
-  const requestBody = {
-    id: nanoid(),
-    type: question['type'],
-    modules: question['modules'],
-    question: question['question'],
-    correct_answers: answers[0],
-    incorrect_answers: answers[1],
+  let requestBody
+  if (question['type'] === 'WRITTEN') {
+    requestBody = {
+      id: nanoid(),
+      type: question['type'],
+      modules: question['modules'],
+      question: question['question'],
+      correct_answers: question['answers'][0]['main'],
+      incorrect_answers: '',
+    }
+  } else {
+    const answers = classifyAnswers(question['answers'])
+    requestBody = {
+      id: nanoid(),
+      type: question['type'],
+      modules: question['modules'],
+      question: question['question'],
+      correct_answers: answers[0],
+      incorrect_answers: answers[1],
+    }
   }
+
   fetch(API_MAKE_QUESTION, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin

@@ -1,18 +1,7 @@
 import { Skeleton } from '@chakra-ui/react'
 import Head from 'next/head'
-import SidebarLayout from '../../components/layouts/SidebarLayout'
 import { useAllQuizzes } from '../../components/quiz/QuizAPI'
 import QuizList from '../../components/quiz/QuizList'
-
-// export const getStaticProps: GetStaticProps = async () => {
-//   const quizzes = await fetchAllQuizzes()
-//   return {
-//     props: {
-//       quizzes,
-//     },
-//     revalidate: 10, // In seconds
-//   }
-// }
 
 export default function QuizPage(): JSX.Element {
   const { quizzes, isLoading } = useAllQuizzes()
@@ -24,11 +13,9 @@ export default function QuizPage(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="dark:bg-gray-800 w-full">
-        <SidebarLayout>
-          <div className="w-full bg-white dark:bg-gray-800">
-            {isLoading ? <Skeleton height="500px" /> : <QuizList quizzes={quizzes} />}
-          </div>
-        </SidebarLayout>
+        <div className="w-full bg-white dark:bg-gray-800">
+          {isLoading ? <Skeleton height="500px" /> : <QuizList quizzes={quizzes} />}
+        </div>
       </div>
     </>
   )

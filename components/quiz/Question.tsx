@@ -34,6 +34,9 @@ const Question = ({
     if (quizMode === QuizMode.REVIEWING) {
       return
     }
+    if (type === 'WRITTEN') {
+      saveProgress([selectedOption])
+    }
     if (userAnswer.includes(selectedOption)) {
       saveProgress([...userAnswer].filter((x) => x !== selectedOption))
     } else {
@@ -64,9 +67,36 @@ const Question = ({
       </p>
       <div className="flex flex-col space-y-4 w-screen p-4 sm:px-12 lg:max-w-5xl">
         <div
-          className="border border-indigo-300 dark:border-indigo-500 rounded-lg shadow-md text-left p-4 px-8 text-lg font-semibold dark:bg-gray-700 flex-auto w-full dark:text-gray-200"
+          className="border border-indigo-300 dark:border-indigo-500 shadow-md text-left p-4 px-8 text-lg font-semibold dark:bg-gray-700 flex-auto w-full dark:text-gray-200"
           dangerouslySetInnerHTML={{ __html: renderMdToHtml(question) }}></div>
-        <div className="border-b-2 border-t-2 border-indigo-300 dark:border-indigo-500 rounded-lg shadow-md text-left bg-gray-100 dark:bg-gray-700 px-3 flex-auto w-full">
+        {type === 'WRITTEN' ? (
+          <div className="shadow-md text-left bg-gray-50 dark:bg-gray-700 flex-auto w-full">
+            <Answer
+              key={0}
+              type={type}
+              answerText={answers.toString()}
+              userAnswer={userAnswer}
+              updateAnswer={updateAnswer}
+              correct_answers={correct_answers}
+              quizMode={quizMode}
+            />
+          </div>
+        ) : (
+          <div className="border-t-2 border-indigo-300 dark:border-indigo-500 shadow-md text-left bg-gray-50 dark:bg-gray-700 px-3 flex-auto w-full">
+            {answers.map((answerText, index) => (
+              <Answer
+                key={index}
+                type={type}
+                answerText={answerText}
+                userAnswer={userAnswer}
+                updateAnswer={updateAnswer}
+                correct_answers={correct_answers}
+                quizMode={quizMode}
+              />
+            ))}
+          </div>
+        )}
+        {/* <div className="border-b-2 border-t-2 border-indigo-300 dark:border-indigo-500 rounded-lg shadow-md text-left bg-gray-100 dark:bg-gray-700 px-3 flex-auto w-full">
           {answers.map((answerText, index) => (
             <Answer
               key={index}
@@ -78,7 +108,7 @@ const Question = ({
               quizMode={quizMode}
             />
           ))}
-        </div>
+        </div> */}
         <div>
           <RelatedPosts posts={posts} quizMode={quizMode} />
         </div>
