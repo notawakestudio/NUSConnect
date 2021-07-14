@@ -33,6 +33,20 @@ function MyApp({ Component, pageProps }): JSX.Element {
         </StoreProvider>
       </Provider>
     )
+  } else if (router.pathname === '/') {
+    return (
+      <Provider session={pageProps.session}>
+        <StoreProvider>
+          <UserProvider>
+            <ChakraProvider>
+              <NavBar />
+              <Component {...pageProps} />
+              <Footer />
+            </ChakraProvider>
+          </UserProvider>
+        </StoreProvider>
+      </Provider>
+    )
   } else {
     return (
       <Provider session={pageProps.session}>
