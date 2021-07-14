@@ -16,7 +16,7 @@ export default function NavigationDrawer(): JSX.Element {
   return (
     <>
       <div className="flex lg:hidden z-50">
-        <div className="fixed top-20 left-4">
+        <div className="fixed bottom-20 left-2">
           <button
             className="rounded-full bg-blue-400 p-2 h-8 w-8 content-center justify-center text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-blue-200"
             onClick={onOpen}>

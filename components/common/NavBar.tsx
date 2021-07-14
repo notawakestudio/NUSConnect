@@ -44,7 +44,7 @@ const NavBar = (): JSX.Element => {
 
   return (
     <div
-      className="sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16"
+      className="flex sticky z-50 top-0 w-full shadow-md bg-white dark:bg-black h-16"
       aria-label="navbar">
       <div className="flex flex-row h-full items-center justify-center xs:items-start xs:justify-between flex-grow">
         <div className="flex flex-row h-full space-x-2 p-2 items-center">

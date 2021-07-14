@@ -49,9 +49,9 @@ export default function ForumLayout({
   }, [isLoading, currTag, query, posts])
   return (
     <>
-      <div className="dark:bg-gray-800 w-full">
-        <div className="flex flex-col w-full overflow-hidden">
-          <div className="flex flex-row bg-gray-100 dark:bg-gray-700 border-b border-gray-200 p-1 py-2">
+      <div className="dark:bg-gray-800 w-full h-full relative">
+        <div className="flex flex-col w-full h-full overflow-hidden">
+          <div className="flex flex-row bg-gray-100 dark:bg-gray-700 border-b border-gray-200 p-1 py-2 h-14">
             <div className="flex flex-row justify-center space-x-2">
               <Link href="/forum/create-post">
                 <button
@@ -64,32 +64,24 @@ export default function ForumLayout({
             </div>
             <TagBar currTag={currTag} setCurrTag={setCurrTag} />
           </div>
-          <div className="grid grid-cols-8">
-            <div
-              className={`${
-                router.pathname === '/forum' ? '' : 'hidden lg:inline'
-              } col-span-8 lg:col-span-3 xl:col-span-2`}>
-              {isLoading ? (
-                <Spinner size="xl" m={20} p={10} />
-              ) : (
-                <div className="border-r border-gray-200">
-                  {/* <div className="p-2 border-b border-gray-200 w-full">
-                    <div className="flex justify-center">
-                      <Link href="/forum/create-post">
-                        <button
-                          className="whitespace-nowrap bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-2"
-                          data-cy="newPost">
-                          New Post
-                        </button>
-                      </Link>
-                      <Search query={query} setQuery={setQuery} design={Design.square} />
-                    </div>
-                  </div> */}
-                  <PostList postList={filteredPosts} />
-                </div>
-              )}
+          <div className="forum-container-content">
+            <div className="grid grid-cols-8 h-full">
+              <div
+                className={`${
+                  router.pathname === '/forum' ? '' : 'hidden lg:inline'
+                } col-span-8 lg:col-span-3 xl:col-span-2 overflow-y-auto`}>
+                {isLoading ? (
+                  <Spinner size="xl" m={20} p={10} />
+                ) : (
+                  <div className="border-r border-gray-200 h-full">
+                    <PostList postList={filteredPosts} />
+                  </div>
+                )}
+              </div>
+              <div className="mx-2 col-span-8 lg:col-span-5 xl:col-span-6 h-full overflow-auto">
+                {children}
+              </div>
             </div>
-            <div className="mx-2 col-span-8 lg:col-span-5 xl:col-span-6">{children}</div>
           </div>
         </div>
       </div>

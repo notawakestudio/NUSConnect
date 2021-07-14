@@ -15,7 +15,7 @@ export default function CurrentPost(): JSX.Element {
         <meta name="description" content="Forum" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col max-h-screen overflow-y-auto">
+      <div className="flex flex-col">
         <div className="mt-4 space-y-4">
           <PostMain key={postId as string} postId={postId as string} />
           <ReplyList postId={postId as string} />

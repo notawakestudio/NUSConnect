@@ -14,7 +14,7 @@ const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
   const weeks = Array.from(new Set(postList.map((post) => post.week)))
 
   return (
-    <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 h-screen">
+    <div className="flex flex-col items-center justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 h-full">
       <div className="overflow-auto w-full">
         <Accordion defaultIndex={[0]} allowMultiple allowToggle>
           {weeks.map((currentWeek) => (
