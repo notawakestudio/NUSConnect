@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }): JSX.Element {
         </StoreProvider>
       </Provider>
     )
-  } else if (router.pathname === '/') {
+  } else if (router.pathname === '/' || router.pathname === '/login') {
     return (
       <Provider session={pageProps.session}>
         <StoreProvider>

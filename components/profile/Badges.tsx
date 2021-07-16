@@ -285,7 +285,7 @@ export default function Badges(): JSX.Element {
             return (
               <div className="flex flex-col text-center m-4 w-36" key={index}>
                 <div className="flex flex-row justify-center space-x-2">{currBadge.icon()}</div>
-                <b>{currBadge.title} Badge</b>
+                <b data-cy={currBadge.title}>{currBadge.title} Badge</b>
               </div>
             )
           })
@@ -298,7 +298,7 @@ export default function Badges(): JSX.Element {
           return (
             <div className="flex flex-col text-center m-4 w-36" key={index}>
               <div className="flex flex-row justify-center space-x-2">{badge.icon()}</div>
-              <b>{badge.title} Badge</b>
+              <b data-cy={badge.title}>{badge.title} Badge</b>
               {badge.description}
             </div>
           )
