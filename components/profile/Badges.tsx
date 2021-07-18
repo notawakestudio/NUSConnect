@@ -10,6 +10,7 @@ import {
   GiAirplaneDeparture,
   GiAlarmClock,
 } from 'react-icons/gi'
+import { useModule } from '../store/module'
 import { User } from './UserAPI'
 
 export type Badge = {
@@ -278,6 +279,7 @@ export default function Badges({
   user: User
   isLoading: boolean
 }): JSX.Element {
+  const { state: module } = useModule()
   return (
     <div>
       <h1 className="text-center text-lg font-semibold mt-2">Your badges</h1>
@@ -285,15 +287,17 @@ export default function Badges({
         {isLoading ? (
           <Skeleton height="300px" />
         ) : (
-          user.modules[0].badges.map((badgeId, index) => {
-            const currBadge = allBadges.filter((curr) => curr.id === badgeId)[0]
-            return (
-              <div className="flex flex-col text-center m-4 w-36" key={index}>
-                <div className="flex flex-row justify-center space-x-2">{currBadge.icon()}</div>
-                <b data-cy={currBadge.title}>{currBadge.title} Badge</b>
-              </div>
-            )
-          })
+          user.modules
+            .filter((mod) => mod.id === module.moduleId)[0]
+            ?.badges.map((badgeId, index) => {
+              const currBadge = allBadges.filter((curr) => curr.id === badgeId)[0]
+              return (
+                <div className="flex flex-col text-center m-4 w-36" key={index}>
+                  <div className="flex flex-row justify-center space-x-2">{currBadge.icon()}</div>
+                  <b data-cy={currBadge.title}>{currBadge.title} Badge</b>
+                </div>
+              )
+            })
         )}
       </div>
       <Divider />

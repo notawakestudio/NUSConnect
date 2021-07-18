@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
 import { getCurrentDateTime } from '../common/Util'
+import { addUserToModule } from '../module/ModuleAPI'
 import { useUserId } from '../store/user'
 
 const API_MAKE_USER = 'https://1ieznu.deta.dev/user/make'
@@ -289,6 +290,7 @@ export async function makeUser(user): Promise<void> {
       body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
     }).then((response) => {
       console.log(response)
+      addUserToModule('kMvp8b48SmTiXXCl7EAkc', user['id']) // add to CS2030 By default
     })
   } else {
     console.log('user already exists')
