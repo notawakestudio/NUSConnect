@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useAllUser } from '../components/profile/UserAPI'
+import { useAllUser } from '../../components/profile/UserAPI'
 import { Spinner } from '@chakra-ui/react'
 function Scoreboard(): JSX.Element {
   const { users, isLoading } = useAllUser()

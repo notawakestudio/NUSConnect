@@ -112,7 +112,10 @@ export const timeSince = (date: number): string => {
     return Math.floor(interval) + ' minute'
   }
 
-  return Math.floor(seconds) + ' seconds'
+  if (seconds > 1 || seconds === 0) {
+    return Math.floor(seconds) + ' seconds'
+  }
+  return Math.floor(seconds) + ' second'
 }
 
 export const notifyReply = (userId: string): void => {

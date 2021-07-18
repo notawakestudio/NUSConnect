@@ -10,7 +10,7 @@ import {
   GiAirplaneDeparture,
   GiAlarmClock,
 } from 'react-icons/gi'
-import { useUser } from './UserAPI'
+import { User } from './UserAPI'
 
 export type Badge = {
   id: string
@@ -271,8 +271,13 @@ export const allBadges: Badge[] = [
     },
   },
 ]
-export default function Badges(): JSX.Element {
-  const { user, isLoading } = useUser()
+export default function Badges({
+  user,
+  isLoading,
+}: {
+  user: User
+  isLoading: boolean
+}): JSX.Element {
   return (
     <div>
       <h1 className="text-center text-lg font-semibold mt-2">Your badges</h1>

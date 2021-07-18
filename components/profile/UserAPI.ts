@@ -42,7 +42,7 @@ export const defaultModuleInfo: ModuleInfo[] = [
     quests: [],
   },
 ]
-type User = {
+export type User = {
   id: string
   modules: ModuleInfo[]
   profilePicUrl: string
@@ -137,7 +137,6 @@ export function submitToUserInbox(userId: string, message: Message): void {
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then((response) => {
-    console.log(response)
     mutate(API_GET_MESSAGES_BY_AUTHORID + userId)
   })
 }

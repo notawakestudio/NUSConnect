@@ -94,7 +94,7 @@ export default function SidebarBody(): JSX.Element {
           <SidebarItem link="/profile/badges" name="Badges">
             <HiBadgeCheck />
           </SidebarItem>
-          <SidebarItem link="/scoreboard" name="Scoreboard">
+          <SidebarItem link="/profile/scoreboard" name="Scoreboard">
             <BsClipboardData />
           </SidebarItem>
         </li>
