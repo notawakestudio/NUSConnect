@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react'
-import { Field, Form, Formik } from 'formik'
+import { Field, FieldArray, Form, Formik } from 'formik'
 import { useSession } from 'next-auth/client'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -11,6 +11,7 @@ import Required from '../forms/Required'
 import { TagMultiSelect } from '../forms/TagMultiSelect'
 import { allAvailableTags } from '../forum/ForumAPI'
 import { useUserId } from '../store/user'
+import NewQuestion from './NewQuestion'
 import { makeQuiz } from './QuizAPI'
 
 const initialValues = {
@@ -140,6 +141,21 @@ export default function NewQuiz({
                 </div>
               </div>
               <hr />
+
+              <FieldArray name="answers">
+                {({ remove, push }) => (
+                  <>
+                    <NewQuestion></NewQuestion>
+                    <button
+                      type="button"
+                      className="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      onClick={() => push('')}>
+                      Add More
+                    </button>
+                  </>
+                )}
+              </FieldArray>
+
               <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
                 <button
                   type="submit"

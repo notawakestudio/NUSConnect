@@ -27,7 +27,7 @@ const quizType = [
   { label: 'WRITTEN', value: 'WRITTEN' },
 ]
 
-export default function NewQuestion() {
+export default function NewQuestion({ style = 'normal' }: { style?: string }): JSX.Element {
   const errorToast = useToast()
 
   function showToast(error: string, id: string): void {
@@ -122,20 +122,7 @@ export default function NewQuestion() {
         }}>
         {(formik) => (
           <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200 w-full">
-            <Form className="px-4 md:px-6 pt-20">
-              <div className="flex justify-between text-gray-600 dark:text-gray-200">
-                <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
-                  Make a question
-                </h1>
-                <Link href={'/quiz/make-quiz'}>
-                  <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center w-auto">
-                    <span className="items-center pr-1">
-                      <GrFormNextLink />
-                    </span>
-                    <span>Done? Go make a quiz!</span>
-                  </span>
-                </Link>
-              </div>
+            <Form>
               <div className="flex flex-col space-y-6 bg-white dark:bg-gray-800 mt-4">
                 <div className="flex flex-col w-full space-y-2">
                   <div className="flex space-x-2 items-end">
