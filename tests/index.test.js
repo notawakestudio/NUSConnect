@@ -11,6 +11,7 @@ import Badges from '../components/profile/Badges'
 import DisplayName from '../components/profile/DisplayName'
 import ProfileHeader from '../components/profile/ProfileHeader'
 import { UserProvider } from '../components/store/user'
+import { ModuleProvider } from '../components/store/module'
 import Custom404 from '../pages/404'
 import Home from '../pages/index'
 import Login from '../pages/login'
@@ -65,7 +66,7 @@ describe('Page level components render successfully', () => {
 
 describe('Component level components render successfully', () => {
   it('renders Badges', () => {
-    act(() => { render(<Badges user={fakeUser} isLoaded={false} />) })
+    act(() => { render(<ModuleProvider><Badges user={fakeUser} isLoaded={false} /></ModuleProvider>) })
     expect(screen.getByText('Your badges')).toBeInTheDocument()
   })
   it('renders Avatar', async () => {

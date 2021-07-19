@@ -1,10 +1,14 @@
 import Head from 'next/head'
 import { useAllUser } from '../../components/profile/UserAPI'
 import { Spinner } from '@chakra-ui/react'
+import { useModule as getCurrentModule } from '../../components/store/module'
+import { useModule } from '../../components/module/ModuleAPI'
 function Scoreboard(): JSX.Element {
   const { users, isLoading } = useAllUser()
+  const { state: currentModule } = getCurrentModule()
+  const { module } = useModule(currentModule.moduleId)
   return (
-    <div className="container flex flex-col">
+    <div className="container flex flex-col min-h-screen">
       <Head>
         <title>Scoreboard | NUS Connect</title>
         <meta name="description" content="NUS Connect" />
@@ -23,7 +27,12 @@ function Scoreboard(): JSX.Element {
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         ) : (
           users
-            .sort((a, b) => b.modules[0].exp - a.modules[0].exp)
+            .filter((user) => module.users.includes(user.id))
+            .sort(
+              (a, b) =>
+                b.modules.filter((mod) => mod.id === currentModule.moduleId)[0].exp -
+                a.modules.filter((mod) => mod.id === currentModule.moduleId)[0].exp
+            )
             .map((user) => {
               return (
                 <li className="border-gray-400 flex flex-row mb-2" key={user.id}>
@@ -39,7 +48,7 @@ function Scoreboard(): JSX.Element {
                       <div className="font-medium dark:text-white">{user.displayName}</div>
                     </div>
                     <div className="text-gray-600 dark:text-gray-200 text-xs">
-                      EXP: {user.modules[0].exp}
+                      EXP: {user.modules.filter((mod) => mod.id === currentModule.moduleId)[0]?.exp}
                     </div>
                   </div>
                 </li>

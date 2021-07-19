@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiFillCaretDown, AiOutlineCalendar } from 'react-icons/ai'
 import { IoIosRemoveCircleOutline, IoMdAddCircleOutline } from 'react-icons/io'
 import { MdDoneAll, MdNotifications, MdNotificationsActive } from 'react-icons/md'
@@ -12,21 +12,26 @@ import { useModule } from '../../components/module/ModuleAPI'
 import QuestItem from '../../components/module/QuestItem'
 import { expForNextLevel, levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
+import { useModule as currentModule } from '../../components/store/module'
 
 export default function DashBoard(): JSX.Element {
   const { user, isLoading } = useUser()
+  const router = useRouter()
   const userId = useUserId()
   const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
-  const router = useRouter()
-  const { module, isLoading: moduleLoading } = useModule('kMvp8b48SmTiXXCl7EAkc')
   const [editing, setEditing] = useState(false)
   const [currentWeek, setCurrentWeek] = useState(null)
-
+  const { state: currentMod } = currentModule()
   const role = isLoading ? 'student' : user.role
+  const [modId, setModId] = useState<string>(currentMod.moduleId) // Default CS2030
+  const { module, isLoading: moduleLoading } = useModule(modId)
   const weeks = moduleLoading
     ? [1]
     : Array.from(new Set(module.announcements.map((announcement) => announcement.week)))
 
+  useEffect(() => {
+    setModId(currentMod.moduleId)
+  }, [currentMod])
   return (
     <>
       <Head>
@@ -76,11 +81,21 @@ export default function DashBoard(): JSX.Element {
                           }></Image>
                         <div className="text-sm text-gray-700 dark:text-white ml-2 font-semibold border-b border-gray-200">
                           Level{' '}
-                          {isLoading ? <Skeleton width={20} /> : levelize(user.modules[0].exp)}
+                          {isLoading ? (
+                            <Skeleton width={20} />
+                          ) : (
+                            levelize(
+                              user.modules.filter((mod) => mod.id === currentMod.moduleId)[0].exp
+                            )
+                          )}
                         </div>
                       </div>
                       <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
-                        {isLoading ? <Skeleton width={20} /> : user.modules[0].exp}
+                        {isLoading ? (
+                          <Skeleton width={20} />
+                        ) : (
+                          user.modules.filter((mod) => mod.id === currentMod.moduleId)[0].exp
+                        )}
                         <span className="text-xs text-gray-400"> EXP</span>
                       </div>
                     </div>
@@ -91,7 +106,12 @@ export default function DashBoard(): JSX.Element {
                           width: isLoading
                             ? ''
                             : `${
-                                (user.modules[0].exp / expForNextLevel(user.modules[0].exp)) * 100
+                                (user.modules[0].exp /
+                                  expForNextLevel(
+                                    user.modules.filter((mod) => mod.id === currentMod.moduleId)[0]
+                                      .exp
+                                  )) *
+                                100
                               }%`,
                         }}></div>
                     </div>
@@ -102,14 +122,22 @@ export default function DashBoard(): JSX.Element {
                 <div className="w-1/2 ">
                   <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                     <p className="text-2xl text-black dark:text-white font-bold">
-                      {isLoading ? <Skeleton width={20} /> : user.modules[0].badges.length}
+                      {isLoading ? (
+                        <Skeleton width={20} />
+                      ) : (
+                        user.modules.filter((mod) => mod.id === currentMod.moduleId)[0].badges
+                          .length
+                      )}
                     </p>
 
                     {isLoading ? (
                       <Skeleton width={20} />
                     ) : (
                       <p className="text-gray-400 text-sm">
-                        {user.modules[0].badges.length > 1 ? 'Badges' : 'Badge'}
+                        {user.modules.filter((mod) => mod.id === currentMod.moduleId)[0].badges
+                          .length > 1
+                          ? 'Badges'
+                          : 'Badge'}
                       </p>
                     )}
                   </div>
