@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import NavBar from '../components/common/NavBar'
 import Footer from '../components/common/Footer'
 import React from 'react'
-import { StoreProvider } from '../components/utils/store'
+import { ModuleProvider } from '../components/store/module'
 import { useRouter } from 'next/router'
 import ForumLayout from '../components/forum/ForumLayout'
 import { UserProvider } from '../components/store/user'
@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }): JSX.Element {
   if (router.pathname.startsWith('/forum')) {
     return (
       <Provider session={pageProps.session}>
-        <StoreProvider>
+        <ModuleProvider>
           <UserProvider>
             <ChakraProvider>
               <div className="h-screen">
@@ -30,13 +30,13 @@ function MyApp({ Component, pageProps }): JSX.Element {
               </div>
             </ChakraProvider>
           </UserProvider>
-        </StoreProvider>
+        </ModuleProvider>
       </Provider>
     )
   } else if (router.pathname === '/' || router.pathname === '/login') {
     return (
       <Provider session={pageProps.session}>
-        <StoreProvider>
+        <ModuleProvider>
           <UserProvider>
             <ChakraProvider>
               <NavBar />
@@ -44,13 +44,13 @@ function MyApp({ Component, pageProps }): JSX.Element {
               <Footer />
             </ChakraProvider>
           </UserProvider>
-        </StoreProvider>
+        </ModuleProvider>
       </Provider>
     )
   } else {
     return (
       <Provider session={pageProps.session}>
-        <StoreProvider>
+        <ModuleProvider>
           <UserProvider>
             <ChakraProvider>
               <NavBar />
@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }): JSX.Element {
               </div>
             </ChakraProvider>
           </UserProvider>
-        </StoreProvider>
+        </ModuleProvider>
       </Provider>
     )
   }

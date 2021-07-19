@@ -1,4 +1,4 @@
-import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import { Menu, MenuButton, MenuItem, MenuList, Button } from '@chakra-ui/react'
 import { useSession } from 'next-auth/client'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -10,15 +10,15 @@ import { MdForum } from 'react-icons/md'
 import { RiDashboardLine } from 'react-icons/ri'
 import Skeleton from 'react-loading-skeleton'
 import { useUser } from '../profile/UserAPI'
-import { useModule } from '../utils/store'
-import QuickLink from './QuickLink'
 import { useUserIdInit } from '../store/user'
-
+import { useModule } from '../store/module'
+import QuickLink from './QuickLink'
+import { GoChevronDown } from 'react-icons/go'
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
   const [profileCollapse, setProfileCollapse] = useState(true)
-  const { state } = useModule()
+  const { state: module, dispatch } = useModule()
   const { user, isLoading } = useUser()
   useUserIdInit()
   useEffect(() => {
@@ -110,9 +110,33 @@ const NavBar = (): JSX.Element => {
               </span>
             </Link>
           </div>
-          <button className="hidden lg:block px-3 text-gray-600 dark:text-white h-10">
-            {state.module}
-          </button>
+          <div className="dark:text-black mr-2">
+            <Menu>
+              <MenuButton as={Button} rightIcon={<GoChevronDown />}>
+                {module.moduleTitle}
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    dispatch({
+                      type: 'switch',
+                      payload: { moduleTitle: 'CS2030', moduleId: 'kMvp8b48SmTiXXCl7EAkc' },
+                    })
+                  }}>
+                  <span>CS2030</span>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    dispatch({
+                      type: 'switch',
+                      payload: { moduleTitle: 'CS2103T', moduleId: 'RFfQyW-oenP9ZW5UQhTtd' },
+                    })
+                  }}>
+                  <span>CS2103T</span>
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </div>
           <div className="flex">
             <Menu autoSelect={false}>
               <MenuButton as="div" onMouseEnter={() => setProfileCollapse(false)}>
