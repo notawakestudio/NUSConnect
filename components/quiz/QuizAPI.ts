@@ -112,9 +112,10 @@ export function createQuestion(json: GrayMatterFile<any>): void {
 
 export function makeQuestion(question): void {
   let requestBody
+  const newId = question['id'] ?? nanoid()
   if (question['type'] === 'WRITTEN') {
     requestBody = {
-      id: nanoid(),
+      id: newId,
       type: question['type'],
       modules: question['modules'],
       question: question['question'],
@@ -124,7 +125,7 @@ export function makeQuestion(question): void {
   } else {
     const answers = classifyAnswers(question['answers'])
     requestBody = {
-      id: nanoid(),
+      id: newId,
       type: question['type'],
       modules: question['modules'],
       question: question['question'],

@@ -44,8 +44,6 @@ const Question = ({
         saveProgress([selectedOption])
       } else if (type === 'MRQ') {
         saveProgress([...userAnswer, selectedOption])
-      } else {
-        console.log('other question types')
       }
     }
   }
