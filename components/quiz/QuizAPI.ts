@@ -84,31 +84,31 @@ export async function getAllQuizId(): Promise<{ quizId: string }[]> {
   })
 }
 
-export function createQuestion(json: GrayMatterFile<any>): void {
-  const requestBody = {
-    id: nanoid(),
-    type: json['data']['type'],
-    modules: json['data']['modules'],
-    question: json['content'],
-    correct_answers: json['data']['correct_answers'],
-    incorrect_answers: json['data']['incorrect_answers'],
-  }
-  fetch(API_MAKE_QUESTION, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'no-cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json',
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  }).then((response) => {
-    console.log(response)
-  })
-}
+// export function createQuestion(json: GrayMatterFile<any>): void {
+//   const requestBody = {
+//     id: nanoid(),
+//     type: json['data']['type'],
+//     modules: json['data']['modules'],
+//     question: json['content'],
+//     correct_answers: json['data']['correct_answers'],
+//     incorrect_answers: json['data']['incorrect_answers'],
+//   }
+//   fetch(API_MAKE_QUESTION, {
+//     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+//     mode: 'no-cors', // no-cors, *cors, same-origin
+//     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+//     credentials: 'same-origin', // include, *same-origin, omit
+//     headers: {
+//       'Content-Type': 'application/json',
+//       // 'Content-Type': 'application/x-www-form-urlencoded',
+//     },
+//     redirect: 'follow', // manual, *follow, error
+//     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+//     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+//   }).then((response) => {
+//     console.log(response)
+//   })
+// }
 
 export function makeQuestion(question): void {
   let requestBody
@@ -152,17 +152,23 @@ export function makeQuestion(question): void {
 }
 
 export function makeQuiz(quiz): void {
+  const questions_id = quiz['new_questions']
+    .filter((question) => question['question'] !== '')
+    .map((question) => question.id)
+    .concat(quiz['questions'])
+
   const requestBody: Quiz = {
     id: nanoid(),
     date: getCurrentDateTime(),
     title: quiz['title'],
     author: quiz['author'],
     modules: quiz['modules'],
-    questions: quiz['questions'],
+    questions: questions_id,
     tags: quiz['tags'],
     week: quiz['week'],
     up_votes: 0,
   }
+
   fetch(API_SUBMIT_QUIZ, {
     method: 'POST',
     mode: 'no-cors',
@@ -178,6 +184,7 @@ export function makeQuiz(quiz): void {
     console.log(response)
   })
 }
+
 export async function fetchAllQuestions(): Promise<Question[]> {
   return await fetch(API_GET_ALL_QUESTION).then((response) => response.json())
 }

@@ -107,7 +107,6 @@ export default function NewQuestion({ style = 'normal' }: { style?: string }): J
             showToast(isCorrectError, 'isCorrect-error')
           } else {
             handleSubmit(values)
-            // console.log(values)
             setTimeout(() => {
               toast({
                 title: 'Success!',
@@ -126,7 +125,7 @@ export default function NewQuestion({ style = 'normal' }: { style?: string }): J
               <div className="flex flex-col space-y-6 bg-white dark:bg-gray-800 mt-4">
                 <div className="flex flex-col w-full space-y-2">
                   <div className="flex space-x-2 items-end">
-                    <div className="">Type of question</div>
+                    <div className="">Question type</div>
                     {formik.errors.type && formik.touched.type ? <Required /> : null}
                   </div>
                   <Field
@@ -145,7 +144,7 @@ export default function NewQuestion({ style = 'normal' }: { style?: string }): J
                   <div className="w-full">
                     <Field
                       as="textarea"
-                      name="question"
+                      name="Question"
                       rows={5}
                       className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="Question"></Field>
@@ -196,7 +195,7 @@ export default function NewQuestion({ style = 'normal' }: { style?: string }): J
                                     <Field
                                       as="textarea"
                                       rows={4}
-                                      className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                      className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                       name={`answers.${index}.main`}
                                       placeholder="Answer"
                                       validate={validateAnswer(formik.values.answers)}
@@ -256,11 +255,8 @@ export default function NewQuestion({ style = 'normal' }: { style?: string }): J
                       if (formik.errors.question && formik.touched.question) {
                         showToast(formik.errors.question, 'question-error')
                       }
-                      // if (formik.errors.answers && formik.touched.answers) {
-                      //   showToast('Please make at least 2 answers', 'answer-error')
-                      // }
                     }}>
-                    Save
+                    Create Question
                   </button>
                 </div>
               </div>
