@@ -9,7 +9,7 @@ import { notifyNewPost, renderMdToHtml } from '../common/Util'
 import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
 import { TagMultiSelect } from '../forms/TagMultiSelect'
-import { useAllQuestions, useQuestion } from '../quiz/QuizAPI'
+import { useAllQuestionsByModule, useQuestion } from '../quiz/QuizAPI'
 import { useUserId } from '../store/user'
 import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
 
@@ -83,7 +83,7 @@ export default function NewPost({
     }
   }
 
-  const { questions, isLoading } = useAllQuestions()
+  const { questions, isLoading } = useAllQuestionsByModule()
   const { question, isLoading: questionIsLoading } = useQuestion(related_question_id)
 
   return (

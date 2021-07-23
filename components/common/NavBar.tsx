@@ -4,21 +4,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineHome } from 'react-icons/ai'
-import { BiBookReader, BiCaretDown } from 'react-icons/bi'
+import { BiCaretDown } from 'react-icons/bi'
 import { BsMoon, BsSun } from 'react-icons/bs'
-import { MdForum } from 'react-icons/md'
 import { RiDashboardLine } from 'react-icons/ri'
 import Skeleton from 'react-loading-skeleton'
 import { useUser } from '../profile/UserAPI'
 import { useUserIdInit } from '../store/user'
-import { useModule } from '../store/module'
+import { useCurrentModule } from '../store/module'
 import QuickLink from './QuickLink'
 import { GoChevronDown } from 'react-icons/go'
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
   const [profileCollapse, setProfileCollapse] = useState(true)
-  const { state: module, dispatch } = useModule()
+  const { state: module, dispatch } = useCurrentModule()
   const { user, isLoading } = useUser()
   useUserIdInit()
   useEffect(() => {
@@ -58,16 +57,6 @@ const NavBar = (): JSX.Element => {
               <RiDashboardLine />
             </button>
           </Link>
-          <Link href="/forum">
-            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
-              <MdForum />
-            </button>
-          </Link>
-          <Link href="/quiz">
-            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
-              <BiBookReader />
-            </button>
-          </Link>
           <QuickLink />
           <button
             className="px-3 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-yellow-300 transition ease-in duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg border border-gray-300 shadow-md h-10"
@@ -75,7 +64,6 @@ const NavBar = (): JSX.Element => {
             {isDarkMode ? <BsMoon /> : <BsSun />}
           </button>
         </div>
-
         <div className="h-16 hidden md:flex items-center w-auto">
           <div className="w-56">
             <Image

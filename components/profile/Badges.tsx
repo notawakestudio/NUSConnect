@@ -10,7 +10,7 @@ import {
   GiAirplaneDeparture,
   GiAlarmClock,
 } from 'react-icons/gi'
-import { useModule } from '../store/module'
+import { useCurrentModule } from '../store/module'
 import { User } from './UserAPI'
 
 export type Badge = {
@@ -279,7 +279,7 @@ export default function Badges({
   user: User
   isLoading: boolean
 }): JSX.Element {
-  const { state: module } = useModule()
+  const { state: module } = useCurrentModule()
   return (
     <div>
       <h1 className="text-center text-lg font-semibold mt-2">Your badges</h1>

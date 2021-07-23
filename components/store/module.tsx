@@ -30,12 +30,12 @@ function ModuleProvider({ children }: StoreProviderProps) {
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }
 
-function useModule() {
+function useCurrentModule() {
   const context = useContext(StoreContext)
   if (context === undefined) {
-    throw new Error('useModule must be used within a ModuleProvider')
+    throw new Error('useCurrentModule must be used within a ModuleProvider')
   }
   return context
 }
 
-export { ModuleProvider, useModule }
+export { ModuleProvider, useCurrentModule }

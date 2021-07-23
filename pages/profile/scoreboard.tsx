@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import { useAllUser } from '../../components/profile/UserAPI'
 import { Spinner } from '@chakra-ui/react'
-import { useModule as getCurrentModule } from '../../components/store/module'
+import { useCurrentModule } from '../../components/store/module'
 import { useModule } from '../../components/module/ModuleAPI'
 function Scoreboard(): JSX.Element {
   const { users, isLoading } = useAllUser()
-  const { state: currentModule } = getCurrentModule()
-  const { module } = useModule(currentModule.moduleId)
+  const { state: currentModule } = useCurrentModule()
+  const { isLoading: isModuleLoading, module } = useModule(currentModule.moduleId)
   return (
     <div className="container flex flex-col min-h-screen">
       <Head>
@@ -23,7 +23,7 @@ function Scoreboard(): JSX.Element {
         </p>
       </div>
       <ul className="flex flex-col self-center">
-        {isLoading ? (
+        {isLoading || isModuleLoading ? (
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         ) : (
           users

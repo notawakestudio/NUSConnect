@@ -1,10 +1,10 @@
 import { Skeleton } from '@chakra-ui/react'
 import Head from 'next/head'
-import { useAllQuizzes } from '../../components/quiz/QuizAPI'
+import { useAllQuizzesByModule } from '../../components/quiz/QuizAPI'
 import QuizList from '../../components/quiz/QuizList'
 
 export default function QuizPage(): JSX.Element {
-  const { quizzes, isLoading } = useAllQuizzes()
+  const { quizzes, isLoading } = useAllQuizzesByModule()
   return (
     <>
       <Head>

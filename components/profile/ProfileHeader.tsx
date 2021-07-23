@@ -8,7 +8,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Spinner,
@@ -124,17 +123,24 @@ export default function ProfileHeader(): JSX.Element {
                         </FormControl>
                       )}
                     </Field>
-                    <Button mt={4} colorScheme="teal" isLoading={props.isSubmitting} type="submit">
-                      Submit
-                    </Button>
+                    <div className="text-right">
+                      <Button mt={4} onClick={onClose}>
+                        Cancel
+                      </Button>
+                      <Button
+                        mt={4}
+                        className="ml-2"
+                        colorScheme="teal"
+                        isLoading={props.isSubmitting}
+                        type="submit">
+                        Submit
+                      </Button>
+                    </div>
                   </Form>
                 )}
               </Formik>
             )}
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

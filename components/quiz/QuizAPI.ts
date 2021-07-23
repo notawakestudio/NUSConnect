@@ -4,6 +4,7 @@ import useSWR, { mutate } from 'swr'
 import QuestionBank from '../../public/data/QuestionBank.json'
 import QuizData from '../../public/data/QuizData.json'
 import { getCurrentDateTime, shuffleStringArray } from '../common/Util'
+import { useCurrentModule } from '../store/module'
 import { Question, QuestionWithAnswersMixed, Quiz } from './types'
 
 const API_GET_QUIZ_BY_ID = 'https://1ieznu.deta.dev/quiz/quiz/'
@@ -14,12 +15,18 @@ const API_SUBMIT_QUIZ = 'https://1ieznu.deta.dev/quiz/collate'
 const API_GET_ALL_QUIZ = 'https://1ieznu.deta.dev/quiz/quiz'
 const API_GET_QUESTION_BY_ID = 'https://1ieznu.deta.dev/quiz/question/'
 
+const API_GET_ALL_QUESTION_BY_MODULE = 'https://1ieznu.deta.dev/quiz/question/all'
+const API_GET_ALL_QUIZ_BY_MODULE = 'https://1ieznu.deta.dev/quiz/all/'
+
 const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
 
 export const useQuestion = (
   questionId: string
 ): { question: Question; isLoading: boolean; isError: any } => {
-  const { data, error } = useSWR(API_GET_QUESTION_BY_ID + questionId, fetcher)
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
+  const { data, error } = useSWR(`${API_GET_QUESTION_BY_ID}/${moduleId}/${questionId}`, fetcher)
   return {
     question: data,
     isLoading: !error && !data,
@@ -27,17 +34,22 @@ export const useQuestion = (
   }
 }
 
-export const useAllQuestions = (): { questions: Question[]; isLoading: boolean; isError: any } => {
-  const { data, error } = useSWR(API_GET_ALL_QUESTION, fetcher)
+export const useAllQuestionsByModule = (): { questions: Question[]; isLoading: boolean } => {
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
+  const { data, error } = useSWR(API_GET_ALL_QUESTION_BY_MODULE + moduleId, fetcher)
   return {
     questions: data,
     isLoading: !error && !data,
-    isError: error,
   }
 }
 
-export const useAllQuizzes = (): { quizzes: Quiz[]; isLoading: boolean } => {
-  const { data } = useSWR(API_GET_ALL_QUIZ, fetcher)
+export const useAllQuizzesByModule = (): { quizzes: Quiz[]; isLoading: boolean } => {
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
+  const { data } = useSWR(API_GET_ALL_QUIZ_BY_MODULE + moduleId, fetcher)
   return {
     quizzes: data,
     isLoading: !data,
@@ -211,33 +223,6 @@ export function createQuiz(json: GrayMatterFile<any>): void {
 
 export async function fetchAllQuizzes(): Promise<Quiz[]> {
   return await fetch(API_GET_ALL_QUIZ).then((response) => response.json())
-}
-
-// MOCK - for later use in test cases
-export const fetchQuizQuestions_MOCK = (quizId: string): QuestionWithAnswersMixed[] => {
-  const selectedQuiz = QuizData.filter((quiz) => quiz['id'] === quizId)[0]['questions']
-  return QuestionBank.filter((question) => selectedQuiz.includes(question['id'])).map(
-    (question: Question) => {
-      return {
-        ...question,
-        answers: shuffleStringArray([...question.incorrect_answers, ...question.correct_answers]),
-      }
-    }
-  )
-}
-
-export function getAllQuizId_MOCK() {
-  return QuizData.map((quiz) => {
-    return {
-      params: {
-        quizId: quiz['id'],
-      },
-    }
-  })
-}
-
-export const fetchQuizTitle_MOCK = (quizId: string): string => {
-  return QuizData.filter((quiz) => quiz['id'] === quizId)[0]['title']
 }
 
 export const classifyAnswers = (answers: { main: string; is_correct?: boolean }[]): string[][] => {
