@@ -1,13 +1,11 @@
-import { useToast, FormLabel, Checkbox } from '@chakra-ui/react'
-import { Formik, Form, Field, FieldArray } from 'formik'
-import Link from 'next/link'
+import { Checkbox, FormLabel, useToast } from '@chakra-ui/react'
+import { Field, FieldArray, Form, Formik } from 'formik'
 import React, { useState } from 'react'
-import { GrFormNextLink } from 'react-icons/gr'
 import { MdRemoveCircle } from 'react-icons/md'
+import * as Yup from 'yup'
 import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
 import { makeQuestion } from './QuizAPI'
-import * as Yup from 'yup'
 
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],
@@ -27,7 +25,7 @@ const quizType = [
   { label: 'WRITTEN', value: 'WRITTEN' },
 ]
 
-export default function NewQuestion({ style = 'normal' }: { style?: string }): JSX.Element {
+export default function NewQuestion(): JSX.Element {
   const errorToast = useToast()
 
   function showToast(error: string, id: string): void {
@@ -62,7 +60,7 @@ export default function NewQuestion({ style = 'normal' }: { style?: string }): J
     return answerError
   }
 
-  function validateWrittenAnswer(answers): string {
+  function validateWrittenAnswer(): string {
     setAnswerError('')
     return answerError
   }
@@ -160,7 +158,7 @@ export default function NewQuestion({ style = 'normal' }: { style?: string }): J
                       as="textarea"
                       name={`answers.0.['main']`}
                       rows={5}
-                      validate={validateWrittenAnswer(formik.values.answers)}
+                      validate={validateWrittenAnswer()}
                       className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="Answer"></Field>
                     <Field
