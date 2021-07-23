@@ -1,13 +1,11 @@
-import { useToast, FormLabel, Checkbox } from '@chakra-ui/react'
-import { Formik, Form, Field, FieldArray } from 'formik'
-import Link from 'next/link'
+import { Checkbox, FormLabel, useToast } from '@chakra-ui/react'
+import { Field, FieldArray, Form, Formik } from 'formik'
 import React, { useState } from 'react'
-import { GrFormNextLink } from 'react-icons/gr'
 import { MdRemoveCircle } from 'react-icons/md'
+import * as Yup from 'yup'
 import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
 import { makeQuestion } from './QuizAPI'
-import * as Yup from 'yup'
 
 const initialValues = {
   modules: ['CS2030', 'CS2030S'],
@@ -27,7 +25,7 @@ const quizType = [
   { label: 'WRITTEN', value: 'WRITTEN' },
 ]
 
-export default function NewQuestion() {
+export default function NewQuestion(): JSX.Element {
   const errorToast = useToast()
 
   function showToast(error: string, id: string): void {
@@ -62,7 +60,7 @@ export default function NewQuestion() {
     return answerError
   }
 
-  function validateWrittenAnswer(answers): string {
+  function validateWrittenAnswer(): string {
     setAnswerError('')
     return answerError
   }
@@ -107,7 +105,6 @@ export default function NewQuestion() {
             showToast(isCorrectError, 'isCorrect-error')
           } else {
             handleSubmit(values)
-            // console.log(values)
             setTimeout(() => {
               toast({
                 title: 'Success!',
@@ -122,24 +119,11 @@ export default function NewQuestion() {
         }}>
         {(formik) => (
           <section className="bg-white bg-opacity-50 dark:bg-gray-800 text-gray-600 dark:text-gray-200 w-full">
-            <Form className="px-4 md:px-6 pt-20">
-              <div className="flex justify-between text-gray-600 dark:text-gray-200">
-                <h1 className="text-4xl font-semibold text-gray-800 dark:text-white">
-                  Make a question
-                </h1>
-                <Link href={'/quiz/make-quiz'}>
-                  <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center w-auto">
-                    <span className="items-center pr-1">
-                      <GrFormNextLink />
-                    </span>
-                    <span>Done? Go make a quiz!</span>
-                  </span>
-                </Link>
-              </div>
+            <Form>
               <div className="flex flex-col space-y-6 bg-white dark:bg-gray-800 mt-4">
                 <div className="flex flex-col w-full space-y-2">
                   <div className="flex space-x-2 items-end">
-                    <div className="">Type of question</div>
+                    <div className="">Question type</div>
                     {formik.errors.type && formik.touched.type ? <Required /> : null}
                   </div>
                   <Field
@@ -174,7 +158,7 @@ export default function NewQuestion() {
                       as="textarea"
                       name={`answers.0.['main']`}
                       rows={5}
-                      validate={validateWrittenAnswer(formik.values.answers)}
+                      validate={validateWrittenAnswer()}
                       className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="Answer"></Field>
                     <Field
@@ -209,7 +193,7 @@ export default function NewQuestion() {
                                     <Field
                                       as="textarea"
                                       rows={4}
-                                      className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                      className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                       name={`answers.${index}.main`}
                                       placeholder="Answer"
                                       validate={validateAnswer(formik.values.answers)}
@@ -269,11 +253,8 @@ export default function NewQuestion() {
                       if (formik.errors.question && formik.touched.question) {
                         showToast(formik.errors.question, 'question-error')
                       }
-                      // if (formik.errors.answers && formik.touched.answers) {
-                      //   showToast('Please make at least 2 answers', 'answer-error')
-                      // }
                     }}>
-                    Save
+                    Create Question
                   </button>
                 </div>
               </div>
