@@ -1,6 +1,5 @@
 import { IconButton } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
-import { Stat, StatArrow, StatGroup, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/stat'
 import { FaExclamation } from 'react-icons/fa'
 import { useAllPosts } from '../../components/forum/ForumAPI'
 import TextContainer from '../common/TextContainer'
@@ -21,33 +20,32 @@ const ForumHome = (): JSX.Element => {
                   colorScheme="blue"
                   aria-label="Important"
                   icon={<FaExclamation />}></IconButton>
-                <div className="leading-relaxed ml-2"> You have 3 unread posts</div>
+                <div className="leading-relaxed ml-2">
+                  Total number of posts: {isLoading ? <Spinner size="xl" /> : posts.length}
+                </div>
               </span>
               <span className="flex flex-row p-2 content-center items-center cursor-pointer">
                 <IconButton
                   colorScheme="blue"
                   aria-label="Important"
                   icon={<FaExclamation />}></IconButton>
-                <div className="leading-relaxed ml-2"> Contribute by adding a new post</div>
+                <div className="leading-relaxed ml-2">
+                  Contribute by adding a new post or comment
+                </div>
               </span>
               <span className="flex flex-row p-2 content-center items-center cursor-pointer">
                 <IconButton
                   colorScheme="blue"
                   aria-label="Important"
                   icon={<FaExclamation />}></IconButton>
-                <div className="leading-relaxed ml-2"> 1 unanswered question</div>
+                <div className="leading-relaxed ml-2">
+                  Post/comment accepts Markdown syntax (cheatsheet below)
+                </div>
+              </span>
+              <span className="flex flex-row p-2 content-center items-center cursor-pointer">
+                <img src="/markdown.png" alt="markdown cheatsheet"></img>
               </span>
             </div>
-            <StatGroup>
-              <Stat className="text-left p-2">
-                <StatLabel>Number of Posts</StatLabel>
-                {isLoading ? <Spinner size="xl" /> : <StatNumber>{posts.length}</StatNumber>}
-                <StatHelpText>
-                  <StatArrow type="increase" />
-                  100%
-                </StatHelpText>
-              </Stat>
-            </StatGroup>
           </div>
         </div>
       </TextContainer>
