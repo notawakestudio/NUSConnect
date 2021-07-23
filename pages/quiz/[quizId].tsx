@@ -61,7 +61,8 @@ export default function Quiz({
           return new AnswerObject(
             quizQuestions[index].question,
             index + 1,
-            quizQuestions[index].correct_answers
+            quizQuestions[index].correct_answers,
+            quizQuestions[index].type
           )
         })
     )

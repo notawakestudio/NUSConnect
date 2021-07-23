@@ -39,7 +39,7 @@ export default function DashBoard(): JSX.Element {
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="dark:bg-gray-800 relative overflow-hidden">
+      <main className="dark:bg-gray-800 relative overflow-hidden w-full h-full">
         <div className="flex flex-col w-full md:space-y-4">
           <header className="w-full h-16 z-40 flex justify-end">
             <div className="relative z-20 flex flex-col justify-end h-full px-3 md:w-full">
