@@ -152,18 +152,13 @@ export function makeQuestion(question): void {
 }
 
 export function makeQuiz(quiz): void {
-  const questions_id = quiz['new_questions']
-    .filter((question) => question['question'] !== '')
-    .map((question) => question.id)
-    .concat(quiz['questions'])
-
   const requestBody: Quiz = {
     id: nanoid(),
     date: getCurrentDateTime(),
     title: quiz['title'],
     author: quiz['author'],
     modules: quiz['modules'],
-    questions: questions_id,
+    questions: quiz['new_questions'],
     tags: quiz['tags'],
     week: quiz['week'],
     up_votes: 0,

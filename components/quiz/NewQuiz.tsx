@@ -22,8 +22,8 @@ const modules = ['CS2030', 'CS2030S']
 
 const empty_question = {
   id: nanoid(),
-  type: '',
   modules: modules,
+  type: '',
   question: '',
   answers: [
     {
@@ -156,9 +156,9 @@ export default function NewQuiz({
                 duration: 2000,
                 isClosable: true,
                 position: 'top-right',
-                // onCloseComplete: () => {
-                //   router.push('/quiz')
-                // },
+                onCloseComplete: () => {
+                  router.push('/quiz')
+                },
               })
               setSubmitting(false)
             }, 400)
