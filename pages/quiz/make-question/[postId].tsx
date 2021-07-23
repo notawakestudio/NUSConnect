@@ -1,7 +1,5 @@
 import {
   Button,
-  Checkbox,
-  FormLabel,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -9,74 +7,24 @@ import {
   PopoverContent,
   PopoverTrigger,
   Portal,
-  useToast,
 } from '@chakra-ui/react'
-import { Field, FieldArray, Form, Formik } from 'formik'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { GrFormNextLink } from 'react-icons/gr'
-import * as Yup from 'yup'
 import Auth from '../../../components/common/Auth'
-import CustomSingleSelect from '../../../components/forms/CustomSingleSelect'
-import Layout from '../../../components/layouts/Layout'
 import PostMain from '../../../components/forum/PostMain'
 import ReplyList from '../../../components/forum/ReplyList'
-import { makeQuestion } from '../../../components/quiz/QuizAPI'
-import Required from '../../../components/forms/Required'
 import NewQuestion from '../../../components/quiz/NewQuestion'
-const initialValues = {
-  modules: ['CS2030', 'CS2030S'],
-  type: '',
-  question: '',
-  answers: [
-    {
-      main: '',
-      is_correct: false,
-    },
-  ],
-}
-
-const quizType = [
-  { label: 'MCQ', value: 'MCQ' },
-  { label: 'MRQ', value: 'MRQ' },
-]
-
-function validateAnswer(value) {
-  let error
-  if (value === '') {
-    error = 'Please enter a value'
-  }
-  return error
-}
 
 const QuestionForm = (): JSX.Element => {
   const router = useRouter()
   const { postId } = router.query
-  const errorToast = useToast()
 
-  function showToast(error: string, id: string): void {
-    if (!errorToast.isActive(id)) {
-      errorToast({
-        id: id,
-        title: 'Error',
-        description: error,
-        status: 'error',
-        duration: 5000,
-        position: 'top-right',
-        isClosable: true,
-      })
-    }
-  }
-
-  const handleSubmit = (value): void => {
-    makeQuestion(value)
-  }
   const [isOpen, setIsOpen] = useState(false)
   const open = (): void => setIsOpen(!isOpen)
   const close = (): void => setIsOpen(false)
-  const toast = useToast()
   return (
     <>
       <Auth>

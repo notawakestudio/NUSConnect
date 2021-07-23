@@ -84,32 +84,6 @@ export async function getAllQuizId(): Promise<{ quizId: string }[]> {
   })
 }
 
-// export function createQuestion(json: GrayMatterFile<any>): void {
-//   const requestBody = {
-//     id: nanoid(),
-//     type: json['data']['type'],
-//     modules: json['data']['modules'],
-//     question: json['content'],
-//     correct_answers: json['data']['correct_answers'],
-//     incorrect_answers: json['data']['incorrect_answers'],
-//   }
-//   fetch(API_MAKE_QUESTION, {
-//     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-//     mode: 'no-cors', // no-cors, *cors, same-origin
-//     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-//     credentials: 'same-origin', // include, *same-origin, omit
-//     headers: {
-//       'Content-Type': 'application/json',
-//       // 'Content-Type': 'application/x-www-form-urlencoded',
-//     },
-//     redirect: 'follow', // manual, *follow, error
-//     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-//     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-//   }).then((response) => {
-//     console.log(response)
-//   })
-// }
-
 export function makeQuestion(question): void {
   let requestBody
   const newId = question['id'] ?? nanoid()
