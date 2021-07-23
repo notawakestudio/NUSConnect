@@ -1,29 +1,12 @@
-import { GetStaticProps } from 'next'
+import { Spinner } from '@chakra-ui/react'
 import Head from 'next/head'
-import React from 'react'
 import Auth from '../../components/common/Auth'
 import { renderMdToHtml } from '../../components/common/Util'
 import NewQuiz from '../../components/quiz/NewQuiz'
-import { fetchAllQuestions } from '../../components/quiz/QuizAPI'
+import { useAllQuestionsByModule } from '../../components/quiz/QuizAPI'
 
-export const getStaticProps: GetStaticProps = async () => {
-  const questions = await fetchAllQuestions()
-  const questionList = questions.map((question) => {
-    return { label: renderMdToHtml(question['question']), value: question['id'] }
-  })
-  return {
-    props: {
-      questionList,
-    },
-    revalidate: 10,
-  }
-}
-
-const QuizForm = ({
-  questionList,
-}: {
-  questionList: { label: string; value: string }
-}): JSX.Element => {
+const QuizForm = (): JSX.Element => {
+  const { questions, isLoading } = useAllQuestionsByModule()
   return (
     <>
       <Auth>
@@ -33,7 +16,15 @@ const QuizForm = ({
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="dark:bg-gray-800 dark:text-gray-200 w-full">
-          <NewQuiz questionList={questionList} />
+          {isLoading ? (
+            <Spinner size="xl" m={20} p={10} />
+          ) : (
+            <NewQuiz
+              questionList={questions.map((question) => {
+                return { label: renderMdToHtml(question['question']), value: question['id'] }
+              })}
+            />
+          )}
         </div>
       </Auth>
     </>

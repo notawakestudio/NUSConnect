@@ -5,6 +5,7 @@ import { MdRemoveCircle } from 'react-icons/md'
 import * as Yup from 'yup'
 import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
+import { useCurrentModule } from '../store/module'
 import { makeQuestion } from './QuizAPI'
 
 const initialValues = {
@@ -26,6 +27,9 @@ const quizType = [
 ]
 
 export default function NewQuestion(): JSX.Element {
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
   const errorToast = useToast()
 
   function showToast(error: string, id: string): void {
@@ -86,7 +90,7 @@ export default function NewQuestion(): JSX.Element {
   }
 
   const handleSubmit = (value): void => {
-    makeQuestion(value)
+    makeQuestion(moduleId, value)
   }
 
   return (

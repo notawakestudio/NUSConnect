@@ -1,19 +1,14 @@
-import { GrayMatterFile } from 'gray-matter'
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
 import { getCurrentDateTime, shuffleStringArray } from '../common/Util'
 import { useCurrentModule } from '../store/module'
 import { Question, QuestionWithAnswersMixed, Quiz } from './types'
 
-const API_GET_QUIZ_BY_ID = 'https://1ieznu.deta.dev/quiz/quiz/'
 const API_MAKE_QUESTION = 'https://1ieznu.deta.dev/quiz/make'
 const API_UPDATE_QUIZ = 'https://1ieznu.deta.dev/quiz/update'
-const API_GET_ALL_QUESTION = 'https://1ieznu.deta.dev/quiz/question'
 const API_SUBMIT_QUIZ = 'https://1ieznu.deta.dev/quiz/collate'
-const API_GET_ALL_QUIZ = 'https://1ieznu.deta.dev/quiz/quiz'
 const API_GET_QUESTION_BY_ID = 'https://1ieznu.deta.dev/quiz/question/'
-
-const API_GET_ALL_QUESTION_BY_MODULE = 'https://1ieznu.deta.dev/quiz/question/all'
+const API_GET_ALL_QUESTION_BY_MODULE = 'https://1ieznu.deta.dev/quiz/question/all/'
 const API_GET_ALL_QUIZ_BY_MODULE = 'https://1ieznu.deta.dev/quiz/all/'
 
 const fetcher = (URL: string) => fetch(URL).then((res) => res.json())
@@ -55,7 +50,11 @@ export const useAllQuizzesByModule = (): { quizzes: Quiz[]; isLoading: boolean }
 }
 
 export const fetchQuizById = async (quizId: string): Promise<Quiz> => {
-  return fetch(API_GET_QUIZ_BY_ID + quizId).then((response) => response.json())
+  // Hardcoded... I know...
+  const quizData = await fetchAllQuizzes('RFfQyW-oenP9ZW5UQhTtd')
+  const quizData2 = await fetchAllQuizzes('kMvp8b48SmTiXXCl7EAkc')
+  const allQuizData = [...quizData, ...quizData2]
+  return allQuizData.filter((quiz) => quiz.id === quizId)[0]
 }
 
 export const fetchQuizTitle = async (quizId: string): Promise<string> => {
@@ -63,20 +62,12 @@ export const fetchQuizTitle = async (quizId: string): Promise<string> => {
   return quiz['title']
 }
 
-export const fetchQuestionById = async (questionId: string): Promise<Question> => {
-  return fetch(API_GET_QUESTION_BY_ID + questionId).then((response) => response.json())
-}
-
-export const fetchQuestionText = async (questionId: string): Promise<string> => {
-  const question = await fetchQuestionById(questionId)
-  return question['question']
-}
-
 export const fetchQuizQuestions = async (quizId: string): Promise<QuestionWithAnswersMixed[]> => {
   const selectedQuiz = await fetchQuizById(quizId)
   const quizQuestionIds = selectedQuiz['questions']
-  const questionBank = await fetchAllQuestions()
-  return questionBank
+  const questionBank = await fetchAllQuestions('RFfQyW-oenP9ZW5UQhTtd')
+  const questionBank2 = await fetchAllQuestions('kMvp8b48SmTiXXCl7EAkc')
+  return [...questionBank, ...questionBank2]
     .filter((question) => quizQuestionIds.includes(question['id']))
     .map((question: Question) => {
       return {
@@ -86,36 +77,34 @@ export const fetchQuizQuestions = async (quizId: string): Promise<QuestionWithAn
     })
 }
 export async function getAllQuizId(): Promise<{ quizId: string }[]> {
-  const quizData = await fetchAllQuizzes()
-  return quizData.map((quiz) => {
+  // Hardcoded... I know...
+  const quizData = await fetchAllQuizzes('RFfQyW-oenP9ZW5UQhTtd')
+  const quizData2 = await fetchAllQuizzes('kMvp8b48SmTiXXCl7EAkc')
+  const allQuizData = [...quizData, ...quizData2]
+  return allQuizData.map((quiz) => {
     return {
       quizId: quiz['id'],
     }
   })
 }
 
-export function makeQuestion(question): void {
-  let requestBody
-  const newId = question['id'] ?? nanoid()
-  if (question['type'] === 'WRITTEN') {
-    requestBody = {
-      id: newId,
+export function makeQuestion(moduleId: string, question): void {
+  const requestBody = {
+    moduleId: moduleId,
+    question: {
+      id: question['id'] ?? nanoid(),
       type: question['type'],
       modules: question['modules'],
       question: question['question'],
-      correct_answers: question['answers'][0]['main'],
-      incorrect_answers: '',
-    }
+    },
+  }
+  if (question['type'] === 'WRITTEN') {
+    requestBody.question['correct_answers'] = question['answers'][0]['main']
+    requestBody.question['incorrect_answers'] = ''
   } else {
     const answers = classifyAnswers(question['answers'])
-    requestBody = {
-      id: newId,
-      type: question['type'],
-      modules: question['modules'],
-      question: question['question'],
-      correct_answers: answers[0],
-      incorrect_answers: answers[1],
-    }
+    requestBody.question['correct_answers'] = answers[0]
+    requestBody.question['incorrect_answers'] = answers[1]
   }
 
   fetch(API_MAKE_QUESTION, {
@@ -130,22 +119,26 @@ export function makeQuestion(question): void {
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  }).then((response) => {
-    console.log(response)
+  }).then(() => {
+    console.log('a new question is created')
+    mutate(API_GET_ALL_QUESTION_BY_MODULE + moduleId)
   })
 }
 
-export function makeQuiz(quiz): void {
-  const requestBody: Quiz = {
-    id: nanoid(),
-    date: getCurrentDateTime(),
-    title: quiz['title'],
-    author: quiz['author'],
-    modules: quiz['modules'],
-    questions: quiz['new_questions'],
-    tags: quiz['tags'],
-    week: quiz['week'],
-    up_votes: 0,
+export function makeQuiz(moduleId: string, quiz): void {
+  const requestBody: { moduleId: string; quiz: Quiz } = {
+    moduleId: moduleId,
+    quiz: {
+      id: nanoid(),
+      date: getCurrentDateTime(),
+      title: quiz['title'],
+      author: quiz['author'],
+      modules: quiz['modules'],
+      questions: quiz['questions'],
+      tags: quiz['tags'],
+      week: quiz['week'],
+      up_votes: 0,
+    },
   }
 
   fetch(API_SUBMIT_QUIZ, {
@@ -159,45 +152,17 @@ export function makeQuiz(quiz): void {
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(requestBody),
-  }).then((response) => {
-    console.log(response)
+  }).then(() => {
+    mutate(API_GET_ALL_QUIZ_BY_MODULE + moduleId)
   })
 }
 
-export async function fetchAllQuestions(): Promise<Question[]> {
-  return await fetch(API_GET_ALL_QUESTION).then((response) => response.json())
+export async function fetchAllQuestions(moduleId: string): Promise<Question[]> {
+  return await fetch(API_GET_ALL_QUESTION_BY_MODULE + moduleId).then((response) => response.json())
 }
 
-export function createQuiz(json: GrayMatterFile<any>): void {
-  const requestBody: Quiz = {
-    id: nanoid(),
-    author: 'Yongliang',
-    date: getCurrentDateTime(),
-    title: json['data']['title'],
-    modules: json['data']['modules'],
-    questions: json['data']['questions'],
-    tags: json['data']['tags'],
-    week: json['data']['week'],
-    up_votes: json['data']['up_votes'],
-  }
-  fetch(API_SUBMIT_QUIZ, {
-    method: 'POST',
-    mode: 'no-cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(requestBody),
-  }).then((response) => {
-    console.log(response)
-  })
-}
-
-export async function fetchAllQuizzes(): Promise<Quiz[]> {
-  return await fetch(API_GET_ALL_QUIZ).then((response) => response.json())
+export async function fetchAllQuizzes(moduleId: string): Promise<Quiz[]> {
+  return await fetch(API_GET_ALL_QUIZ_BY_MODULE + moduleId).then((response) => response.json())
 }
 
 export const classifyAnswers = (answers: { main: string; is_correct?: boolean }[]): string[][] => {
@@ -210,17 +175,20 @@ export const classifyAnswers = (answers: { main: string; is_correct?: boolean }[
   return [correct_answers, incorrect_answers]
 }
 
-export function updateQuiz(quiz: Quiz): void {
-  const requestBody: Quiz = {
-    id: quiz['id'],
-    date: quiz['date'],
-    title: quiz['title'],
-    author: quiz['author'],
-    modules: quiz['modules'],
-    questions: quiz['questions'],
-    tags: quiz['tags'],
-    week: quiz['week'],
-    up_votes: quiz['up_votes'],
+export function updateQuiz(moduleId: string, quiz: Quiz): void {
+  const requestBody: { moduleId: string; quiz: Quiz } = {
+    moduleId: moduleId,
+    quiz: {
+      id: quiz['id'],
+      date: quiz['date'],
+      title: quiz['title'],
+      author: quiz['author'],
+      modules: quiz['modules'],
+      questions: quiz['questions'],
+      tags: quiz['tags'],
+      week: quiz['week'],
+      up_votes: quiz['up_votes'],
+    },
   }
   fetch(API_UPDATE_QUIZ, {
     method: 'POST',
@@ -233,8 +201,7 @@ export function updateQuiz(quiz: Quiz): void {
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(requestBody),
-  }).then((response) => {
-    console.log(response)
-    mutate(API_GET_ALL_QUIZ)
+  }).then(() => {
+    mutate(API_GET_ALL_QUIZ_BY_MODULE + moduleId)
   })
 }
