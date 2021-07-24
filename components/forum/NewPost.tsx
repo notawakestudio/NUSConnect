@@ -86,7 +86,7 @@ export default function NewPost({
   }
 
   const { questions, isLoading } = useAllQuestionsByModule()
-  const { question, isLoading: questionIsLoading } = useQuestion(related_question_id)
+  const { question, isLoading: questionIsLoading, isError } = useQuestion(related_question_id)
 
   return (
     <Auth>
@@ -165,7 +165,7 @@ export default function NewPost({
                               }
                             })}
                             setValue={
-                              related_question_id
+                              related_question_id && !isError
                                 ? {
                                     value: related_question_id,
                                     label: renderMdToHtml(question.question),

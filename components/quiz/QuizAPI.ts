@@ -19,7 +19,7 @@ export const useQuestion = (
   const {
     state: { moduleId },
   } = useCurrentModule()
-  const { data, error } = useSWR(`${API_GET_QUESTION_BY_ID}/${moduleId}/${questionId}`, fetcher)
+  const { data, error } = useSWR(`${API_GET_QUESTION_BY_ID}${moduleId}/${questionId}`, fetcher)
   return {
     question: data,
     isLoading: !error && !data,
