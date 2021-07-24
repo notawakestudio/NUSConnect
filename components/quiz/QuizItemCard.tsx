@@ -30,7 +30,9 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
   } = useCurrentModule()
   return (
     <>
-      <div className="shadow-lg border-t-2 m-2 border-indigo-300 w-auto h-auto flex flex-col relative justify-between">
+      <div
+        className="shadow-lg border-t-2 m-2 border-indigo-300 h-auto flex flex-col relative justify-between"
+        style={{ minWidth: '18rem' }}>
         <button
           onClick={onOpen}
           className="p-4 w-full hover:bg-gray-200 space-y-2 text-left flex flex-col justify-between flex-grow">

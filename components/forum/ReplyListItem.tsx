@@ -26,6 +26,7 @@ import { nanoid } from 'nanoid'
 import DisplayName from '../profile/DisplayName'
 import { useUserId } from '../store/user'
 import { useUser } from '../profile/UserAPI'
+import { useCurrentModule } from '../store/module'
 
 const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   const currentReply = reply
@@ -37,6 +38,9 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
   const userId = useUserId()
   const { user, isLoading: userLoading } = useUser()
   const role = userLoading ? 'student' : user.role
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
   return (
     <TextContainer>
       <a className="flex items-center border-b border-grey-200 flex-grow py-2 dark:bg-gray-800">
@@ -111,7 +115,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
                     isClosable: true,
                     position: 'top-right',
                   })
-                  deleteReply(currentReply.id, currentReply.post_id)
+                  deleteReply(moduleId, currentReply.id, currentReply.post_id)
                 }}
                 className="text-gray-400 mr-2 inline-flex items-center text-sm">
                 {editing ? (
@@ -161,7 +165,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
             key={currentReply.id}
             likeCount={currentReply.up_votes}
             handleUpdate={() => {
-              updateReplyLikes(currentReply.up_votes + 1, currentReply.id)
+              updateReplyLikes(moduleId, currentReply.up_votes + 1, currentReply.id)
             }}
           />
         </div>
