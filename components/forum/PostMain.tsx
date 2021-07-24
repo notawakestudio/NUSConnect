@@ -21,6 +21,7 @@ import div from '../common/TextContainer'
 import { renderMdToHtml, timeSince } from '../common/Util'
 import DisplayName from '../profile/DisplayName'
 import { useUser } from '../profile/UserAPI'
+import { useCurrentModule } from '../store/module'
 import { useUserId } from '../store/user'
 import { deletePost, updatePostLikes, usePost } from './ForumAPI'
 import ModelQuestionCard from './ModelQuestionCard'
@@ -40,7 +41,9 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
   const userId = useUserId()
   const { user, isLoading: userLoading } = useUser()
   const role = userLoading ? 'student' : user.role
-
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
   return (
     <>
       <div className="shadow-md border w-full">
@@ -150,7 +153,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
                     key={postId}
                     likeCount={currentPost.up_votes}
                     handleUpdate={() => {
-                      updatePostLikes(currentPost.up_votes + 1, currentPost.id)
+                      updatePostLikes(moduleId, currentPost.up_votes + 1, currentPost.id)
                     }}
                   />
                 )}
@@ -177,7 +180,7 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
               <Button
                 colorScheme="red"
                 onClick={() => {
-                  deletePost(currentPost.id)
+                  deletePost(moduleId, currentPost.id)
                   toast({
                     title: 'Post deleted',
                     status: 'warning',

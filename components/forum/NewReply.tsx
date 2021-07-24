@@ -7,6 +7,7 @@ import Auth from '../common/Auth'
 import div from '../common/TextContainer'
 import { notifyReply } from '../common/Util'
 import Required from '../forms/Required'
+import { useCurrentModule } from '../store/module'
 import { useUserId } from '../store/user'
 import { makeReply, updateReply } from './ForumAPI'
 
@@ -15,7 +16,7 @@ export default function NewReply({
   content = '',
   label = 'New comment',
   id = '',
-  setEditing = function (bool) {},
+  setEditing,
 }: {
   postId: string
   content?: string
@@ -28,14 +29,17 @@ export default function NewReply({
     content: content,
   }
   const userId = useUserId()
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
-    makeReply(value, postId)
+    makeReply(moduleId, value, postId)
     notifyReply(userId)
   }
 
   const handleSubmitEdit = (value): void => {
-    updateReply(value, postId, id)
+    updateReply(moduleId, value, postId, id)
     setEditing(false)
   }
 

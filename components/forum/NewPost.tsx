@@ -10,6 +10,7 @@ import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
 import { TagMultiSelect } from '../forms/TagMultiSelect'
 import { useAllQuestionsByModule, useQuestion } from '../quiz/QuizAPI'
+import { useCurrentModule } from '../store/module'
 import { useUserId } from '../store/user'
 import { allAvailableTags, makePost, Post, updatePost } from './ForumAPI'
 
@@ -30,7 +31,7 @@ const defaultPost = {
 export default function NewPost({
   label = 'Make a post',
   currentPost = defaultPost,
-  setEditing = function (bool) {},
+  setEditing,
   related_question_id = '',
 }: {
   label?: string
@@ -49,22 +50,23 @@ export default function NewPost({
     related_question_id: related_question_id ?? '',
   }
 
-  //User Session
   const [session] = useSession()
   const userId = useUserId()
-
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
   //Handling post request
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
-    makePost(value)
+    makePost(moduleId, value)
     notifyNewPost(userId)
   }
   const handleSubmitUpdate = (value): void => {
-    updatePost(value, currentPost)
+    updatePost(moduleId, value, currentPost)
   }
   const handleSubmitWiki = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
-    makePost(value)
+    makePost(moduleId, value)
   }
 
   //Toast
@@ -84,7 +86,7 @@ export default function NewPost({
   }
 
   const { questions, isLoading } = useAllQuestionsByModule()
-  const { question, isLoading: questionIsLoading } = useQuestion(related_question_id)
+  const { question, isLoading: questionIsLoading, isError } = useQuestion(related_question_id)
 
   return (
     <Auth>
@@ -163,7 +165,7 @@ export default function NewPost({
                               }
                             })}
                             setValue={
-                              related_question_id
+                              related_question_id && !isError
                                 ? {
                                     value: related_question_id,
                                     label: renderMdToHtml(question.question),
