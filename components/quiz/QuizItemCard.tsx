@@ -19,11 +19,15 @@ import { Quiz } from './types'
 import DisplayName from '../profile/DisplayName'
 import Avatar from '../profile/Avatar'
 import { updateQuiz } from './QuizAPI'
+import { useCurrentModule } from '../store/module'
 const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
   const date = timeSince(quiz.date)
   const [liked, setLiked] = useState(false)
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
   return (
     <>
       <div className="shadow-lg border-t-2 m-2 border-indigo-300 w-auto h-auto flex flex-col relative justify-between">
@@ -65,7 +69,7 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
                     status: 'success',
                     position: 'top-right',
                   })
-                  updateQuiz({ ...quiz, up_votes: quiz.up_votes + 1 })
+                  updateQuiz(moduleId, { ...quiz, up_votes: quiz.up_votes + 1 })
                   setLiked(true)
                 }}
                 className="flex text-xs border-l border-gray-200 items-center">

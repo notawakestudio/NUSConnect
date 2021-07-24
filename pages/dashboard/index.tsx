@@ -12,7 +12,7 @@ import { useModule } from '../../components/module/ModuleAPI'
 import QuestItem from '../../components/module/QuestItem'
 import { expForNextLevel, levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
-import { useModule as currentModule } from '../../components/store/module'
+import { useCurrentModule } from '../../components/store/module'
 
 export default function DashBoard(): JSX.Element {
   const { user, isLoading } = useUser()
@@ -21,7 +21,7 @@ export default function DashBoard(): JSX.Element {
   const { inbox, isLoading: inboxLoading } = useUserInbox(userId)
   const [editing, setEditing] = useState(false)
   const [currentWeek, setCurrentWeek] = useState(null)
-  const { state: currentMod } = currentModule()
+  const { state: currentMod } = useCurrentModule()
   const role = isLoading ? 'student' : user.role
   const [modId, setModId] = useState<string>(currentMod.moduleId) // Default CS2030
   const { module, isLoading: moduleLoading } = useModule(modId)

@@ -1,6 +1,5 @@
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
-import matter from 'gray-matter'
 import { submitToUserInbox } from '../profile/UserAPI'
 import { nanoid } from 'nanoid'
 
@@ -26,7 +25,7 @@ export const getReadableDate = (): string => {
 }
 
 // returns string representation of Html
-export const renderMdToHtml = (raw: string, escapeFrontMatter = false): string => {
+export const renderMdToHtml = (raw: string): string => {
   const mdParser = new MarkdownIt({
     highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
@@ -44,9 +43,7 @@ export const renderMdToHtml = (raw: string, escapeFrontMatter = false): string =
       return '<pre class="hljs"><code>' + mdParser.utils.escapeHtml(str) + '</code></pre>'
     },
   })
-  if (escapeFrontMatter) {
-    return mdParser.render(matter(raw).content)
-  }
+
   return mdParser.render(raw)
 }
 

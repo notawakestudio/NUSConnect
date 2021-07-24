@@ -14,6 +14,7 @@ import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
 import { TagMultiSelect } from '../forms/TagMultiSelect'
 import { allAvailableTags } from '../forum/ForumAPI'
+import { useCurrentModule } from '../store/module'
 import { useUserId } from '../store/user'
 import { makeQuestion, makeQuiz } from './QuizAPI'
 
@@ -50,16 +51,19 @@ const initialValues = {
 export default function NewQuiz({
   questionList,
 }: {
-  questionList: { label: string; value: string }
+  questionList: { label: string; value: string }[]
 }): JSX.Element {
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
   const [session] = useSession()
   const userId = useUserId()
   const handleSubmit = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
     value['new_questions'].forEach((q) => {
-      makeQuestion(q)
+      setTimeout(() => makeQuestion(moduleId, q), 2000)
     })
-    makeQuiz(value)
+    makeQuiz(moduleId, value)
   }
 
   //Toast when error occurs
@@ -152,7 +156,7 @@ export default function NewQuiz({
               toast({
                 title: 'Success! Redirecting back to the quiz list...',
                 status: 'success',
-                duration: 2000,
+                duration: 5000,
                 isClosable: true,
                 position: 'top-right',
                 onCloseComplete: () => {

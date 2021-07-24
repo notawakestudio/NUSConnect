@@ -1,7 +1,10 @@
+import { Skeleton } from '@chakra-ui/react'
 import React from 'react'
-import data from '../../public/data/ModuleData.json'
+import { moduleProfById, moduleTitleById } from '../module/ModuleAPI'
+import { levelize, useUser } from './UserAPI'
 
 export default function ModuleCards(): JSX.Element {
+  const { user, isLoading } = useUser()
   return (
     <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
       <div className="rounded-t mb-0 px-0 border-0">
@@ -11,7 +14,7 @@ export default function ModuleCards(): JSX.Element {
           </div>
           <div className="relative w-full max-w-full flex-grow flex-1 text-right">
             <button
-              className="bg-blue-500 dark:bg-gray-100 text-white active:bg-blue-600 dark:text-gray-800 dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="hidden bg-blue-500 dark:bg-gray-100 text-white active:bg-blue-600 dark:text-gray-800 dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button">
               See past modules
             </button>
@@ -36,29 +39,28 @@ export default function ModuleCards(): JSX.Element {
               </tr>
             </thead>
             <tbody>
-              {data.map((module) => (
-                <tr className="text-gray-700 dark:text-gray-100" key={module.id}>
-                  <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                    {module.title}
-                  </th>
-                  <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    2021/2022 Sem 1
-                  </td>
-                  <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    Prof X
-                  </td>
-                  <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    <div className="flex items-center">
-                      <span className="mr-2">{module.users.length}</span>
-                      <div className="relative w-full">
-                        <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
-                          <div className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"></div>
-                        </div>
+              {isLoading ? (
+                <Skeleton height="40px" />
+              ) : (
+                user.modules.map((module) => (
+                  <tr className="text-gray-700 dark:text-gray-100" key={module.id}>
+                    <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                      {moduleTitleById(module.id)}
+                    </th>
+                    <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      2021/2022 Sem 1
+                    </td>
+                    <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      {moduleProfById(module.id)}
+                    </td>
+                    <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      <div className="flex items-center">
+                        <span className="mr-2">{levelize(module.exp)}</span>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

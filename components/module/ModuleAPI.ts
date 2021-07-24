@@ -331,3 +331,19 @@ export function deleteQuest(moduleId: string, questId: string): void {
     mutate(API_GET_MODULE + moduleId)
   })
 }
+
+export const moduleTitleById = (moduleId: string): string => {
+  const moduleMapping = {
+    kMvp8b48SmTiXXCl7EAkc: 'CS2030',
+    'RFfQyW-oenP9ZW5UQhTtd': 'CS2103T',
+  }
+  return moduleMapping[moduleId]
+}
+
+export const moduleProfById = (moduleId: string): string => {
+  const moduleMapping = {
+    kMvp8b48SmTiXXCl7EAkc: 'Henry CHIA Wai Kit',
+    'RFfQyW-oenP9ZW5UQhTtd': 'Damith Chatura RAJAPAKSE',
+  }
+  return moduleMapping[moduleId]
+}
