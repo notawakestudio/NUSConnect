@@ -20,19 +20,6 @@ import { makeQuestion, makeQuiz } from './QuizAPI'
 
 const modules = ['CS2030', 'CS2030S']
 
-const empty_question = {
-  id: nanoid(),
-  modules: modules,
-  type: '',
-  question: '',
-  answers: [
-    {
-      main: '',
-      is_correct: false,
-    },
-  ],
-}
-
 const quizType = [
   { label: 'MCQ', value: 'MCQ' },
   { label: 'MRQ', value: 'MRQ' },
@@ -48,6 +35,14 @@ const initialValues = {
   new_questions: [],
 }
 
+type EmptyQuestion = {
+  id: string
+  modules: string[]
+  type: string
+  question: string
+  answers: any
+}
+
 export default function NewQuiz({
   questionList,
 }: {
@@ -58,12 +53,33 @@ export default function NewQuiz({
   } = useCurrentModule()
   const [session] = useSession()
   const userId = useUserId()
+
   const handleSubmit = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
     value['new_questions'].forEach((q) => {
-      setTimeout(() => makeQuestion(moduleId, q), 2000)
+      console.log(q)
+      setTimeout(() => makeQuestion(moduleId, q), randomNumberBetween1000and2000())
     })
     makeQuiz(moduleId, value)
+  }
+
+  function randomNumberBetween1000and2000(): number {
+    return Math.floor(Math.random() * 2000) + 1000
+  }
+
+  function createNewQuestion(): EmptyQuestion {
+    return {
+      id: nanoid(),
+      modules: modules,
+      type: '',
+      question: '',
+      answers: [
+        {
+          main: '',
+          is_correct: false,
+        },
+      ],
+    }
   }
 
   //Toast when error occurs
@@ -360,7 +376,7 @@ export default function NewQuiz({
                     <button
                       type="button"
                       className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-1/2 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-                      onClick={() => push(empty_question)}>
+                      onClick={() => push(createNewQuestion())}>
                       Add New Question
                     </button>
                   </div>
