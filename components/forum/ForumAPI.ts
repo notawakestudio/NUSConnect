@@ -178,11 +178,6 @@ export function makeReply(moduleId: string, reply: string[], postId: string): vo
       is_edited: false,
     },
   }
-  mutate(
-    API_GET_REPLY_BY_POSTID + moduleId + '/' + postId,
-    (replies: Reply[]) => [...replies, requestBody],
-    false
-  )
   fetch(API_SUBMIT_REPLY, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'no-cors', // no-cors, *cors, same-origin
