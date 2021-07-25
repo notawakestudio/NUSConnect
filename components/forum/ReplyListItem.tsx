@@ -19,7 +19,7 @@ import { GiGiftOfKnowledge } from 'react-icons/gi'
 import NewReply from '../../components/forum/NewReply'
 import LikeButton from '../common/LikeButton'
 import TextContainer from '../common/TextContainer'
-import { renderMdToHtml, timeSince } from '../common/Util'
+import { getCurrentWeek, renderMdToHtml, timeSince } from '../common/Util'
 import { deleteReply, Reply, updateReplyLikes } from './ForumAPI'
 import NewPost from './NewPost'
 import { nanoid } from 'nanoid'
@@ -143,7 +143,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
                         created_date: 0,
                         edited_date: 0,
                         tags: ['Wiki'],
-                        week: '1',
+                        week: getCurrentWeek(),
                         reply_count: 0,
                         up_votes: 0,
                         is_edited: false,
