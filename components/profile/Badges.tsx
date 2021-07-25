@@ -64,7 +64,7 @@ export const allBadges: Badge[] = [
   {
     id: '6ZVNTqzE8NjHN0vfYAI_X',
     title: 'Strong',
-    description: 'Complete 1 question!',
+    description: 'Complete 1 quiz!',
     icon: function icon(): JSX.Element {
       return (
         <Gi3DHammer className="self-center border rounded-full border-black w-10 h-10 p-1 bg-yellow-700" />
@@ -74,7 +74,7 @@ export const allBadges: Badge[] = [
   {
     id: 'VXES2R6L7N7PIiLu1KNEO',
     title: 'Strong',
-    description: 'Complete 10 questions!',
+    description: 'Complete 10 quizzes!',
     icon: function icon(): JSX.Element {
       return (
         <Gi3DHammer className="self-center border rounded-full border-black w-10 h-10 p-1 bg-gray-200" />
@@ -84,7 +84,7 @@ export const allBadges: Badge[] = [
   {
     id: 'IdONfjYukVWuA3BZNNaXX',
     title: 'Strong',
-    description: 'Complete 100 questions!',
+    description: 'Complete 100 quizzes!',
     icon: function icon(): JSX.Element {
       return (
         <Gi3DHammer className="self-center border rounded-full border-black w-10 h-10 p-1 bg-yellow-300" />

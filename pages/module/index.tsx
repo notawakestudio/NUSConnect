@@ -32,6 +32,10 @@ export default function Home(): JSX.Element {
               <h3 className="font-semibold text-base text-gray-900 dark:text-gray-50">
                 Existing Modules
               </h3>
+              <p className="text-xs italic">
+                P.S. For the purpose of showcasing mudule switching functionality for Orbital, the
+                following modules will still be available even if you "quit" the module.
+              </p>
             </div>
             {role === 'admin' ? (
               <div className="relative w-full max-w-full flex-grow flex-1 text-right">

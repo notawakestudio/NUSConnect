@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
-import { date } from 'yup'
 import ModuleData from '../../public/data/ModuleData.json'
 import { getCurrentDateTime } from '../common/Util'
 import { Post, Reply } from '../forum/ForumAPI'
@@ -16,6 +15,7 @@ const API_REMOVE_USER_FROM_MODULE = 'https://1ieznu.deta.dev/module/removeUser'
 const API_SUBMIT_QUEST = 'https://1ieznu.deta.dev/module/quest/make/'
 const API_UPDATE_QUEST = 'https://1ieznu.deta.dev/module/quest/update/'
 const API_DELETE_QUEST = 'https://1ieznu.deta.dev/module/quest/delete/'
+const API_CHECK_QUEST = 'https://1ieznu.deta.dev/module/quest/check'
 export type Reward = {
   exp: number
   badge: string
@@ -312,7 +312,6 @@ export function updateQuest(moduleId: string, update: string[], currQuest: Quest
 }
 
 export function deleteQuest(moduleId: string, questId: string): void {
-  console.log('delete Quest' + questId)
   const requestBody = {}
   fetch(API_DELETE_QUEST + moduleId + '/' + questId, {
     method: 'DELETE', // *GET, Quest, PUT, DELETE, etc.
@@ -346,4 +345,26 @@ export const moduleProfById = (moduleId: string): string => {
     'RFfQyW-oenP9ZW5UQhTtd': 'Damith Chatura RAJAPAKSE',
   }
   return moduleMapping[moduleId]
+}
+
+export const checkQuestsCompletion = (userId: string, moduleId: string): void => {
+  const requestBody = {
+    userId: userId,
+    moduleId: moduleId,
+    currentDateTime: getCurrentDateTime(),
+  }
+  fetch(API_CHECK_QUEST, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(requestBody),
+  }).then((response) => {
+    console.log(response)
+  })
 }
