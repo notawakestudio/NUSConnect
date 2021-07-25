@@ -44,6 +44,14 @@ export const defaultModuleInfo: ModuleInfo[] = [
     quests: [],
     posts: [],
   },
+  {
+    id: 'RFfQyW-oenP9ZW5UQhTtd',
+    exp: 0,
+    badges: ['ngtbhPgKtHLClT4WdXT9N'],
+    quizzes: [],
+    quests: [],
+    posts: [],
+  },
 ]
 export type User = {
   id: string
