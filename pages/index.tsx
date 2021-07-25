@@ -3,6 +3,7 @@ import Feature from '../components/landingPage/Feature'
 import Hero from '../components/landingPage/Hero'
 import Pricing from '../components/landingPage/Pricing'
 import Team from '../components/landingPage/Team'
+import Timeline from '../components/landingPage/Timeline'
 
 export default function Home(): JSX.Element {
   return (
@@ -12,11 +13,14 @@ export default function Home(): JSX.Element {
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Hero />
-      <div className="container mx-auto pt-2 text-center  ">
-        <Feature />
+      <div className="dark:bg-black bg-white items-center w-full">
+        <Hero />
+        <div className="mx-auto">
+          <Feature />
+        </div>
         <Team />
-        <Pricing />
+        {/* <Pricing /> */}
+        <Timeline />
       </div>
     </>
   )

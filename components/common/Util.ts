@@ -60,7 +60,11 @@ export const showCurrentDate = (date: number): string => {
 }
 
 export const getCurrentWeek = (): number => {
-  return 1
+  const startDate = 1627191607381
+  const currDate = getCurrentDateTime()
+  const weeklyInterval = 604800
+
+  return Math.floor((currDate - startDate) / weeklyInterval)
 }
 
 export const timeSince = (date: number): string => {

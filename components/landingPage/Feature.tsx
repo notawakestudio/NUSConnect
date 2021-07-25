@@ -1,12 +1,13 @@
-import { MdForum } from 'react-icons/md'
-import { GrDocumentTest } from 'react-icons/gr'
+import React from 'react'
+import { AiOutlineFileSearch } from 'react-icons/ai'
 import { GiSpellBook } from 'react-icons/gi'
+import { MdForum } from 'react-icons/md'
 
 const Feature = (): JSX.Element => {
   return (
-    <section>
-      <div className="container mb-20 bg-white ">
-        <div className="flex flex-wrap justify-center">
+    <section className="items-center w-full">
+      <div className="mb-20 bg-white dark:bg-black dark:text-white">
+        <div className="flex flex-wrap justify-center items-center">
           <div className="text-xl">
             <h2 className="mb-4 text-3xl lg:text-4xl font-bold font-heading ">Features</h2>
             <p className="mb-8 leading-loose mx-2 max-w-prose text-left text-gray-500 dark:text-gray-300 ">
@@ -31,7 +32,7 @@ const Feature = (): JSX.Element => {
             </li>
             <li className="flex items-center">
               <div className="px-4">
-                <GrDocumentTest size={50} />
+                <AiOutlineFileSearch size={50} />
               </div>
               <div className="px-4">
                 <h3 className="my-4 text-xl font-semibold dark:text-white">Quiz</h3>
