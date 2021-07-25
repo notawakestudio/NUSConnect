@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/client'
 import React from 'react'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
-import { notifyNewPost, renderMdToHtml } from '../common/Util'
+import { getCurrentWeek, notifyNewPost, renderMdToHtml } from '../common/Util'
 import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
 import { TagMultiSelect } from '../forms/TagMultiSelect'
@@ -22,7 +22,7 @@ const defaultPost = {
   created_date: 0,
   edited_date: 0,
   tags: [],
-  week: 1,
+  week: getCurrentWeek(),
   reply_count: 0,
   up_votes: 0,
   is_edited: false,

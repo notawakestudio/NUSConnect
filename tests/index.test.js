@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals'
 import { render, screen } from '@testing-library/react'
 import { useSession } from 'next-auth/client'
-import { act } from "react-dom/test-utils"
+import { act } from 'react-dom/test-utils'
 import Footer from '../components/common/Footer'
 import LikeButton from '../components/common/LikeButton'
 import QuickLink from '../components/common/QuickLink'
@@ -19,27 +19,24 @@ import Login from '../pages/login'
 jest.mock('next-auth/client')
 
 const fakeUser = {
-  displayName: "fakeName",
-  profilePicUrl: "/cat.jpg",
-  modules:
-    [
-      {
-        "badges": [
-          "ngtbhPgKtHLClT4WdXT9N"
-        ],
-        "exp": 20,
-        "id": "CS2030/S",
-        "quest": null,
-        "quiz": null
-      }
-    ]
+  displayName: 'fakeName',
+  profilePicUrl: '/cat.jpg',
+  modules: [
+    {
+      badges: ['ngtbhPgKtHLClT4WdXT9N'],
+      exp: 20,
+      id: 'CS2030/S',
+      quest: null,
+      quiz: null,
+    },
+  ],
 }
 
-jest.spyOn(global, "fetch").mockImplementation(() =>
+jest.spyOn(global, 'fetch').mockImplementation(() =>
   Promise.resolve({
-    json: () => Promise.resolve(fakeUser)
+    json: () => Promise.resolve(fakeUser),
   })
-);
+)
 
 useSession.mockReturnValue([
   {
@@ -52,7 +49,7 @@ useSession.mockReturnValue([
 describe('Page level components render successfully', () => {
   it('renders Home', () => {
     render(<Home />)
-    expect(screen.getByText('Explore Now')).toBeInTheDocument()
+    expect(screen.getByText('NotAwakeStudio Presents')).toBeInTheDocument()
   })
   it('renders 404', () => {
     render(<Custom404 />)
@@ -61,12 +58,17 @@ describe('Page level components render successfully', () => {
     render(<Login />)
     expect(screen.getByText('You are logged in as Delta')).toBeInTheDocument()
   })
-
 })
 
 describe('Component level components render successfully', () => {
   it('renders Badges', () => {
-    act(() => { render(<ModuleProvider><Badges user={fakeUser} isLoaded={false} /></ModuleProvider>) })
+    act(() => {
+      render(
+        <ModuleProvider>
+          <Badges user={fakeUser} isLoaded={false} />
+        </ModuleProvider>
+      )
+    })
     expect(screen.getByText('Your badges')).toBeInTheDocument()
   })
   it('renders Avatar', async () => {
@@ -83,11 +85,14 @@ describe('Component level components render successfully', () => {
   })
   it('renders ProfileHeader', async () => {
     await act(async () => {
-      render(<UserProvider><ProfileHeader /></UserProvider>)
+      render(
+        <UserProvider>
+          <ProfileHeader />
+        </UserProvider>
+      )
     })
     expect(screen.getByText('fakeName')).toBeInTheDocument()
   })
-
 })
 
 describe('Common components render successfully', () => {

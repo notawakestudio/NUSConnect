@@ -46,6 +46,7 @@ const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
             .sort((postA, postB) => (postA.edited_date < postB.edited_date ? 1 : -1))
             .map((post) => {
               return <PostListItem key={post.id} post={post} />
+              
             })}
         </div> */}
       </div>

@@ -4,7 +4,7 @@ import { AiFillGithub, AiFillGoogleCircle } from 'react-icons/ai'
 export default function Login(): JSX.Element {
   const [session] = useSession()
   return (
-    <div className="container flex justify-center mx-auto">
+    <div className="container flex justify-center mx-auto m-2">
       {!session && (
         <div>
           <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">

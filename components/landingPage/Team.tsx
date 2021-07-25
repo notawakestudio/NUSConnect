@@ -1,7 +1,9 @@
 const Team = (): JSX.Element => {
   return (
-    <section>
-      <h1 className="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Team</h1>
+    <section className="w-full bg-gray-100 dark:bg-gray-900 py-12">
+      <h1 className="sm:text-4xl text-3xl font-semibold title-font mb-2 text-gray-900 text-center dark:text-gray-100">
+        Team
+      </h1>
       <div className="md:flex justify-center gap-10">
         <div className="text-center mb-8 md:mb-0 ">
           <img

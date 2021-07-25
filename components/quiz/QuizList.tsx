@@ -52,7 +52,7 @@ const QuizList = ({ quizzes }: { quizzes: Quiz[] }): JSX.Element => {
       </div>
       <div className="flex w-full bg-white dark:bg-gray-800 p-4">
         <div className="flex flex-col items-center lg:items-start justify-start bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-full">
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 justify-start">
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 justify-start w-full">
             {filteredQuizzes.map((quiz) => {
               return <QuizItemCard key={quiz.id} quiz={quiz} />
             })}

@@ -15,6 +15,7 @@ import QuickLink from './QuickLink'
 import { GoChevronDown } from 'react-icons/go'
 import useLocalStorage from '../store/localStorage'
 import { useRouter } from 'next/router'
+
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
@@ -55,14 +56,18 @@ const NavBar = (): JSX.Element => {
       <div className="flex flex-row h-full items-center justify-center xs:items-start xs:justify-between flex-grow">
         <div className="flex flex-row h-full space-x-2 p-2 items-center">
           <Link href="/">
-            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg h-10">
-              <AiOutlineHome />
-            </button>
+            <a>
+              <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg h-10">
+                <AiOutlineHome />
+              </button>
+            </a>
           </Link>
           <Link href="/dashboard">
-            <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
-              <RiDashboardLine />
-            </button>
+            <a>
+              <button className="px-3 bg-gray-600 hover:bg-blue-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white transition ease-in duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg h-10">
+                <RiDashboardLine />
+              </button>
+            </a>
           </Link>
           <QuickLink />
           <button
@@ -72,31 +77,17 @@ const NavBar = (): JSX.Element => {
           </button>
         </div>
         <div className="h-16 hidden md:flex items-center w-auto">
-          <div className="w-56">
+          <div className="w-64 h-16">
             <Image
               alt="NUSConnectBanner"
-              src="/NUSConnectBanner.png"
-              height={514}
-              width={2343}
+              src="/NUSConnectBanner.svg"
+              height={256}
+              width={1024}
               className="cursor-pointer"
             />
           </div>
         </div>
 
-        {/* {!session && (
-          <div className="hidden xs:flex py-4 px-2 items-center text-gray-800 dark:text-gray-200">
-            <Link href="/login">
-              <span className="flex px-2 font-light cursor-pointer border-r-2 border-gray-200 mr-2">
-                Login
-              </span>
-            </Link>
-            <Link href="/login">
-              <span className="flex px-2 py-1 font-light cursor-pointer border border-indigo-300 rounded-lg hover:bg-indigo-200">
-                Sign up
-              </span>
-            </Link>
-          </div>
-        )} */}
         <div className="hidden xs:flex py-3 px-1 h-full w-auto text-gray-800 dark:text-gray-200">
           <div className="hidden xs:flex py-4 px-2 items-center text-gray-800 dark:text-gray-200">
             <Link href="/login">
@@ -172,12 +163,16 @@ const NavBar = (): JSX.Element => {
                 </div>
               </MenuButton>
               <MenuList as="div" className={`${profileCollapse ? 'hidden' : ''}`}>
-                <Link href="/profile">
-                  <MenuItem>Profile</MenuItem>
-                </Link>
-                <Link href="/login">
-                  <MenuItem>Logout</MenuItem>
-                </Link>
+                <a>
+                  <Link href="/profile">
+                    <MenuItem>Profile</MenuItem>
+                  </Link>
+                </a>
+                <a>
+                  <Link href="/login">
+                    <MenuItem>Logout</MenuItem>
+                  </Link>
+                </a>
               </MenuList>
             </Menu>
           </div>
