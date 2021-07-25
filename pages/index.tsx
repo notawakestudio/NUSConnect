@@ -19,7 +19,6 @@ export default function Home(): JSX.Element {
           <Feature />
         </div>
         <Team />
-        {/* <Pricing /> */}
         <Timeline />
       </div>
     </>
