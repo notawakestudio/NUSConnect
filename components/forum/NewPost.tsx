@@ -22,7 +22,7 @@ const defaultPost = {
   created_date: 0,
   edited_date: 0,
   tags: [],
-  week: '1',
+  week: 1,
   reply_count: 0,
   up_votes: 0,
   is_edited: false,

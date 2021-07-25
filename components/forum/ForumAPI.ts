@@ -45,7 +45,7 @@ export type Post = {
   created_date: number
   edited_date: number
   tags: string[]
-  week: string
+  week: number
   reply_count: number
   up_votes: number
   is_edited: boolean
@@ -124,8 +124,6 @@ export async function getAllPostsByQuestionId(question_id: string): Promise<Post
 
 export function makePost(moduleId: string, post: string[]): void {
   const currDate = getCurrentDateTime()
-  const currWeek = getCurrentWeek().toString()
-
   const requestBody: { moduleId: string; post: Post } = {
     moduleId: moduleId,
     post: {
@@ -136,7 +134,7 @@ export function makePost(moduleId: string, post: string[]): void {
       created_date: currDate,
       edited_date: currDate,
       tags: post['tags'],
-      week: currWeek,
+      week: getCurrentWeek(),
       reply_count: 0,
       up_votes: 0,
       is_edited: false,
