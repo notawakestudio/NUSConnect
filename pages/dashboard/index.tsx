@@ -13,6 +13,7 @@ import QuestItem from '../../components/module/QuestItem'
 import { expForNextLevel, levelize, useUser, useUserInbox } from '../../components/profile/UserAPI'
 import { useUserId } from '../../components/store/user'
 import { useCurrentModule } from '../../components/store/module'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export default function DashBoard(): JSX.Element {
   const { user, isLoading } = useUser()
@@ -144,7 +145,16 @@ export default function DashBoard(): JSX.Element {
                 </div>
                 <div className="w-1/2">
                   <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
-                    <p className="text-2xl text-black dark:text-white font-bold">0</p>
+                    {isLoading ? (
+                      <Skeleton width={20} />
+                    ) : (
+                      <p className="text-2xl text-black dark:text-white font-bold">
+                        {
+                          user.modules.filter((mod) => mod.id === currentMod.moduleId)[0].quests
+                            .length
+                        }
+                      </p>
+                    )}
                     <p className="text-gray-400 text-sm">Completed Quests</p>
                     <span className="rounded-full absolute p-4 bg-purple-500 top-2 right-4">
                       <MdDoneAll />

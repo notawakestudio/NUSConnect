@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
 import { getCurrentDateTime } from '../common/Util'
-import { addUserToModule } from '../module/ModuleAPI'
+import { addUserToModule, checkQuestsCompletion } from '../module/ModuleAPI'
 import { useUserId } from '../store/user'
 
 const API_MAKE_USER = 'https://1ieznu.deta.dev/user/make'
@@ -9,7 +9,8 @@ const API_GET_USER = 'https://1ieznu.deta.dev/user/'
 const API_GET_ALL_USER = 'https://1ieznu.deta.dev/user/all'
 const API_CHECK_USER = 'https://1ieznu.deta.dev/user/check/'
 const API_UPDATE_USER = 'https://1ieznu.deta.dev/user/update/'
-
+const API_UPDATE_USER_POST = 'https://1ieznu.deta.dev/user/update/post/'
+const API_UPDATE_USER_QUIZ = 'https://1ieznu.deta.dev/user/update/quiz/'
 const API_GET_MESSAGES_BY_AUTHORID = 'https://1ieznu.deta.dev/user/inbox/'
 const API_SUBMIT_MESSAGE = 'https://1ieznu.deta.dev/user/inbox/make/'
 const API_MARK_MESSAGE_READ = 'https://1ieznu.deta.dev/user/inbox/read/'
@@ -24,13 +25,13 @@ export type Message = {
 type QuizInfo = {
   id: string
   score: number
-  ans: string[]
 }
 
 type ModuleInfo = {
   id: string
   quizzes: QuizInfo[]
   quests: string[]
+  posts: string[]
   exp: number
   badges: string[]
 }
@@ -41,6 +42,7 @@ export const defaultModuleInfo: ModuleInfo[] = [
     badges: ['ngtbhPgKtHLClT4WdXT9N'],
     quizzes: [],
     quests: [],
+    posts: [],
   },
 ]
 export type User = {
@@ -217,6 +219,50 @@ export function updateModuleData(userId: string, modifiedModuleData: ModuleInfo[
   })
 }
 
+export function addPostToUserRecord(userId: string, moduleId: string, postId: string): void {
+  const requestBody = {
+    moduleId: moduleId,
+    postId: postId,
+  }
+  fetch(API_UPDATE_USER_POST + userId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then(() => {
+    checkQuestsCompletion(userId, moduleId)
+  })
+}
+
+export function addQuizToUserRecord(userId: string, moduleId: string, quizRecord: QuizInfo): void {
+  const requestBody = {
+    moduleId: moduleId,
+    quizRecord: quizRecord,
+  }
+  fetch(API_UPDATE_USER_QUIZ + userId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then(() => {
+    checkQuestsCompletion(userId, moduleId)
+  })
+}
+
 async function checkUserExists(userId: string): Promise<boolean> {
   const response = await fetch(API_CHECK_USER + userId, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -272,7 +318,7 @@ export async function makeUser(user): Promise<void> {
   }
   const exist = await checkUserExists(user['id'])
   if (exist) {
-    console.log('user already in DB')
+    // console.log('user already in DB')
     return
   }
   if (!exist) {
@@ -293,6 +339,6 @@ export async function makeUser(user): Promise<void> {
       addUserToModule('kMvp8b48SmTiXXCl7EAkc', user['id']) // add to CS2030 By default
     })
   } else {
-    console.log('user already exists')
+    // console.log('user already exists')
   }
 }

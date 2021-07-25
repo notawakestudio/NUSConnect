@@ -115,26 +115,26 @@ export const timeSince = (date: number): string => {
   return Math.floor(seconds) + ' second'
 }
 
-export const notifyReply = (userId: string): void => {
+export const notifyReply = (userId: string, moduleTitle: string): void => {
   const message = {
     id: nanoid(),
     content:
       '<h2>You Replied!</h2><p>Thank you for being active in the forum and help others learn!</p>',
     created_date: getCurrentDateTime(),
     read: false,
-    type: 'CS2030/S',
+    type: moduleTitle,
   }
   submitToUserInbox(userId, message)
 }
 
-export const notifyNewPost = (userId: string): void => {
+export const notifyNewPost = (userId: string, moduleTitle: string): void => {
   const message = {
     id: nanoid(),
     content:
       '<h2>You Posted!</h2><p>Thank you for being active in the forum and help others learn!</p>',
     created_date: getCurrentDateTime(),
     read: false,
-    type: 'CS2030/S',
+    type: moduleTitle,
   }
   submitToUserInbox(userId, message)
 }

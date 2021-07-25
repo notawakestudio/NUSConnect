@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
 import { getCurrentDateTime, getCurrentWeek } from '../common/Util'
+import { addPostToUserRecord } from '../profile/UserAPI'
 import { useCurrentModule } from '../store/module'
 
 export const API_GET_ALL_POST = 'https://1ieznu.deta.dev/forum/post/'
@@ -156,6 +157,7 @@ export function makePost(moduleId: string, post: string[]): void {
     body: JSON.stringify(requestBody),
   }).then(() => {
     // trigger a revalidation (refetch) to make sure our local data is correct
+    addPostToUserRecord(post['author'], moduleId, requestBody['post']['id'])
     mutate(API_GET_ALL_POST + moduleId)
   })
 }
