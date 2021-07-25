@@ -13,12 +13,19 @@ import { useUserIdInit } from '../store/user'
 import { useCurrentModule } from '../store/module'
 import QuickLink from './QuickLink'
 import { GoChevronDown } from 'react-icons/go'
+import useLocalStorage from '../store/localStorage'
+import { useRouter } from 'next/router'
 const NavBar = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [session] = useSession()
   const [profileCollapse, setProfileCollapse] = useState(true)
   const { state: module, dispatch } = useCurrentModule()
   const { user, isLoading } = useUser()
+  const [storedValue, setValue] = useLocalStorage('module', {
+    moduleTitle: 'CS2030',
+    moduleId: 'kMvp8b48SmTiXXCl7EAkc',
+  })
+  const router = useRouter()
   useUserIdInit()
   useEffect(() => {
     if (
@@ -106,19 +113,39 @@ const NavBar = (): JSX.Element => {
               <MenuList>
                 <MenuItem
                   onClick={() => {
+                    if (module.moduleId === 'kMvp8b48SmTiXXCl7EAkc') {
+                      return
+                    }
+                    setValue({ moduleTitle: 'CS2030', moduleId: 'kMvp8b48SmTiXXCl7EAkc' })
                     dispatch({
                       type: 'switch',
                       payload: { moduleTitle: 'CS2030', moduleId: 'kMvp8b48SmTiXXCl7EAkc' },
                     })
+                    if (router.pathname.startsWith('/forum')) {
+                      router.push('/forum')
+                    }
+                    if (router.pathname.startsWith('/quiz')) {
+                      router.push('/quiz')
+                    }
                   }}>
                   <span>CS2030</span>
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
+                    if (module.moduleId === 'RFfQyW-oenP9ZW5UQhTtd') {
+                      return
+                    }
+                    setValue({ moduleTitle: 'CS2103T', moduleId: 'RFfQyW-oenP9ZW5UQhTtd' })
                     dispatch({
                       type: 'switch',
                       payload: { moduleTitle: 'CS2103T', moduleId: 'RFfQyW-oenP9ZW5UQhTtd' },
                     })
+                    if (router.pathname.startsWith('/forum')) {
+                      router.push('/forum')
+                    }
+                    if (router.pathname.startsWith('/quiz')) {
+                      router.push('/quiz')
+                    }
                   }}>
                   <span>CS2103T</span>
                 </MenuItem>
