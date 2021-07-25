@@ -228,14 +228,12 @@ export default function DashBoard(): JSX.Element {
                             <span>edit</span>
                           </span>
                         </button>
-                        <Link href={'/module/new-quest'}>
-                          <span className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex flex-row items-center">
-                            <span className="items-center pt-1 pr-1">
-                              <IoMdAddCircleOutline />
-                            </span>
-                            <span>new quest</span>
-                          </span>
-                        </Link>
+                        <button
+                          className="shadow-md p-2 cursor-pointer bg-white hover:bg-indigo-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-500 flex items-center"
+                          onClick={() => router.push('/module/new-quest')}>
+                          <IoMdAddCircleOutline className="items-center pt-1 pr-1" />
+                          <span>new quest</span>
+                        </button>
                       </span>
                     ) : (
                       ''
