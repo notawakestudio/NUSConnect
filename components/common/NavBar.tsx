@@ -77,11 +77,11 @@ const NavBar = (): JSX.Element => {
           </button>
         </div>
         <div className="h-16 hidden md:flex items-center w-auto">
-          <div className="w-64 pt-2">
+          <div className="w-64 h-16">
             <Image
               alt="NUSConnectBanner"
               src="/NUSConnectBanner.svg"
-              height={1024}
+              height={256}
               width={1024}
               className="cursor-pointer"
             />
