@@ -49,7 +49,7 @@ useSession.mockReturnValue([
 describe('Page level components render successfully', () => {
   it('renders Home', () => {
     render(<Home />)
-    expect(screen.getByText('Forum')).toBeInTheDocument()
+    expect(screen.getByText('NotAwakeStudio Presents')).toBeInTheDocument()
   })
   it('renders 404', () => {
     render(<Custom404 />)
