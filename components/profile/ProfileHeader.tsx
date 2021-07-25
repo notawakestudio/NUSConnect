@@ -55,7 +55,7 @@ export default function ProfileHeader(): JSX.Element {
               Role: {isLoading ? <Skeleton width={100} /> : user.role}
             </p>
           </div>
-          <div className="max-w-max rounded-lg bg-blue-100 dark:bg-gray-700 p-2">
+          <div className="hidden max-w-max rounded-lg bg-blue-100 dark:bg-gray-700 p-2">
             <div className="flex flex-row space-x-3 items-center text-xs text-gray-500 dark:text-gray-200">
               <p className="flex flex-col ">
                 Total Posts

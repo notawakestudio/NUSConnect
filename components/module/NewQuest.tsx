@@ -8,13 +8,14 @@ import Auth from '../common/Auth'
 import { getCurrentDateTime } from '../common/Util'
 import { DatePickerField } from '../forms/DatePickerField'
 import Required from '../forms/Required'
+import { useCurrentModule } from '../store/module'
 import { makeQuest, Quest, updateQuest } from './ModuleAPI'
 
 const defaultQuest = {
   id: nanoid(),
   description: '',
   type: 'quiz',
-  count: undefined,
+  count: 1,
   week: 1,
   link: '',
   start_date: getCurrentDateTime(),
@@ -50,15 +51,17 @@ export default function NewQuest({
 
   //User Session
   const [session] = useSession()
-
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
   //Handling Quest request
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? session.user.name : 'Anonymous'
-    makeQuest('kMvp8b48SmTiXXCl7EAkc', value)
+    makeQuest(moduleId, value)
   }
 
   const handleSubmitUpdate = (value): void => {
-    updateQuest('kMvp8b48SmTiXXCl7EAkc', value, currentQuest)
+    updateQuest(moduleId, value, currentQuest)
   }
 
   //Initialize toast for error message
@@ -180,9 +183,10 @@ export default function NewQuest({
                     <label htmlFor="count">Count</label>
                     <Field
                       name="count"
+                      type="number"
                       rows={5}
                       className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                      placeholder="(optional)"></Field>
+                      placeholder={1}></Field>
                   </div>
                   <hr />
 

@@ -1,15 +1,19 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Pagination from '../../components/common/Pagination'
 import { hasSameContent } from '../../components/common/Util'
+import { addQuizToUserRecord } from '../../components/profile/UserAPI'
 import AnswerObject from '../../components/quiz/AnswerObject'
 import OptionsBar from '../../components/quiz/OptionsBar'
 import Question from '../../components/quiz/Question'
 import { fetchQuizQuestions, fetchQuizTitle, getAllQuizId } from '../../components/quiz/QuizAPI'
 import ScoreCard from '../../components/quiz/ScoreCard'
 import { QuestionWithAnswersMixed, QuizMode } from '../../components/quiz/types'
+import { useCurrentModule } from '../../components/store/module'
+import { useUserId } from '../../components/store/user'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const quizIds = await getAllQuizId()
@@ -50,6 +54,12 @@ export default function Quiz({
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [score, setScore] = useState(0)
   const [quizMode, setQuizMode] = useState(QuizMode.STARTING)
+  const userId = useUserId()
+  const router = useRouter()
+  const { quizId } = router.query
+  const {
+    state: { moduleId },
+  } = useCurrentModule()
 
   const startQuiz = (): void => {
     setLoading(true)
@@ -78,11 +88,14 @@ export default function Quiz({
   }
 
   const updateTotalScore = (): void => {
-    setScore(
-      userAnswers.reduce((memo, answerObject) => {
-        return memo + (answerObject.isCorrect ? 1 : 0)
-      }, 0)
-    )
+    const score = userAnswers.reduce((memo, answerObject) => {
+      return memo + (answerObject.isCorrect ? 1 : 0)
+    }, 0)
+    setScore(score)
+    addQuizToUserRecord(userId, moduleId, {
+      id: quizId as string,
+      score: score,
+    })
     setQuizMode(QuizMode.ENDING)
   }
 

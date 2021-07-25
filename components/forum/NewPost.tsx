@@ -53,13 +53,13 @@ export default function NewPost({
   const [session] = useSession()
   const userId = useUserId()
   const {
-    state: { moduleId },
+    state: { moduleId, moduleTitle },
   } = useCurrentModule()
   //Handling post request
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
     makePost(moduleId, value)
-    notifyNewPost(userId)
+    notifyNewPost(userId, moduleTitle)
   }
   const handleSubmitUpdate = (value): void => {
     updatePost(moduleId, value, currentPost)

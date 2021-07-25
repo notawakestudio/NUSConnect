@@ -30,12 +30,12 @@ export default function NewReply({
   }
   const userId = useUserId()
   const {
-    state: { moduleId },
+    state: { moduleId, moduleTitle },
   } = useCurrentModule()
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
     makeReply(moduleId, value, postId)
-    notifyReply(userId)
+    notifyReply(userId, moduleTitle)
   }
 
   const handleSubmitEdit = (value): void => {
