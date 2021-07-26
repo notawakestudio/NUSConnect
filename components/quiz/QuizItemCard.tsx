@@ -20,7 +20,7 @@ import DisplayName from '../profile/DisplayName'
 import Avatar from '../profile/Avatar'
 import { updateQuiz } from './QuizAPI'
 import { useCurrentModule } from '../store/module'
-const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
+const QuizItemCard = ({ quiz }: { quiz: Quiz }): JSX.Element => {
   const date = timeSince(quiz.date)
   const [liked, setLiked] = useState(false)
   const toast = useToast()
@@ -100,4 +100,4 @@ const QuizItem = ({ quiz }: { quiz: Quiz }): JSX.Element => {
   )
 }
 
-export default QuizItem
+export default QuizItemCard
