@@ -71,7 +71,7 @@ const Hero = (): JSX.Element => {
             <a
               className="px-8 py-2 text-lg font-medium text-white transition-colors duration-300 transform bg-indigo-500 rounded hover:bg-indigo-400"
               href="/dashboard">
-              Dashbaord
+              Dashboard
             </a>
           </div>
         </div>

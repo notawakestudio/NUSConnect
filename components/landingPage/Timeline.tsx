@@ -15,14 +15,15 @@ export default function Timeline() {
       </span>
       <div className="relative wrap overflow-hidden p-10 h-full">
         <div
-          className="border-2-2 absolute border-opacity-20 border-gray-700 dark:border-gray-400 h-full border"
+          className="border-2-2 absolute border-opacity-20 border-gray-700 dark:border-gray-400 h-full border hidden sm:flex"
           style={{ left: '50%' }}></div>
+
         <div className="mb-8 flex justify-between items-center w-full right-timeline">
-          <div className="order-1 w-5/12"></div>
+          <div className="order-1 sm:w-5/12"></div>
           <div className="z-20 flex items-center order-1 bg-gray-800 dark:bg-gray-700 shadow-xl w-8 h-8 rounded-full">
             <h1 className="mx-auto font-semibold text-lg text-white">1</h1>
           </div>
-          <div className="order-1 bg-gray-400 rounded-lg shadow-xl w-5/12 px-6 py-4">
+          <div className="order-1 bg-gray-400 rounded-lg shadow-xl sm:w-5/12 w-5/6 px-6 py-4">
             <h3 className="mb-3 font-bold text-gray-800 text-xl">Started development (3/5/2021)</h3>
             <p className="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">
               Started development on NUS Connect. We worked on various aspects of the website
@@ -31,12 +32,12 @@ export default function Timeline() {
           </div>
         </div>
 
-        <div className="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
-          <div className="order-1 w-5/12"></div>
+        <div className="mb-8 flex justify-between sm:flex-row-reverse items-center w-full left-timeline">
+          <div className="order-1 sm:w-5/12"></div>
           <div className="z-20 flex items-center order-1 bg-gray-800 dark:bg-gray-700 shadow-xl w-8 h-8 rounded-full">
             <h1 className="mx-auto text-white font-semibold text-lg">2</h1>
           </div>
-          <div className="order-1 bg-red-400 rounded-lg shadow-xl w-5/12 px-6 py-4">
+          <div className="order-1 bg-red-400 rounded-lg shadow-xl sm:w-5/12 w-5/6 px-6 py-4">
             <h3 className="mb-3 font-bold text-white text-xl">
               Deployed working website (10/5/2021)
             </h3>
@@ -48,11 +49,11 @@ export default function Timeline() {
         </div>
 
         <div className="mb-8 flex justify-between items-center w-full right-timeline">
-          <div className="order-1 w-5/12"></div>
+          <div className="order-1 sm:w-5/12"></div>
           <div className="z-20 flex items-center order-1 bg-gray-800 dark:bg-gray-700 shadow-xl w-8 h-8 rounded-full">
             <h1 className="mx-auto font-semibold text-lg text-white">3</h1>
           </div>
-          <div className="order-1 bg-gray-400 rounded-lg shadow-xl w-5/12 px-6 py-4">
+          <div className="order-1 bg-gray-400 rounded-lg shadow-xl sm:w-5/12 w-5/6 px-6 py-4">
             <h3 className="mb-3 font-bold text-gray-800 text-xl">Milestone 2 (28/6/2021)</h3>
             <p className="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">
               Milestone 2 was a turing point for our application. As we started implementing many of
@@ -61,12 +62,12 @@ export default function Timeline() {
           </div>
         </div>
 
-        <div className="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
-          <div className="order-1 w-5/12"></div>
+        <div className="mb-8 flex justify-between sm:flex-row-reverse items-center w-full left-timeline">
+          <div className="order-1 sm:w-5/12"></div>
           <div className="z-20 flex items-center order-1 bg-gray-800 dark:bg-gray-700 shadow-xl w-8 h-8 rounded-full">
             <h1 className="mx-auto text-white font-semibold text-lg">4</h1>
           </div>
-          <div className="order-1 bg-red-400 rounded-lg shadow-xl w-5/12 px-6 py-4">
+          <div className="order-1 bg-red-400 rounded-lg shadow-xl sm:w-5/12 w-5/6 px-6 py-4">
             <h3 className="mb-3 font-bold text-white text-xl">Milestone 3 (26/7/2021)</h3>
             <p className="text-sm font-medium leading-snug tracking-wide text-white text-opacity-100">
               This is our final milestone and also marks the first public beta release of the
