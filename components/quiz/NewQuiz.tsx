@@ -16,7 +16,7 @@ import { TagMultiSelect } from '../forms/TagMultiSelect'
 import { allAvailableTags } from '../forum/ForumAPI'
 import { useCurrentModule } from '../store/module'
 import { useUserId } from '../store/user'
-import { makeQuestion, makeQuiz } from './QuizAPI'
+import { makeQuiz, makeQuizWithQuestions } from './QuizAPI'
 
 const modules = ['CS2030', 'CS2030S']
 
@@ -56,15 +56,12 @@ export default function NewQuiz({
 
   const handleSubmit = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
-    value['new_questions'].forEach((q) => {
-      console.log(q)
-      setTimeout(() => makeQuestion(moduleId, q), randomNumberBetween1000and2000())
-    })
-    makeQuiz(moduleId, value)
-  }
-
-  function randomNumberBetween1000and2000(): number {
-    return Math.floor(Math.random() * 2000) + 1000
+    if (value['new_questions'] === []) {
+      makeQuiz(moduleId, value)
+    }
+    if (value['new_questions'].length >= 1) {
+      makeQuizWithQuestions(moduleId, value)
+    }
   }
 
   function createNewQuestion(): EmptyQuestion {
