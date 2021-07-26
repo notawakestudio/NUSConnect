@@ -22,7 +22,7 @@ const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
               <h2>
                 <AccordionButton className="bg-indigo-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
                   <Box flex="1" textAlign="left">
-                    <h4 className="text-base leading-6 font-medium">{currentWeek}</h4>
+                    <h4 className="text-base leading-6 font-medium">Week {currentWeek}</h4>
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
