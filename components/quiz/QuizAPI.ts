@@ -5,6 +5,8 @@ import { useCurrentModule } from '../store/module'
 import { Question, QuestionWithAnswersMixed, Quiz } from './types'
 
 const API_MAKE_QUESTION = 'https://1ieznu.deta.dev/quiz/make'
+const API_MAKE_MULTIPLE_QUESTION = 'https://1ieznu.deta.dev/quiz/make/multiple'
+const API_MAKE_QUIZ_WITH_MULTIPLE_QUESTION = 'https://1ieznu.deta.dev/quiz/collate/make'
 const API_UPDATE_QUIZ = 'https://1ieznu.deta.dev/quiz/update'
 const API_SUBMIT_QUIZ = 'https://1ieznu.deta.dev/quiz/collate'
 const API_GET_QUESTION_BY_ID = 'https://1ieznu.deta.dev/quiz/question/'
@@ -120,7 +122,103 @@ export function makeQuestion(moduleId: string, question): void {
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then(() => {
-    console.log('a new question is created')
+    mutate(API_GET_ALL_QUESTION_BY_MODULE + moduleId)
+  })
+}
+
+export function makeMultipleQuestions(moduleId: string, questions): void {
+  const prepared_questions = questions.map((question) => {
+    let correct_answers
+    let incorrect_answers
+    if (question['type'] === 'WRITTEN') {
+      correct_answers = question['answers'][0]['main']
+      incorrect_answers = ''
+    } else {
+      const answers = classifyAnswers(question['answers'])
+      correct_answers = answers[0]
+      incorrect_answers = answers[1]
+    }
+    return {
+      id: question['id'] ?? nanoid(),
+      type: question['type'],
+      modules: question['modules'],
+      question: question['question'],
+      correct_answers: correct_answers,
+      incorrect_answers: incorrect_answers,
+    }
+  })
+  const requestBody = {
+    moduleId: moduleId,
+    questions: prepared_questions,
+  }
+
+  fetch(API_MAKE_MULTIPLE_QUESTION, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(requestBody),
+  }).then(() => {
+    mutate(API_GET_ALL_QUESTION_BY_MODULE + moduleId)
+  })
+}
+
+export function makeQuizWithQuestions(moduleId: string, quiz): void {
+  const prepared_questions = quiz['new_questions'].map((question) => {
+    let correct_answers
+    let incorrect_answers
+    if (question['type'] === 'WRITTEN') {
+      correct_answers = question['answers'][0]['main']
+      incorrect_answers = ''
+    } else {
+      const answers = classifyAnswers(question['answers'])
+      correct_answers = answers[0]
+      incorrect_answers = answers[1]
+    }
+    return {
+      id: question['id'] ?? nanoid(),
+      type: question['type'],
+      modules: question['modules'],
+      question: question['question'],
+      correct_answers: correct_answers,
+      incorrect_answers: incorrect_answers,
+    }
+  })
+  const requestBody = {
+    moduleId: moduleId,
+    questions: prepared_questions,
+    quiz: {
+      id: nanoid(),
+      date: getCurrentDateTime(),
+      title: quiz['title'],
+      author: quiz['author'],
+      modules: quiz['modules'],
+      questions: quiz['questions'],
+      tags: quiz['tags'],
+      week: quiz['week'],
+      up_votes: 0,
+    },
+  }
+
+  fetch(API_MAKE_QUIZ_WITH_MULTIPLE_QUESTION, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'no-cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(requestBody),
+  }).then(() => {
     mutate(API_GET_ALL_QUESTION_BY_MODULE + moduleId)
   })
 }
