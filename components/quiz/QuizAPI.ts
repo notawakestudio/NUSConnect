@@ -174,8 +174,8 @@ export function makeQuizWithQuestions(moduleId: string, quiz): void {
     let correct_answers
     let incorrect_answers
     if (question['type'] === 'WRITTEN') {
-      correct_answers = question['answers'][0]['main']
-      incorrect_answers = ''
+      correct_answers = question['answers'][0]['main'] ?? ['No answer given']
+      incorrect_answers = ['']
     } else {
       const answers = classifyAnswers(question['answers'])
       correct_answers = answers[0]

@@ -40,15 +40,6 @@ const PostList = ({ postList }: { postList: Post[] }): JSX.Element => {
             </AccordionItem>
           ))}
         </Accordion>
-        {/* <h4 className="text-lg leading-6 font-medium my-2 text-center">Week 1</h4>
-        <div className="flex flex-col border-t border-gray-200" data-cy="postList">
-          {postList
-            .sort((postA, postB) => (postA.edited_date < postB.edited_date ? 1 : -1))
-            .map((post) => {
-              return <PostListItem key={post.id} post={post} />
-              
-            })}
-        </div> */}
       </div>
     </div>
   )
