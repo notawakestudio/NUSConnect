@@ -18,7 +18,7 @@ const defaultPost = {
   id: nanoid(),
   author_id: 'string',
   title: '',
-  content: ' ',
+  content: '',
   created_date: 0,
   edited_date: 0,
   tags: [],
@@ -98,10 +98,9 @@ export default function NewPost({
           validationSchema={Yup.object({
             tags: Yup.array().min(1, 'Please select one tag'),
             title: Yup.string().required('Please enter a title'),
-            content: Yup.string().required('Content must be filled in'),
+            content: Yup.string().required('Please enter some content'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            console.log(values)
             if (label === 'Make a post' || label === 'link-from-quiz') {
               handleSubmitNew(values)
             } else if (label === 'Make into wiki') {
@@ -181,10 +180,10 @@ export default function NewPost({
                     )}
                     <br />
                     <ContentTextArea
-                      label="Content (optional)"
+                      label="Content"
                       name="content"
                       rows={6}
-                      placeholder="Leave a comment"
+                      placeholder="Thoughts/Questions/Comments/Ideas? Share!"
                     />
                     <br />
                   </div>
@@ -226,12 +225,12 @@ const ContentTextArea = ({
   return (
     <>
       <label htmlFor={props.name}>{label}</label>
+      {meta.touched && meta.error ? <Required /> : null}
       <textarea
         className="flex rounded-lg border-transparent appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         {...field}
         {...props}
       />
-      {meta.touched && meta.error ? <div className="">{meta.error}</div> : null}
     </>
   )
 }

@@ -64,7 +64,7 @@ export default function NewReply({
         <Formik
           initialValues={initialValues}
           validationSchema={Yup.object({
-            content: Yup.string().required('*required'),
+            content: Yup.string().required('Please enter your comment'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             if (label === 'New comment') {
