@@ -250,11 +250,19 @@ export default function DashBoard(): JSX.Element {
                     )}
                   </div>
                   <div className="dark:text-gray-300">
-                    {moduleLoading ? (
+                    {moduleLoading || isLoading ? (
                       <Skeleton isLoaded={!isLoading} height={40} />
                     ) : (
                       module.quests.map((quest) => (
-                        <QuestItem quest={quest} key={quest.id} editing={editing} />
+                        <QuestItem
+                          moduleId={currentMod.moduleId}
+                          quest={quest}
+                          key={quest.id}
+                          editing={editing}
+                          userRecord={
+                            user.modules.filter((mod) => mod.id === currentMod.moduleId)[0].quests
+                          }
+                        />
                       ))
                     )}
                   </div>
