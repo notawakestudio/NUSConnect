@@ -17,6 +17,7 @@ const API_UPDATE_REPLY_LIKES = 'https://1ieznu.deta.dev/reply/update/likes/'
 const API_UPDATE_POST_LIKES = 'https://1ieznu.deta.dev/post/update/likes/'
 const API_UPDATE_POST = 'https://1ieznu.deta.dev/post/update/'
 const API_DELETE_POST = 'https://1ieznu.deta.dev/post/delete/'
+
 export const allAvailableTags = ['Question', 'Lecture', 'Quiz', 'Admin', 'Wiki']
 
 export type Post = {
