@@ -18,7 +18,7 @@ const defaultPost = {
   id: nanoid(),
   author_id: 'string',
   title: '',
-  content: '',
+  content: ' ',
   created_date: 0,
   edited_date: 0,
   tags: [],
@@ -98,6 +98,7 @@ export default function NewPost({
           validationSchema={Yup.object({
             tags: Yup.array().min(1, 'Please select one tag'),
             title: Yup.string().required('Please enter a title'),
+            content: Yup.string().required('Content must be filled in'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             console.log(values)
