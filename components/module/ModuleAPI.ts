@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
 import ModuleData from '../../public/data/ModuleData.json'
-import { getCurrentDateTime } from '../common/Util'
+import { getCurrentDateTime, getCurrentWeek } from '../common/Util'
 import { Post, Reply } from '../forum/ForumAPI'
 import { Question, Quiz } from '../quiz/types'
 const API_MAKE_MODULE = 'https://1ieznu.deta.dev/module/make'
@@ -249,10 +249,11 @@ export function makeQuest(moduleId: string, quest: string[]): void {
 
   const start_date = new Date(quest['start_date']).getTime()
   const end_date = new Date(quest['end_date']).getTime()
+  const week = getCurrentWeek()
 
   const requestBody: Quest = {
     id: nanoid(),
-    week: 1,
+    week: week,
     description: quest['description'],
     type: quest['type'],
     count: quest['count'],
@@ -281,6 +282,14 @@ export function makeQuest(moduleId: string, quest: string[]): void {
 }
 
 export function updateQuest(moduleId: string, update: string[], currQuest: Quest): void {
+  const reward: Reward = {
+    exp: parseInt(update['exp']),
+    badge: '',
+  }
+
+  const start_date = new Date(update['start_date']).getTime()
+  const end_date = new Date(update['end_date']).getTime()
+
   const requestBody: Quest = {
     id: currQuest.id,
     week: currQuest.week,
@@ -288,9 +297,9 @@ export function updateQuest(moduleId: string, update: string[], currQuest: Quest
     description: update['description'],
     type: update['type'],
     count: update['count'],
-    reward: update['reward'],
-    start_date: update['start_date'],
-    end_date: update['end_date'],
+    reward: reward,
+    start_date: start_date,
+    end_date: end_date,
   }
 
   fetch(API_UPDATE_QUEST + moduleId + '/' + currQuest.id, {

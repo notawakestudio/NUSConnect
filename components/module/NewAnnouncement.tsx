@@ -14,7 +14,7 @@ const defaultAnnouncement = {
   author_id: 'string',
   week: 1,
   title: '',
-  content: '',
+  content: ' ',
   created_date: 0,
 }
 
@@ -72,6 +72,7 @@ export default function NewAnnouncement({
           validationSchema={Yup.object({
             title: Yup.string().required('Please enter a title'),
             week: Yup.number().required('Please enter current week'),
+            content: Yup.number().required('Please enter current week'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             if (label === 'Make an Announcement') {
@@ -108,7 +109,7 @@ export default function NewAnnouncement({
                       {formik.errors.title && formik.touched.title ? <Required /> : null}
                     </span>
                     <Field
-                      name="description"
+                      name="title"
                       rows={5}
                       className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="Please enter a title"></Field>
@@ -132,7 +133,7 @@ export default function NewAnnouncement({
                   <hr />
 
                   <ContentTextArea
-                    label="Content (optional)"
+                    label="Content"
                     name="content"
                     rows={6}
                     placeholder="Leave a comment"

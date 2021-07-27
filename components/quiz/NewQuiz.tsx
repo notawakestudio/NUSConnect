@@ -56,7 +56,7 @@ export default function NewQuiz({
 
   const handleSubmit = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
-    if (value['new_questions'] === []) {
+    if (value['new_questions'].length === 0) {
       makeQuiz(moduleId, value)
     }
     if (value['new_questions'].length >= 1) {
@@ -141,6 +141,17 @@ export default function NewQuiz({
     return isCorrectError
   }
 
+  function createQuestionArray(values) {
+    if (values['new_questions'].length >= 1) {
+      values['questions'].push(
+        ...values['new_questions']
+          .filter((question) => question['question'] !== '')
+          .map((question) => question.id as string)
+      )
+    }
+    return values['questions']
+  }
+
   return (
     <Formik
       initialValues={initialValues}
@@ -156,11 +167,7 @@ export default function NewQuiz({
         } else if (isCorrectError) {
           showToast(isCorrectError, 'isCorrect-error')
         } else {
-          values['questions'].push(
-            ...values['new_questions']
-              .filter((question) => question['question'] !== '')
-              .map((question) => question.id as string)
-          )
+          values['questions'] = createQuestionArray(values)
           if (values['questions'].length < 1) {
             showToast('Please add at least one question', 'question-error')
           } else {
