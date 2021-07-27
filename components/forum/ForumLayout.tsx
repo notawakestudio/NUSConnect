@@ -1,3 +1,4 @@
+import { Skeleton } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -70,13 +71,11 @@ export default function ForumLayout({
                 className={`${
                   router.pathname === '/forum' ? '' : 'hidden lg:inline'
                 } col-span-8 lg:col-span-3 xl:col-span-2 overflow-y-auto`}>
-                {isLoading ? (
-                  <Spinner size="xl" m={20} p={10} />
-                ) : (
+                <Skeleton isLoaded={!isLoading}>
                   <div className="border-r border-gray-200 h-full">
                     <PostList postList={filteredPosts} />
                   </div>
-                )}
+                </Skeleton>
               </div>
               <div className="mx-2 col-span-8 lg:col-span-5 xl:col-span-6 h-full overflow-auto">
                 {children}

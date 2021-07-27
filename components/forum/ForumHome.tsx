@@ -21,7 +21,7 @@ const ForumHome = (): JSX.Element => {
                   aria-label="Important"
                   icon={<FaExclamation />}></IconButton>
                 <div className="leading-relaxed ml-2">
-                  Total number of posts: {isLoading ? <Spinner size="xl" /> : posts.length}
+                  Total number of posts: {isLoading ? <Spinner size="xs" /> : posts.length}
                 </div>
               </span>
               <span className="flex flex-row p-2 content-center items-center cursor-pointer">
