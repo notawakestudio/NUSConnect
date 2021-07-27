@@ -14,7 +14,7 @@ const defaultAnnouncement = {
   author_id: 'string',
   week: 1,
   title: '',
-  content: ' ',
+  content: '',
   created_date: 0,
 }
 
@@ -72,7 +72,7 @@ export default function NewAnnouncement({
           validationSchema={Yup.object({
             title: Yup.string().required('Please enter a title'),
             week: Yup.number().required('Please enter current week'),
-            content: Yup.number().required('Please enter current week'),
+            content: Yup.string().required('Please enter announcement'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             if (label === 'Make an Announcement') {
@@ -136,7 +136,7 @@ export default function NewAnnouncement({
                     label="Content"
                     name="content"
                     rows={6}
-                    placeholder="Leave a comment"
+                    placeholder="Announcement"
                   />
                   <hr />
 
