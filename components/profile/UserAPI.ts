@@ -337,13 +337,11 @@ export async function makeUser(user): Promise<void> {
       credentials: 'same-origin', // include, *same-origin, omit
       headers: {
         'Content-Type': 'application/json',
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-    }).then((response) => {
-      console.log(response)
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(requestBody),
+    }).then(() => {
       addUserToModule('kMvp8b48SmTiXXCl7EAkc', user['id']) // add to CS2030 By default
     })
   } else {
