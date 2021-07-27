@@ -11,7 +11,7 @@ export default function Badge(): JSX.Element {
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-full h-full">
+      <div className="w-full min-h-screen dark:bg-gray-800">
         <Badges user={user} isLoading={isLoading} />
       </div>
     </>

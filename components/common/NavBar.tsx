@@ -162,7 +162,11 @@ const NavBar = (): JSX.Element => {
                   </span>
                 </div>
               </MenuButton>
-              <MenuList as="div" className={`${profileCollapse ? 'hidden' : ''}`}>
+              <MenuList
+                as="div"
+                className={`dark:bg-gray-600 dark:hover:text-gray-800 ${
+                  profileCollapse ? 'hidden' : ''
+                }`}>
                 <a>
                   <Link href="/profile">
                     <MenuItem>Profile</MenuItem>

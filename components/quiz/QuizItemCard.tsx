@@ -35,7 +35,7 @@ const QuizItemCard = ({ quiz }: { quiz: Quiz }): JSX.Element => {
         style={{ minWidth: '18rem' }}>
         <button
           onClick={onOpen}
-          className="p-4 w-full hover:bg-gray-200 space-y-2 text-left flex flex-col justify-between flex-grow">
+          className="p-4 w-full hover:bg-gray-200 dark:hover:bg-gray-600 space-y-2 text-left flex flex-col justify-between flex-grow">
           <div
             className="text-gray-600 font-bold text-xl items-center dark:text-gray-100"
             data-cy="quizTitle">

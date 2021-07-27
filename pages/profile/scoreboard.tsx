@@ -8,13 +8,13 @@ function Scoreboard(): JSX.Element {
   const { state: currentModule } = useCurrentModule()
   const { isLoading: isModuleLoading, module } = useModule(currentModule.moduleId)
   return (
-    <div className="container flex flex-col min-h-screen">
+    <div className="container flex flex-col min-h-screen dark:bg-gray-800">
       <Head>
         <title>Scoreboard | NUS Connect</title>
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="mt-4 px-4 py-5 sm:px-6 mx-auto border dark:bg-gray-800 bg-white shadow mb-2 rounded-md">
+      <div className="mt-4 px-4 py-5 sm:px-6 mx-auto border dark:bg-gray-500 bg-white shadow mb-2 rounded-md">
         <h3 className="text-lg text-center leading-6 font-medium text-gray-900 dark:text-white">
           ScoreBoard
         </h3>
