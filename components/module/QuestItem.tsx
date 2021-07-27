@@ -12,22 +12,27 @@ import {
 import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import { AiOutlineArrowUp, AiOutlineEdit } from 'react-icons/ai'
+import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
 import { showCurrentDate } from '../common/Util'
 import { deleteQuest, Quest } from './ModuleAPI'
 import NewQuest from './NewQuest'
 
 export default function QuestItem({
+  moduleId,
   quest,
   editing: editMode,
+  userRecord,
 }: {
+  moduleId: string
   quest: Quest
   editing: boolean
+  userRecord: string[]
 }): JSX.Element {
   const [editing, setEditing] = useState(false)
 
   const handleDelete = (): void => {
-    deleteQuest('kMvp8b48SmTiXXCl7EAkc', quest.id)
+    deleteQuest(moduleId, quest.id)
   }
 
   //Alert Dialog
@@ -67,10 +72,17 @@ export default function QuestItem({
           <NewQuest label="edit" currentQuest={quest}></NewQuest>
         ) : (
           <Link href={link} key={quest.id}>
-            <div className="shadow-md w-full bg-white dark:bg-gray-700 relative overflow-hidden p-2 my-2 cursor-pointer">
+            <div className="shadow-md w-full bg-white dark:bg-gray-700 relative overflow-hidden p-2 my-2 cursor-pointer ">
               <div className="flex flex-row justify-between">
-                <div className="text-base">{quest.description}</div>
-                <div className="text-sm  flex items-center">
+                <div className="text-base flex ">
+                  {userRecord.includes(quest.id) ? (
+                    <ImCheckboxChecked className="mt-1 mr-1" />
+                  ) : (
+                    <ImCheckboxUnchecked className="mt-1 mr-1" />
+                  )}
+                  {quest.description}
+                </div>
+                <div className="text-sm flex items-center">
                   <span className="text-sm text-green-400 p-1 mt-1">
                     <AiOutlineArrowUp />
                   </span>
