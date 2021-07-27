@@ -281,7 +281,7 @@ export default function Badges({
 }): JSX.Element {
   const { state: module } = useCurrentModule()
   return (
-    <div>
+    <div className="dark:text-gray-400">
       <h1 className="text-center text-lg font-semibold mt-2">Your badges</h1>
       <div className="p-10 flex space-4 flex-wrap justify-center">
         {isLoading ? (

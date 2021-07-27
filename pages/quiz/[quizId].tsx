@@ -146,7 +146,7 @@ export default function Quiz({
   }
 
   return (
-    <div className="grid dark:bg-gray-800 dark:text-gray-100 w-full h-full">
+    <div className="grid dark:bg-gray-800 dark:text-gray-100 w-full min-h-screen">
       <div className="container mx-auto pt-2 text-center">
         <Head>
           <title>Attempt Quiz | NUS Connect</title>

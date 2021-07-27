@@ -13,8 +13,8 @@ export default function Inbox(): JSX.Element {
         <meta name="description" content="NUS Connect" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col w-full min-h-screen">
-        <section className="text-gray-600 body-font overflow-hidden">
+      <div className="dark:bg-gray-800 flex flex-col w-full min-h-screen">
+        <section className="dark:text-white text-gray-600 body-font overflow-hidden">
           <div className="container px-5 py-24 mx-auto">
             <div className="-my-8 divide-y-2 divide-gray-100">
               {isLoading ? (
