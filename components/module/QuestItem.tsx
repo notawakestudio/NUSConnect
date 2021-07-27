@@ -13,6 +13,7 @@ import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import { AiOutlineArrowUp, AiOutlineEdit } from 'react-icons/ai'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
+import { showCurrentDate } from '../common/Util'
 import { deleteQuest, Quest } from './ModuleAPI'
 import NewQuest from './NewQuest'
 
@@ -75,6 +76,10 @@ export default function QuestItem({
                   </span>
                   <span>{quest.reward.exp} exp</span>
                 </div>
+              </div>
+              <div className="flex flex-row justify-between text-xs text-gray-600 dark:text-gray-400">
+                <div className="">Start date: {showCurrentDate(quest.start_date)}</div>
+                <div className="">End date: {showCurrentDate(quest.end_date)}</div>
               </div>
             </div>
           </Link>
