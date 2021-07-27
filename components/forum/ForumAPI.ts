@@ -18,7 +18,22 @@ const API_UPDATE_POST_LIKES = 'https://1ieznu.deta.dev/post/update/likes/'
 const API_UPDATE_POST = 'https://1ieznu.deta.dev/post/update/'
 const API_DELETE_POST = 'https://1ieznu.deta.dev/post/delete/'
 
-export const allAvailableTags = ['Question', 'Lecture', 'Quiz', 'Admin', 'Wiki']
+export const allAvailableTags = [
+  'Question',
+  'Lecture',
+  'Quiz',
+  'Admin',
+  'Wiki',
+  'Coding',
+  'Random',
+  'Meme',
+  'Java',
+  'Lab',
+  'Recitation',
+  'Tutorial',
+  'Exam',
+  'Concept',
+]
 
 export type Post = {
   id: string
@@ -207,7 +222,12 @@ export function updateReply(
   })
 }
 
-export function updateReplyLikes(moduleId: string, newCount: number, replyId: string): void {
+export function updateReplyLikes(
+  moduleId: string,
+  newCount: number,
+  replyId: string,
+  postId: string
+): void {
   const requestBody = {
     moduleId: moduleId,
     reply: {
@@ -226,6 +246,8 @@ export function updateReplyLikes(moduleId: string, newCount: number, replyId: st
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
+  }).then(() => {
+    mutate(API_GET_REPLY_BY_POSTID + moduleId + '/' + postId)
   })
 }
 
@@ -291,6 +313,7 @@ export function updatePost(moduleId: string, update: string[], currPost: Post): 
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
   }).then(() => {
     mutate(API_GET_POST_BY_ID + moduleId + '/' + currPost.id)
+    mutate(API_GET_ALL_POST + moduleId)
   })
 }
 

@@ -12,12 +12,10 @@ import { Skeleton } from '@chakra-ui/skeleton'
 import { useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { BsFillQuestionSquareFill } from 'react-icons/bs'
 import { FaDirections, FaEdit } from 'react-icons/fa'
 import { ImCancelCircle } from 'react-icons/im'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import LikeButton from '../common/LikeButton'
-import div from '../common/TextContainer'
 import { renderMdToHtml, timeSince } from '../common/Util'
 import DisplayName from '../profile/DisplayName'
 import { useUser } from '../profile/UserAPI'
@@ -54,8 +52,6 @@ const PostMain = ({ postId }: { postId: string }): JSX.Element => {
             <a className="flex items-center border-b border-grey-200">
               <div className="flex flex-row justify-between p-2 px-6 text-xs sm:text-sm font-medium text-gray-400 dark:text-gray-100 w-full">
                 <span className="flex flex-row items-center space-x-1">
-                  <BsFillQuestionSquareFill size={20} className="mr-2" />
-                  Question by:
                   <DisplayName author_id={currentPost.author_id} />
                 </span>
                 {timeSince(currentPost.edited_date)} ago {currentPost.is_edited ? '(edited)' : ''}

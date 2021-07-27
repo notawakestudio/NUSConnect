@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import {
   addUserToModule,
+  moduleProfById,
   removeUserFromModule,
   useAllModules,
 } from '../../components/module/ModuleAPI'
@@ -32,9 +33,13 @@ export default function Home(): JSX.Element {
               <h3 className="font-semibold text-base text-gray-900 dark:text-gray-50">
                 Existing Modules
               </h3>
-              <p className="text-xs italic">
+              <p className="text-sm italic dark:text-gray-300">
                 P.S. For the purpose of showcasing mudule switching functionality for Orbital, the
-                following modules will still be available even if you "quit" the module.
+                following modules will still be available even if you quit the module. Also note
+                that the create new module function will currently be reserved for site
+                administrators until after the product launch. This is because we would like to
+                bring in real users for the below two modules over the coming semester for public
+                testing.
               </p>
             </div>
             {role === 'admin' ? (
@@ -82,7 +87,7 @@ export default function Home(): JSX.Element {
                         2021/2022 Sem 1
                       </td>
                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        Prof X
+                        {moduleProfById(module.id)}
                       </td>
                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <div className="flex items-center">

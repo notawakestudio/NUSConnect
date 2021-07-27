@@ -130,7 +130,7 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
               <Modal isOpen={isOpen} onClose={onClose} size="xl">
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>Make into Wiki</ModalHeader>
+                  <ModalHeader></ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
                     <NewPost
@@ -165,7 +165,12 @@ const ReplyListItem = ({ reply }: { reply: Reply }): JSX.Element => {
             key={currentReply.id}
             likeCount={currentReply.up_votes}
             handleUpdate={() => {
-              updateReplyLikes(moduleId, currentReply.up_votes + 1, currentReply.id)
+              updateReplyLikes(
+                moduleId,
+                currentReply.up_votes + 1,
+                currentReply.id,
+                currentReply.post_id
+              )
             }}
           />
         </div>
