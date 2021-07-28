@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
-import { submitToUserInbox } from '../profile/UserAPI'
+import { addToUserBadges, submitToUserInbox } from '../profile/UserAPI'
 import { nanoid } from 'nanoid'
 
 export const shuffleStringArray = (array: string[]): string[] => {
@@ -141,4 +141,63 @@ export const notifyNewPost = (userId: string, moduleTitle: string): void => {
     type: moduleTitle,
   }
   submitToUserInbox(userId, message)
+}
+
+export const checkReplyBadge = (userId: string, moduleId: string, moduleTitle: string): void => {
+  const message = {
+    id: nanoid(),
+    content: '<h2>You Earn It!</h2><p>Check the Badges page to see your new badge!</p>',
+    created_date: getCurrentDateTime(),
+    read: false,
+    type: moduleTitle,
+  }
+  addToUserBadges(userId, moduleId, message, 'reply', 'Fixv0kY-oq4pe-yu63-bz')
+}
+
+export const checkPostBadge = (userId: string, moduleId: string, moduleTitle: string): void => {
+  const message = {
+    id: nanoid(),
+    content: '<h2>You Earn It!</h2><p>Check the Badges page to see your new badge!</p>',
+    created_date: getCurrentDateTime(),
+    read: false,
+    type: moduleTitle,
+  }
+  addToUserBadges(userId, moduleId, message, 'post', 'zpgNYEuAl_nmhmxoI4QDQ')
+}
+
+export const checkQuestionBadge = (userId: string, moduleId: string, moduleTitle: string): void => {
+  const message = {
+    id: nanoid(),
+    content: '<h2>You Earn It!</h2><p>Check the Badges page to see your new badge!</p>',
+    created_date: getCurrentDateTime(),
+    read: false,
+    type: moduleTitle,
+  }
+  addToUserBadges(userId, moduleId, message, 'question', 'QQxOX_Ajt51_rfa952BTQ')
+}
+
+export const checkAceBadge = (userId: string, moduleId: string, moduleTitle: string): void => {
+  const message = {
+    id: nanoid(),
+    content: '<h2>You Earn It!</h2><p>Check the Badges page to see your new badge!</p>',
+    created_date: getCurrentDateTime(),
+    read: false,
+    type: moduleTitle,
+  }
+  addToUserBadges(userId, moduleId, message, 'quiz', 'vSNM-sWvxUjDIaAYfmXGw')
+}
+
+export const checkWrongQuestionBadge = (
+  userId: string,
+  moduleId: string,
+  moduleTitle: string
+): void => {
+  const message = {
+    id: nanoid(),
+    content: '<h2>You Earn It!</h2><p>Check the Badges page to see your new badge!</p>',
+    created_date: getCurrentDateTime(),
+    read: false,
+    type: moduleTitle,
+  }
+  addToUserBadges(userId, moduleId, message, 'question', 'ryB3xsuIQQhn49ZedpQd1')
 }

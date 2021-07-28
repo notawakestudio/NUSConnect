@@ -5,6 +5,7 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Tag,
@@ -94,6 +95,11 @@ const QuizItemCard = ({ quiz }: { quiz: Quiz }): JSX.Element => {
               </Button>
             </Link>
           </ModalBody>
+          <ModalFooter>
+            <p className="text-xs italic">
+              P.S. Please wait for a few seconds for the quiz to load after clicking start...
+            </p>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

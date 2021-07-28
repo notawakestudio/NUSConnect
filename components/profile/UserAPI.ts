@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import useSWR, { mutate } from 'swr'
-import { getCurrentDateTime } from '../common/Util'
-import { addUserToModule, checkQuestsCompletion } from '../module/ModuleAPI'
+import { checkQuestionBadge, getCurrentDateTime } from '../common/Util'
+import { addUserToModule, checkQuestsCompletion, moduleTitleById } from '../module/ModuleAPI'
 import { useUserId } from '../store/user'
 
 const API_MAKE_USER = 'https://1ieznu.deta.dev/user/make'
@@ -14,7 +14,7 @@ const API_UPDATE_USER_QUIZ = 'https://1ieznu.deta.dev/user/update/quiz/'
 const API_GET_MESSAGES_BY_AUTHORID = 'https://1ieznu.deta.dev/user/inbox/'
 const API_SUBMIT_MESSAGE = 'https://1ieznu.deta.dev/user/inbox/make/'
 const API_MARK_MESSAGE_READ = 'https://1ieznu.deta.dev/user/inbox/read/'
-
+const API_CHECK_USER_BADGE = 'https://1ieznu.deta.dev/user/badge/check/'
 export type Message = {
   id: string
   type: string
@@ -147,7 +147,7 @@ export function submitToUserInbox(userId: string, message: Message): void {
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  }).then((response) => {
+  }).then(() => {
     mutate(API_GET_MESSAGES_BY_AUTHORID + userId)
   })
 }
@@ -266,11 +266,45 @@ export function addQuizToUserRecord(userId: string, moduleId: string, quizRecord
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(requestBody), // body data type must match "Content-Type" header
-  }).then(() => {
-    checkQuestsCompletion(userId, moduleId)
   })
+    .then(() => {
+      checkQuestsCompletion(userId, moduleId)
+    })
+    .then(() => {
+      if (quizRecord.score >= 1) {
+        checkQuestionBadge(userId, moduleId, moduleTitleById(moduleId))
+      }
+    })
 }
 
+export function addToUserBadges(
+  userId: string,
+  moduleId: string,
+  message: Record<string, any>,
+  type: string,
+  badgeId: string
+): void {
+  const requestBody = {
+    moduleId: moduleId,
+    badgeId: badgeId,
+    message: message,
+    type: type,
+  }
+  fetch(API_CHECK_USER_BADGE + userId, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(requestBody),
+  }).then(() => {
+    mutate(API_GET_USER + userId)
+  })
+}
 async function checkUserExists(userId: string): Promise<boolean> {
   const response = await fetch(API_CHECK_USER + userId, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.

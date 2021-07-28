@@ -44,7 +44,7 @@ export const allBadges: Badge[] = [
   {
     id: '0fpBjCwd7tvr5R4HhygWr',
     title: 'Smart',
-    description: 'Answer 10 quiz questions correctly!(coming soon)',
+    description: 'Answer 10 quiz questions correctly!',
     icon: function icon(): JSX.Element {
       return (
         <Gi3DGlasses className="self-center border rounded-full border-black w-10 h-10 p-1 bg-gray-200" />
@@ -54,7 +54,7 @@ export const allBadges: Badge[] = [
   {
     id: 'UII8XXW1moC1OSANXAqIn',
     title: 'Smart',
-    description: 'Answer 100 quiz questions correctly!(coming soon)',
+    description: 'Answer 100 quiz questions correctly!',
     icon: function icon(): JSX.Element {
       return (
         <Gi3DGlasses className="self-center border rounded-full border-black w-10 h-10 p-1 bg-yellow-300" />
@@ -134,7 +134,7 @@ export const allBadges: Badge[] = [
   {
     id: '9T4T_9K8K2XgJ1nLvHJcI',
     title: 'Achilles Heel',
-    description: 'Get 10 questions wrong!(coming soon)',
+    description: 'Get 10 questions wrong!',
     icon: function icon(): JSX.Element {
       return (
         <GiAchillesHeel className="self-center border rounded-full border-black w-10 h-10 p-1 bg-gray-200" />
@@ -144,7 +144,7 @@ export const allBadges: Badge[] = [
   {
     id: 'I2Pmd48rYFtnDizKASaX3',
     title: 'Achilles Heel',
-    description: 'Get 100 questions wrong!(coming soon)',
+    description: 'Get 100 questions wrong!',
     icon: function icon(): JSX.Element {
       return (
         <GiAchillesHeel className="self-center border rounded-full border-black w-10 h-10 p-1 bg-yellow-300" />
@@ -164,7 +164,7 @@ export const allBadges: Badge[] = [
   {
     id: 'XrwNb_UlFEAS8brwkuQex',
     title: 'Ace',
-    description: 'Get full marks for a quiz 10 times!(coming soon)',
+    description: 'Get full marks for a quiz 10 times!',
     icon: function icon(): JSX.Element {
       return (
         <GiAce className="self-center border rounded-full border-black w-10 h-10 p-1 bg-gray-200" />
@@ -174,7 +174,7 @@ export const allBadges: Badge[] = [
   {
     id: '50f-hKoRaYPohCdCU_Df3',
     title: 'Ace',
-    description: 'Get full marks for a quiz 100 times!(coming soon)',
+    description: 'Get full marks for a quiz 100 times!',
     icon: function icon(): JSX.Element {
       return (
         <GiAce className="self-center border rounded-full border-black w-10 h-10 p-1 bg-yellow-300" />
@@ -244,7 +244,7 @@ export const allBadges: Badge[] = [
   {
     id: 'ozIXuiMd4dEEheO7eiHV3',
     title: 'Speed',
-    description: 'Be the first to reply a post 1 time!(coming soon)',
+    description: 'Be the first to reply a post 1 time!',
     icon: function icon(): JSX.Element {
       return (
         <GiAlarmClock className="self-center border rounded-full border-black w-10 h-10 p-1 bg-yellow-700" />
@@ -254,7 +254,7 @@ export const allBadges: Badge[] = [
   {
     id: 'iGN2ybKH3jLz7prq5h8c9',
     title: 'Speed',
-    description: 'Be the first to reply a post 10 times!(coming soon)',
+    description: 'Be the first to reply a post 10 times!',
     icon: function icon(): JSX.Element {
       return (
         <GiAlarmClock className="self-center border rounded-full border-black w-10 h-10 p-1 bg-gray-200" />
@@ -264,7 +264,7 @@ export const allBadges: Badge[] = [
   {
     id: 'lVhxyj0_R3_El8T-m7QWn',
     title: 'Speed',
-    description: 'Be the first to reply a post 100 times!(coming soon)',
+    description: 'Be the first to reply a post 100 times!',
     icon: function icon(): JSX.Element {
       return (
         <GiAlarmClock className="self-center border rounded-full border-black w-10 h-10 p-1 bg-yellow-300" />
@@ -302,6 +302,9 @@ export default function Badges({
       </div>
       <Divider />
       <h1 className="text-center text-lg font-semibold">Available badges</h1>
+      <p className="text-center text-xs italic">
+        P.S. Some badges are only given as a quest reward
+      </p>
       <div className="p-10 flex space-4 flex-wrap justify-center">
         {allBadges.map((badge, index) => {
           return (
