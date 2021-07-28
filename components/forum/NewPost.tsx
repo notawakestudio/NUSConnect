@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/client'
 import React from 'react'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
-import { getCurrentWeek, notifyNewPost, renderMdToHtml } from '../common/Util'
+import { checkPostBadge, getCurrentWeek, notifyNewPost, renderMdToHtml } from '../common/Util'
 import CustomSingleSelect from '../forms/CustomSingleSelect'
 import Required from '../forms/Required'
 import { TagMultiSelect } from '../forms/TagMultiSelect'
@@ -60,6 +60,7 @@ export default function NewPost({
     value.author = session.user?.name ? userId : 'Anonymous'
     makePost(moduleId, value)
     notifyNewPost(userId, moduleTitle)
+    setTimeout(() => checkPostBadge(userId, moduleId, moduleTitle), 1000)
   }
   const handleSubmitUpdate = (value): void => {
     updatePost(moduleId, value, currentPost)
@@ -67,6 +68,8 @@ export default function NewPost({
   const handleSubmitWiki = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
     makePost(moduleId, value)
+    notifyNewPost(userId, moduleTitle)
+    setTimeout(() => checkPostBadge(userId, moduleId, moduleTitle), 1000)
   }
 
   //Toast

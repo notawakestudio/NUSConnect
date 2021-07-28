@@ -4,8 +4,7 @@ import { useSession } from 'next-auth/client'
 import React from 'react'
 import * as Yup from 'yup'
 import Auth from '../common/Auth'
-import div from '../common/TextContainer'
-import { notifyReply } from '../common/Util'
+import { checkReplyBadge } from '../common/Util'
 import Required from '../forms/Required'
 import { useCurrentModule } from '../store/module'
 import { useUserId } from '../store/user'
@@ -35,7 +34,7 @@ export default function NewReply({
   const handleSubmitNew = (value): void => {
     value.author = session.user?.name ? userId : 'Anonymous'
     makeReply(moduleId, value, postId)
-    notifyReply(userId, moduleTitle)
+    setTimeout(() => checkReplyBadge(userId, moduleId, moduleTitle), 500)
   }
 
   const handleSubmitEdit = (value): void => {

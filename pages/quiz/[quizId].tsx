@@ -4,7 +4,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Pagination from '../../components/common/Pagination'
-import { hasSameContent } from '../../components/common/Util'
+import {
+  checkAceBadge,
+  checkWrongQuestionBadge,
+  hasSameContent,
+} from '../../components/common/Util'
+import { moduleTitleById } from '../../components/module/ModuleAPI'
 import { addQuizToUserRecord } from '../../components/profile/UserAPI'
 import AnswerObject from '../../components/quiz/AnswerObject'
 import OptionsBar from '../../components/quiz/OptionsBar'
@@ -88,6 +93,7 @@ export default function Quiz({
   }
 
   const updateTotalScore = (): void => {
+    const totalScore = quizQuestions.length
     const score = userAnswers.reduce((memo, answerObject) => {
       return memo + (answerObject.isCorrect ? 1 : 0)
     }, 0)
@@ -96,6 +102,16 @@ export default function Quiz({
       id: quizId as string,
       score: score,
     })
+    if (totalScore == score) {
+      setTimeout(() => {
+        checkAceBadge(userId, moduleId, moduleTitleById(moduleId))
+      }, 300)
+    }
+    if (totalScore > score) {
+      setTimeout(() => {
+        checkWrongQuestionBadge(userId, moduleId, moduleTitleById(moduleId))
+      }, 300)
+    }
     setQuizMode(QuizMode.ENDING)
   }
 
