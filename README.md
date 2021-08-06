@@ -1,41 +1,23 @@
+# NUS Connect (Orbital Project AY20/21)
+A gamified learning management system that is accessible to all and easy to use.
 
-![poster](https://github.com/notawakestudio/NUSConnect/blob/main/public/NotAwake.png?raw=true)
-# NUS Connect (Orbital project for AY20/21)
+## Level of Achievement
+Officially: **Artemis**
 
-### Level of acheivement
+In our own words:
 
-Officially: Artemis
+A software application that we are proud of. One that follows the standard software engineering practices. One that we are not afraid to show you the code. One that we use to remember this summer of NUS CS journey.
 
-### Tech Stack
+## Developers
+- [Jun Xiong](https://github.com/ong6)
+- [Yongliang](https://github.com/tlylt)
+## Resources
 
-- Nextjs
-- TypeScript
-- Tailwind CSS
-- Jest & React testing library & Cypress
+- [Trailer Video](https://youtu.be/5p1V0kUZNzQ)
 
-### Resources
+- [Final Submission Video](https://www.youtube.com/watch?v=lYMwwFo2hoU)
 
-- Our figma page [here](https://www.figma.com/file/G0ajAThyYnljoAg9M25ahR/Not-Awake-team-library?node-id=0%3A1)
-- Our google docs page [here](https://docs.google.com/document/d/1gVK1er13XGxM9K4T8hWutoqQm9WUkyBN_oKn4uAAlRk/edit)
+- [Documentation](https://notawakestudio.github.io/NUSConnect-Docs/)
 
-### Notes
 
-- We use Yarn (start development server via: `yarn dev`)
-- All dependencies should be added via `yarn add`
-
-### Setup Guide
-
-```
-yarn install
-yarn dev
-```
-
-- configure tailwindcss
-
-```
-yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
-
-npx tailwindcss init -p
-update tailwind config to purge css and use JIT compiler
-then include tailwind in css
-```
+![poster](https://github.com/notawakestudio/NUSConnect/blob/main/public/2653.png?raw=true)
