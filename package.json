@@ -26,7 +26,7 @@
     "highlight.js": "^10.7.2",
     "markdown-it": "^12.0.6",
     "nanoid": "^3.1.23",
-    "next": "^10.2.0",
+    "next": "^11.1.2",
     "next-auth": "^3.24.0",
     "react": "^17.0.2",
     "react-datepicker": "^4.1.1",

@@ -2,6 +2,7 @@ import { useField } from 'formik'
 import Select from 'react-select'
 
 export default function CustomSingleSelect(props): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, state, { setValue, setTouched }] = useField(props.field.name)
   const onChange = (value: { value: string; label: string }): void => setValue(value.value)
   return (
