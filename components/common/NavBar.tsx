@@ -22,6 +22,7 @@ const NavBar = (): JSX.Element => {
   const [profileCollapse, setProfileCollapse] = useState(true)
   const { state: module, dispatch } = useCurrentModule()
   const { user, isLoading } = useUser()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [storedValue, setValue] = useLocalStorage('module', {
     moduleTitle: 'CS2030',
     moduleId: 'kMvp8b48SmTiXXCl7EAkc',

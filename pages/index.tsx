@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Feature from '../components/landingPage/Feature'
 import Hero from '../components/landingPage/Hero'
-import Pricing from '../components/landingPage/Pricing'
 import Team from '../components/landingPage/Team'
 import Timeline from '../components/landingPage/Timeline'
 
